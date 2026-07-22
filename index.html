@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMA Learning & Services | Skills, Automation & Career</title>
+    <meta name="description" content="UMA Learning & Services, Jaipur — certified professional courses (Advanced Excel, ADCA, Digital Marketing, Web Development, Data Analytics) plus business automation, CRM & web solutions. Practical training, real projects, placement support.">
+    <meta name="keywords" content="UMA Learning Jaipur, Advanced Excel course Jaipur, ADCA course, digital marketing course Jaipur, business automation, CRM development, web development training, career skills 2026">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://umalearningservices.com/" id="canonicalLink">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="UMA Learning & Services">
+    <meta property="og:title" content="UMA Learning & Services | Skills, Automation & Career" id="ogTitle">
+    <meta property="og:description" content="Certified training, digital marketing, web development, data analytics, automation & business solutions — learn practical skills or grow your business with UMA." id="ogDescription">
+    <meta property="og:image" content="images/logo.png" id="ogImage">
+    <meta property="og:locale" content="en_IN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UMA Learning & Services" id="twitterTitle">
+    <meta name="twitter:description" content="Practical courses, career skills, and business automation solutions from UMA, Jaipur." id="twitterDescription">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json" id="orgSchema">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "UMA Learning & Services",
+      "url": "https://umalearningservices.com/",
+      "logo": "images/logo.png",
+      "description": "Certified professional courses and business automation/web solutions provider based in Jaipur, Rajasthan.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Vatika Road",
+        "addressLocality": "Jaipur",
+        "addressRegion": "Rajasthan",
+        "postalCode": "303905",
+        "addressCountry": "IN"
+      },
+      "telephone": "+918340434138",
+      "sameAs": [
+        "https://www.instagram.com/umalearningservices",
+        "https://www.facebook.com/umalearningservices",
+        "https://www.linkedin.com/company/uma-learning-services",
+        "https://twitter.com/umalearning",
+        "https://www.youtube.com/@umalearningservices"
+      ]
+    }
+    </script>
+</head>
+<body>
+
+
+
+    <header>
+        <div class="logo-container" onclick="showAllViews()">
+            <img src="images/logo.png" alt="UMA Learning & Services">
+            <span class="logo-subtitle">TRAINING | TECHNOLOGY | SOLUTIONS | SUCCESS</span>
+        </div>
+
+    <!-- THIS IS NOTHING BUT WOWO -->
+
+<nav>
+<div class="nav-search" onclick="openSearch()" role="button" tabindex="0" aria-label="Open search" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openSearch();}">
+    <span class="nav-search-icon-wrap">
+        <span class="nav-search-icon-ping"></span>
+        <img src="images/search.png" alt="Search" class="nav-search-icon">
+    </span>
+    <input type="text" id="navSearchDisplay"
+    placeholder="Find Courses & Services • Excel • Power BI • Python • Web Development • Automation..."
+    readonly tabindex="-1">
+
+
+    
+</div>
+
+    <a onclick="showAllViews()" data-page="home">Home</a>
+    <a onclick="goServices('corporate')" class="nav-studio" data-page="services" data-view="corporate">Services Studio</a>
+    <a onclick="goServices('academic')" class="nav-campus" data-page="services" data-view="academic">Learning Campus</a>
+    <a onclick="openStudentLogin()" class="nav-student-login">🎓 Student Login</a>
+    <a onclick="showPage('whyus')" data-page="whyus">Why Us?</a>
+    <a onclick="showPage('contact')" data-page="contact">Contact Us</a>
+    <div class="nav-dropdown" id="moreDropdown">
+        <a onclick="toggleMoreDropdown(event)" data-page="more" class="nav-more-toggle" title="More" aria-label="More">
+            <span class="hamburger-box">
+                <span class="hamburger-line l1"></span>
+                <span class="hamburger-line l2"></span>
+                <span class="hamburger-line l3"></span>
+            </span>
+        </a>
+        <div class="nav-dropdown-menu">
+
+            <a onclick="showPage('reviews')" data-page="reviews">
+                <img src="images/rating.png" alt="Reviews" class="dropdown-icon">
+                <span>Reviews</span>
+            </a>
+
+            <a onclick="showPage('team')" data-page="team">
+                <img src="images/team.png" alt="Our Team" class="dropdown-icon">
+                <span>Our Team</span>
+            </a>
+
+            <a onclick="showPage('branches')" data-page="branches">
+                <img src="images/branch.png" alt="Our Branches" class="dropdown-icon">
+                <span>Our Branches</span>
+            </a>
+
+            <a onclick="showPage('blogs')" data-page="blogs">
+                <img src="images/blog.png" alt="Our Blogs" class="dropdown-icon">
+                <span>Our Blogs</span>
+            </a>
+
+            <a onclick="showPage('gallery')" data-page="gallery">
+                <img src="images/gallery.png" alt="Gallery" class="dropdown-icon">
+                <span>Gallery</span>
+            </a>
+
+            <a onclick="goToContactFAQ()" data-page="FAQ">
+                <img src="images/faq.png" alt="FAQ" class="dropdown-icon">
+                <span>FAQ</span>
+            </a>
+
+        </div>
+    </div>
+    <div id="nav-progress-bar"></div>
+    
+</nav>
+    </header>
+
+    <!-- ================= SEARCH OVERLAY ================= -->
+    <div class="search-overlay" id="searchOverlay" onclick="closeSearchOnOverlay(event)">
+        <div class="search-box">
+            <div class="search-box-header">
+            <span class="search-input-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+            <input type="text" id="searchInput" placeholder="Search courses & services (e.g. Excel,ADCA,FMS,Design, CRM, Web Development)..." oninput="runSiteSearch()" onkeydown="handleSearchKeydown(event)" autocomplete="off">
+            <span class="search-clear" id="searchClear" onclick="clearSearchInput()" title="Clear">✕</span>
+            <span class="search-close" onclick="closeSearch()">Close</span>
+            </div>
+            <div class="search-results" id="searchResults">
+                <p class="search-hint">Start typing to search across all courses and services.<br><span class="search-hint-sub">Tip: try "Excel", "web development", "ERP" or "certification".</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-home">
+    <div class="split-container" id="heroSplit">
+        <section class="screen right-hero" id="rightHeroSection">
+            <div class="hero-bg-layer active"></div>
+            <div class="hero-bg-layer"></div>
+            <div class="hero-overlay"></div>
+            <!-- <div class="hero-dots" id="rightHeroDots"></div> -->
+            <span class="badge">UMA Learning Campus</span>
+            <h1>Professional Courses</h1>
+            <p class="hero-tagline">"Knowledge Today, Success Tomorrow !"</p>
+            <p class="trust-snippet">"Transforming education into opportunity through practical learning, industry-relevant skills, and real-world experience that prepares you for a successful future."</p>
+            <p class="tagline">Your all-in-one learning and business solutions partner—offering certified training, digital marketing, graphic design, data analytics, automation, jewellery CAD, branding, web development, and technology consulting and more.</p>
+            <div class="academy-animation">
+
+                <div class="ring ring1"></div>
+                <div class="ring ring2"></div>
+
+                <div class="pulse pulse1"></div>
+                 <div class="pulse pulse2"></div>
+    
+                <a onclick="goServices('academic')" class="btn btn-academy">
+                    Explore Professional Courses
+                </a>
+
+            </div>
+        </section>
+
+        <section class="screen left-hero" id="leftHeroSection">
+            <div class="hero-bg-layer"></div>
+            <div class="hero-overlay"></div>
+            <!-- <div class="hero-dots" id="leftHeroDots"></div> -->
+            <span class="badge">UMA Services Studio</span>
+            <h1>Integrated Business Solutions</h1>
+            <p class="hero-tagline">"Dedicated to Your Learning Journey.!"</p>
+            <p class="trust-snippet">"We work as your growth partner, not just a service provider. Move fast. Break nothing. You can close your eyes and trust us."</p>
+            <p class="tagline">Design and implement customized Graphic, business solutions, workflow automations, digital systems, and operational processes that improve efficiency, productivity, and business growth.</p>
+            <div class="corporate-animation">
+
+
+    <div class="pulse pulse1"></div>
+    <div class="pulse pulse2"></div>
+
+    <a onclick="goServices('corporate')" class="btn btn-agency">
+        Explore Corporate Solutions
+    </a>
+
+</div>
+        </section>
+    </div>
+
+<section class="tech-section">
+
+    <div class="tech-heading">
+
+        <strong>TECHNOLOGIES WE WORK WITH</strong>
+
+        <!-- <h2>Modern Technologies. Real Business Solutions.</h2> -->
+
+    </div>
+
+    <div class="marquee">
+
+        <div class="marquee-track">
+
+<div class="tech-card">🐍 Python</div>
+<div class="tech-card">🌐 HTML5</div>
+<div class="tech-card">🎨 CSS3</div>
+<div class="tech-card">⚡ JavaScript</div>
+<div class="tech-card">⚛️ React JS</div>
+<div class="tech-card">🟢 Node.js</div>
+<div class="tech-card">🚀 Express.js</div>
+<div class="tech-card">🗄️ SQL</div>
+<div class="tech-card">🍃 MongoDB</div>
+<div class="tech-card">📊 Power BI</div>
+<div class="tech-card">📈 Excel VBA</div>
+<div class="tech-card">🤖 AI / ML</div>
+<div class="tech-card">🧠 OpenAI APIs</div>
+<div class="tech-card">⚙️ ERP Systems</div>
+<div class="tech-card">📋 CRM Systems</div>
+<div class="tech-card">🏢 HRMS</div>
+<div class="tech-card">☁️ Cloud (AWS)</div>
+<div class="tech-card">🔥 Firebase</div>
+<div class="tech-card">🐳 Docker</div>
+<div class="tech-card">⚙️ DevOps</div>
+<div class="tech-card">🌍 SEO</div>
+<div class="tech-card">📱 Mobile Apps</div>
+<div class="tech-card">🧩 APIs</div>
+<div class="tech-card">🌄 Graphic Design</div>
+<div class="tech-card">🧾️ Automation Tools</div>
+
+<!-- Added Technologies -->
+<div class="tech-card">🖌️ Adobe Photoshop</div>
+<div class="tech-card">🎨 Adobe Illustrator</div>
+<div class="tech-card">📷 Adobe Lightroom</div>
+<div class="tech-card">🎬 Adobe Premiere Pro</div>
+<div class="tech-card">✨ Adobe After Effects</div>
+
+<div class="tech-card">💙 Flutter</div>
+<div class="tech-card">📱 Android Studio</div>
+
+<div class="tech-card">💎 Rhino 3D</div>
+<div class="tech-card">💍 MatrixGold</div>
+<div class="tech-card">💠 RhinoGold</div>
+
+<div class="tech-card">🛠️ AutoCAD</div>
+<div class="tech-card">🎭 Blender</div>
+<div class="tech-card">🖥️ Figma</div>
+<div class="tech-card">🎯 Canva</div>
+<div class="tech-card">📐 UI/UX Design</div>
+
+<div class="tech-card">☁️ Google Cloud</div>
+<div class="tech-card">🔷 Microsoft Azure</div>
+<div class="tech-card">🐙 Git & GitHub</div>
+<div class="tech-card">🔄 CI/CD</div>
+<div class="tech-card">📡 REST APIs</div>
+<div class="tech-card">🔗 GraphQL</div>
+
+<div class="tech-card">📊 Data Analytics</div>
+<div class="tech-card">📈 Business Intelligence</div>
+
+
+                <!-- Duplicate -->
+
+<div class="tech-card">🐍 Python</div>
+<div class="tech-card">🌐 HTML5</div>
+<div class="tech-card">🎨 CSS3</div>
+<div class="tech-card">⚡ JavaScript</div>
+<div class="tech-card">⚛️ React JS</div>
+<div class="tech-card">🟢 Node.js</div>
+<div class="tech-card">🚀 Express.js</div>
+<div class="tech-card">🗄️ SQL</div>
+<div class="tech-card">🍃 MongoDB</div>
+<div class="tech-card">📊 Power BI</div>
+<div class="tech-card">📈 Excel VBA</div>
+<div class="tech-card">🤖 AI / ML</div>
+<div class="tech-card">🧠 OpenAI APIs</div>
+<div class="tech-card">⚙️ ERP Systems</div>
+<div class="tech-card">📋 CRM Systems</div>
+<div class="tech-card">🏢 HRMS</div>
+<div class="tech-card">☁️ Cloud (AWS)</div>
+<div class="tech-card">🔥 Firebase</div>
+<div class="tech-card">🐳 Docker</div>
+<div class="tech-card">⚙️ DevOps</div>
+<div class="tech-card">🌍 SEO</div>
+<div class="tech-card">📱 Mobile Apps</div>
+<div class="tech-card">🧩 APIs</div>
+<div class="tech-card">🌄 Graphic Design</div>
+<div class="tech-card">🧾️ Automation Tools</div>
+
+<!-- Added Technologies -->
+<div class="tech-card">🖌️ Adobe Photoshop</div>
+<div class="tech-card">🎨 Adobe Illustrator</div>
+<div class="tech-card">📷 Adobe Lightroom</div>
+<div class="tech-card">🎬 Adobe Premiere Pro</div>
+<div class="tech-card">✨ Adobe After Effects</div>
+
+<div class="tech-card">💙 Flutter</div>
+<div class="tech-card">📱 Android Studio</div>
+
+<div class="tech-card">💎 Rhino 3D</div>
+<div class="tech-card">💍 MatrixGold</div>
+<div class="tech-card">💠 RhinoGold</div>
+
+<div class="tech-card">🛠️ AutoCAD</div>
+<div class="tech-card">🎭 Blender</div>
+<div class="tech-card">🖥️ Figma</div>
+<div class="tech-card">🎯 Canva</div>
+<div class="tech-card">📐 UI/UX Design</div>
+
+<div class="tech-card">☁️ Google Cloud</div>
+<div class="tech-card">🔷 Microsoft Azure</div>
+<div class="tech-card">🐙 Git & GitHub</div>
+<div class="tech-card">🔄 CI/CD</div>
+<div class="tech-card">📡 REST APIs</div>
+<div class="tech-card">🔗 GraphQL</div>
+
+<div class="tech-card">📊 Data Analytics</div>
+<div class="tech-card">📈 Business Intelligence</div>
+
+            </div>
+
+        </div>
+
+</section>
+
+    
+
+   
+
+    
+    <div class="testimonial-wrap">
+    <button class="testimonial-arrow prev" aria-label="Previous testimonial">‹</button>
+    <div class="testimonial-strip">
+        <div class="testimonial-card">
+            <div class="testimonial-avatar">
+                <img src="images/personal de.jpg" alt="Client photo" class="circle-avatar">
+            </div>
+            <p class="quote">"I taken online Advance Excel class from suraj sir ,oct 2024 now I am working as MIS in merchandiser in gulmohar lane,mahendra SEZ ,jaipur from last 1.5 years, super experience."</p>
+            <p class="author">— Placeholder,Merchandiser MIS</p>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-avatar avatar-initial">O</div>
+            <p class="quote">"UMA automated our entire attendance and payroll process — what used to take days now runs itself."</p>
+            <p class="author">— Placeholder, Operations Head</p>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-avatar avatar-initial">C</div>
+            <p class="quote">"The Advanced Excel + VBA course gave me real project experience, not just theory. Got placed within a month."</p>
+            <p class="author">— Placeholder, Course Graduate</p>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-avatar avatar-initial">B</div>
+            <p class="quote">"Our CRM and help desk system built by UMA cut our response time in half. Genuinely reliable support."</p>
+            <p class="author">— Placeholder, Business Owner</p>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-avatar avatar-initial">S</div>
+            <p class="quote">"Trainers were patient, practical, and always available. Highly recommend the ADCA Plus program."</p>
+            <p class="author">— Placeholder, Student</p>
+        </div>
+        <div class="testimonial-card">
+            <img src="images/student1.jpg" alt="Student" class="testimonial-image">
+
+            <p class="quote">
+                "Trainers were patient, practical, and always available. Highly recommend the ADCA Plus program."
+            </p>
+
+            <p class="author">— Rahul Sharma, Student</p>
+        </div>
+
+    </div>
+    <button class="testimonial-arrow next" aria-label="Next testimonial">›</button>
+    </div>
+
+    <p style="text-align:center; font-size:0.75rem; color:#9fb3c8; padding:8px 20px 0 20px; background:#0c2340; margin:0;">* Sample testimonials — swap in real client/student quotes</p>
+
+     <section class="live-counters" id="liveCounters">
+        <div class="counter-item">
+            <span class="counter-num" data-target="150">0</span><span class="counter-suffix">+</span>
+            <span class="counter-label">Students Trained</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" data-target="50">0</span><span class="counter-suffix">+</span>
+            <span class="counter-label">Projects Delivered</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" data-target="50">0</span><span class="counter-suffix">+</span>
+            <span class="counter-label">Automations Built</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" data-target="20">0</span><span class="counter-suffix">+</span>
+            <span class="counter-label">Courses Offered</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" data-target="57">0</span><span class="counter-suffix">+</span>
+            <span class="counter-label">Students Placed</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" data-target="8">0</span><span class="counter-suffix">+</span>
+            <span class="counter-label">Self Employed</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" data-target="1000">0</span><span class="counter-suffix">+</span>
+            <span class="counter-label">Hours Saved for Clients</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" data-target="99.98">0</span><span class="counter-suffix">%</span>
+            <span class="counter-label">Student Satisfaction</span>
+        </div>
+    </section>
+
+
+    </div><!-- /page-home -->
+
+    <div class="page" id="page-services">
+    <main class="main-showcase" id="mainShowcase"><script>
+        /* Instantly pre-apply the correct single-column view (Services Studio or
+           Learning Campus) from the URL hash, the moment this element exists in
+           the DOM — instead of waiting for script.js to finish loading and fire
+           DOMContentLoaded. On a slow connection/device that gap could otherwise
+           be visible for a moment as both columns showing side-by-side
+           ("split in two") before collapsing to one. script.js still runs its
+           normal restore logic afterwards; this is just a fast, safe head start. */
+        (function () {
+            var m = /^#?services:(corporate|academic)$/.exec(location.hash || '');
+            if (m) document.getElementById('mainShowcase').classList.add('view-' + m[1]);
+        })();
+    </script>
+        
+        <section id="services-hub" class="showcase-column agency-column">
+            <h2 class="section-title">Corporate Solutions & Business Automation</h2>
+            <p class="section-subtitle">Custom operational workflow automation infrastructures, deep software integrations, and visual media production pipelines.</p>
+            
+            <div class="segment-wrapper">
+                <div class="segment-heading">Core Enterprise Automation Ecosystems</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Custom FMS 1.jpeg|images/Custom FMS 2.jpeg" data-full="A tailor-made Flow Management System that maps your exact business process step-by-step — enquiry, approval, execution, and closure — so nothing is missed. It covers workflow mapping, role-based task routing, WhatsApp &amp; Email trigger integration, real-time status dashboards, and escalation alerts for delayed steps. Ideal for offices that currently track work on registers, WhatsApp chats, or scattered spreadsheets and want one unified system that notifies the right person automatically at every stage.">
+                        <div class="card-image-carousel">
+                            <img src="images/Custom FMS 1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Custom FMS 2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Custom FMS (Flow Management System)</span>
+                            <span class="card-details">With WhatsApp,Email and more Integration </span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/WhatsApp API Engines1.jpeg|images/WhatsApp API Engines2.jpeg.jpeg">
+                        <div class="card-image-carousel">
+                            <img src="images/WhatsApp API Engines1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/WhatsApp API Engines2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">WhatsApp API Engines</span>
+                            <span class="card-details">WhatsApp api and their integrations</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Custom_Google_Workspace_Automation1.jpeg|images/Custom_Google_Workspace_Automation2.jpeg" data-full="Turns your everyday Google Docs, Sheets, and Slides into a connected automation engine using Apps Script. It covers custom Apps Script triggers, Sheet-to-Doc/Slide automation, cloud-based macro logic, approval workflows built inside Sheets, and scheduled auto-reports sent by email. Best suited to teams already using Google Workspace who want it to work like a mini ERP without buying new software.">
+                        <div class="card-image-carousel">
+                            <img src="images/Custom_Google_Workspace_Automation1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Custom_Google_Workspace_Automation2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Custom Google Workspace Automation</span>
+                            <span class="card-details">Custom Apps Script cloud macro logic structures and more</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Excel_Add-in1.jpeg|images/Excel_Add-in2.jpeg" data-full="We design and build custom Excel/Office add-ins so your team gets one-click buttons for tasks that currently take manual effort. It covers Excel Add-in (XLAM) development, custom ribbon buttons &amp; menus, VBA/Office Scripts backend logic, tool packaging &amp; installation, and staff training on the finished add-in. Great for finance, HR, or operations teams doing the same repetitive Excel task every day.">
+                        <div class="card-image-carousel">
+                            <img src="images/Excel_Add-in1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Excel_Add-in2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Custom Add-ins & Office Tools Development</span>
+                            <span class="card-details">like custom excel addins and tools and more</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Smart_Business_Process_Automation_1.jpeg|images/Smart_Business_Process_Automation_2.jpeg" data-full="End-to-end automation of a business process using API and Webhook connections between the tools you already use. It covers workflow integration design, REST API &amp; Webhook setup, third-party app connections (CRM, payment, messaging), trigger-based actions, and error/alert monitoring. Recommended for growing businesses that want their software tools to talk to each other instead of manual copy-paste between systems.">
+                        <div class="card-image-carousel">
+                            <img src="images/Smart_Business_Process_Automation_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Smart_Business_Process_Automation_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Smart Business Process Automation</span>
+                            <span class="card-details">Workflow Integration & API/Webhook Solutions</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Data_collection_report_automation1.jpeg|images/Data_collection_report_automation2.jpeg" data-full="Automated pipelines that collect data from forms, sheets, or systems and turn it into ready-to-read reports without manual compilation. It covers form &amp; data-source integration, automated data logging, scheduled report generation, chart/summary auto-formatting, and multi-channel report delivery (email/WhatsApp). Useful for managers who currently spend hours every week compiling daily/weekly/monthly reports by hand.">
+                        <div class="card-image-carousel">
+                            <img src="images/Data_collection_report_automation1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Data_collection_report_automation2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Data Collection & Report Automation</span>
+                            <span class="card-details">Automated report aggregators & data logging</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Office_automation_and_analysis1.jpeg|images/Office_automation_and_analysis2.jpeg" data-full="A strategic, end-to-end review of your office operations followed by automation of the weak points to save time and reduce errors. It covers process audit &amp; bottleneck analysis, task-flow redesign, automation of repetitive office work, KPI/efficiency dashboards, and ongoing optimization support. Ideal for business owners who feel operations are running fine but suspect a lot of time is quietly being wasted.">
+                        <div class="card-image-carousel">
+                            <img src="images/Office_automation_and_analysis1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Office_automation_and_analysis2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Operations & Office Automation & Analysis</span>
+                            <span class="card-details">Strategic end-to-end efficiency optimization systems</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper">
+                <div class="segment-heading">Smart HR Operations & Security Frameworks</div>
+                <div class="items-grid">
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/HR Automation Systems (1).jpeg|images/HR Automation Systems (2).jpeg" data-full="A complete digital HR toolkit that replaces manual registers with automated tracking and instant approvals. It covers leave request &amp; approval workflow, automatic salary slip generation, daily attendance tracking, HR notification alerts, and employee record management. Built for HR teams and small business owners handling staff processes manually on paper or Excel.">
+                        <div class="card-image-carousel">
+                            <img src="images/HR Automation Systems (1).jpeg" alt="" class="card-image ci-1">
+                            <img src="images/HR Automation Systems (2).jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">HR Automation Systems</span>
+                            <span class="card-details">Leave Approval, Salary Slip Generator & Attendance Tracker</span>
+                        </div>
+                    </div>
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Night_guard_automation(1).jpeg|images/Night_guard_automation(2).jpeg" data-full="A monitoring system that confirms security staff are actually on duty and alert through timed check-ins. It covers live popup check-in alerts, photo/image verification at each round, digital punch/attendance tracker, missed-round escalation notifications, and duty history reports. Designed for factories, warehouses, and offices that depend on night security staff and need proof of active patrolling.">
+                        <div class="card-image-carousel">
+                            <img src="images/Night_guard_automation(1).jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Night_guard_automation(2).jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Smart Night Guard Duty Automation</span>
+                            <span class="card-details">Live Popup Alerts, Image Verification & Punch Tracker</span>
+                        </div>
+                    </div>
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/SmartAlertSystem(1).jpeg|images/SmartAlertSystem(2).jpeg" data-full="An automated reminder engine so your business never misses a renewal, birthday, or compliance deadline again. It covers birthday &amp; event auto-reminders, document/insurance expiry tracking, compliance deadline alerts, multi-channel notifications (Email/WhatsApp/SMS), and a central reminder dashboard. Perfect for admin teams currently relying on memory or sticky notes to track important dates.">
+                        <div class="card-image-carousel">
+                            <img src="images/SmartAlertSystem(1).jpeg" alt="" class="card-image ci-1">
+                            <img src="images/SmartAlertSystem(2).jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Smart Alert System</span>
+                            <span class="card-details">Auto reminders for Birthdays, Events, Documents Expiry, Insurance & Compliance</span>
+                        </div>
+                    </div>
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Task_delegation_and_monitoring_1.jpeg|images/Task_delegation_and_monitoring_2.jpeg" data-full="A real-time system that assigns daily tasks to staff and tracks completion so managers always know what&#x27;s pending. It covers task assignment workflow, real-time progress tracking, deadline &amp; delay alerts, staff performance summaries, and daily task reports. Recommended for teams where work gets assigned verbally and often falls through the cracks.">
+                        <div class="card-image-carousel">
+                            <img src="images/Task_delegation_and_monitoring_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Task_delegation_and_monitoring_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Task Delegation & Monitoring System</span>
+                            <span class="card-details">Real-time operational tracking frameworks</span>
+                        </div>
+                    </div>
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Visitor_Gate_Pass_Automation_1.jpeg|images/Visitor_Gate_Pass_Automation_2.jpeg" data-full="A digital gate-pass system that logs and verifies every visitor entering your premises. It covers visitor registration &amp; ID capture, digital gate-pass generation, host approval workflow, entry/exit log history, and security dashboard reporting. Suitable for offices, factories, and gated facilities wanting a paperless, secure visitor record.">
+                        <div class="card-image-carousel">
+                            <img src="images/Visitor_Gate_Pass_Automation_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Visitor_Gate_Pass_Automation_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Visitor Gate Pass Automation</span>
+                            <span class="card-details">Secure access tracking validation modules</span>
+                        </div>
+                    </div>
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/IMS_Smart_Stock_Management_System_1.jpeg|images/IMS_Smart_Stock_Management_System_2.jpeg" data-full="A real-time inventory management system that tracks stock levels, movement, and reorder points automatically. It covers stock-in/stock-out tracking, low-stock auto-alerts, item-wise inventory reports, multi-location stock visibility, and purchase/reorder suggestions. Ideal for retailers, distributors, and manufacturers currently tracking stock manually in registers or basic spreadsheets.">
+                        <div class="card-image-carousel">
+                            <img src="images/IMS_Smart_Stock_Management_System_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/IMS_Smart_Stock_Management_System_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">IMS Smart Stock Management System</span>
+                            <span class="card-details">Real-time inventory optimization tracking systems</span>
+                        </div>
+                    </div>
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/DISC_Personality_Analysis_1 (1).jpeg|images/DISC_Personality_Analysis_1 (2).jpeg" data-full="A behavioural assessment tool used to understand employee working styles for better team building and management. It covers DISC framework fundamentals (Dominance, Influence, Steadiness, Compliance), employee behaviour profiling, team-culture fit analysis, communication-style mapping, and manager coaching reports. Useful for HR teams making hiring decisions or building better-balanced teams.">
+                        <div class="card-image-carousel">
+                            <img src="images/DISC_Personality_Analysis_1 (1).jpeg" alt="" class="card-image ci-1">
+                            <img src="images/DISC_Personality_Analysis_1 (2).jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">DISC Personality Analysis</span>
+                            <span class="card-details">For Employee Behaviour and cultural management modules</span>
+                        </div>
+                    </div>
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Third-Party_Payroll_Services_1.jpeg|images/Third-Party_Payroll_Services_2.jpeg" data-full="Complete outsourced payroll processing so your business stays statutory-compliant without an in-house payroll team. It covers salary computation &amp; disbursal, PF/ESI/TDS compliance processing, payslip generation, statutory filing support, and payroll query resolution. Best for growing businesses that want accurate, on-time payroll without the compliance headache.">
+                        <div class="card-image-carousel">
+                            <img src="images/Third-Party_Payroll_Services_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Third-Party_Payroll_Services_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Third-Party Payroll Services</span>
+                            <span class="card-details">Corporate payroll compliance engine processing</span>
+                        </div>
+                    </div>
+                    <div class="card cat-hr-security" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/remainder1.jpeg|images/remainder2.jpeg" data-full="Get instant/custom automated alerts for compliance registers, birthdays, document expiries, renewals, task deadlines, and other important events. It covers rule-based reminder configuration, multi-channel delivery (Email, WhatsApp, SMS, push notification), escalation alerting, and a central reminder log. Receive notifications through your preferred communication channel and stay organized with real-time updates so nothing is ever missed.">
+                        <div class="card-image-carousel">
+                            <img src="images/remainder1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/remainder2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Auto Reminder Systems</span>
+                            <span class="card-details">Get instant/custom automated alerts for compliance registers, birthdays, document expiries, renewals, task deadlines, and other important events. Receive notifications through Email, WhatsApp, SMS, push notifications, or your preferred communication channel. Stay organized with smart reminders, escalation alerts, and real-time updates to ensure nothing is missed and more.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper">
+                <div class="segment-heading">Digital Systems & Web Infrastructure Solutions</div>
+                <div class="items-grid">
+                    <div class="card cat-web-systems" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/CRM_Help_Desk_Management_System_1.jpeg|images/CRM_Help_Desk_Management_System_12.jpeg" data-full="A complete customer-relationship system covering the full journey from order confirmation to dispatch, with automatic alerts at every stage. It covers lead &amp; customer database management, order-to-dispatch workflow tracking, auto-summary notifications, support ticket handling, and follow-up reminders. Built for sales and support teams who want every customer interaction tracked in one place instead of scattered notebooks and chats.">
+                        <div class="card-image-carousel">
+                            <img src="images/CRM_Help_Desk_Management_System_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/CRM_Help_Desk_Management_System_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text"><span class="card-title">CRM & Help Desk Management System</span>
+                        <span class="card-details">complete process form order confirmation to dispatch with alert and Auto Summary notification and more</span>
+                    </div>
+                    </div>
+                    <div class="card cat-web-systems" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Custom_ERP_design_and_management_1.jpeg|images/Custom_ERP_design_and_management_2.jpeg" data-full="We design a custom ERP for any single process or department in your organisation, built around how you actually work rather than a rigid off-the-shelf template. It covers department-wise module design (sales, inventory, HR, accounts), workflow &amp; approval automation, centralised data dashboards, user role management, and ongoing system support. Suitable for businesses that have outgrown spreadsheets but don&#x27;t need (or want to pay for) a giant generic ERP.">
+                        <div class="card-image-carousel">
+                            <img src="images/Custom_ERP_design_and_management_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Custom_ERP_design_and_management_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text"><span class="card-title">ERP Development & Management Systems</span>
+                        <span class="card-details">Make any type of ERP for individual process or department</span>
+                        </div>
+
+                    </div>
+                    <div class="card cat-web-systems" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Web_App_Custom_Tool_Development_1.jpeg|images/Web_App_Custom_Tool_Development_2.jpeg" data-full="We build with WordPress, Shopify, React, Node.js, PHP and more — whatever tool or platform best fits your specific requirement. It covers requirement-based platform selection, custom web application development, e-commerce store setup, internal tool/dashboard building, and post-launch maintenance. Ideal for businesses needing a purpose-built tool rather than a generic template site.">
+                        <div class="card-image-carousel">
+                            <img src="images/Web_App_Custom_Tool_Development_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Web_App_Custom_Tool_Development_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text"><span class="card-title">Web App & Custom Tool Development</span><span class="card-details">Make any type of Web App & Custom Tool for individual process or department</span></div>
+                    </div>
+                    <div class="card cat-web-systems" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Website_design_business_solutions_1.jpeg|images/Website_design_business_solutions_2.jpeg" data-full="We deal with WordPress, Shopify, React, Node.js, PHP and more types of tools to build the exact website your business needs. It covers business/portfolio/e-commerce website design, responsive &amp; mobile-friendly builds, SEO-ready structuring, domain &amp; hosting setup, and post-launch support. Great for businesses that need a professional online presence without managing the technical side themselves.">
+                        <div class="card-image-carousel">
+                            <img src="images/Website_design_business_solutions_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Website_design_business_solutions_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text"><span class="card-title">Website Development Solutions</span>
+                        <span class="card-details">We Deals with wordpress,shopify ,Reacts, nod.js, php and more type of tools.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-web-systems" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Client_Order_Auto_System_1.jpeg|images/Client_Order_Auto_System_2.jpeg" data-full="Like a Help Desk system — clients raise their query or order, and it&#x27;s automatically assigned to the responsible person for action. It covers query/order intake forms, auto-assignment logic &amp; routing, status tracking dashboards, resolution/completion alerts, and client communication history. Useful for service businesses juggling multiple client requests across teams.">
+                        <div class="card-image-carousel">
+                            <img src="images/Client_Order_Auto_System_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Client_Order_Auto_System_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text"><span class="card-title">Client Order Auto System & Job Tracker</span></div>
+                    </div>
+                    <div class="card cat-web-systems" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Corporate_coordination_communicate1.jpeg|images/Corporate_coordination_communicate2.jpeg" data-full="A centralised system that keeps internal teams, departments, and branches coordinated with clear communication trails. It covers inter-department request/approval flow, centralised announcement &amp; notice system, task hand-off tracking, communication log/history, and status dashboards. Recommended for organisations with multiple departments or branches struggling with coordination gaps.">
+                        <div class="card-image-carousel">
+                            <img src="images/Corporate_coordination_communicate1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Corporate_coordination_communicate2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text"><span class="card-title">Corporate Coordination & Communication Systems</span>
+                        <span class="card-details">like Help Desk in which any one use that write their query and assign to responsible person</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper">
+                <div class="segment-heading">Creative Production & Media Studio</div>
+                <div class="items-grid">
+                    <div class="card cat-media-studio" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Professional_photography_service1.jpeg|images/Professional_photography_service2.jpeg" data-full="Professional photoshoot and photography services for products, corporate events, portfolios, and business branding needs. It covers product &amp; catalogue photography, corporate/event photography, portrait &amp; profile shoots, on-site and studio setups, and edited high-resolution delivery. Suitable for businesses needing polished visuals for their website, social media, or marketing material.">
+                        <div class="card-image-carousel">
+                            <img src="images/Professional_photography_service1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Professional_photography_service2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Professional Photography</span>
+                            <span class="card-details">Photoshoot & Photography Services</span>
+                        </div>
+                    </div>
+                    <div class="card cat-media-studio" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Video_production_shoot_export1.jpeg|images/Video_production_shoot_export2.jpeg" data-full="Full video production service from shoot to final export, including our structured video-editing workflow. It covers event &amp; corporate videography, promotional/product video shoots, professional video editing tracks, colour grading &amp; sound sync, and final delivery in multiple formats. Ideal for brands wanting polished video content for marketing, social media, or internal use.">
+                        <div class="card-image-carousel">
+                            <img src="images/Video_production_shoot_export1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Video_production_shoot_export2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Videography & Video Production</span>
+                            <span class="card-details">Video Editing Track Modules</span>
+                        </div>
+                    </div>
+                    <div class="card cat-media-studio" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Animation_and_motion_graphics_1.jpeg|images/Animation_and_motion_graphics_2.jpeg" data-full="Custom animation and motion-graphics work that brings static ideas to life for marketing and explainer content. It covers 2D animation basics, motion graphics for social/ads, explainer-video style animation, typography &amp; logo animation, and export for web/social formats. Useful for brands wanting attention-grabbing animated content rather than plain static posts.">
+                        <div class="card-image-carousel">
+                            <img src="images/Animation_and_motion_graphics_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Animation_and_motion_graphics_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text"><span class="card-title">Animation & Motion Graphics</span></div>
+                    </div>
+                    <div class="card cat-media-studio" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Social_media_handling_graphic_2.jpeg|images/Social_media_handling_graphic_1.jpeg" data-full="Complete social media management covering static posts, content writing, and reels so your brand stays active and consistent online. It covers content calendar planning, static post &amp; reel creation, caption/content writing, page management &amp; posting schedule, and basic performance reporting. Suited to businesses that want a consistent social media presence without managing it in-house.">
+                        <div class="card-image-carousel">
+                            <img src="images/Social_media_handling_graphic_2.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Social_media_handling_graphic_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Social Media Handling & Graphic Creation</span>
+                            <span class="card-details">Social Media Static_Post, Content Writing,Reel</span>
+                        </div>
+                    </div>
+                    <div class="card cat-media-studio" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/YouTube_thumbnail_banner_designing_2.jpeg|images/YouTube_thumbnail_banner_designing_1.jpeg" data-full="Eye-catching thumbnails and channel banners designed to boost click-through rate and channel branding. It covers click-worthy thumbnail design principles, YouTube channel banner/art design, consistent branding across videos, A/B style variant design, and quick-turnaround delivery. Great for YouTubers and businesses running a video channel who want professional-looking cover art.">
+                        <div class="card-image-carousel">
+                            <img src="images/YouTube_thumbnail_banner_designing_2.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/YouTube_thumbnail_banner_designing_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text"><span class="card-title">YouTube Thumbnail & Banner Designing</span></div>
+                    </div>
+                    <div class="card cat-media-studio" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Business_promotional_creatives_1.jpeg|images/Business_promotional_creatives_2.jpeg" data-full="Festival, marketing, and branding creatives designed to keep your business visible and relevant year-round. It covers festival &amp; seasonal poster design, marketing/offer creative design, brand identity-consistent advertisement design, print-ready &amp; social-ready formats, and quick festival-calendar turnaround. Ideal for businesses that want ready-made, on-brand creatives for every occasion without hiring an in-house designer.">
+                        <div class="card-image-carousel">
+                            <img src="images/Business_promotional_creatives_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Business_promotional_creatives_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Business Promotional Creatives</span>
+                            <span class="card-details">Festival & Marketing Posters, Branding & Advertisement Designing</span>
+                        </div>
+                    </div>
+
+                    <div class="card cat-media-studio" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Publishing_services_for_release_1.jpeg|images/Publishing_services_for_release_2.jpeg" data-full="End-to-end publishing support to get your written or designed material ready for print or digital release. It covers manuscript/document formatting, cover &amp; layout design, print-ready file preparation, digital/e-book publishing formats, and proofreading support. Useful for authors, institutions, or businesses publishing books, brochures, or magazines.">
+                        <div class="card-image-carousel">
+                            <img src="images/Publishing_services_for_release_1.jpeg" alt="Graphic Design Services" class="card-image ci-1">
+                            <img src="images/Publishing_services_for_release_2.jpeg" alt="Magazine & Book Design" class="card-image ci-2">
+                        </div>
+
+                        <div class="card-text">
+                            <span class="card-title">Publishing Services</span>
+                            <span class="card-details">
+                                Magazine Design • Book Layout • Brochure Design • Company Profiles • Resume Templates • Job CV Design • Certificates • Flyers • Posters • Business Cards • Social Media Templates • Custom Print Designs
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="info-panel timeline-panel">
+                <h3>Corporate Support Track Additions</h3>
+                <ul class="info-timeline">
+                    <li>No advance payment required</li>
+                    <li>Lifetime free service & support</li>
+                    <li>End-to-end delivery</li>
+                    <li>We always ready for Offline and Online Meeting</li>
+                    <li>Professional Portfolio Designing</li>
+                    <li>Full Mock/Custome according to Organization</li>
+                    <li>Most Security of Data</li>
+                    <li>Easy to use</li>
+
+                </ul>
+            </div>
+        </section>
+
+        <section id="academy-hub" class="showcase-column academy-column">
+
+        <div class="batch-marquee">
+        <div class="batch-marquee-track">
+            <span>Every Monday is a New Beginning! Get FLAT <span class="discount">10% OFF</span> on Admission — Enroll Before Monday!</span>
+            <span>Next Batch Starts This Monday • Limited Seats Available • Register Today!</span>
+            <span>Don't Wait! Join This Monday and Save <span class="discount">10% OFF</span> on Your Course Fee.</span>
+            <span>Learn • Automate • Grow • Succeed — Admission Open for Monday Batch!</span>
+            <span aria-hidden="true">Every Monday is a New Beginning! Get FLAT <span class="discount">10% OFF</span> on Admission — Enroll Before Monday!</span>
+            <span aria-hidden="true">Next Batch Starts This Monday • Limited Seats Available • Register Today!</span>
+            <span aria-hidden="true">Don't Wait! Join This Monday and Save <span class="discount">10% OFF</span> on Your Course Fee.</span>
+            <span aria-hidden="true">Learn • Automate • Grow • Succeed — Admission Open for Monday Batch!</span>
+        </div>
+        </div>   
+            <h2 class="section-title">Professional Courses & Skill Development</h2>
+            <p class="section-subtitle">Comprehensive training tracks across core literacy, custom scripting logic architectures, and advanced data science.</p>
+                       
+            <div class="segment-wrapper">
+                <div class="segment-heading">Advanced Data Analytics & Automation Engineering</div>
+                <div class="items-grid">
+
+
+
+                    <div class="card cat-data-auto" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Macro_VBA_Engineering_Excel_Add-ins_1 (1).jpeg|images/Macro_VBA_Engineering_Excel_Add-ins_1 (2).jpeg" data-full="A focused engineering-level course on building custom Excel add-ins and automation logic using VBA. It covers VBA programming fundamentals to advanced, custom Add-in (XLAM) creation, UserForm design, error handling &amp; debugging, and real business-case automation projects. Ideal for learners who already know Excel basics and want to build tools, not just use them.">
+                        <div class="card-image-carousel">
+                            <img src="images/Macro_VBA_Engineering_Excel_Add-ins_1 (1).jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Macro_VBA_Engineering_Excel_Add-ins_1 (2).jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="macro-vba">
+                            <span class="card-title">Macro & VBA Engineering</span>
+                            <span class="card-details">Custom Add-ins Creation & More</span>
+                        </div>
+                    </div>
+
+
+                    <div class="card cat-data-auto" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Advanced_Excel_Macro_VBA_AI_1.jpeg|images/Advanced_Excel_Macro_VBA_AI_2.jpeg" data-full="A focused engineering-level course on building custom Excel add-ins and automation logic using VBA. It covers VBA programming fundamentals to advanced, custom Add-in (XLAM) creation, UserForm design, error handling &amp; debugging, and real business-case automation projects. Ideal for learners who already know Excel basics and want to build tools, not just use them.">
+                        <div class="card-image-carousel">
+                            <img src="images/Advanced_Excel_Macro_VBA_AI_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Advanced_Excel_Macro_VBA_AI_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="advanced-excel-vba-ai">
+                            <span class="card-title">Advanced Excel + Macro/VBA with AI</span>
+                            <span class="card-details">Power Query,Power Pivot, Macro,VBA,DAX Logic Modules, 365 functions etc</span>
+                            <span class="card-details">Free Basic Google sheet course</span>                        </div>
+                    </div>
+                                        
+
+                    <div class="card cat-data-auto" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/AI_tools_for_business_workflows1.jpeg|images/AI_tools_for_business_workflows1.jpeg" data-full="Learn trending AI tools used in real business workflows — NotebookLM, Hugging Face, Gemini AI, Google Flow, Gamma AI, Google AI Studio, and machine learning fundamentals — taught in a business-class context. It covers AI-assisted research &amp; summarization, prompt-based content and presentation generation, AI image/video tools, intro to machine learning concepts, and applying AI to daily office/business tasks. Great for professionals and students who want practical AI skills, not just theory.">
+                        <div class="card-image-carousel">
+                            <img src="images/AI_tools_for_business_workflows1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/AI_tools_for_business_workflows1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="ai">
+                            <span class="card-title">AI</span>
+                            <span class="card-details">Learn trending AI NotebookLM,Hugging Face,Gemini AI,Google Flow,Gamma AI,Google AI studio,Machine Learning etc which is given in business class</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="card cat-data-auto" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Data_visualization_course_BI_tools_1.jpeg|images/Data_visualization_course_BI_tools_2.jpeg" data-full="A data-visualization course covering the three most in-demand BI tools used by businesses today. It covers dashboard design principles, Looker Studio report building, Power BI data modeling &amp; DAX basics, Tableau visual analytics, and connecting live data sources. Suitable for anyone who wants to turn raw business data into clear, decision-ready visual reports.">
+                        <div class="card-image-carousel">
+                            <img src="images/Data_visualization_course_BI_tools_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Data_visualization_course_BI_tools_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="bi-tools">
+                            <span class="card-title">Looker Studio / Power BI / Tableau</span>
+                            <span class="card-details">Advanced metrics visualization layout tooling</span>
+                        </div>
+                    </div>
+                    <div class="card cat-data-auto" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Data_Analytics_Data_Science_AI_1.jpeg|images/Data_Analytics_Data_Science_AI_2.jpeg" data-full="An advanced course in predictive modeling and statistical analytics enhanced with modern AI tools. It covers statistics fundamentals for analytics, predictive modeling techniques, Python/AI-assisted data analysis, data cleaning &amp; visualization, and real dataset case studies. Ideal for students and professionals aiming for data analyst or junior data scientist roles.">
+                        <div class="card-image-carousel">
+                            <img src="images/Data_Analytics_Data_Science_AI_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Data_Analytics_Data_Science_AI_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="data-analytics-ds-ai">
+                            <span class="card-title">Data Analytics and Data Science with AI</span>
+                            <span class="card-details">Advanced predictive modeling & statistical analytics pipelines</span>
+                        </div>
+                    </div>
+                    <div class="card cat-data-auto" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Google_Workspace_with_AI_2K_1.jpeg|images/Google_Workspace_with_AI_2K_1.jpeg" data-full="Master Docs, Sheets, Slides and more Google Workspace tools, boosted with built-in AI features for faster, smarter output. It covers advanced Docs/Sheets/Slides features, Google Workspace AI (Gemini) integration, collaborative workflow setup, template &amp; automation basics, and cloud file management. Great for anyone who wants to work faster inside Google&#x27;s ecosystem using AI shortcuts.">
+                        <div class="card-image-carousel">
+                            <img src="images/Google_Workspace_with_AI_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Google_Workspace_with_AI_2K_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="google-workspace-ai">
+                            <span class="card-title">Google Workspace with AI</span>
+                            <span class="card-details">Docs, Sheets, Slides & More</span>
+                        </div>
+                    </div>
+                    <div class="card cat-data-auto" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Google_Apps_Script_automation_2K_1.jpeg|images/Google_Apps_Script_automation_2K_2.jpeg" data-full="Learn to build custom scripting automation layers directly inside Google Sheets, Docs, and Forms. It covers Apps Script fundamentals (JavaScript-based), Sheet/Doc automation scripts, custom triggers &amp; scheduled functions, Gmail/Calendar API integration, and mini-project building. Ideal for learners who want to automate Google Workspace beyond what built-in features allow.">
+                        <div class="card-image-carousel">
+                            <img src="images/Google_Apps_Script_automation_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Google_Apps_Script_automation_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="google-apps-script">
+                            <span class="card-title">Google Apps Script</span>
+                            <span class="card-details">Custom scripting automation layers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper">
+                <div class="segment-heading">Software Engineering, Databases & Web Development</div>
+                <div class="items-grid">
+                    <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Python_Programming_Fundamentals_…_2K_1.jpeg|images/Python_Programming_Fundamentals_…_2K_2.jpeg" data-full="A structured Python course covering both fundamentals and practical, project-based application. It covers Python syntax &amp; core programming logic, data structures, file handling &amp; automation scripting, intro to libraries (Pandas/NumPy), and mini real-world projects. Suitable for beginners as well as professionals wanting to automate tasks or move into data/AI roles.">
+                        <div class="card-image-carousel">
+                            <img src="images/Python_Programming_Fundamentals_…_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Python_Programming_Fundamentals_…_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="python"><span class="card-title">Python Programming</span></div>
+                    </div>
+
+                    <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/PHP_language_for_dynamic_websites_1.jpeg|images/PHP_language_for_dynamic_websites_2.jpeg" data-full="A practical PHP course focused on building dynamic, database-driven websites and applications. It covers PHP syntax &amp; core concepts, MySQL database integration, form handling &amp; sessions, basic CRUD application building, and deployment fundamentals. Ideal for learners aiming to build or maintain dynamic websites and web applications.">
+                        <div class="card-image-carousel">
+                            <img src="images/PHP_language_for_dynamic_websites_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/PHP_language_for_dynamic_websites_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="php"><span class="card-title">PHP Language</span></div>
+                    </div>
+
+
+
+                <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/MERN_Full_Stack_Development_Course_1.jpeg|images/MERN_Full_Stack_Development_Course_2.jpeg" data-full="A complete full-stack web development course covering MongoDB, Express, React, and Node.js. It covers React front-end development, Node.js &amp; Express back-end APIs, MongoDB database design, full-stack project integration, and deployment basics. Best suited to learners aiming for a career as a full-stack web developer.">
+                        <div class="card-image-carousel">
+                            <img src="images/MERN_Full_Stack_Development_Course_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/MERN_Full_Stack_Development_Course_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="mern-fullstack"><span class="card-title">MERN Full Stack Development</span></div>
+                    </div>
+
+
+
+                    <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/C,_C+,_C++_Programming_Fundamentals_1.jpeg|images/C,_C+,_C++_Programming_Fundamentals_2.jpeg" data-full="A strong programming-fundamentals course built around C, C+, and C++ languages. It covers programming logic &amp; syntax basics, data structures fundamentals, object-oriented programming concepts (C++), problem-solving practice, and small project assignments. Ideal for students building a base for further computer science or software development studies.">
+                        <div class="card-image-carousel">
+                            <img src="images/C,_C+,_C++_Programming_Fundamentals_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/C,_C+,_C++_Programming_Fundamentals_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="c-cpp"><span class="card-title">C,C Plus,C++ Programming</span></div>
+                    </div>
+                    <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/SQL_Database_Management_Course_2K_1.jpeg|images/SQL_Database_Management_Course_2K_2.jpeg" data-full="A practical course on designing, querying, and managing relational databases using SQL. It covers database design &amp; normalization, SQL queries (joins, subqueries, aggregation), stored procedures &amp; triggers basics, database administration fundamentals, and real business data exercises. Suitable for anyone working with data who needs to query and manage databases confidently.">
+                        <div class="card-image-carousel">
+                            <img src="images/SQL_Database_Management_Course_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/SQL_Database_Management_Course_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="sql"><span class="card-title">SQL Database Management</span></div>
+                    </div>
+                    <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Web_development_course_JavaScrip…_2K_1.jpeg|images/Web_development_course_JavaScrip…_2K_2.jpeg" data-full="A foundational web-development course covering the three core building blocks of every website. It covers HTML5 structure &amp; semantic tags, CSS3 styling, layouts &amp; responsiveness, JavaScript programming fundamentals, DOM manipulation, and small interactive project building. Ideal for beginners starting a career in web development or design.">
+                        <div class="card-image-carousel">
+                            <img src="images/Web_development_course_JavaScrip…_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Web_development_course_JavaScrip…_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="js-html-css"><span class="card-title">JavaScript, HTML5, CSS3</span></div>
+                    </div>
+                    <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Web_development_course_JavaScrip…_2K_1.jpeg|images/Web_development_course_JavaScrip…_2K_2.jpeg" data-full="A complete course on planning, designing, and building functional websites from scratch. It covers front-end basics (HTML/CSS/JS), CMS platforms like WordPress, responsive design principles, basic hosting &amp; domain setup, and a capstone website project. Great for students and small business owners who want to build and manage their own website.">
+                        <div class="card-image-carousel">
+                            <img src="images/Web_development_course_JavaScrip…_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Web_development_course_JavaScrip…_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="website-development"><span class="card-title">Website Development</span></div>
+                    </div>
+                    <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ERP_Development_for_Business_Pro…_1.jpeg|images/ERP_Development_for_Business_Pro…_2.jpeg" data-full="Learn how ERP systems are designed and built for departmental or organisation-wide business processes. It covers ERP architecture fundamentals, module design (sales/inventory/HR/accounts), database structuring for ERP, workflow &amp; approval logic, and a guided ERP mini-project. Suitable for learners aiming to work in business-software development or process automation.">
+                        <div class="card-image-carousel">
+                            <img src="images/ERP_Development_for_Business_Pro…_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/ERP_Development_for_Business_Pro…_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="erp-development"><span class="card-title">ERP Development</span></div>
+                    </div>
+                    <div class="card cat-software" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Android_App_Development_2K_1.jpeg|images/Android_App_Development_2K_2.jpeg" data-full="A complete, project-based Android App Development course that takes you from Java fundamentals to publishing real apps on the Google Play Store. It covers Android Studio setup &amp; project structure, Java &amp; J2ME foundations, UI/UX with Material Design, Activity/Fragment lifecycle, GPS, sensors, media &amp; SMS, SQLite &amp; Firebase, and Play Store deployment. Ideal for IT/CSE students and anyone aiming for a career in mobile app development.">
+                        <div class="card-image-carousel">
+                            <img src="images/Android_App_Development_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Android_App_Development_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="android"><span class="card-title">Android App Development</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper">
+                <div class="segment-heading">Specialized Creative Design & Vocational Systems</div>
+                <div class="items-grid">
+                    <div class="card cat-academy-creative" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Rhino_Matrix_Jewellery_Designing_2K_1.jpeg|images/Rhino_Matrix_Jewellery_Designing_2K_2.jpeg" data-full="Advanced 3D design concepts for jewellery, apparel, and manufacturing-sector product design using Rhino and Matrix software. It covers Rhino 3D modeling fundamentals, Matrix jewellery-specific tools, rendering &amp; prototyping workflow, manufacturing-ready file preparation, and portfolio project building. Ideal for aspiring jewellery/CAD designers and manufacturing professionals.">
+                        <div class="card-image-carousel">
+                            <img src="images/Rhino_Matrix_Jewellery_Designing_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Rhino_Matrix_Jewellery_Designing_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="rhino-matrix-jewellery"><span class="card-title">Rhino & Matrix Jewellery Designing</span></div>
+                    </div>
+                    <div class="card cat-academy-creative" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/CAD_Designing_for_Manufacturing_2K_1.jpeg|images/CAD_Designing_for_Manufacturing_2K_2.jpeg" data-full="A practical CAD design course applicable across jewellery, apparel, and general manufacturing design work. It covers 2D/3D CAD fundamentals, precision drafting &amp; modeling, industry-specific design workflows, rendering basics, and manufacturing-ready output preparation. Suited to learners entering design or manufacturing-support careers.">
+                        <div class="card-image-carousel">
+                            <img src="images/CAD_Designing_for_Manufacturing_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/CAD_Designing_for_Manufacturing_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="cad-designing"><span class="card-title">CAD Designing</span></div>
+                    </div>
+                    <div class="card cat-academy-creative" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Designing_across_Photoshop,_Figm…_2K_1.jpeg|images/Designing_across_Photoshop,_Figm…_2K_2.jpeg" data-full="Advanced design concepts applicable across cloth, jewellery, and any manufacturing-sector visual design work, taught across four major design tools. It covers Photoshop photo editing &amp; compositing, Figma UI/UX design basics, Canva quick-design workflows, CorelDRAW vector design, and portfolio-building projects. Great for anyone wanting versatile, industry-ready design skills across multiple platforms.">
+                        <div class="card-image-carousel">
+                            <img src="images/Designing_across_Photoshop,_Figm…_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Designing_across_Photoshop,_Figm…_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="design-tools-suite">
+                            <span class="card-title">Adobe Photoshop,Figma, Canva & CorelDRAW Designing</span>
+                            <span class="card-details">Advance Concept for Cloth,Jewellery and any Manufacturing Sector</span>
+                        </div>
+                    </div>
+                    <div class="card cat-academy-creative" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Digital_Marketing_and_SEO_Strate…_1.jpeg|images/Digital_Marketing_and_SEO_Strate…_2.jpeg" data-full="A complete digital marketing course covering social media management and content creation alongside core SEO skills. It covers SEO fundamentals (on-page/off-page), social media strategy &amp; management, content creation &amp; scheduling, paid ad basics (Google/Meta), and analytics/reporting. Ideal for students and business owners wanting to grow a brand&#x27;s visibility online.">
+                        <div class="card-image-carousel">
+                            <img src="images/Digital_Marketing_and_SEO_Strate…_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Digital_Marketing_and_SEO_Strate…_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="digital-marketing-seo">
+                            <span class="card-title">Digital Marketing & SEO</span>
+                            <span class="card-details">Social Media Management & Content Creation</span>
+                        </div>
+                    </div>
+                    <div class="card cat-academy-creative" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Tally_Prime_with_GST_2K_1.jpeg|images/Tally_Prime_with_GST_2K_2.jpeg" data-full="Covers Tally ERP, Tally Prime, TDS, and GST — the core toolkit for any accounts department. It covers Tally Prime navigation &amp; entries, GST return filing concepts, TDS computation &amp; compliance, ledger &amp; inventory management, and financial report generation. Suited to commerce students and working professionals in accounts/finance roles.">
+                        <div class="card-image-carousel">
+                            <img src="images/Tally_Prime_with_GST_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Tally_Prime_with_GST_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="tally-gst">
+                            <span class="card-title">Tally Prime with GST</span>
+                        <span class="card-details">Tally ERP7,Tally Prime ,TDS, GST for account department</span></div>
+                    </div>
+
+                    <div class="card cat-academy-creative" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Advance_Diploma_Finance_Accounting_2K_1.jpeg|images/Advance_Diploma_Finance_Accounting_2K_1.jpeg" data-full="Covers Tally ERP, Tally Prime, TDS, and GST for the account department, combined with a strong Excel capsule for complete finance-role readiness. It covers Tally Prime &amp; GST/TDS compliance, advanced Excel for finance (formulas, reports, reconciliation), financial statement preparation, payroll &amp; accounting fundamentals, and practical accounting case studies. Ideal for those pursuing a career in accounting, finance, or auditing support roles.">
+                        <div class="card-image-carousel">
+                            <img src="images/Advance_Diploma_Finance_Accounting_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Advance_Diploma_Finance_Accounting_2K_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="adfa">
+                            <span class="card-title">Advance Diploma In Finance and Accounting(ADFA)</span>
+                        <span class="card-details">Tally ERP7,Tally Prime ,TDS, GST for account department with strong excel capsule</span></div>
+                    </div>
+
+
+                    <div class="card cat-academy-creative" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Typing_and_language_skills_courses_1.jpeg|images/Typing_and_language_skills_courses_1.jpeg" data-full="Mangal and Krutidev typing training designed specifically for government exam requirements. It covers Krutidev &amp; Mangal font typing practice, speed &amp; accuracy building drills, exam-format typing tests, keyboard shortcut mastery, and mock test practice. Ideal for candidates preparing for government job typing-speed requirements.">
+                        <div class="card-image-carousel">
+                            <img src="images/Typing_and_language_skills_courses_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Typing_and_language_skills_courses_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="typing">
+                            <span class="card-title">Hindi & English Typing</span>
+                            <span class="card-details">Mangal + Krutidev (For Government Exams)</span>
+                        </div>
+                    </div>
+                    <div class="card cat-academy-creative" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Creative_design_course_brand_ide…_1.jpeg|images/Creative_design_course_brand_ide…_2.jpeg" data-full="A creative design course focused on building brand identity through logos and everyday marketing posts. It covers logo design principles &amp; software, social media post design, brand colour/typography consistency, design software basics (Photoshop/Canva/CorelDRAW), and a personal design portfolio. Great for aspiring graphic designers and small business owners designing their own brand material.">
+                        <div class="card-image-carousel">
+                            <img src="images/Creative_design_course_brand_ide…_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Creative_design_course_brand_ide…_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="logo-creative-design"><span class="card-title">Logo / Post & Creative Designing</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper">
+                <div class="segment-heading">Computer COMBO & Communications</div>
+                <div class="items-grid">
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Basic_Computer_Logic_Building_Co…_1.jpeg|images/Basic_Computer_Logic_Building_Co…_1.jpeg" data-full="A beginner-friendly foundation course covering essential computer skills alongside communication and interview skills. It covers computer fundamentals &amp; OS basics, logical/problem-solving building blocks, typing &amp; basic software use, communication skills practice, and interview preparation. Ideal for absolute beginners and students preparing to enter the job market.">
+                        <div class="card-image-carousel">
+                            <img src="images/Basic_Computer_Logic_Building_Co…_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Basic_Computer_Logic_Building_Co…_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="basic-computer-logic"><span class="card-title">Basic Computer & Logic Building</span></div>
+                    </div>
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Internet_Surfing_course_basics_2K_1.jpeg|images/Internet_Surfing_course_basics_2K_2.jpeg" data-full="A practical course on using the internet safely, efficiently, and productively for study, work, and everyday tasks. It covers browser &amp; search fundamentals, email &amp; online form handling, online safety &amp; privacy basics, useful websites/tools for study or business, and basic troubleshooting. Suitable for beginners who want confidence using the internet for daily and professional needs.">
+                        <div class="card-image-carousel">
+                            <img src="images/Internet_Surfing_course_basics_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Internet_Surfing_course_basics_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="internet-surfing"><span class="card-title">Internet Surfing</span></div>
+                    </div>
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/MS-Office_course_covering_office…_2K_1.jpeg|images/MS-Office_course_covering_office…_2K_2.jpeg" data-full="A complete Microsoft Office course covering the tools most used in everyday office work. It covers Word document formatting &amp; templates, Excel formulas &amp; basic data handling, PowerPoint presentation design, Outlook email management basics, and practical office-task assignments. Ideal for anyone entering office/administrative roles.">
+                        <div class="card-image-carousel">
+                            <img src="images/MS-Office_course_covering_office…_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/MS-Office_course_covering_office…_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="ms-office"><span class="card-title">MS-Office</span></div>
+                    </div>
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Diploma_Computer_Applications_br…_2K_1.jpeg|images/Diploma_Computer_Applications_br…_2K_2.jpeg" data-full="Diploma in Computer Applications — a broad foundation course covering essential computer and office skills. It covers computer fundamentals, MS-Office (Word/Excel/PowerPoint), internet &amp; email basics, typing practice, and an introduction to computer accounting. Suited to students and job-seekers wanting a recognised, well-rounded computer diploma.">
+                        <div class="card-image-carousel">
+                            <img src="images/Diploma_Computer_Applications_br…_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Diploma_Computer_Applications_br…_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="dca"><span class="card-title">DCA</span></div>
+                    </div>
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Advanced_Diploma_Computer_Applic…_1.jpeg|images/Advanced_Diploma_Computer_Applic…_2.jpeg" data-full="Advanced Diploma in Computer Applications — a deeper computer course covering office tools, basic programming, and accounting software. It covers advanced MS-Office skills, Tally/basic accounting software, internet &amp; digital literacy, introductory programming concepts, and typing proficiency. Ideal for students wanting a stronger, more advanced computer diploma than DCA.">
+                        <div class="card-image-carousel">
+                            <img src="images/Advanced_Diploma_Computer_Applic…_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Advanced_Diploma_Computer_Applic…_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="adca"><span class="card-title">ADCA</span></div>
+                    </div>
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ADCA_PLUS_extended_diploma_2K_1.jpeg|images/ADCA_PLUS_extended_diploma_2K_1.jpeg" data-full="An extended version of the ADCA diploma with additional modules for more complete career readiness. It covers everything in ADCA (Office, Tally, internet, typing) plus added modules in digital marketing basics, design software introduction, and communication skills. Best suited to students wanting the most comprehensive diploma option in this category.">
+                        <div class="card-image-carousel">
+                            <img src="images/ADCA_PLUS_extended_diploma_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/ADCA_PLUS_extended_diploma_2K_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="adca-plus"><span class="card-title">ADCA PLUS</span></div>
+                    </div>
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/O-LEVEL_computer_course_certific…_2K_1.jpeg|images/O-LEVEL_computer_course_certific…_2K_1.jpeg" data-full="A government-recognised (DOEACC/NIELIT-pattern) computer course covering both theory and practical computer applications. It covers computer fundamentals &amp; IT tools, programming &amp; web technology basics, office application proficiency, and a practical project component. Ideal for students wanting a nationally recognised computer certification for government or private job eligibility.">
+                        <div class="card-image-carousel">
+                            <img src="images/O-LEVEL_computer_course_certific…_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/O-LEVEL_computer_course_certific…_2K_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="o-level"><span class="card-title">O-LEVEL</span></div>
+                    </div>
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/InDesign_page_layout_publication…_2K_1.jpeg|images/InDesign_page_layout_publication…_2K_2.jpeg" data-full="A dedicated Adobe InDesign course for professional page layout and publication design. It covers InDesign workspace &amp; tools, magazine/brochure/book layout design, typography &amp; grid systems, print-ready export settings, and portfolio project work. Great for aspiring publication designers, students, and print-media professionals.">
+                        <div class="card-image-carousel">
+                            <img src="images/InDesign_page_layout_publication…_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/InDesign_page_layout_publication…_2K_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="indesign"><span class="card-title">INDESIGN</span></div>
+                    </div>
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Graphic_design_course_covering_t…_1.jpeg|images/Graphic_design_course_covering_t…_2.jpeg" data-full="A complete graphic design course covering the core tools and principles used in the design industry. It covers design fundamentals (colour, layout, typography), Photoshop &amp; Illustrator/CorelDRAW basics, branding &amp; poster design projects, print vs digital design formats, and portfolio building. Suitable for beginners aiming for a career in graphic design.">
+                        <div class="card-image-carousel">
+                            <img src="images/Graphic_design_course_covering_t…_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Graphic_design_course_covering_t…_2.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="graphic-design"><span class="card-title">GRAPHIC DESIGN</span></div>
+                    </div>
+
+                    <div class="card cat-literacy" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/Spoken_English_course_2K_1.jpeg|images/Spoken_English_course_2K_1.jpeg" data-full="A communication-focused course to build confident spoken English along with interview skills. It covers grammar &amp; vocabulary building, everyday conversation practice, public speaking &amp; confidence building, group discussion practice, and mock interview sessions. Ideal for students and job-seekers wanting to communicate confidently in academic and professional settings.">
+                        <div class="card-image-carousel">
+                            <img src="images/Spoken_English_course_2K_1.jpeg" alt="" class="card-image ci-1">
+                            <img src="images/Spoken_English_course_2K_1.jpeg" alt="" class="card-image ci-2">
+                        </div>
+                        <div class="card-text" data-course="spoken-english">
+                            <span class="card-title">Spoken English</span>
+                            <span class="card-details">Communication & Interview Skills</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-panel timeline-panel">
+                <h3>100% Job Assistance & Career Support</h3>
+                <ul class="info-timeline">
+                    <li>100% Job Assistance & Career Guidance After Learning</li>
+                    <li>Interview Preparation Frameworks</li>
+                    <li>Resume & Job Profile Support</li>
+                    <li>Practical Office Project Experience</li>
+                    <li>Freelancing & Business Guidance</li>
+                    <li>Skill Based Career Development</li>
+                    <li>Internship & Project Support</li>
+                    <li>Reference Support After Learning</li>
+                    <li>Freelance & business guidance</li>
+                    <li>Industry-expert trainers</li>
+                    
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="synergy-banner synergy-banner-academic" style="background:#102a43; font-size:1rem; padding:25px 20px;">
+        Training Formats: Online & Offline Classes Available | Practical Training with Live Projects | Certification Available | Corporate Level Learning Environment | Student Friendly Guidance
+    </div>
+
+    <div class="synergy-banner synergy-banner-corporate" style="background:#102a43; font-size:1rem; padding:25px 20px;">
+        Support You Can Count On: Lifetime Free Service Updates | Dedicated Support Line | On-site & Remote Assistance | Priority Issue Resolution | Long-Term Maintenance Partner
+    </div>
+    </div><!-- /page-services -->
+
+    <!-- ================= WHY US PAGE ================= -->
+    <div class="page" id="page-whyus">
+
+        <section class="why-hero">
+            <span class="badge" style="background:#0073e6;">The UMA Difference</span>
+            <h2 class="section-title" style="font-size:2.4rem;">Real Experience.<br>Real Value. Real Results.</h2>
+            <p class="section-subtitle" style="max-width:720px; margin-left:auto; margin-right:auto; text-align:center;">Whether you're a business looking to automate and grow, or a learner looking to build a career — UMA Learning & Services is built around one promise: you should see real, measurable value from every rupee and every hour you invest with us.</p>
+        </section>
+
+<div class="whyus-trust-strip">
+
+    <div class="whyus-trust-item">
+        <span class="whyus-trust-icon">
+            <img src="images/target.png" alt="Outcome">
+        </span>
+        <div>
+            <strong>Outcome-first approach</strong>
+            <p>We measure success by the results you get — a working system, a job offer, a skill you can actually use — not just a completed handover.</p>
+        </div>
+    </div>
+
+        <div class="whyus-trust-item">
+            <span class="whyus-trust-icon">
+                <img src="images/support.png" alt="Support">
+            </span>
+            <div>
+                <strong>We stay with you</strong>
+                <p>Support doesn't end at delivery or graduation. From free lifetime service updates to career mentorship, our relationship continues long after.</p>
+            </div>
+        </div>
+
+        <div class="whyus-trust-item">
+            <span class="whyus-trust-icon">
+                <img src="images/team.png" alt="Team">
+            </span>
+            <div>
+                <strong>One team, two strengths</strong>
+                <p>Our Services Studio and Learning Campus work under one roof, so businesses get practically trained talent, and students get real, working projects to learn from.</p>
+            </div>
+        </div>
+
+    </div>
+
+<div class="whyus-grid">
+
+    <!-- SERVICES STUDIO -->
+    <div class="why-card services-card">
+
+        <div class="why-card-header">
+            
+            <div>
+                <h2>UMA Services Studio</h2>
+                <p>Business Automation & Creative Solutions</p>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/payment.png">
+            <div>
+                <strong>No Advance Payment</strong>
+                <span>Experience our service first, then pay.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/custom.png">
+            <div>
+                <strong>Custom-Built Solutions</strong>
+                <span>Designed specifically for your business workflow.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/support.png">
+            <div>
+                <strong>Lifetime Support</strong>
+                <span>Free updates and technical assistance after delivery.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/security.png">
+            <div>
+                <strong>Security First</strong>
+                <span>Enterprise-grade protection and access control.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/automation.png">
+            <div>
+                <strong>End-to-End Solutions</strong>
+                <span>Automation, ERP, CRM, websites and branding.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/fast.png">
+            <div>
+                <strong>Fast Delivery</strong>
+                <span>Quick development with regular project updates.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/Trust.png">
+            <div>
+                <strong>Trusted by Businesses</strong>
+                <span>Manufacturing, Jewellery, Retail & Corporate.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/meeting.png">
+            <div>
+                <strong>Online & Offline Meetings</strong>
+                <span>Flexible communication at your convenience.</span>
+            </div>
+        </div>
+
+        <a onclick="showPage('contact')" class="btn btn-agency">
+            Talk to Our Solutions Team
+        </a>
+
+    </div>
+
+    <!-- LEARNING CAMPUS -->
+    <div class="why-card academy-card">
+
+        <div class="why-card-header">
+            
+            <div>
+                <h2>UMA Learning Campus</h2>
+                <p>Learn • Practice • Get Hired</p>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/trainer.png">
+            <div>
+                <strong>Industry Expert Trainers</strong>
+                <span>Learn directly from experienced professionals.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/job.png">
+            <div>
+                <strong>100% Job Assistance</strong>
+                <span>Resume, interviews and placement guidance.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/project.png">
+            <div>
+                <strong>Live Project Training</strong>
+                <span>Work on real company projects.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/calendar.png">
+            <div>
+                <strong>Flexible Batches</strong>
+                <span>Online and offline learning options.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/certificate.png">
+            <div>
+                <strong>Certification</strong>
+                <span>Receive course completion certificates.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/freelance.png">
+            <div>
+                <strong>Career & Freelancing</strong>
+                <span>Start a job, freelance or your own business.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/class.png">
+            <div>
+                <strong>Extra Classes</strong>
+                <span>Sunday and additional sessions whenever required.</span>
+            </div>
+        </div>
+
+        <div class="why-feature">
+            <img src="images/community.png">
+            <div>
+                <strong>Lifetime Learning Support</strong>
+                <span>Guidance even after course completion.</span>
+            </div>
+        </div>
+
+        <a onclick="showPage('contact')" class="btn btn-academy">
+            Talk to Our Admissions Team
+        </a>
+
+    </div>
+
+</div>
+
+    </div>
+
+    <!-- ================= OUR TEAM PAGE ================= -->
+    <div class="page" id="page-team">
+
+        <section class="success-journey">
+            <div class="success-journey-header">
+                <span class="section-tag">YOUR SUCCESS JOURNEY</span>
+                <h2>From Your First Step<br>to Your Biggest Achievement</h2>
+                <p>Every successful student and business begins with a single conversation. We understand your vision, build the right solution, and stay with you throughout your journey.</p>
+                <a onclick="showPage('contact')" class="journey-btn">Start Your Journey →</a>
+            </div>
+
+<div class="success-steps">
+
+    <div class="success-step">
+        <span class="success-step-num">01</span>
+        <div class="success-step-icon">
+            <img src="images/connect.png" alt="Connect With Us">
+        </div>
+        <h3>Connect With Us</h3>
+        <p>Tell us about your goals, ideas, or business challenges.</p>
+    </div>
+
+
+    <div class="success-step">
+        <span class="success-step-num">02</span>
+        <div class="success-step-icon">
+            <img src="images/plan.png" alt="Plan Together">
+        </div>
+        <h3>Plan Together</h3>
+        <p>We prepare the best roadmap for your success.</p>
+    </div>
+
+
+    <div class="success-step">
+        <span class="success-step-num">03</span>
+        <div class="success-step-icon">
+            <img src="images/build.png" alt="Build & Learn">
+        </div>
+        <h3>Build & Learn</h3>
+        <p>Development, automation and practical training with industry standards.</p>
+    </div>
+
+
+    <div class="success-step">
+        <span class="success-step-num">04</span>
+        <div class="success-step-icon">
+            <img src="images/launch.png" alt="Launch & Grow">
+        </div>
+        <h3>Launch & Grow</h3>
+        <p>Continuous support, updates and long-term partnership.</p>
+    </div>
+
+</div>
+        </section>
+
+        <section class="team-section">
+            <span class="section-tag" style="display:block; text-align:center;">MEET THE EXPERTS</span>
+            <h2 class="section-title">Our Team</h2>
+            <p class="section-subtitle">The trainers and creators behind UMA Learning & Services.</p>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-photo"><img src="images/teacher1.jpg" alt="Suraj Kumar Kushwaha — Data Analyst Trainer at UMA Learning & Services"></div>
+                    <h3>Suraj Kumar Kushwaha</h3>
+                    <span class="team-role">Data Analyst </span>
+                    <ul class="team-tags">
+                        <li>5+ Work Experience,3+ Teaching Experience</li>
+                        <li>30+ Certifications</li>
+                    </ul>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-photo"><img src="images/teacher2.jpg" alt="Suraj Narayan Mahto — Visual & Graphic Design Trainer at UMA Learning & Services"></div>
+                    <h3>Suraj Narayan Mahto</h3>
+                    <span class="team-role">Visual & Graphic Design Trainer</span>
+                    <ul class="team-tags">
+                        <li>3+ Years Experience</li>
+                        <li>B.DES (Bachelor of Design)</li>
+                        <li>Visual & Graphic Designer</li>
+                    </ul>
+                </div>
+
+                <!-- Add more mentors as the team grows — just copy a .team-card block above -->
+            </div>
+        </section>
+
+        <section class="classes-gallery-section">
+            <h2 class="section-title">Classes in Action</h2>
+            <p class="section-subtitle">A glimpse of our classroom sessions, workshops & live-project training.</p>
+<div class="classes-gallery-grid">
+
+    <div class="gallery-slot">
+        <img src="images/class1 (1).jpeg" alt="">
+    </div>
+
+    <div class="gallery-slot">
+        <img src="images/class1 (2).jpeg" alt="">
+    </div>
+
+    <div class="gallery-slot">
+        <img src="images/class1 (3).jpeg" alt="">
+    </div>
+
+    <div class="gallery-slot">
+        <img src="images/class1 (4).jpeg" alt="">
+    </div>
+
+</div>
+</section>
+
+    </div>
+
+    <!-- ================= CONTACT US PAGE ================= -->
+    <div class="page" id="page-contact">
+        <section class="why-hero">
+            <span class="badge" style="background:#0073e6;">Get In Touch</span>
+            <h2 class="section-title" style="font-size:2.4rem;">Contact UMA Learning & Services</h2>
+            <p class="section-subtitle" style="max-width:700px; margin-left:auto; margin-right:auto; text-align:center;">Have a question about a service or a course? Reach out — we usually reply within a few hours.</p>
+        </section>
+
+        <div class="contact-grid">
+   <div class="contact-info-block">
+
+    <h3>Call or WhatsApp Us</h3>
+
+        <div class="contact-line">
+            <img src="images/call.png" alt="Call">
+            <a href="https://wa.me/918340434138" target="_blank">8340434138</a>
+            <span>|</span>
+            <a href="https://wa.me/918825362312" target="_blank">8825362312</a>
+            <span>|</span>
+            <a href="https://wa.me/917370020653" target="_blank">7370020653</a>
+            <span>|</span>
+            <a href="https://wa.me/917985255606" target="_blank">7985255606</a>
+        </div>
+
+
+        <div class="location-line">
+            <img src="images/map.png" alt="Location">
+            <div>
+                <strong>UMA LEARNING & SERVICES</strong><br>
+                Vatika Road, Jaipur, Rajasthan – 303905
+            </div>
+        </div>
+
+
+        <div class="map-container">
+            <iframe src="https://maps.google.com/maps?q=Vatika%20Road,%20Jaipur&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+        </div>
+
+    </div>
+
+            <div class="contact-form-block">
+                <h3>Send a Quick Enquiry <span class="hi-text">| त्वरित पूछताछ भेजें</span></h3>
+                <form id="enquiryForm" onsubmit="return submitEnquiry(event)" novalidate>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Full Name <span class="hi-text">| पूरा नाम</span></label>
+                            <input type="text" id="enqName" required placeholder="Your name / अपना नाम लिखें">
+                            <span class="field-error-msg" id="enqNameError">Please enter your name.</span>
+                        </div>
+                        <div class="form-field">
+                            <label>Phone Number <span class="hi-text">| फ़ोन नंबर</span></label>
+                            <input type="tel" id="enqPhone" required inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit mobile number / मोबाइल नंबर">
+                            <span class="field-error-msg" id="enqPhoneError">Enter a valid 10-digit mobile number.</span>
+                        </div>
+                    </div>
+
+                    <label>Email (optional) <span class="hi-text">| ईमेल (वैकल्पिक)</span></label>
+                    <input type="email" id="enqEmail" placeholder="you@example.com">
+
+                    <label>I'm Interested In <span class="hi-text">| मुझे रुचि है</span></label>
+                    <select id="enqType">
+                        <option value="Services Studio">Corporate Solutions / Services Studio — कॉर्पोरेट सेवाएं</option>
+                        <option value="Learning Campus">Professional Courses / Learning Campus — प्रोफेशनल कोर्स</option>
+                        <option value="Not Sure">Not Sure Yet — अभी तय नहीं</option>
+                    </select>
+
+                    <label>Specific Service / Course (optional) <span class="hi-text">| विशेष सेवा / कोर्स (वैकल्पिक)</span></label>
+                    <input type="text" id="enquiryService" placeholder="e.g. Custom FMS, Advanced Excel...">
+
+                    <label>Message <span class="hi-text">| संदेश</span></label>
+                    <textarea id="enqMessage" rows="4" placeholder="Tell us what you need... / अपनी आवश्यकता बताएं..."></textarea>
+
+                    <div class="enquiry-form-actions">
+                        <button type="submit" class="btn btn-agency">Send via WhatsApp <span class="hi-text">| व्हाट्सएप पर भेजें</span></button>
+                        <a href="https://forms.gle/QHnCYCDaoNZPu1cd9" target="_blank" rel="noopener" class="btn btn-form-alt">Fill Google Form Instead <span class="hi-text">| गूगल फॉर्म भरें</span></a>
+                    </div>
+
+                    <p class="enquiry-success-msg" id="enquirySuccessMsg">Thanks! WhatsApp is opening with your details filled in — just hit send there to reach our team.</p>
+                    <p class="enquiry-trust-note">Your details are used only to respond to your enquiry — never shared or sold.</p>
+                </form>
+            </div>
+        </div>
+
+            <h3 id="faqSection" style="text-align:center; color:#0c2340; margin:10px 0 15px 0; scroll-margin-top:110px;">Frequently Asked Questions</h3>
+
+            <div class="faq-tab-switch">
+                <button type="button" class="faq-tab-btn active" data-tab="education" onclick="switchFaqTab('education', this)">Learning Campus FAQs</button>
+                <button type="button" class="faq-tab-btn" data-tab="service" onclick="switchFaqTab('service', this)">Services Studio FAQs</button>
+                <button type="button" class="faq-tab-btn" data-tab="general" onclick="switchFaqTab('general', this)">General FAQs</button>
+            </div>
+
+    <div class="faq-group active" id="faq-education">
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you offer both online and offline classes? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We provide a complete hybrid learning system with both online and offline training options. Offline sessions are conducted in Jaipur with hands-on guidance, while online classes are structured with live interaction, recorded support, and doubt-solving sessions. Students can choose flexible batches based on their availability.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Is job assistance guaranteed after a course? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        We provide strong 100% job assistance support which includes professional resume building, interview preparation, mock interviews, and direct referral opportunities. However, final placement depends on the candidate’s performance, skill level, and market requirements. Our focus is to make every learner industry-ready.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">What programming languages and technologies do you teach? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        We offer industry-focused training in Python, JavaScript, PHP, HTML, CSS, SQL, and modern frameworks depending on the course path. Our curriculum is designed based on real project requirements, ensuring students learn practical skills used in companies and startups.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you provide live project training? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. Every student works on live industry-level projects such as ERP modules, CRM dashboards, automation tools, and business systems. This ensures practical exposure and helps build a strong portfolio for job placement or freelancing.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you provide certification after course completion? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. After successful completion of training and assessments, we provide industry-recognized completion certificates. These certificates validate your skills and help strengthen your profile for job applications and freelancing opportunities.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Can beginners join your courses? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Absolutely. Our courses are designed for beginners as well as advanced learners. We start from fundamentals and gradually move to real-world project development, ensuring every student can learn effectively regardless of prior experience.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you support freelancing and business setup guidance for students? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We guide students in freelancing, client acquisition, project handling, and even starting their own IT or automation-based business. Our mentorship helps learners become independent professionals.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you offer weekend or flexible batches? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We provide flexible batch timings including weekend, evening, and customized schedules to suit working professionals, students, and business owners.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you provide internship opportunities? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. Selected learners may get internship opportunities on live client projects, where they gain real industry exposure and hands-on experience.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">How do I enroll in a course? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        You can enroll easily through our website enquiry form, WhatsApp support, or a direct call. Our team will guide you through course selection, batch scheduling, and onboarding within a few hours.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">What is the typical duration of your courses? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Course duration varies by program — most professional courses run between 6 to 12 weeks, while advanced or multi-module tracks can extend up to a few months. Exact timelines are shared during your enquiry, based on the course and batch pace you choose.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you provide study material and practice resources? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. Every course includes structured notes, practice assignments, and access to real project files, so you can revise and practice even after class hours.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Is there an EMI or installment option for course fees? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We offer flexible installment options for most courses so fees aren't a barrier to learning. Reach out to our Student Desk to discuss a plan that fits your budget.
+    </div>
+    </div>
+
+    </div>
+
+    <div class="faq-group" id="faq-service">
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Can you build a fully custom automation or ERP system for our business? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We specialize in end-to-end custom software development including ERP, CRM, and business automation systems. Every solution is designed after analyzing your real workflow, operations, and business requirements. We build scalable systems for HR, inventory, sales, finance, and complete organizational management with long-term support.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">What is FMS (Facility Management System)? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        FMS is a digital system used to manage and optimize organizational facilities, assets, maintenance operations, and workflows. It helps businesses improve efficiency, reduce manual work, and maintain full operational control through automation and reporting tools.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you provide corporate training programs? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We provide customized corporate training programs tailored to company workflows and industry needs. These programs focus on productivity improvement, automation, digital transformation, and employee skill development.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you develop websites and mobile applications? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We develop responsive websites, business portals, dashboards, and Android/web applications tailored for business needs. Our focus is on performance, scalability, and automation integration.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you provide support after project delivery? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We offer continuous post-delivery support including maintenance, updates, bug fixes, and system improvements to ensure long-term stability and performance.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">What industries do you serve? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        We serve multiple industries including manufacturing, retail, jewellery, education, healthcare, and corporate enterprises. Our solutions are adaptable to any workflow-driven business.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">How fast do you deliver projects? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Delivery timelines depend on project complexity. We follow an agile development approach with regular updates, ensuring fast, transparent, and high-quality delivery.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you require any advance payment to start a project? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        No. We don't require advance payment to get started — you can take the service first and pay once you're satisfied with the delivery. Payment terms for larger, multi-phase projects are discussed and agreed upfront.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Can you integrate a new system with our existing software or tools? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We regularly integrate new automation, ERP, or CRM systems with your existing tools, databases, or third-party software, so your team doesn't have to change everything at once.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Do you offer AMC (Annual Maintenance Contracts)? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. We offer AMC plans that cover regular maintenance, updates, bug fixes, and priority support, so your systems keep running smoothly without you needing an in-house technical team.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">How do we get a quote for our project? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Share your requirement through our enquiry form, WhatsApp, or a direct call — our Solutions Team will understand your workflow and share a clear, no-obligation quote within a few hours.
+    </div>
+    </div>
+
+    </div>
+
+    <div class="faq-group" id="faq-general">
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Are you a training institute, a service provider, or both? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Both, under one roof. Our Learning Campus runs certified professional courses, while our Services Studio delivers automation, CRM, and web solutions for businesses — so learners train on the same kind of work our clients pay for.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Where are you located and do you work with clients outside Jaipur? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        We're based on Vatika Road, Jaipur, Rajasthan, but a large part of our course delivery and project work is fully remote-friendly, so students and businesses anywhere can work with us online.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">How quickly do you respond to an enquiry? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Most enquiries — whether about a course or a business solution — get a reply within a few hours during business hours (Mon–Sat, 9:00 AM–9:30 PM). WhatsApp is usually the fastest way to reach us.
+    </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-question">Can I read more detailed guides before reaching out? <span class="faq-arrow">▾</span></div>
+    <div class="faq-answer">
+        Yes. Our Blogs section has in-depth, professional write-ups on courses, career paths, and business automation topics that go deeper than these short FAQs.
+    </div>
+    </div>
+
+    </div>
+
+    <p class="faq-blog-cta">
+        Want more detail than a quick answer? <a onclick="showPage('blogs')">Read our in-depth blog guides →</a>
+    </p>
+        </div>
+        
+    <!-- ================= SERVICE / COURSE DETAIL PAGE ================= -->
+    <div class="page" id="page-detail">
+        <section class="detail-wrap">
+            <a onclick="goBackFromDetail()" class="detail-back">← Back</a>
+            <div class="detail-card">
+                <div class="detail-image-carousel" id="detailImageCarousel">
+                    <!-- images injected by JS -->
+                    <div class="gallery-dots" id="detailGalleryDots"></div>
+                </div>
+                <div class="detail-body">
+                    <span class="badge" id="detailBadge">UMA</span>
+                    <div class="detail-category" id="detailCategory"></div>
+                    <h2 class="detail-title" id="detailTitle"></h2>
+                    <div class="detail-rating" id="detailRating"></div>
+                    <div class="detail-desc" id="detailDesc"></div>
+                    <div class="detail-curriculum" id="detailCurriculum"></div>
+
+                    <div class="detail-meta-grid">
+                        <div class="detail-meta-item">
+                            <div class="dmi-label">Fee</div>
+                            <div class="dmi-value" id="detailFee">Contact for Fee</div>
+                        </div>
+                        <div class="detail-meta-item">
+                            <div class="dmi-label">Duration</div>
+                            <div class="dmi-value" id="detailDuration">Flexible</div>
+                        </div>
+                        <div class="detail-meta-item">
+                            <div class="dmi-label">Mode</div>
+                            <div class="detail-mode-tags" id="detailMode">
+                                <span class="mode-tag">Offline</span>
+                                <span class="mode-tag">Online</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-actions">
+                        <a id="detailWhatsapp" class="btn btn-agency" target="_blank" rel="noopener">Enquire on WhatsApp</a>
+                        <a onclick="showPage('contact')" class="btn btn-academy">Fill Enquiry Form</a>
+                        <a onclick="payNowClicked()" class="btn btn-paynow">Pay Now</a>
+                    </div>
+
+                    <div class="info-panel" style="margin-top:30px;">
+                        <h3>What Happens Next?</h3>
+                        <ul class="info-list" style="grid-template-columns:1fr;">
+                            <li>Our team reviews your requirement within 24 hours</li>
+                            <li>A specialist calls or WhatsApps you to understand scope/goals</li>
+                            <li>You get a clear proposal, timeline, or batch schedule</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-suggestions" id="detailSuggestions">
+                <h3 class="detail-suggestions-title" id="detailSuggestionsTitle">You Might Also Like</h3>
+                <div class="items-grid" id="detailSuggestionsGrid"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= REVIEWS PAGE ================= -->
+    <div class="page" id="page-reviews">
+        <section class="why-hero">
+            <span class="badge" style="background:#1565c0;">Reviews</span>
+            <h2 class="section-title" style="font-size:2.4rem;">What Our Students & Clients Say</h2>
+            <p class="section-subtitle" style="max-width:700px; margin-left:auto; margin-right:auto; text-align:center;">Real feedback from learners and businesses who've worked with UMA.</p>
+        </section>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="quote">"I taken online Advance Excel class from suraj sir ,oct 2024 now I am working as MIS in merchandiser in gulmohar lane,mahendra SEZ ,jaipur from last 1.5 years, super experience."</p>
+                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Merchandiser MIS </span></div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="quote">"The Advanced Excel + VBA course gave me real project experience, not just theory. Got placed within a month."</p>
+                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Course Graduate</span></div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★☆</div>
+                <p class="quote">"Our CRM and help desk system built by UMA cut our response time in half. Genuinely reliable support."</p>
+                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Business Owner</span></div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="quote">"Trainers were patient, practical, and always available. Highly recommend the ADCA Plus program."</p>
+                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Student</span></div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="quote">"Great blend of online flexibility and offline hands-on sessions. Made a real difference to my learning."</p>
+                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Student</span></div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★☆</div>
+                <p class="quote">"Professional team, clear communication, and they delivered our automation project ahead of schedule."</p>
+                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Client</span></div>
+            </div>
+
+        <div class="review-card review-card-image">
+
+            <div class="review-content">
+                <div class="review-stars">★★★★★</div>
+
+               <strng> <p class="quote">"NEXT YOU."</p></strng>
+
+                <div class="review-author">
+                    <span class="ra-name ra-no-verify"></span><br>
+                    <span class="ra-course"></span>
+                </div>
+            </div>
+
+            <div class="review-image-box">
+                <img src="images/next you.jpeg" alt="Student" class="review-image">
+            </div>
+
+        </div>
+
+        </div>
+        <p style="text-align:center; font-size:0.75rem; color:#9fb3c8; margin-top:-40px; padding-bottom:30px;">* Sample reviews — swap in real client/student feedback</p>
+
+        <div class="student-list-wrap">
+            <h3 style="text-align:center; color:#0c2340; margin-bottom:22px;">Recent Student Achievers</h3>
+            <div class="student-grid">
+                <div class="student-chip"><div class="sc-name">Placeholder Student</div><div class="sc-course">Advanced Excel + VBA · Batch 2026</div></div>
+                <div class="student-chip"><div class="sc-name">Placeholder Student</div><div class="sc-course">ADCA Plus · Batch 2026</div></div>
+                <div class="student-chip"><div class="sc-name">Placeholder Student</div><div class="sc-course">Digital Marketing · Batch 2026</div></div>
+                <div class="student-chip"><div class="sc-name">Placeholder Student</div><div class="sc-course">Web Development · Batch 2026</div></div>
+                <div class="student-chip"><div class="sc-name">Placeholder Student</div><div class="sc-course">Graphic Design · Batch 2026</div></div>
+                <div class="student-chip"><div class="sc-name">Placeholder Student</div><div class="sc-course">Data Analytics · Batch 2026</div></div>
+                <div class="student-chip"><div class="sc-name">Placeholder Student</div><div class="sc-course">Jewellery CAD · Batch 2026</div></div>
+                <div class="student-chip"><div class="sc-name">Placeholder Student</div><div class="sc-course">Tally + GST · Batch 2026</div></div>
+            </div>
+            <p style="text-align:center; font-size:0.75rem; color:#9fb3c8; margin-top:18px;">* Placeholder list — replace with your real student roster</p>
+        </div>
+    </div>
+
+    <!-- ================= OUR BRANCHES PAGE ================= -->
+    <div class="page" id="page-branches">
+        <section class="why-hero">
+            <span class="badge" style="background:#0073e6;">Our Branches</span>
+            <h2 class="section-title" style="font-size:2.4rem;">Visit Us at a Branch Near You</h2>
+            <p class="section-subtitle" style="max-width:700px; margin-left:auto; margin-right:auto; text-align:center;">Walk in for a free counselling session or a discussion about your business automation needs.</p>
+        </section>
+
+        <div class="branches-grid branches-grid-primary">
+            <div class="branch-card branch-card-primary">
+                <span class="branch-tag">Head Office</span>
+                <h4>UMA Learning & Services — Jaipur (Main)</h4>
+                <p>Vatika Road, Jaipur, Rajasthan – 303905</p>
+                <p>8340434138</p>
+                <p>Mon – Sat: 9:30 AM – 7:30 PM</p>
+                <a onclick="showPage('contact')" style="color:#0073e6; font-weight:700; font-size:0.85rem; cursor:pointer;">Get Directions / Contact →</a>
+            </div>
+            <div class="branch-card branch-card-soon">
+                <span class="branch-tag branch-tag-soon">Coming Soon</span>
+                <h4>New UMA Branch — Opening Soon</h4>
+                <p class="branch-soon-copy">We're expanding! A new location is on the way to serve you even better.</p>
+                <a onclick="showPage('contact')" style="color:#0073e6; font-weight:700; font-size:0.85rem; cursor:pointer;">Get Notified →</a>
+            </div>
+        </div>
+        <p style="text-align:center; font-size:0.75rem; color:#9fb3c8; margin-top:-40px; padding-bottom:40px;">* Second location coming soon — check back for updates</p>
+    </div>
+
+    <!-- ================= OUR BLOGS PAGE ================= -->
+    <div class="page" id="page-blogs">
+        <section class="why-hero">
+            <span class="badge" style="background:#1565c0;">Our Blogs</span>
+            <h2 class="section-title" style="font-size:2.4rem;">Insights on Skills, Automation & Career Growth</h2>
+            <p class="section-subtitle" style="max-width:700px; margin-left:auto; margin-right:auto; text-align:center;">Tips, guides, and updates from the UMA team.</p>
+        </section>
+
+        <div class="blogs-grid">
+            <article class="blog-card" onclick="openBlogDetail(this)" role="button" tabindex="0" data-date="2026-01-10" data-author="UMA Team">
+                <img class="blog-card-cover" src="images/blog/in-demand-skills-2026.jpg" alt="Students learning in-demand career skills">
+                <span class="blog-cat">Career</span>
+                <h4>5 In-Demand Skills That Get You Hired Faster in 2026</h4>
+                <p>A look at the practical, employer-valued skills worth learning this year — from data analytics to automation basics.</p>
+                <div class="blog-card-meta">
+                    <span class="bcm-date">10 Jan 2026</span>
+                    <span class="bcm-dot">•</span>
+                    <span class="bcm-read"></span>
+                </div>
+                <span class="blog-read-more">Read More →</span>
+                <div class="blog-full-content" hidden>
+                    <p>Employers today are hiring less for degrees and more for what you can actually do on day one. Across the businesses we work with in Jaipur and beyond, the same handful of practical skills keep coming up in job descriptions — and they're skills that can realistically be learned in a matter of months, not years.</p>
+                    <p><strong>Data analytics and reporting</strong> tops the list. Being able to pull numbers out of a spreadsheet and turn them into a decision — not just a chart — is what separates a candidate who gets shortlisted from one who doesn't.</p>
+                    <p><strong>Workflow automation</strong> is close behind. Tools that connect apps together, trigger reminders, and remove repetitive manual work are now expected knowledge in operations, HR, and admin roles alike.</p>
+                    <p>Rounding out the list: basic web/CRM literacy, spoken English and interview confidence, and simple graphic design for day-to-day marketing needs. None of these require a computer science background — they require structured, hands-on practice, which is exactly how we run our own training tracks.</p>
+                    <p>If you'd like a personalised view of which of these skills would move the needle most for your goals, our admissions team is happy to walk through it with you.</p>
+                </div>
+            </article>
+            <article class="blog-card" onclick="openBlogDetail(this)" role="button" tabindex="0" data-date="2026-01-22" data-author="UMA Team">
+                <img class="blog-card-cover" src="images/blog/small-business-automation.jpg" alt="Small business workflow automation">
+                <span class="blog-cat">Automation</span>
+                <h4>Why Small Businesses Should Automate Their Workflows Early</h4>
+                <p>How custom automation — from attendance to CRM — saves hours every week and reduces costly manual errors.</p>
+                <div class="blog-card-meta">
+                    <span class="bcm-date">22 Jan 2026</span>
+                    <span class="bcm-dot">•</span>
+                    <span class="bcm-read"></span>
+                </div>
+                <span class="blog-read-more">Read More →</span>
+                <div class="blog-full-content" hidden>
+                    <p>Most small businesses put off automation until they feel "big enough" to need it. In practice, the earlier you automate the repetitive parts of your operations, the more time and money you save while the business is still small enough for those savings to matter most.</p>
+                    <p>The usual starting points are the tasks nobody enjoys anyway: attendance and leave tracking, reminder systems for renewals and compliance dates, basic CRM follow-ups, and internal help-desk style ticketing so requests don't get lost in someone's inbox.</p>
+                    <p>None of this requires an expensive enterprise system. A well-built, custom-fit automation layer — connected to WhatsApp, email, or your existing tools — usually pays for itself within the first few months through hours saved and errors avoided.</p>
+                    <p>We build these systems end-to-end, with no advance payment and lifetime support, so you can see the impact before committing further. Reach out and we'll map out where automation would help your business first.</p>
+                </div>
+            </article>
+            <article class="blog-card" onclick="openBlogDetail(this)" role="button" tabindex="0" data-date="2026-02-04" data-author="UMA Team">
+                <img class="blog-card-cover" src="images/blog/online-vs-offline-classes.jpg" alt="Online vs offline classes comparison">
+                <span class="blog-cat">Learning Tips</span>
+                <h4>Online vs Offline Classes: Which Should You Choose?</h4>
+                <p>Both formats work — here's how to decide based on your schedule, learning style, and career goals.</p>
+                <div class="blog-card-meta">
+                    <span class="bcm-date">4 Feb 2026</span>
+                    <span class="bcm-dot">•</span>
+                    <span class="bcm-read"></span>
+                </div>
+                <span class="blog-read-more">Read More →</span>
+                <div class="blog-full-content" hidden>
+                    <p>There isn't a universally "better" option between online and offline classes — the right choice depends on how you learn best and what your week actually looks like.</p>
+                    <p><strong>Offline classes</strong> suit people who want hands-on guidance in the room, immediate doubt-solving, and the structure of a fixed schedule. It's often the better fit for hardware-heavy or highly practical tracks, and for learners who focus better away from home.</p>
+                    <p><strong>Online classes</strong> suit people juggling a job, college, or family responsibilities, since you can attend live sessions and fall back on recordings if you miss one. It also works well if you're comfortable being self-directed between sessions.</p>
+                    <p>Many of our students actually mix both — offline for the sessions that benefit from in-person practice, online for everything else. Our team can recommend a format once we understand your schedule and the course you're aiming for.</p>
+                </div>
+            </article>
+            <article class="blog-card" onclick="openBlogDetail(this)" role="button" tabindex="0" data-date="2026-02-18" data-author="UMA Team">
+                <img class="blog-card-cover" src="images/blog/interview-preparation.jpg" alt="Preparing for interviews after certification">
+                <span class="blog-cat">Placement</span>
+                <h4>How to Prepare for Interviews After a Certification Course</h4>
+                <p>Practical tips on building your portfolio, resume, and interview confidence after finishing your training.</p>
+                <div class="blog-card-meta">
+                    <span class="bcm-date">18 Feb 2026</span>
+                    <span class="bcm-dot">•</span>
+                    <span class="bcm-read"></span>
+                </div>
+                <span class="blog-read-more">Read More →</span>
+                <div class="blog-full-content" hidden>
+                    <p>Finishing a certification course is only half the job-search equation — how you present what you've learned is what actually gets you shortlisted and hired.</p>
+                    <p>Start with a small portfolio: even two or three real project examples (a spreadsheet automation, a sample website, a design mock-up) demonstrate your skills far better than the certificate alone.</p>
+                    <p>Keep your resume specific — list the tools and tasks you can actually do, not just the course title. Interviewers respond much better to "built an automated attendance tracker using Google Sheets and Apps Script" than to "completed automation course."</p>
+                    <p>Finally, practice explaining your projects out loud before the interview — confidence in describing your own work matters as much as the work itself. Our placement support includes resume review, mock interviews, and referrals, so you're not doing this alone.</p>
+                </div>
+            </article>
+        </div>
+        <p style="text-align:center; font-size:0.75rem; color:#9fb3c8; margin-top:-40px; padding-bottom:40px;">* Placeholder posts — connect a CMS or publish real articles here</p>
+    </div>
+
+    <!-- ================= BLOG DETAIL PAGE ================= -->
+    <div class="page" id="page-blogdetail">
+        <section class="detail-wrap blog-detail-wrap">
+            <a onclick="goBackFromBlogDetail()" class="detail-back">← Back to Blogs</a>
+            <div class="detail-card blog-detail-card">
+                <div class="detail-body">
+                    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+                        <a onclick="showAllViews()">Home</a> <span>/</span>
+                        <a onclick="showPage('blogs')">Our Blogs</a> <span>/</span>
+                        <span id="blogDetailCrumb">Article</span>
+                    </nav>
+                    <span class="badge" id="blogDetailCat" style="background:#32a852;">Category</span>
+                    <h2 class="detail-title" id="blogDetailTitle"></h2>
+                    <div class="blog-detail-meta">
+                        <span id="blogDetailAuthor">By UMA Team</span>
+                        <span class="bcm-dot">•</span>
+                        <time id="blogDetailDate"></time>
+                        <span class="bcm-dot">•</span>
+                        <span id="blogDetailRead"></span>
+                    </div>
+                    <img id="blogDetailCover" class="blog-detail-cover" src="" alt="">
+                    <div class="blog-detail-content" id="blogDetailContent"></div>
+
+                    <div class="detail-actions">
+                        <a onclick="showPage('contact')" class="btn btn-academy">Talk to Our Team About This</a>
+                        <a onclick="goBackFromBlogDetail()" class="btn btn-agency">Back to All Blogs</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= GALLERY PAGE (celebrations, birthdays, festivals, classroom) ================= -->
+    <div class="page" id="page-gallery">
+        <section class="why-hero">
+            <span class="badge" style="background:#1565c0;">Gallery</span>
+            <h2 class="section-title" style="font-size:2.4rem;">Moments From UMA</h2>
+            <p class="section-subtitle" style="max-width:700px; margin-left:auto; margin-right:auto; text-align:center;">Classroom sessions, birthdays, festivals, and every celebration in between — a peek into life at UMA Learning & Services.</p>
+        </section>
+
+        <div class="gallery-filter-bar" role="tablist" aria-label="Filter gallery">
+            <button type="button" class="gallery-filter-btn active" data-filter="all" onclick="filterGallery('all', this)">All</button>
+            <button type="button" class="gallery-filter-btn" data-filter="classroom" onclick="filterGallery('classroom', this)">Classroom</button>
+            <button type="button" class="gallery-filter-btn" data-filter="birthday" onclick="filterGallery('birthday', this)">Birthday</button>
+            <button type="button" class="gallery-filter-btn" data-filter="festival" onclick="filterGallery('festival', this)">Festival</button>
+            <button type="button" class="gallery-filter-btn" data-filter="celebration" onclick="filterGallery('celebration', this)">Celebration</button>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid">
+
+            <figure class="gallery-item" data-category="classroom" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/class1 (1).jpeg" alt="Students in a live classroom session">
+                <figcaption>Live Classroom Session</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-category="birthday" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/birthday1.png" alt="Birthday celebration at UMA">
+                <figcaption>Birthday Celebration</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-category="festival" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/festival1.png" alt="Diwali festival celebration at UMA">
+                <figcaption>Diwali Celebration</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-category="classroom" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/class1 (2).jpeg" alt="Practical lab session in progress">
+                <figcaption>Practical Lab Session</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-category="celebration" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/certificate_dist1.png" alt="Certificate distribution celebration">
+                <figcaption>Certificate Distribution Day</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-category="festival" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/festival1.png" alt="Independence Day celebration at UMA">
+                <figcaption>Independence Day</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-category="birthday" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/birthday1.png" alt="Student birthday surprise with cake">
+                <figcaption>Student Birthday Surprise</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-category="classroom" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/class1 (3).jpeg" alt="Group discussion in classroom">
+                <figcaption>Group Discussion</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-category="celebration" onclick="openGalleryLightbox(this)">
+                <img class="gallery-photo" src="images/anniversary celebration1.png" alt="UMA anniversary celebration">
+                <figcaption>UMA Anniversary</figcaption>
+            </figure>
+
+        </div>
+
+        <p class="gallery-empty-msg" id="galleryEmptyMsg" style="display:none;">No photos in this category yet.</p>
+    </div>
+
+    <!-- Gallery lightbox: click any photo above to view it larger -->
+    <div class="gallery-lightbox" id="galleryLightbox" onclick="closeGalleryLightbox(event)">
+        <button type="button" class="gallery-lightbox-close" onclick="closeGalleryLightbox(event)" aria-label="Close">✕</button>
+        <img id="galleryLightboxImg" src="" alt="">
+        <div class="gallery-lightbox-caption" id="galleryLightboxCaption"></div>
+    </div>
+
+    <footer class="footer-cta-wrap">
+        <div class="footer-grid">
+            <div class="footer-map-col">
+                <a class="map-container map-link-clickable" href="https://www.google.com/maps/search/?api=1&query=Vatika+Road,+Jaipur,+Rajasthan" target="_blank" rel="noopener" aria-label="Open UMA Learning & Services location in Google Maps">
+                    <div class="map-cursor-overlay"></div>
+                    <iframe src="https://maps.google.com/maps?q=Vatika%20Road,%20Jaipur&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+                    <span class="map-click-hint">Click to open in Google Maps</span>
+                </a>
+            </div>
+
+            <div class="footer-info-col">
+                <div class="footer-brand">
+                    <div class="social-row">
+                        <a href="https://wa.me/918340434138" target="_blank" rel="noopener" class="social-icon si-whatsapp" title="WhatsApp">
+                            <img src="images/whatsapp.png" alt="WhatsApp" class="social-icon-img">
+                        </a>
+
+                        <a href="https://t.me/umalearningservices" target="_blank" rel="noopener" class="social-icon si-telegram" title="Telegram">
+                            <img src="images/telegram.png" alt="Telegram" class="social-icon-img">
+                        </a>
+
+                        <!-- <a href="https://twitter.com/umalearning" target="_blank" rel="noopener" class="social-icon si-twitter" title="Twitter / X">
+                            <img src="images/twitter.png" alt="Twitter" class="social-icon-img">
+                        </a> -->
+
+                        <a href="https://linkedin.com/company/uma-learning-services" target="_blank" rel="noopener" class="social-icon si-linkedin" title="LinkedIn">
+                            <img src="images/linkedin.png" alt="LinkedIn" class="social-icon-img">
+                        </a>
+
+                        <a href="https://instagram.com/umalearningservices" target="_blank" rel="noopener" class="social-icon si-instagram" title="Instagram">
+                            <img src="images/instagram.png" alt="Instagram" class="social-icon-img">
+                        </a>
+
+                        <a href="https://facebook.com/umalearningservices" target="_blank" rel="noopener" class="social-icon si-facebook" title="Facebook">
+                            <img src="images/facebook.png" alt="Facebook" class="social-icon-img">
+                        </a>
+
+                        <a href="https://youtube.com/@umalearningservices" target="_blank" rel="noopener" class="social-icon si-youtube" title="YouTube">
+                            <img src="images/youtube.png" alt="YouTube" class="social-icon-img">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+
+                    <p>
+                        <strong>WhatsApp:</strong>
+                        <a class="phone-interactive-item" href="https://wa.me/918340434138" target="_blank">8340434138</a> |
+                        <a class="phone-interactive-item" href="https://wa.me/918825362312" target="_blank">8825362312</a> |
+                        <a class="phone-interactive-item" href="https://wa.me/917370020653" target="_blank">7370020653</a> |
+                        <a class="phone-interactive-item" href="https://wa.me/917985255606" target="_blank">7985255606</a>
+                    </p>
+                    <p><strong>Mail:</strong>
+                       <a href="mailto:umalearingandservices@gmail.com" class="phone-interactive-item mail-hover-link">
+                          <span>umalearingandservices@gmail.com</span>
+                          <span class="mail-hover-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg></span>
+                       </a>
+                    </p>
+
+                    <div class="hours-box">
+                        <div class="hours-title">Business + Learning Hours :</div>
+
+                        <div class="hours-item">
+                            <span class="label">Mon – Sat:</span>
+                            <span class="value">9:00 AM – 9:30 PM</span>
+                        </div>
+
+                        <div class="hours-item">
+                            <span class="label">Sunday:</span>
+                            <span class="value">By Appointment Only</span>
+                        </div>
+                    </div>
+                    <div class="footer-subscribe">
+                        <h5>Subscribe for Updates</h5>
+                        <form class="footer-subscribe-form" onsubmit="return subscribeNewsletter(event)">
+                            <input type="email" id="subscribeEmail" placeholder="Enter your email">
+                            <input type="tel" id="subscribePhone" placeholder="Enter your mobile number" pattern="[0-9+ ]{7,15}">
+                            <button type="submit">Subscribe</button>
+                        </form>
+                        <p class="footer-subscribe-msg" id="subscribeMsg"></p>
+                    <p class="footer-address">
+                        <strong>Location:</strong>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Vatika+Road,+Jaipur,+Rajasthan" target="_blank" rel="noopener" class="phone-interactive-item">Vatika Road, Jaipur, Rajasthan</a>
+                    </p>
+                    </div>
+                    
+
+
+                </div>
+            </div>
+            
+
+
+
+        </div>
+        
+        <div class="footer-bottom-row">
+            <div class="bottom-copyright" style="padding-top:0;">
+                <p>© 2026 UMA Learning & Services. All Corporate Solutions and Educational Curriculum Programs are built and delivered in-house under strict quality controls program updates.</p>
+                <p style="margin-top:10px;">
+                    <a onclick="openLegal('privacy')" class="legal-link">Privacy Policy</a> ·
+                    <a onclick="openLegal('terms')" class="legal-link">Terms & Conditions</a> ·
+                    <a onclick="showPage('contact')" class="legal-link">Contact Us</a> ·
+                    <a onclick="showPage('whyus')" class="legal-link">Why Us?</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= WHATSAPP LIVE CHAT WIDGET (all pages / all screens) =================
+         A dedicated, always-visible WhatsApp bubble — separate from the multi-option
+         "Contact Us" FAB below — so visitors can start a chat in a single tap. -->
+
+
+    <!-- ================= FLOATING QUICK ENROLL CTA (all pages / all screens) ================= -->
+    <a href="https://wa.me/918340434138?text=Hi%2C%20I%27d%20like%20to%20quickly%20enroll%20/%20get%20a%20quote%20from%20UMA%20Learning%20%26%20Services." target="_blank" rel="noopener" class="quick-enroll-fab" id="quickEnrollFab">
+        <span class="quick-enroll-pulse"></span>
+        <span class="quick-enroll-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></span>
+        <span class="quick-enroll-text">Enroll Now →</span>
+    </a>
+
+    <!-- ================= FLOATING CONTACT BUTTON (all pages / all screens) ================= -->
+    <div class="contact-fab-wrap" id="contactFabWrap">
+        <div class="contact-fab-panel">
+            <a href="https://wa.me/918340434138" target="_blank" rel="noopener" class="contact-fab-item">
+                <img src="images/whatsap.png" alt="UMA Services Studio" class="contact-fab-item-icon">
+                <span>WhatsApp Us</span>
+            </a>
+            <a href="tel:+918340434138" class="contact-fab-item">
+            <img src="images/phone.png" alt="Phone" class="contact-fab-item-icon">
+            <span>Call Us</span>
+           </a>
+                    
+            
+            <a href="mailto:umalearingandservices@gmail.com" class="contact-fab-item">
+            <img src="images/mail.png" alt="Email" class="contact-fab-item-icon">
+            <span>Email Us</span>
+           </a>
+            <a onclick="showPage('contact')" class="contact-fab-item">
+                <img src="images/form.png" alt="Contact Form" class="contact-fab-item-icon">
+                <span>Contact Form</span>
+            </a>
+        </div>
+<button class="contact-fab-toggle" onclick="toggleContactFab()" title="Contact Us">
+    <img src="images/comment.png" alt="Logo" class="contact-fab-icon round">
+    <span class="contact-fab-badge">1</span>
+</button>
+    </div>
+
+    <!-- ================= BACK TO TOP BUTTON ================= -->
+    <button id="myBtn" title="Back to top" aria-label="Back to top">
+        <span class="myBtn-inner">↑</span>
+    </button>
+
+    <!-- Lightweight legal modal -->
+    <div class="legal-modal-overlay" id="legalModal" onclick="closeLegal(event)">
+        <div class="legal-modal-box">
+            <a class="legal-close" onclick="closeLegal(event)">✕</a>
+            <h3 id="legalModalTitle">Privacy Policy</h3>
+            <div id="legalModalBody">Placeholder content — replace this with your actual policy text.</div>
+        </div>
+    </div>
+
+    <!-- Student Login overlay — only reachable via the Student Login nav button.
+         Full demo flow: Login -> Student Dashboard -> Certificate preview.
+         See DEMO_STUDENTS in script.js for the sample login (ID: 9999999999 / Password: demo123). -->
+    <div class="legal-modal-overlay" id="studentLoginOverlay" onclick="closeStudentLoginOnOverlay(event)">
+        <div class="legal-modal-box student-login-box">
+            <a class="legal-close" onclick="closeStudentLogin()">✕</a>
+            <span class="badge" style="background:#1565c0;">Learning Campus</span>
+
+            <div class="student-login-form" id="slLoginForm">
+                <h3>Student Login</h3>
+                <label for="slIdentifier">Student ID / Mobile Number</label>
+                <input type="text" id="slIdentifier" placeholder="Enter your Student ID or mobile number">
+                <label for="slPassword">Password</label>
+                <input type="password" id="slPassword" placeholder="Enter your password">
+                <button type="button" onclick="studentLoginSubmit()">Login</button>
+                <p class="sl-error" id="slError">Incorrect Student ID/Mobile or Password. Please try again.</p>
+                <p class="sl-hint">Demo login — ID: <strong>9999999999</strong> &nbsp;|&nbsp; Password: <strong>demo123</strong></p>
+            </div>
+
+            <div class="sl-dashboard" id="slDashboard">
+                <h3>Welcome back, <span id="slStudentName"></span> </h3>
+                <div class="sl-courses-list" id="slCoursesList"></div>
+                <button type="button" class="sl-logout-btn" onclick="studentLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+
+<div id="scroll-progress-container">
+    <div id="scroll-progress"></div>
+</div>
+
+
+</body>
+</html>
+
+
+
