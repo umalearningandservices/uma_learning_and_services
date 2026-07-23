@@ -903,9 +903,9 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             border: 2px solid #d9e2ec;
             background: #ffffff;
             color: #486581;
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 10px 22px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 13px 28px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -3399,6 +3399,11 @@ transition:.3s;
 .faq-group.active .faq-item:nth-child(8) { animation-delay: 0.30s; }
 .faq-group.active .faq-item:nth-child(9) { animation-delay: 0.34s; }
 .faq-group.active .faq-item:nth-child(10) { animation-delay: 0.38s; }
+.faq-group.active .faq-item:nth-child(11) { animation-delay: 0.42s; }
+.faq-group.active .faq-item:nth-child(12) { animation-delay: 0.46s; }
+.faq-group.active .faq-item:nth-child(13) { animation-delay: 0.50s; }
+.faq-group.active .faq-item:nth-child(14) { animation-delay: 0.54s; }
+.faq-group.active .faq-item:nth-child(15) { animation-delay: 0.58s; }
 
 @keyframes faqCardIn {
     from { opacity: 0; transform: translateY(14px); }
@@ -3414,12 +3419,12 @@ transition:.3s;
 
 /* question */
 .faq-question{
-    padding: 16px 60px 16px 18px;
-    font-weight: 600;
+    padding: 20px 64px 20px 22px;
+    font-weight: 700;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 15px;
+    font-size: 18px;
     position: relative;
     color: #0c2340;
     transition: color 0.3s ease;
@@ -3450,10 +3455,10 @@ transition:.3s;
 .faq-answer{
     max-height: 0;
     overflow: hidden;
-    padding: 0 18px;
+    padding: 0 22px;
     color: #555;
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 16px;
+    line-height: 1.7;
     opacity: 0;
     transform: translateY(-4px);
     transition: max-height 0.45s cubic-bezier(.22,1,.36,1),
@@ -3471,7 +3476,7 @@ transition:.3s;
 .faq-item.active .faq-question{ color: #0073e6; }
 
 .faq-item.active .faq-answer{
-    padding: 0 18px 18px 18px;
+    padding: 0 22px 22px 22px;
     opacity: 1;
     transform: translateY(0);
 }
@@ -3486,6 +3491,14 @@ transition:.3s;
 #faq-education .faq-item.active{ border-left-color: #0c2340; box-shadow: 0 12px 30px rgba(12,35,64,0.18); }
 #faq-education .faq-item.active .faq-question{ color: #0c2340; }
 #faq-education .faq-item.active .faq-arrow{ background: #0c2340; }
+
+@media (max-width: 600px){
+    #faqSection{ font-size: 1.5rem !important; }
+    .faq-tab-btn{ font-size: 0.9rem; padding: 10px 18px; }
+    .faq-question{ font-size: 15px; padding: 16px 52px 16px 16px; }
+    .faq-answer{ font-size: 14px; padding-left: 16px; padding-right: 16px; }
+    .faq-item.active .faq-answer{ padding: 0 16px 16px 16px; }
+}
 
 
 .phone-interactive-item{
@@ -3640,6 +3653,23 @@ background:#2563eb;
 
 transform:translateY(-8px);
 
+}
+
+/* Shrink marquee tech cards on phones so 2-3 are visible at once */
+@media (max-width: 600px){
+    .marquee-track{ gap:12px; }
+    .tech-card{
+        padding:9px 16px;
+        font-size:12px;
+        border-radius:30px;
+    }
+}
+@media (max-width: 380px){
+    .marquee-track{ gap:8px; }
+    .tech-card{
+        padding:7px 12px;
+        font-size:11px;
+    }
 }
 
 @keyframes scroll{
@@ -5279,9 +5309,15 @@ left:150%;
 }
 
 .contact-info-block h3 {
-    font-size: 22px;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.25;
     margin-bottom: 15px;
     color: #ffffff;
+}
+
+@media (max-width: 600px){
+    .contact-info-block h3 { font-size: 24px; }
 }
 
 
@@ -5466,4 +5502,19 @@ left:150%;
     transform: none !important;
     box-shadow: none !important;
     transition: background .3s ease !important;
+}
+
+/* ==========================================================================
+   FINAL OVERRIDE: kill the expanding "wave" pulse rings around the home
+   hero buttons (Explore Corporate Solutions / Explore Professional Courses).
+   ========================================================================== */
+.pulse,
+.pulse1,
+.pulse2,
+.ring,
+.ring1,
+.ring2 {
+    display: none !important;
+    animation: none !important;
+    opacity: 0 !important;
 }
