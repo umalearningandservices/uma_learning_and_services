@@ -221,10 +221,25 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         /* Main Double Showcase Grid Section Layout */
         .main-showcase {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             min-height: 100vh;
             padding-top: 25px; /* clears the fixed header, same purpose as .split-container's padding-top */
             transition: all 0.4s ease-in-out;
+        }
+
+        /* Single-page-per-section: only one column is ever visible.
+           Services Studio shows only the agency (corporate) column, and
+           Learning Campus shows only the academy (course) column — the
+           .academy-column is hidden by default so a page load/refresh can
+           never briefly (or permanently) show both side-by-side. */
+        .main-showcase .academy-column {
+            display: none;
+        }
+        .main-showcase.view-academic .academy-column {
+            display: block;
+        }
+        .main-showcase.view-academic .agency-column {
+            display: none;
         }
 
         /* Dynamic filtering view states */
@@ -1449,6 +1464,14 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         .card:hover .card-image.ci-1 { animation-delay: 0s; }
         .card:hover .card-image.ci-2 { animation-delay: 2s; }
 
+        @keyframes cardImgCycle {
+            0%   { opacity: 0; }
+            8%   { opacity: 1; }
+            42%  { opacity: 1; }
+            50%  { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
 
         /* Detail page gallery: always auto-cycling, larger, full column height, matches front-card look */
         .detail-image-carousel {
@@ -1465,10 +1488,39 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             height: 100%;
             object-fit: cover;
             opacity: 0;
-            animation: cardImgCycle 5s ease-in-out infinite;
+            transition: opacity 0.4s ease;
         }
-        .detail-image-carousel img:nth-of-type(1) { opacity: 1; animation-delay: 0s; }
-        .detail-image-carousel img:nth-of-type(2) { animation-delay: 2.5s; }
+        /* Only the active photo is visible; JS toggles this class on click */
+        .detail-image-carousel img:nth-of-type(1) { opacity: 1; }
+        .detail-image-carousel img.active { opacity: 1; }
+
+        .detail-carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #0073e6 0%, #0c2340 100%);
+            color: #fff;
+            font-size: 1.4rem;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .detail-carousel-arrow:hover { transform: translateY(-50%) scale(1.1); box-shadow: 0 6px 18px rgba(0,115,230,0.5); }
+        .detail-carousel-arrow.prev { left: 10px; }
+        .detail-carousel-arrow.next { right: 10px; }
+        .detail-carousel-arrow[hidden] { display: none; }
+        @media (max-width: 700px) {
+            .detail-carousel-arrow { width: 32px; height: 32px; font-size: 1.1rem; }
+        }
         .detail-image-carousel .gallery-dots {
             position: absolute;
             bottom: 12px;
@@ -1484,6 +1536,12 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             height: 7px;
             border-radius: 50%;
             background: rgba(255,255,255,0.6);
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .detail-image-carousel .gallery-dots span.active {
+            background: #ffffff;
+            transform: scale(1.3);
         }
 
         .card-text {
@@ -5516,5 +5574,36 @@ left:150%;
 .ring2 {
     display: none !important;
     animation: none !important;
+    opacity: 0 !important;
+}
+
+/* ==========================================================================
+   FINAL OVERRIDE: remove the flickering/blinking hover image-swap on the
+   main-page service & course listing cards. Each card now always shows just
+   its first photo, static, no matter what earlier rules in this file say.
+   (The detail page's click-through image gallery is unaffected — that one
+   stays as-is, controlled by the prev/next buttons.)
+   ========================================================================== */
+.card-image-carousel img,
+.card-image {
+    animation: none !important;
+    transition: none !important;
+}
+.card-image-carousel img:nth-of-type(1),
+.card-image.ci-1 {
+    opacity: 1 !important;
+}
+.card-image-carousel img:nth-of-type(n+2),
+.card-image.ci-2 {
+    opacity: 0 !important;
+}
+.card:hover .card-image-carousel img:nth-of-type(1),
+.card:hover .ci-1,
+.card:hover .card-image.ci-1 {
+    opacity: 1 !important;
+}
+.card:hover .card-image-carousel img:nth-of-type(n+2),
+.card:hover .ci-2,
+.card:hover .card-image.ci-2 {
     opacity: 0 !important;
 }
