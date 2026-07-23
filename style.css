@@ -2713,14 +2713,14 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 
 
 .left-hero {
-    background-image: url('file:///C:/Users/DESKTOP/Desktop/Gemini_Generated_Image_24f1zu24f1zu24f1.PNG');
+    background-image: url('images/left_hero.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .right-hero {
-    background-image: url('file:///C:/Users/DESKTOP/Desktop/Gemini_Generated_Image_vko65bvko65bvko6.PNG');
+    background-image: url('images/right_hero.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
