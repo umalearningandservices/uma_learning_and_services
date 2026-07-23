@@ -632,14 +632,19 @@ function renderCourseCurriculum(courseKey) {
             const dotsEl = document.getElementById('detailGalleryDots');
             carouselEl.querySelectorAll('img').forEach(img => img.remove());
             dotsEl.innerHTML = '';
-            imageList.forEach(src => {
+            imageList.forEach((src, i) => {
                 const img = document.createElement('img');
                 img.src = src;
                 img.alt = title;
+                if (i === 0) img.classList.add('active');
                 carouselEl.insertBefore(img, dotsEl);
                 const dot = document.createElement('span');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => setDetailCarouselIndex(i));
                 dotsEl.appendChild(dot);
             });
+            const arrowsHidden = imageList.length <= 1;
+            carouselEl.querySelectorAll('.detail-carousel-arrow').forEach(btn => btn.hidden = arrowsHidden);
 
             document.getElementById('detailCategory').textContent = segmentHeading;
             document.getElementById('detailTitle').textContent = title;
@@ -701,6 +706,29 @@ function renderCourseCurriculum(courseKey) {
             showPage(lastPage || 'services');
         }
 
+        /* ---------- DETAIL-CARD IMAGE CAROUSEL (click prev/next or a dot) ---------- */
+        function setDetailCarouselIndex(index) {
+            const carouselEl = document.getElementById('detailImageCarousel');
+            const dotsEl = document.getElementById('detailGalleryDots');
+            if (!carouselEl) return;
+            const imgs = carouselEl.querySelectorAll('img');
+            const dots = dotsEl ? dotsEl.querySelectorAll('span') : [];
+            if (!imgs.length) return;
+            const total = imgs.length;
+            const nextIndex = ((index % total) + total) % total; // wrap around both directions
+            imgs.forEach((img, i) => img.classList.toggle('active', i === nextIndex));
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === nextIndex));
+        }
+
+        function detailCarouselNav(direction) {
+            const carouselEl = document.getElementById('detailImageCarousel');
+            if (!carouselEl) return;
+            const imgs = carouselEl.querySelectorAll('img');
+            let currentIndex = 0;
+            imgs.forEach((img, i) => { if (img.classList.contains('active')) currentIndex = i; });
+            setDetailCarouselIndex(currentIndex + direction);
+        }
+
         /* ---------- BLOG READING TIME (SEO/UX — computed from actual word count) ---------- */
         function computeReadTime(text) {
             const words = (text.trim().match(/\S+/g) || []).length;
@@ -748,10 +776,10 @@ function renderCourseCurriculum(courseKey) {
                 return slot;
             };
 
-            // Spread up to 4 slots evenly across the paragraphs (one right after
-            // the opening paragraph, the rest at roughly even intervals),
+            // Spread up to 2 slots evenly across the paragraphs (one right after
+            // the opening paragraph, the other roughly in the middle),
             // without inserting more slots than there are gaps between paragraphs.
-            const desiredSlots = Math.min(4, paras.length);
+            const desiredSlots = Math.min(2, paras.length);
             const usedIndices = new Set();
             let slotNum = 0;
             for (let s = 0; s < desiredSlots; s++) {
@@ -1247,15 +1275,28 @@ window.addEventListener('resize', () => {
         function persistPageState(name, view) {
             if (name === 'detail' || name === 'blogdetail') return;
             const hash = view ? `${name}:${view}` : name;
-            try { history.replaceState(null, '', '#' + hash); } catch (e) {}
+            const newHash = '#' + hash;
+            try {
+                // Push a new history entry when the page actually changed, so the
+                // browser's own Back button steps back through the site's pages
+                // instead of leaving the site entirely. Avoid pushing a duplicate
+                // entry if the hash hasn't changed (e.g. re-showing the same page).
+                if (location.hash !== newHash) {
+                    history.pushState(null, '', newHash);
+                } else {
+                    history.replaceState(null, '', newHash);
+                }
+            } catch (e) {}
         }
 
         function restorePageFromHash() {
             const raw = (location.hash || '').replace('#', '');
             if (!raw) { showPage('home'); return; }
             const [name, view] = raw.split(':');
-            if (name === 'services' && (view === 'corporate' || view === 'academic')) {
-                goServices(view);
+            if (name === 'services') {
+                // Services is always single-view — default to Services Studio
+                // (corporate) if the URL didn't specify corporate/academic.
+                goServices(view === 'academic' ? 'academic' : 'corporate');
             } else if (document.getElementById('page-' + name)) {
                 showPage(name, view);
             } else {
@@ -1265,6 +1306,9 @@ window.addEventListener('resize', () => {
 
         document.addEventListener('DOMContentLoaded', restorePageFromHash);
         window.addEventListener('hashchange', restorePageFromHash);
+        // Browser/hardware Back and Forward buttons trigger this directly.
+        window.addEventListener('popstate', restorePageFromHash);
+
 
 function showPage(name, view) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1502,11 +1546,21 @@ function autoScrollTestimonials() {
   const prevBtn = document.querySelector('.testimonial-arrow.prev');
   const nextBtn = document.querySelector('.testimonial-arrow.next');
   if (prevBtn) prevBtn.addEventListener('click', () => {
-    container.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (container.scrollLeft <= 5) {
+      container.scrollTo({ left: maxScroll, behavior: 'smooth' }); // loop to the last card
+    } else {
+      container.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+    }
     pauseAutoplay(true);
   });
   if (nextBtn) nextBtn.addEventListener('click', () => {
-    container.scrollBy({ left: cardStep(), behavior: 'smooth' });
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (container.scrollLeft >= maxScroll - 5) {
+      container.scrollTo({ left: 0, behavior: 'smooth' }); // loop back to the first card
+    } else {
+      container.scrollBy({ left: cardStep(), behavior: 'smooth' });
+    }
     pauseAutoplay(true);
   });
 }
