@@ -5294,6 +5294,19 @@ grid-template-columns:1fr;
     transform:scale(1);
 }
 
+/* Phones/tablets have no hover state — keep the zoom button visible always,
+   just slightly smaller so it doesn't crowd the small mobile logo. */
+@media (hover: none), (max-width: 950px) {
+    .logo-zoom-btn{
+        opacity:1;
+        transform:scale(1);
+        width:17px;
+        height:17px;
+        top:-4px;
+        right:-8px;
+    }
+}
+
 .logo-container img{
 
     animation:logoMove3D 4s ease-in-out infinite;
