@@ -8,505 +8,664 @@ const courses = {
     "macro-vba": {
         title: "Macro & VBA Engineering",
         description: "Master Microsoft Excel automation using VBA and build professional automation tools, dashboards, reporting systems and custom Excel Add-ins for real business requirements.",
-        curriculum: [
-            { title: "VBA Fundamentals", topics: ["Introduction to Macros & VBA", "Recording and Editing Macros", "Variables & Data Types", "Modules & Procedures", "Functions", "Programming Basics"] },
-            { title: "Programming Logic", topics: ["If Else", "Select Case", "For Loops", "Do While", "Error Handling", "Debugging"] },
-            { title: "Excel Object Model", topics: ["Workbook", "Worksheet", "Range", "Cells", "Charts", "Pivot Tables"] },
-            { title: "UserForms", topics: ["TextBox", "ComboBox", "ListBox", "Validation", "Buttons", "Events"] },
-            { title: "Custom Add-ins", topics: ["XLAM Creation", "Ribbon Customization", "Deployment", "Templates"] },
-        ],
+curriculum: [
+    {
+        title: "Macro & VBA Basics",
+        topics: [
+            "Excel Automation",
+            "Macro Recorder",
+            "VBA Editor",
+            "Variables",
+            "Data Types",
+            "Procedures & Functions"
+        ]
+    },
+    {
+        title: "Programming Fundamentals",
+        topics: [
+            "If...Else",
+            "Select Case",
+            "Loops",
+            "Arrays",
+            "Error Handling",
+            "Debugging"
+        ]
+    },
+    {
+        title: "Excel Object Model",
+        topics: [
+            "Workbook",
+            "Worksheet",
+            "Range & Cells",
+            "Rows & Columns",
+            "Named Ranges",
+            "Events"
+        ]
+    },
+    {
+        title: "Data Automation",
+        topics: [
+            "Sorting & Filtering",
+            "Find & Replace",
+            "Formatting",
+            "Data Validation",
+            "Pivot Tables",
+            "Charts"
+        ]
+    },
+    {
+        title: "UserForms & UI",
+        topics: [
+            "TextBox",
+            "ComboBox",
+            "ListBox",
+            "Buttons",
+            "Validation",
+            "Event Handling"
+        ]
+    },
+    {
+        title: "File & Office Automation",
+        topics: [
+            "PDF Export",
+            "File Handling",
+            "Folder Operations",
+            "Outlook Email",
+            "Workbook Management",
+            "Templates"
+        ]
+    },
+    {
+        title: "Advanced VBA",
+        topics: [
+            "Collections",
+            "Dictionary",
+            "Class Modules",
+            "Custom Functions",
+            "Performance Optimization",
+            "Code Reusability"
+        ]
+    },
+    {
+        title: "Integration & Deployment",
+        topics: [
+            "APIs",
+            "JSON/XML",
+            "Database Basics",
+            "Custom Add-ins",
+            "Ribbon Customization",
+            "Deployment"
+        ]
+    },
+    {
+        title: "Real-World Projects",
+        topics: [
+            "MIS Reports",
+            "Dashboards",
+            "Payroll",
+            "Inventory",
+            "Invoice System",
+            "Business Automation"
+        ]
+    }
+],
         features: ["Hands-on Projects", "Professional Code Reviews", "Reusable Templates", "LMS Access", "Assignments", "Certificate"],
-        roles: ["Excel VBA Developer", "MIS Executive", "Business Automation Developer", "Reporting Analyst"],
-        highlights: ["Build Professional Add-ins", "Real Business Projects", "Portfolio Ready", "Industry Best Practices"],
+        roles: ["Excel VBA Developer", "MIS Executive", "Business Automation Developer", "Reporting Analyst", "Data Analyst (Excel/VBA)", "Automation Consultant and More"],
+        highlights: ["Build Professional Add-ins", "Real Business Projects", "Portfolio Ready", "Industry Best Practices", "In-Demand Automation Skillset", "Mentor-Guided Project Building"],
     },
     "advanced-excel-vba-ai": {
         title: "Advanced Excel + Macro/VBA with AI",
         description: "Go beyond basic Excel with Power Query, Power Pivot, DAX, VBA automation and AI-assisted tools like Copilot to build interactive dashboards and automated reports for real business use.",
-        curriculum: [
-            { title: "Advanced Excel Foundations", topics: ["Lookup Family Formulas", "Array Formulas", "Data Cleaning", "Data Validation", "Conditional Formatting"] },
-            { title: "Power Query & Power Pivot", topics: ["Data Import & Transformation", "Data Modeling", "Table Relationships", "DAX Basics"] },
-            { title: "Macro & VBA Automation", topics: ["Recording Macros", "Editing Macros", "VBA Programming Essentials", "Automating Repetitive Tasks"] },
-            { title: "DAX & Data Modelling", topics: ["DAX Measures", "Calculated Columns", "Interactive Dashboards", "KPI & Trend Analysis"] },
-            { title: "Microsoft 365 & AI Tools", topics: ["Copilot in Excel", "AI-assisted Formula Writing", "Smart Data Analysis"] },
-            { title: "Dashboards & Reporting", topics: ["Interactive Dashboard Design", "Pivot Table & Chart Mastery", "Real-World Reporting Projects"] },
-        ],
+curriculum: [
+    {
+        title: "Excel Fundamentals",
+        topics: [
+            "Excel Interface & All Tabs",
+            "Workbook & Worksheet",
+            "Formatting",
+            "Tables",
+            "Named Ranges",
+            "Shortcuts"
+        ]
+    },
+    {
+        title: "Formulas & Functions",
+        topics: [
+            "Basic Formulas",
+            "Logical Functions",
+            "Lookup Functions",
+            "Text Functions",
+            "Date & Time",
+            "Math & Statistical",
+            "Nested & Complex Formulas",
+            "Dynamic Arrays"
+        ]
+    },
+    {
+        title: "Data Analysis",
+        topics: [
+            "Data Validation",
+            "Conditional Formatting",
+            "Data Cleaning",
+            "Sort & Filter",
+            "Charts & Graphs",
+            "Pivot Tables"
+        ]
+    },
+    {
+        title: "Business Intelligence",
+        topics: [
+            "Interactive Dashboards",
+            "Power Query",
+            "Data Modeling",
+            "Relationships",
+            "DAX Basics",
+            "Measures & Calculated Columns"
+        ]
+    },
+    {
+        title: "Automation & AI",
+        topics: [
+            "Recording Macros",
+            "Editing Macros",
+            "VBA Essentials",
+            "UserForms",
+            "Task Automation",
+            "Copilot & AI"
+        ]
+    },
+    {
+        title: "Projects",
+        topics: [
+            "Smart Data Analysis",
+            "MIS Reports",
+            "Dashboard Projects",
+            "Business Reports",
+            "Automation Projects",
+            "Capstone Project"
+        ]
+    }
+],
+
         features: ["Covers Excel to AI-Powered Automation", "Power Query, Power Pivot & DAX", "Hands-on Dashboard Building", "Free Bonus Google Sheets Course", "Real Dataset Practice", "Certificate"],
-        roles: ["MIS Executive", "Data Analyst", "Reporting & Dashboard Specialist", "Business Analyst", "Excel Automation Consultant"],
-        highlights: ["One Course, Excel + VBA + AI", "Job-ready Dashboards & Reports", "Learn Microsoft 365 Copilot Workflows", "Mentorship from Data Experts"],
+        roles: ["MIS Executive", "Data Analyst", "Reporting & Dashboard Specialist", "Business Analyst", "Excel Automation Consultant", "VBA Developer And More"],
+        highlights: ["One Course, Excel + VBA + AI", "Job-ready Dashboards & Reports", "Learn Microsoft 365 Copilot Workflows", "Mentorship from Data Experts", "Trusted by Working Professionals & Analysts", "Boosts Efficiency Across Any Excel-Heavy Role"],
     },
     "ai": {
         title: "AI",
         description: "Learn to use today's leading AI tools confidently — from prompt engineering to AI-assisted productivity, content, image, video and business automation — with no coding required.",
         curriculum: [
-            { title: "Introduction to AI", topics: ["What is AI, ML & Generative AI", "Real-World AI Use Cases", "AI Tools Landscape Overview"] },
-            { title: "Prompt Engineering", topics: ["Writing Effective Prompts", "Prompt Patterns & Techniques", "Prompting Across Different Tools"] },
-            { title: "AI for Productivity", topics: ["AI in Excel/Office Tools", "AI for Content & Writing", "AI for Research & Summarization"] },
-            { title: "AI for Image, Audio & Video", topics: ["AI Image Generation Tools", "AI Video & Voice Tools", "Practical Creative Workflows"] },
-            { title: "AI for Business & Automation", topics: ["AI Chatbots & Assistants", "Workflow Automation with AI", "AI in Marketing & Sales"] },
-            { title: "Ethics & Best Practices", topics: ["Responsible AI Use", "Data Privacy Considerations", "Fact-Checking AI Output"] },
+            { title: "Introduction to AI", topics: ["What is AI, ML & Generative AI", "How Large Language Models Work (Basics)", "Real-World AI Use Cases", "AI Tools Landscape Overview", "Free vs Paid AI Tools", "Setting Up Your AI Toolkit"] },
+            { title: "Prompt Engineering", topics: ["Writing Effective Prompts", "Prompt Patterns & Techniques", "Zero-shot vs Few-shot Prompting", "Chaining & Iterative Prompts", "Prompting Across Different Tools", "Common Prompting Mistakes"] },
+            { title: "AI for Productivity", topics: ["AI in Excel/Office Tools", "AI for Content & Writing", "AI for Research & Summarization", "AI for Meeting Notes & Emails", "AI-Assisted Presentations", "Building Personal AI Workflows"] },
+            { title: "AI for Image, Audio & Video", topics: ["AI Image Generation Tools", "AI Video & Voice Tools", "Text-to-Speech & Voice Basics", "AI Photo/Video Editing", "Practical Creative Workflows", "Brand-Consistent AI Content"] },
+            { title: "AI for Business & Automation", topics: ["AI Chatbots & Assistants", "Workflow Automation with AI", "AI in Marketing & Sales", "AI for Customer Support", "No-Code AI Automation Tools", "Connecting AI Tools to Everyday Apps"] },
+            { title: "Ethics & Best Practices", topics: ["Responsible AI Use", "Data Privacy Considerations", "Fact-Checking AI Output", "Avoiding AI Bias & Hallucination", "Copyright & AI-Generated Content", "Building a Continuous AI-Learning Habit"] },
+            { title: "Capstone Project", topics: ["Personal AI Toolkit Build", "Business Use-Case Project", "AI-Assisted Presentation & Report", "Portfolio-Ready Final Submission"] },
         ],
         features: ["Beginner Friendly, No Coding", "Hands-on with Popular AI Tools", "Covers Text, Image, Audio & Video AI", "Real Workplace Productivity Focus", "Practical Assignments", "Certificate"],
-        roles: ["AI Tools Specialist", "Prompt Engineer (Associate)", "Digital Productivity Consultant", "AI-Assisted Content Creator", "Automation Executive"],
-        highlights: ["Use AI Tools Confidently at Work", "Save Hours Weekly with AI Workflows", "Stay Current with a Fast-Growing Skillset", "Suitable for Students & Professionals"],
+        roles: ["AI Tools Specialist", "Prompt Engineer (Associate)", "Digital Productivity Consultant", "AI-Assisted Content Creator", "Automation Executive", "Freelance AI Consultant"],
+        highlights: ["Use AI Tools Confidently at Work", "Save Hours Weekly with AI Workflows", "Stay Current with a Fast-Growing Skillset", "Suitable for Students & Professionals", "No Coding Required to Get Started", "Applicable Across Every Industry"],
     },
     "bi-tools": {
         title: "Looker Studio / Power BI / Tableau",
         description: "Become fluent in the top three business intelligence platforms and learn to design real, interactive dashboards that turn business data into clear, decision-ready insights.",
         curriculum: [
-            { title: "BI Fundamentals", topics: ["What is Business Intelligence", "Data Visualization Principles", "Choosing the Right BI Tool"] },
-            { title: "Power BI", topics: ["Power Query & Data Modeling", "DAX Measures", "Interactive Report Building"] },
-            { title: "Tableau", topics: ["Connecting Data Sources", "Calculated Fields", "Dashboard Design & Storytelling"] },
-            { title: "Looker Studio", topics: ["Connecting Google Data Sources", "Building Shareable Reports", "Blending Data Sources"] },
-            { title: "Dashboard Design Best Practices", topics: ["Layout & UX for Dashboards", "Choosing the Right Chart Types", "KPI Tracking Design"] },
-            { title: "Real-World Reporting Projects", topics: ["Sales/Marketing Dashboards", "Live Client-Style Datasets", "Publishing & Sharing Reports"] },
+            { title: "BI Fundamentals", topics: ["What is Business Intelligence", "Data Visualization Principles", "Choosing the Right BI Tool", "BI Workflow: Source to Dashboard", "Data Types & Chart Selection", "Setting Up Each Platform"] },
+            { title: "Power BI", topics: ["Power Query & Data Modeling", "Relationships & Data Model Design", "DAX Measures & Calculated Columns", "Interactive Report Building", "Slicers, Filters & Drill-Throughs", "Publishing to Power BI Service"] },
+            { title: "Tableau", topics: ["Connecting Data Sources", "Calculated Fields", "Dashboard Design & Storytelling", "Filters, Parameters & Actions", "Maps & Advanced Visuals", "Publishing to Tableau Public/Server"] },
+            { title: "Looker Studio", topics: ["Connecting Google Data Sources", "Building Shareable Reports", "Blending Data Sources", "Calculated Fields & Custom Metrics", "Scheduling & Sharing Automation"] },
+            { title: "Dashboard Design Best Practices", topics: ["Layout & UX for Dashboards", "Choosing the Right Chart Types", "KPI Tracking Design", "Colour, Typography & Visual Hierarchy", "Mobile-Friendly Dashboard Design"] },
+            { title: "Real-World Reporting Projects", topics: ["Sales/Marketing Dashboards", "Finance & Operations Dashboards", "Live Client-Style Datasets", "Publishing & Sharing Reports", "Client Presentation of Insights"] },
         ],
         features: ["Covers 3 Major BI Tools", "Real Dataset Dashboard Building", "DAX & Calculated Fields Included", "Business Storytelling with Data", "Portfolio-Ready Projects", "Certificate"],
-        roles: ["BI Analyst", "Power BI Developer", "Data Visualization Specialist", "Reporting Analyst", "Dashboard Consultant"],
-        highlights: ["Fluent in the Top 3 BI Platforms", "Dashboard Portfolio for Interviews", "Learn from Real Business Datasets", "Project-First Teaching Approach"],
+        roles: ["BI Analyst", "Power BI Developer", "Data Visualization Specialist", "Reporting Analyst", "Dashboard Consultant", "Data Analyst (BI Focus)"],
+        highlights: ["Fluent in the Top 3 BI Platforms", "Dashboard Portfolio for Interviews", "Learn from Real Business Datasets", "Project-First Teaching Approach", "In-Demand Skillset Across Every Industry", "Hands-on Training on Real Business Data"],
     },
     "data-analytics-ds-ai": {
         title: "Data Analytics and Data Science with AI",
         description: "A complete pathway from data analytics foundations to Python, SQL, BI tools and machine learning — accelerated with AI-assisted workflows and a resume-ready capstone project.",
         curriculum: [
-            { title: "Foundations of Data Analytics", topics: ["Statistics Basics", "Data Types & Data Cleaning", "Analytical Thinking"] },
-            { title: "Python for Data Science", topics: ["Python Fundamentals", "NumPy & Pandas", "Data Wrangling"] },
-            { title: "Data Visualization", topics: ["Matplotlib & Seaborn", "Power BI/Tableau Basics", "Storytelling with Data"] },
-            { title: "SQL for Analysts", topics: ["Querying Databases", "Joins & Aggregations", "Real Dataset Analysis"] },
-            { title: "Machine Learning Basics", topics: ["Supervised vs Unsupervised Learning", "Regression & Classification", "Model Evaluation"] },
-            { title: "AI-Assisted Data Science", topics: ["Using AI for EDA", "AI-Assisted Model Building", "Automating Analysis Workflows"] },
-            { title: "Capstone Projects", topics: ["End-to-End Analytics Project", "Business Case Study", "Presenting Insights"] },
+            { title: "Foundations of Data Analytics", topics: ["Statistics Basics", "Probability Fundamentals", "Data Types & Data Cleaning", "Analytical Thinking", "Excel for Quick Analysis"] },
+            { title: "Python for Data Science", topics: ["Python Fundamentals", "NumPy & Pandas", "Data Wrangling", "Working with Real Datasets", "Automating Analysis Scripts"] },
+            { title: "Data Visualization", topics: ["Matplotlib & Seaborn", "Power BI/Tableau Basics", "Choosing the Right Chart", "Storytelling with Data", "Dashboard Fundamentals"] },
+            { title: "SQL for Analysts", topics: ["Querying Databases", "Filtering & Aggregation", "Joins & Subqueries", "Window Functions", "Real Dataset Analysis"] },
+            { title: "Machine Learning Basics", topics: ["Supervised vs Unsupervised Learning", "Regression & Classification", "Clustering Basics", "Feature Engineering", "Model Evaluation & Metrics"] },
+            { title: "AI-Assisted Data Science", topics: ["Using AI for EDA", "AI-Assisted Model Building", "Automating Analysis Workflows", "Prompt-Based Data Exploration"] },
+            { title: "Capstone Projects", topics: ["End-to-End Analytics Project", "Business Case Study", "Model Building & Validation", "Presenting Insights", "Resume-Ready Portfolio Project"] },
         ],
         features: ["Python, SQL, BI & ML in One Track", "AI-Assisted Analytics Workflows", "Real Dataset Projects Throughout", "Beginner to Job-Ready Structure", "Resume-Ready Capstone Project", "Certificate"],
-        roles: ["Data Analyst", "Junior Data Scientist", "Business Intelligence Analyst", "Reporting Analyst", "Analytics Consultant"],
-        highlights: ["Complete Data Analytics + Data Science Pathway", "Use AI to Accelerate Analysis", "Capstone Project for Your Portfolio", "Mentorship from Working Analysts"],
+        roles: ["Data Analyst", "Junior Data Scientist", "Business Intelligence Analyst", "Reporting Analyst", "Analytics Consultant", "AI/ML Enthusiast (Entry-Level)"],
+        highlights: ["Complete Data Analytics + Data Science Pathway", "Use AI to Accelerate Analysis", "Capstone Project for Your Portfolio", "Mentorship from Working Analysts", "Beginner to Job-Ready Learning Path", "Strong Foundation for Advanced AI/ML Roles"],
     },
     "google-workspace-ai": {
         title: "Google Workspace with AI",
         description: "Master the full Google Workspace suite — Gmail, Docs, Sheets, Drive and Forms — enhanced with Gemini AI features for faster, smarter everyday productivity at work.",
         curriculum: [
-            { title: "Gmail & Calendar Mastery", topics: ["Inbox Organization", "Calendar Scheduling & Sharing", "Google Meet Essentials"] },
-            { title: "Google Docs & Slides", topics: ["Collaborative Document Editing", "Templates & Formatting", "AI-Assisted Writing (Gemini)"] },
-            { title: "Google Sheets", topics: ["Formulas & Functions", "Data Organization", "AI-Assisted Analysis"] },
-            { title: "Google Drive & Sharing", topics: ["File Organization & Permissions", "Shared Drives", "Version History"] },
-            { title: "Forms & Data Collection", topics: ["Building Forms & Surveys", "Response Analysis", "Integrating with Sheets"] },
-            { title: "AI in Google Workspace", topics: ["Gemini for Workspace", "AI-Assisted Content Creation", "Smart Automation Features"] },
+            { title: "Gmail & Calendar Mastery", topics: ["Inbox Organization & Filters", "Calendar Scheduling & Sharing", "Google Meet Essentials", "Labels, Rules & Smart Replies", "Email Etiquette & Templates"] },
+            { title: "Google Docs & Slides", topics: ["Collaborative Document Editing", "Templates & Formatting", "Comments & Suggestion Mode", "Slide Design Basics", "AI-Assisted Writing (Gemini)"] },
+            { title: "Google Sheets", topics: ["Formulas & Functions", "Data Organization & Validation", "Charts & Basic Pivot Tables", "Conditional Formatting", "AI-Assisted Analysis"] },
+            { title: "Google Drive & Sharing", topics: ["File Organization & Permissions", "Shared Drives", "Version History", "Offline Access & Sync"] },
+            { title: "Forms & Data Collection", topics: ["Building Forms & Surveys", "Response Analysis", "Integrating with Sheets", "Conditional Logic in Forms"] },
+            { title: "AI in Google Workspace", topics: ["Gemini for Workspace", "AI-Assisted Content Creation", "Smart Automation Features", "AI for Meeting Summaries", "Everyday AI Productivity Habits"] },
         ],
         features: ["Full Google Workspace Suite", "AI (Gemini) Integration Throughout", "Practical, Workplace-Ready Skills", "Hands-on Assignments Every Module", "Certificate"],
-        roles: ["Executive Assistant", "Office Administrator", "Virtual Assistant", "Operations Coordinator", "Digital Workplace Specialist"],
-        highlights: ["Master Tools Used by Modern Workplaces Daily", "Learn AI-Assisted Productivity Features", "Great for Freshers & Office Professionals", "Boost Collaboration & Efficiency"],
+        roles: ["Executive Assistant", "Office Administrator", "Virtual Assistant", "Operations Coordinator", "Digital Workplace Specialist", "Admin Support Executive"],
+        highlights: ["Master Tools Used by Modern Workplaces Daily", "Learn AI-Assisted Productivity Features", "Great for Freshers & Office Professionals", "Boost Collaboration & Efficiency", "Widely Applicable Across Every Office Role", "Learn Directly on Real Google Workspace Tools"],
     },
     "google-apps-script": {
         title: "Google Apps Script",
         description: "Learn to automate the entire Google Workspace suite with Apps Script — from custom Sheets functions to API integrations and fully custom business tools.",
         curriculum: [
-            { title: "Apps Script Fundamentals", topics: ["JavaScript Basics for Apps Script", "Script Editor & Project Structure", "Running & Debugging Scripts"] },
-            { title: "Automating Google Sheets", topics: ["Custom Functions", "Triggers & Automation", "Working with Ranges & Data"] },
-            { title: "Automating Docs & Forms", topics: ["Auto-Generating Documents", "Form Response Automation", "Email Automation from Sheets"] },
-            { title: "Working with APIs", topics: ["Connecting to External APIs", "Handling JSON Data", "Building Custom Integrations"] },
-            { title: "Building Custom Tools", topics: ["Custom Menus & UI", "Web App Deployment", "Real Business Automation Projects"] },
+            { title: "Apps Script Fundamentals", topics: ["JavaScript Basics for Apps Script", "Script Editor & Project Structure", "Variables, Loops & Functions", "Running & Debugging Scripts", "Reading the Execution Log"] },
+            { title: "Automating Google Sheets", topics: ["Custom Functions", "Triggers & Automation", "Working with Ranges & Data", "Sheet-to-Sheet Automation", "Conditional Automation Logic"] },
+            { title: "Automating Docs & Forms", topics: ["Auto-Generating Documents", "Form Response Automation", "Email Automation from Sheets", "Scheduled Auto-Reports"] },
+            { title: "Working with APIs", topics: ["Connecting to External APIs", "Handling JSON Data", "Authentication Basics (OAuth)", "Building Custom Integrations"] },
+            { title: "Building Custom Tools", topics: ["Custom Menus & UI", "HTML Service for Custom Dialogs", "Web App Deployment", "Real Business Automation Projects", "Publishing & Sharing Tools"] },
         ],
         features: ["Automate the Entire Workspace Suite", "Real Scripting Projects", "Learn API Integration Basics", "Build Custom Business Tools", "Certificate"],
-        roles: ["Automation Developer", "Workspace Solutions Specialist", "Junior Web Developer", "Business Systems Analyst", "Low-Code/No-Code Developer"],
-        highlights: ["Automate Repetitive Workspace Tasks", "Learn Practical JavaScript through Real Projects", "Bridge Between No-Code and Full Coding", "Mentor-Guided Project Building"],
+        roles: ["Automation Developer", "Workspace Solutions Specialist", "Junior Web Developer", "Business Systems Analyst", "Low-Code/No-Code Developer", "Google Workspace Automation Consultant"],
+        highlights: ["Automate Repetitive Workspace Tasks", "Learn Practical JavaScript through Real Projects", "Bridge Between No-Code and Full Coding", "Mentor-Guided Project Building", "High-Value, Low-Competition Skill", "Hands-on Real Scripting Practice"],
     },
     "python": {
         title: "Python Programming",
         description: "Build a strong programming foundation with Python — from core syntax and data structures to OOP, libraries and real capstone projects that prepare you for further specialization.",
         curriculum: [
-            { title: "Python Fundamentals", topics: ["Syntax & Variables", "Data Types", "Operators & Control Flow", "Loops & Functions"] },
-            { title: "Data Structures", topics: ["Lists, Tuples & Dictionaries", "Sets & Strings", "Comprehensions"] },
-            { title: "Object-Oriented Programming", topics: ["Classes & Objects", "Inheritance & Polymorphism", "Exception Handling"] },
-            { title: "File Handling & Modules", topics: ["Reading/Writing Files", "Modules & Packages", "Virtual Environments"] },
-            { title: "Libraries for Real Work", topics: ["NumPy & Pandas Basics", "Web Scraping Basics", "Working with APIs"] },
-            { title: "Mini & Capstone Projects", topics: ["Automation Scripts", "Data Analysis Project", "Portfolio-Ready Final Project"] },
+            { title: "Python Fundamentals", topics: ["Syntax & Variables", "Data Types", "Operators & Control Flow", "Loops & Functions", "Input/Output Basics", "Writing Clean, Readable Code"] },
+            { title: "Data Structures", topics: ["Lists, Tuples & Dictionaries", "Sets & Strings", "Comprehensions", "Nested Data Structures", "Sorting & Searching Basics"] },
+            { title: "Object-Oriented Programming", topics: ["Classes & Objects", "Inheritance & Polymorphism", "Encapsulation & Abstraction", "Exception Handling", "Custom Exceptions"] },
+            { title: "File Handling & Modules", topics: ["Reading/Writing Files", "Working with CSV/JSON", "Modules & Packages", "Virtual Environments", "Package Management (pip)"] },
+            { title: "Libraries for Real Work", topics: ["NumPy & Pandas Basics", "Data Visualization Basics", "Web Scraping Basics", "Working with APIs", "Automation Scripting"] },
+            { title: "Mini & Capstone Projects", topics: ["Automation Scripts", "Data Analysis Project", "Simple GUI/CLI Tool", "Portfolio-Ready Final Project"] },
         ],
         features: ["Beginner-Friendly, Project-Based", "Core Python to Real Libraries", "Hands-on Coding Every Class", "Capstone Portfolio Project", "LMS Access with Code & Recordings", "Certificate"],
-        roles: ["Python Developer", "Junior Software Engineer", "Automation Engineer", "Data Analyst (Python)", "Backend Developer (Trainee)"],
-        highlights: ["Build a Strong Programming Foundation", "Learn the Language Powering AI, Data & Web", "Practical Projects, Not Just Syntax", "Ideal Launchpad for Further Specialization"],
+        roles: ["Python Developer", "Junior Software Engineer", "Automation Engineer", "Data Analyst (Python)", "Backend Developer (Trainee)", "Software Developer (Entry-Level)"],
+        highlights: ["Build a Strong Programming Foundation", "Learn the Language Powering AI, Data & Web", "Practical Projects, Not Just Syntax", "Ideal Launchpad for Further Specialization", "Beginner-Friendly, Step-by-Step Teaching", "Strong Foundation for AI, Web & Data Careers"],
     },
     "php": {
         title: "PHP Language",
         description: "Learn PHP from core syntax to dynamic, database-driven websites — covering MySQL integration, OOP, authentication and a real deployable project.",
         curriculum: [
-            { title: "Web & PHP Basics", topics: ["How the Web Works", "PHP Syntax & Variables", "Control Structures & Functions"] },
-            { title: "Forms & Data Handling", topics: ["Handling GET/POST Data", "Form Validation", "Sessions & Cookies"] },
-            { title: "MySQL Database Integration", topics: ["Database Design Basics", "CRUD Operations with PHP", "Prepared Statements & Security"] },
-            { title: "Object-Oriented PHP", topics: ["Classes & Objects in PHP", "Reusable Code Structure", "Error & Exception Handling"] },
-            { title: "Building Dynamic Websites", topics: ["File Uploads", "Authentication Systems", "Building a Mini CMS"] },
-            { title: "Real Project Development", topics: ["Dynamic Website Project", "Admin Panel Development", "Deployment Basics"] },
+            { title: "Web & PHP Basics", topics: ["How the Web Works", "PHP Syntax & Variables", "Control Structures & Functions", "Arrays & String Handling", "Setting Up a Local Server"] },
+            { title: "Forms & Data Handling", topics: ["Handling GET/POST Data", "Form Validation", "Sessions & Cookies", "File Uploads"] },
+            { title: "MySQL Database Integration", topics: ["Database Design Basics", "CRUD Operations with PHP", "Prepared Statements & Security", "Joins & Relational Queries"] },
+            { title: "Object-Oriented PHP", topics: ["Classes & Objects in PHP", "Inheritance & Interfaces", "Reusable Code Structure", "Error & Exception Handling"] },
+            { title: "Building Dynamic Websites", topics: ["Authentication Systems", "Role-Based Access", "Building a Mini CMS", "Basic API Endpoints"] },
+            { title: "Real Project Development", topics: ["Dynamic Website Project", "Admin Panel Development", "Security Best Practices", "Deployment Basics"] },
         ],
         features: ["PHP Basics to Dynamic Websites", "MySQL Database Integration", "Hands-on CRUD & Auth Projects", "Secure Coding Practices", "Real Deployable Project", "Certificate"],
-        roles: ["PHP Developer", "Web Developer", "Backend Developer", "WordPress Developer (Foundation)", "Freelance Web Developer"],
-        highlights: ["Build Fully Dynamic, Database-Driven Websites", "In-Demand Backend Skill", "Real-World Secure Coding Practices", "Great Foundation for Freelancing"],
+        roles: ["PHP Developer", "Web Developer", "Backend Developer", "WordPress Developer (Foundation)", "Freelance Web Developer", "CMS Developer (WordPress/Custom)"],
+        highlights: ["Build Fully Dynamic, Database-Driven Websites", "In-Demand Backend Skill", "Real-World Secure Coding Practices", "Great Foundation for Freelancing", "Widely Used, In-Demand Backend Language", "Hands-on Database-Driven Website Building"],
     },
     "mern-fullstack": {
         title: "MERN Full Stack Development",
         description: "Become a job-ready full stack developer with MongoDB, Express, React and Node.js — building, integrating and deploying a complete real-world web application.",
         curriculum: [
-            { title: "Frontend Foundations", topics: ["HTML5, CSS3 & Responsive Design", "JavaScript (ES6+)", "Git & GitHub Basics"] },
-            { title: "React.js", topics: ["Components & Props", "State & Hooks", "Routing & Forms"] },
-            { title: "Node.js & Express", topics: ["Server-Side JavaScript", "Building REST APIs", "Middleware & Routing"] },
-            { title: "MongoDB", topics: ["NoSQL Database Concepts", "CRUD Operations", "Mongoose & Schema Design"] },
-            { title: "Full Stack Integration", topics: ["Connecting Frontend to Backend", "Authentication (JWT)", "State Management"] },
-            { title: "Deployment & Real Projects", topics: ["Deploying MERN Apps", "Building a Capstone Application", "Version Control Workflow"] },
+            { title: "Frontend Foundations", topics: ["HTML5, CSS3 & Responsive Design", "JavaScript (ES6+)", "Git & GitHub Basics", "Flexbox & Grid Layouts", "DOM & Event Handling"] },
+            { title: "React.js", topics: ["Components & Props", "State & Hooks", "Routing & Forms", "Context API", "Reusable Component Design"] },
+            { title: "Node.js & Express", topics: ["Server-Side JavaScript", "Building REST APIs", "Middleware & Routing", "Error Handling & Validation"] },
+            { title: "MongoDB", topics: ["NoSQL Database Concepts", "CRUD Operations", "Mongoose & Schema Design", "Relationships & Aggregation"] },
+            { title: "Full Stack Integration", topics: ["Connecting Frontend to Backend", "Authentication (JWT)", "State Management", "Environment Variables & Config"] },
+            { title: "Deployment & Real Projects", topics: ["Deploying MERN Apps", "Building a Capstone Application", "Version Control Workflow", "Performance & Security Basics"] },
         ],
         features: ["MongoDB, Express, React & Node End-to-End", "Build & Deploy Real Applications", "Industry-Standard Tools & Workflow", "Project-Based, Job-Focused Curriculum", "Personal Mentorship & Code Reviews", "Certificate"],
-        roles: ["Full Stack Developer", "Frontend Developer (React)", "Backend Developer (Node.js)", "MERN Stack Engineer", "Web Application Developer"],
-        highlights: ["Job-Ready Full Stack Developer", "Build & Deploy a Complete Web App", "Most In-Demand JS Stack", "Portfolio Project for Placements"],
+        roles: ["Full Stack Developer", "Frontend Developer (React)", "Backend Developer (Node.js)", "MERN Stack Engineer", "Web Application Developer", "JavaScript Full Stack Engineer"],
+        highlights: ["Job-Ready Full Stack Developer", "Build & Deploy a Complete Web App", "Most In-Demand JS Stack", "Portfolio Project for Placements", "Covers the Complete Modern Web Stack", "Strong Placement-Focused Curriculum"],
     },
+    
     "c-cpp": {
         title: "C,C Plus,C++ Programming",
         description: "Build the programming logic every developer needs — from C fundamentals and pointers to C++ object-oriented programming and core data structures.",
         curriculum: [
-            { title: "C Programming Basics", topics: ["Syntax, Variables & Data Types", "Operators & Control Flow", "Functions & Recursion"] },
-            { title: "Pointers & Memory", topics: ["Pointers & Arrays", "Dynamic Memory Allocation", "Structures & Unions"] },
-            { title: "C++ Fundamentals", topics: ["C++ Syntax over C", "Input/Output Streams", "Functions & Overloading"] },
-            { title: "OOP in C++", topics: ["Classes & Objects", "Inheritance & Polymorphism", "Constructors/Destructors"] },
-            { title: "Data Structures Basics", topics: ["Arrays, Linked Lists & Stacks", "Queues & Basic Sorting", "Problem-Solving Practice"] },
-            { title: "Practical Projects", topics: ["Console-Based Applications", "Mini Data Structure Projects", "Logic-Building Exercises"] },
+            { title: "C Programming Basics", topics: ["Syntax, Variables & Data Types", "Operators & Control Flow", "Functions & Recursion", "Arrays & Strings"] },
+            { title: "Pointers & Memory", topics: ["Pointers & Arrays", "Dynamic Memory Allocation", "Structures & Unions", "File Handling in C"] },
+            { title: "C++ Fundamentals", topics: ["C++ Syntax over C", "Input/Output Streams", "Functions & Overloading", "References & Default Arguments"] },
+            { title: "OOP in C++", topics: ["Classes & Objects", "Inheritance & Polymorphism", "Constructors/Destructors", "Operator Overloading"] },
+            { title: "Data Structures Basics", topics: ["Arrays, Linked Lists & Stacks", "Queues & Trees (Intro)", "Basic Sorting & Searching", "Problem-Solving Practice"] },
+            { title: "Practical Projects", topics: ["Console-Based Applications", "Mini Data Structure Projects", "Logic-Building Exercises", "Interview-Style Coding Practice"] },
         ],
         features: ["Strong Programming Logic Foundation", "Covers Procedural (C) and OOP (C++)", "Data Structures Fundamentals", "Extensive Problem-Solving Practice", "Certificate"],
-        roles: ["Junior Software Developer", "C/C++ Programmer", "Embedded Systems Trainee", "Competitive Programmer", "Software Engineering Trainee"],
-        highlights: ["Build the Logic Every Developer Needs", "Strong Base for Data Structures & Algorithms", "Prepares You for Technical Interviews", "Foundation for Further Languages"],
+        roles: ["Junior Software Developer", "C/C++ Programmer", "Embedded Systems Trainee", "Competitive Programmer", "Software Engineering Trainee", "Systems Programming Trainee"],
+        highlights: ["Build the Logic Every Developer Needs", "Strong Base for Data Structures & Algorithms", "Prepares You for Technical Interviews", "Foundation for Further Languages", "Time-Tested, Universally Respected Skill", "Great Foundation for Competitive Coding"],
     },
     "sql": {
         title: "SQL Database Management",
         description: "Learn to design, query and manage relational databases — from core SQL queries and joins to database design, optimization and real business reporting.",
         curriculum: [
-            { title: "Database Fundamentals", topics: ["RDBMS Concepts", "Tables, Keys & Relationships", "Installing & Using SQL Tools"] },
-            { title: "Core SQL Queries", topics: ["SELECT, WHERE & ORDER BY", "Filtering & Aggregation", "GROUP BY & HAVING"] },
-            { title: "Joins & Subqueries", topics: ["Inner/Outer Joins", "Subqueries & Nested Queries", "Set Operations"] },
-            { title: "Database Design", topics: ["Normalization", "ER Diagrams", "Constraints & Indexing"] },
-            { title: "Data Manipulation & Administration", topics: ["INSERT/UPDATE/DELETE", "Views & Stored Procedures Basics", "Backup & User Permissions"] },
-            { title: "Real-World Projects", topics: ["Business Database Design", "Reporting Queries", "Query Optimization Practice"] },
+            { title: "Database Fundamentals", topics: ["RDBMS Concepts", "Tables, Keys & Relationships", "Installing & Using SQL Tools", "Data Types & Schema Basics"] },
+            { title: "Core SQL Queries", topics: ["SELECT, WHERE & ORDER BY", "Filtering & Aggregation", "GROUP BY & HAVING", "String & Date Functions"] },
+            { title: "Joins & Subqueries", topics: ["Inner/Outer Joins", "Self Joins", "Subqueries & Nested Queries", "Set Operations", "Window Functions (Intro)"] },
+            { title: "Database Design", topics: ["Normalization", "ER Diagrams", "Constraints & Indexing", "Primary/Foreign Key Design"] },
+            { title: "Data Manipulation & Administration", topics: ["INSERT/UPDATE/DELETE", "Views & Stored Procedures Basics", "Triggers (Intro)", "Backup & User Permissions"] },
+            { title: "Real-World Projects", topics: ["Business Database Design", "Reporting Queries", "Query Optimization Practice", "Real Dataset Case Study"] },
         ],
         features: ["Query Writing to Database Design", "Hands-on Practice on Real Datasets", "Joins, Subqueries & Optimization", "Useful Across Every Tech Role", "Certificate"],
-        roles: ["Database Administrator (Junior)", "SQL Developer", "Data Analyst", "Backend Developer", "Reporting Analyst"],
-        highlights: ["Most Universally Required Tech Skill", "Design and Query Real Databases", "Strengthens Every Analytics & Dev Path", "Practice-Heavy, Query-Writing Focused"],
+        roles: ["Database Administrator (Junior)", "SQL Developer", "Data Analyst", "Backend Developer", "Reporting Analyst", "Business Intelligence Executive (Junior)"],
+        highlights: ["Most Universally Required Tech Skill", "Design and Query Real Databases", "Strengthens Every Analytics & Dev Path", "Practice-Heavy, Query-Writing Focused", "Applicable Across Nearly Every Tech Role", "Real Business Database Practice Throughout"],
     },
     "js-html-css": {
         title: "JavaScript, HTML5, CSS3",
         description: "Learn the three core building blocks of the web — from semantic HTML and responsive CSS to modern JavaScript — and build a real portfolio website by course end.",
         curriculum: [
-            { title: "HTML5 Fundamentals", topics: ["Semantic HTML Structure", "Forms & Media Elements", "Accessibility Basics"] },
-            { title: "CSS3 Styling", topics: ["Selectors & Box Model", "Flexbox & Grid Layouts", "Responsive Design & Media Queries"] },
-            { title: "JavaScript Basics", topics: ["Variables, Data Types & Operators", "Control Flow & Functions", "DOM Manipulation"] },
-            { title: "Interactive Web Pages", topics: ["Events & Event Handling", "Form Validation", "Dynamic Content Updates"] },
-            { title: "Modern JavaScript (ES6+)", topics: ["Arrow Functions & let/const", "Array/Object Methods", "Fetch API & JSON"] },
-            { title: "Mini Projects", topics: ["Responsive Landing Page", "Interactive JS App", "Portfolio Website Build"] },
+            { title: "HTML5 Fundamentals", topics: ["Semantic HTML Structure", "Forms & Media Elements", "Tables & Lists", "Accessibility Basics"] },
+            { title: "CSS3 Styling", topics: ["Selectors & Box Model", "Flexbox & Grid Layouts", "Responsive Design & Media Queries", "Animations & Transitions"] },
+            { title: "JavaScript Basics", topics: ["Variables, Data Types & Operators", "Control Flow & Functions", "Arrays & Objects", "DOM Manipulation"] },
+            { title: "Interactive Web Pages", topics: ["Events & Event Handling", "Form Validation", "Dynamic Content Updates", "Local Storage Basics"] },
+            { title: "Modern JavaScript (ES6+)", topics: ["Arrow Functions & let/const", "Array/Object Methods", "Fetch API & JSON", "Async/Await Basics"] },
+            { title: "Mini Projects", topics: ["Responsive Landing Page", "Interactive JS App", "Portfolio Website Build", "Deploying Your Site"] },
         ],
         features: ["Three Core Building Blocks of the Web", "Responsive Design with Flexbox & Grid", "Hands-on DOM & Event Handling", "Modern ES6+ JavaScript", "Real Portfolio Website", "Certificate"],
-        roles: ["Frontend Developer (Junior)", "Web Designer", "UI Developer", "WordPress/Web Editor", "Freelance Web Developer"],
-        highlights: ["Perfect Starting Point for Web Development", "Build Fully Responsive, Interactive Websites", "Foundation for React, Vue & Other Frameworks", "Portfolio Website by Course End"],
+        roles: ["Frontend Developer (Junior)", "Web Designer", "UI Developer", "WordPress/Web Editor", "Freelance Web Developer", "JavaScript Developer (Junior)"],
+        highlights: ["Perfect Starting Point for Web Development", "Build Fully Responsive, Interactive Websites", "Foundation for React, Vue & Other Frameworks", "Portfolio Website by Course End", "Strong Fundamentals-First Teaching Approach", "Great Entry Point into Web Development Careers"],
     },
     "website-development": {
         title: "Website Development",
         description: "Learn to build and launch complete websites through both WordPress and custom coding routes — with responsive design, SEO basics and a real live project.",
         curriculum: [
-            { title: "Web Fundamentals", topics: ["How Websites Work", "HTML5 & CSS3 Essentials", "Domain & Hosting Basics"] },
-            { title: "Responsive Design", topics: ["Flexbox & Grid Layouts", "Mobile-First Design", "Cross-Browser Compatibility"] },
-            { title: "CMS-Based Development", topics: ["WordPress Basics", "Themes & Plugins", "Page Builders"] },
-            { title: "Custom Website Development", topics: ["JavaScript Interactivity", "Contact Forms & Integrations", "Basic Backend Connection"] },
-            { title: "SEO & Performance Basics", topics: ["On-Page SEO", "Page Speed Optimization", "Google Search Console Basics"] },
-            { title: "Launch & Real Projects", topics: ["Business Website Project", "E-commerce Site Basics", "Going Live & Maintenance"] },
+            { title: "Web Fundamentals", topics: ["How Websites Work", "HTML5 & CSS3 Essentials", "Domain & Hosting Basics", "Planning a Website Structure"] },
+            { title: "Responsive Design", topics: ["Flexbox & Grid Layouts", "Mobile-First Design", "Cross-Browser Compatibility", "UI Design Basics"] },
+            { title: "CMS-Based Development", topics: ["WordPress Basics", "Themes & Plugins", "Page Builders", "WooCommerce Basics"] },
+            { title: "Custom Website Development", topics: ["JavaScript Interactivity", "Contact Forms & Integrations", "Basic Backend Connection", "Third-Party API Integration"] },
+            { title: "SEO & Performance Basics", topics: ["On-Page SEO", "Page Speed Optimization", "Google Search Console Basics", "Basic Analytics Setup"] },
+            { title: "Launch & Real Projects", topics: ["Business Website Project", "E-commerce Site Basics", "Going Live & Maintenance", "Client Handover Process"] },
         ],
         features: ["CMS (WordPress) & Custom Coding Routes", "Responsive, Mobile-First Websites", "SEO & Performance Basics Included", "Build & Launch a Real Website", "Certificate"],
-        roles: ["Website Developer", "WordPress Developer", "Freelance Web Designer", "Digital Agency Executive", "Junior Web Developer"],
-        highlights: ["Build & Launch Complete Websites", "Both No-Code and Coding Paths Covered", "Great for Freelancers & Small Businesses", "Real Website Project by Course End"],
+        roles: ["Website Developer", "WordPress Developer", "Freelance Web Designer", "Digital Agency Executive", "Junior Web Developer", "E-commerce Website Executive"],
+        highlights: ["Build & Launch Complete Websites", "Both No-Code and Coding Paths Covered", "Great for Freelancers & Small Businesses", "Real Website Project by Course End", "Complete No-Code + Coding Skillset", "Real Business Website Delivered"],
     },
     "erp-development": {
         title: "ERP Development",
         description: "Learn to design and build real ERP systems — covering database design, backend APIs, dashboards and core business modules like inventory, billing and HR.",
         curriculum: [
-            { title: "ERP Concepts", topics: ["What is ERP", "Business Process Mapping", "Modules Overview (Sales, Inventory, HR, Finance)"] },
-            { title: "Database Design for ERP", topics: ["Relational Schema Design", "Master & Transaction Tables", "Data Integrity & Constraints"] },
-            { title: "Backend Development", topics: ["Server-Side Logic (PHP/Node)", "API Design for ERP Modules", "Role-Based Access Control"] },
-            { title: "Frontend & Dashboards", topics: ["Admin Panel Development", "Reports & Dashboards", "Form-Driven Workflows"] },
-            { title: "Core ERP Modules", topics: ["Inventory & Billing Module", "HR & Payroll Basics", "Sales & Purchase Workflows"] },
-            { title: "Deployment & Customization", topics: ["Testing & Debugging", "Client Customization Approach", "Deployment & Maintenance"] },
+            { title: "ERP Concepts", topics: ["What is ERP", "Business Process Mapping", "Modules Overview (Sales, Inventory, HR, Finance)", "Requirement Gathering Basics"] },
+            { title: "Database Design for ERP", topics: ["Relational Schema Design", "Master & Transaction Tables", "Data Integrity & Constraints", "Normalization for ERP Data"] },
+            { title: "Backend Development", topics: ["Server-Side Logic (PHP/Node)", "API Design for ERP Modules", "Role-Based Access Control", "Workflow & Approval Logic"] },
+            { title: "Frontend & Dashboards", topics: ["Admin Panel Development", "Reports & Dashboards", "Form-Driven Workflows", "Notifications & Alerts"] },
+            { title: "Core ERP Modules", topics: ["Inventory & Billing Module", "HR & Payroll Basics", "Sales & Purchase Workflows", "Accounts/Finance Module Basics"] },
+            { title: "Deployment & Customization", topics: ["Testing & Debugging", "Client Customization Approach", "Deployment & Maintenance", "Handling Feature Requests"] },
         ],
         features: ["Build Real ERP Systems from Scratch", "Database, Backend & Frontend Together", "Real Business-Module Development", "Role-Based Access & Security Practices", "Certificate"],
-        roles: ["ERP Developer", "Software Developer (Business Systems)", "Systems Analyst", "ERP Implementation Executive", "Full Stack Developer (Business Apps)"],
-        highlights: ["Build a Complete, Working ERP System", "Rare, High-Value Specialization", "Real Business Process Automation", "Great for Entrepreneurs Building Own Tools"],
+        roles: ["ERP Developer", "Software Developer (Business Systems)", "Systems Analyst", "ERP Implementation Executive", "Full Stack Developer (Business Apps)", "Business Automation Developer"],
+        highlights: ["Build a Complete, Working ERP System", "Rare, High-Value Specialization", "Real Business Process Automation", "Great for Entrepreneurs Building Own Tools", "Covers Database, Backend & Frontend Together", "Highly Valuable, Niche Specialization"],
     },
     "rhino-matrix-jewellery": {
         title: "Rhino & Matrix Jewellery Designing",
         description: "Master the industry-standard Rhino and Matrix jewellery CAD workflow — from 3D modeling of rings, pendants and earrings to rendering and production-ready files.",
         curriculum: [
-            { title: "Jewellery Design Fundamentals", topics: ["Design Principles & Terminology", "Sketching Basics", "Industry Workflow Overview"] },
-            { title: "Rhino 3D Basics", topics: ["Interface & Navigation", "2D/3D Modeling Tools", "Curves & Surfaces"] },
-            { title: "Jewellery Modeling in Rhino", topics: ["Ring, Pendant & Earring Modeling", "Stone Setting Techniques", "Component Assembly"] },
-            { title: "Matrix for Jewellery", topics: ["Matrix Plugin Tools", "Parametric Jewellery Design", "Pattern & Shank Generation"] },
-            { title: "Rendering & Presentation", topics: ["Material & Texture Setup", "Rendering for Client Presentation", "Technical Drawings for Production"] },
-            { title: "Real Design Projects", topics: ["Custom Jewellery Piece Design", "Client Brief-Based Project", "Production-Ready File Prep"] },
+            { title: "Jewellery Design Fundamentals", topics: ["Design Principles & Terminology", "Sketching Basics", "Industry Workflow Overview", "Gemstone & Metal Basics"] },
+            { title: "Rhino 3D Basics", topics: ["Interface & Navigation", "2D/3D Modeling Tools", "Curves & Surfaces", "Precision Modeling Techniques"] },
+            { title: "Jewellery Modeling in Rhino", topics: ["Ring, Pendant & Earring Modeling", "Bangle & Chain Modeling", "Stone Setting Techniques", "Component Assembly"] },
+            { title: "Matrix for Jewellery", topics: ["Matrix Plugin Tools", "Parametric Jewellery Design", "Pattern & Shank Generation", "Auto Prong & Setting Tools"] },
+            { title: "Rendering & Presentation", topics: ["Material & Texture Setup", "Lighting for Realistic Renders", "Rendering for Client Presentation", "Technical Drawings for Production"] },
+            { title: "Real Design Projects", topics: ["Custom Jewellery Piece Design", "Client Brief-Based Project", "Production-Ready File Prep", "Portfolio Compilation"] },
         ],
         features: ["Industry-Standard Rhino + Matrix Workflow", "Hands-on 3D Jewellery Modeling", "Rendering & Production-Ready Files", "Real Client-Style Design Briefs", "Portfolio of Designed Pieces", "Certificate"],
-        roles: ["Jewellery CAD Designer", "3D Jewellery Modeler", "Rhino/Matrix Designer", "Jewellery Design Consultant", "CAD-CAM Production Assistant"],
-        highlights: ["Master Industry-Standard Jewellery CAD Tools", "Build a Professional Design Portfolio", "High Demand in Jewellery Manufacturing Hubs", "Concept to Production-Ready Files"],
+        roles: ["Jewellery CAD Designer", "3D Jewellery Modeler", "Rhino/Matrix Designer", "Jewellery Design Consultant", "CAD-CAM Production Assistant", "Freelance Jewellery CAD Artist"],
+        highlights: ["Master Industry-Standard Jewellery CAD Tools", "Build a Professional Design Portfolio", "High Demand in Jewellery Manufacturing Hubs", "Concept to Production-Ready Files", "In High Demand at Jewellery Manufacturing Hubs", "Strong, Visual Portfolio by Course End"],
     },
     "cad-designing": {
         title: "CAD Designing",
         description: "Build strong technical drafting skills with industry-standard CAD software — covering 2D drafting, 3D modeling, assemblies and real design projects.",
         curriculum: [
-            { title: "CAD Fundamentals", topics: ["2D Drafting Basics", "Interface & Tools Overview", "Precision Drawing Techniques"] },
-            { title: "2D Drafting & Documentation", topics: ["Layers & Annotations", "Dimensioning Standards", "Technical Drawing Conventions"] },
-            { title: "3D Modeling Basics", topics: ["Solid Modeling Tools", "Extrude, Revolve & Sweep", "Assemblies & Constraints"] },
-            { title: "Design Projects", topics: ["Mechanical Part Design", "Architectural/Product Drawings", "Rendering Basics"] },
-            { title: "Industry Workflow", topics: ["File Formats & Sharing", "Design Revisions & Version Control", "Client Presentation of Designs"] },
+            { title: "CAD Fundamentals", topics: ["2D Drafting Basics", "Interface & Tools Overview", "Precision Drawing Techniques", "Coordinate Systems & Snapping"] },
+            { title: "2D Drafting & Documentation", topics: ["Layers & Annotations", "Dimensioning Standards", "Technical Drawing Conventions", "Blocks & Templates"] },
+            { title: "3D Modeling Basics", topics: ["Solid Modeling Tools", "Extrude, Revolve & Sweep", "Assemblies & Constraints", "Editing & Modifying Solids"] },
+            { title: "Design Projects", topics: ["Mechanical Part Design", "Architectural/Product Drawings", "Rendering Basics", "Bill of Materials Basics"] },
+            { title: "Industry Workflow", topics: ["File Formats & Sharing", "Design Revisions & Version Control", "Client Presentation of Designs", "Print & Plot Setup"] },
         ],
         features: ["2D Drafting & 3D Modeling", "Industry-Standard CAD Workflow", "Real Design & Drafting Projects", "Precision & Documentation Focus", "Certificate"],
-        roles: ["CAD Designer/Drafter", "Junior Design Engineer", "Architecture Drafting Assistant", "Product Design Trainee", "CAD Technician"],
-        highlights: ["Build Strong Technical Drafting Skills", "Industry-Aligned CAD Training", "Useful Across Mechanical, Civil & Product Design", "Portfolio of Design Drawings"],
+        roles: ["CAD Designer/Drafter", "Junior Design Engineer", "Architecture Drafting Assistant", "Product Design Trainee", "CAD Technician", "Manufacturing Design Support Executive"],
+        highlights: ["Build Strong Technical Drafting Skills", "Industry-Aligned CAD Training", "Useful Across Mechanical, Civil & Product Design", "Portfolio of Design Drawings", "Applicable Across Mechanical, Civil & Product Design", "Hands-on Precision Drafting Practice"],
     },
     "design-tools-suite": {
         title: "Adobe Photoshop,Figma, Canva & CorelDRAW Designing",
         description: "Master four industry-standard design tools in one course — covering print, digital, UI/UX and social media design — and build a strong, varied design portfolio.",
         curriculum: [
-            { title: "Design Fundamentals", topics: ["Color Theory & Typography", "Composition Principles", "Choosing the Right Tool for the Job"] },
-            { title: "Adobe Photoshop", topics: ["Layers & Masking", "Photo Editing & Retouching", "Compositing & Effects"] },
-            { title: "CorelDRAW", topics: ["Vector Illustration Basics", "Logo & Print Design", "Working with Typography"] },
-            { title: "Figma", topics: ["UI/UX Design Basics", "Components & Auto-Layout", "Prototyping & Sharing"] },
-            { title: "Canva", topics: ["Quick Social Media Designs", "Templates & Branding Kits", "Presentation & Marketing Design"] },
-            { title: "Real Design Projects", topics: ["Brand Identity Project", "Social Media Design Set", "UI Mockup Project"] },
+            { title: "Design Fundamentals", topics: ["Color Theory & Typography", "Composition Principles", "Choosing the Right Tool for the Job", "File Formats & Export Basics"] },
+            { title: "Adobe Photoshop", topics: ["Layers & Masking", "Photo Editing & Retouching", "Compositing & Effects", "Working with Selections & Filters"] },
+            { title: "CorelDRAW", topics: ["Vector Illustration Basics", "Logo & Print Design", "Working with Typography", "Print-Ready Export Settings"] },
+            { title: "Figma", topics: ["UI/UX Design Basics", "Components & Auto-Layout", "Prototyping & Sharing", "Design Systems Basics"] },
+            { title: "Canva", topics: ["Quick Social Media Designs", "Templates & Branding Kits", "Presentation & Marketing Design", "Animated Post Basics"] },
+            { title: "Real Design Projects", topics: ["Brand Identity Project", "Social Media Design Set", "UI Mockup Project", "Portfolio Compilation"] },
         ],
         features: ["4 Industry-Standard Design Tools", "Print, Digital & UI/UX Design Covered", "Real Branding & Social Media Projects", "Beginner-Friendly", "Portfolio-Ready Project Set", "Certificate"],
-        roles: ["Graphic Designer", "Social Media Designer", "UI/UX Designer (Junior)", "Freelance Designer", "Brand & Marketing Designer"],
-        highlights: ["One Course, Four Industry-Standard Tools", "Build a Strong, Varied Design Portfolio", "Covers Both Print and Digital Design", "Great for Freelancers & Content Creators"],
+        roles: ["Graphic Designer", "Social Media Designer", "UI/UX Designer (Junior)", "Freelance Designer", "Brand & Marketing Designer", "Print & Digital Design Executive"],
+        highlights: ["One Course, Four Industry-Standard Tools", "Build a Strong, Varied Design Portfolio", "Covers Both Print and Digital Design", "Great for Freelancers & Content Creators", "Covers Both Print and Digital Design Together", "Ideal for Freelancers & Content Creators"],
     },
     "digital-marketing-seo": {
         title: "Digital Marketing & SEO",
         description: "Learn organic (SEO) and paid digital marketing together — covering social media, Google/Meta Ads, content marketing and analytics through a real campaign project.",
         curriculum: [
-            { title: "Digital Marketing Foundations", topics: ["Marketing Funnel Basics", "Digital Marketing Channels Overview", "Setting Goals & KPIs"] },
-            { title: "SEO Fundamentals", topics: ["On-Page & Off-Page SEO", "Keyword Research", "Technical SEO Basics"] },
-            { title: "Social Media Marketing", topics: ["Platform Strategy (Instagram, FB, LinkedIn)", "Content Calendars", "Organic Growth Tactics"] },
-            { title: "Paid Advertising", topics: ["Google Ads Basics", "Meta Ads Basics", "Campaign Optimization"] },
-            { title: "Content & Email Marketing", topics: ["Content Strategy", "Email Campaigns & Automation Basics", "Analytics-Driven Content Planning"] },
-            { title: "Analytics & Real Campaigns", topics: ["Google Analytics Basics", "Reporting & Performance Tracking", "Live Campaign Project"] },
+            { title: "Digital Marketing Foundations", topics: ["Marketing Funnel Basics", "Digital Marketing Channels Overview", "Setting Goals & KPIs", "Understanding Your Target Audience"] },
+            { title: "SEO Fundamentals", topics: ["On-Page & Off-Page SEO", "Keyword Research", "Technical SEO Basics", "Local SEO & Google Business Profile"] },
+            { title: "Social Media Marketing", topics: ["Platform Strategy (Instagram, FB, LinkedIn)", "Content Calendars", "Organic Growth Tactics", "Influencer & Collaboration Basics"] },
+            { title: "Paid Advertising", topics: ["Google Ads Basics", "Meta Ads Basics", "Audience Targeting & Retargeting", "Campaign Optimization"] },
+            { title: "Content & Email Marketing", topics: ["Content Strategy", "Email Campaigns & Automation Basics", "Analytics-Driven Content Planning", "Copywriting Basics"] },
+            { title: "Analytics & Real Campaigns", topics: ["Google Analytics Basics", "Reporting & Performance Tracking", "A/B Testing Basics", "Live Campaign Project"] },
         ],
         features: ["SEO, Social Media, Paid Ads & Analytics", "Hands-on Google & Meta Ads Practice", "Real Campaign Planning & Execution", "Analytics-Driven Decision Making", "Portfolio-Ready Campaign Project", "Certificate"],
-        roles: ["Digital Marketing Executive", "SEO Executive", "Social Media Manager", "Performance Marketing Associate", "Content Marketing Specialist"],
-        highlights: ["Complete Digital Marketing Skillset", "Organic (SEO) & Paid Strategies Together", "Real Ad Campaign Experience", "High-Demand, Fast-Growing Career Field"],
+        roles: ["Digital Marketing Executive", "SEO Executive", "Social Media Manager", "Performance Marketing Associate", "Content Marketing Specialist", "E-commerce Marketing Executive"],
+        highlights: ["Complete Digital Marketing Skillset", "Organic (SEO) & Paid Strategies Together", "Real Ad Campaign Experience", "High-Demand, Fast-Growing Career Field", "Combines Organic and Paid Strategy Together", "Real Ad-Spend Campaign Experience"],
     },
     "tally-gst": {
         title: "Tally Prime with GST",
         description: "Learn Tally Prime and GST compliance end-to-end — from vouchers and inventory to GST returns, payroll and TDS, with real business data-entry practice.",
         curriculum: [
-            { title: "Accounting Fundamentals", topics: ["Basic Accounting Principles", "Ledgers & Vouchers", "Chart of Accounts Setup"] },
-            { title: "Tally Prime Basics", topics: ["Company Creation & Setup", "Voucher Entry", "Inventory Management Basics"] },
-            { title: "GST in Tally", topics: ["GST Concepts & Registration", "GST Voucher Entry", "GST Returns (GSTR-1, GSTR-3B)"] },
-            { title: "Banking & Reconciliation", topics: ["Bank Reconciliation", "Payment & Receipt Entries", "Cheque Printing"] },
-            { title: "Payroll & TDS", topics: ["Payroll Processing in Tally", "TDS Basics & Entries", "Statutory Compliance Overview"] },
-            { title: "Reports & Real Practice", topics: ["MIS & Financial Reports", "Real Business Data Entry Practice", "Year-End Closing Basics"] },
+            { title: "Accounting Fundamentals", topics: ["Basic Accounting Principles", "Ledgers & Vouchers", "Chart of Accounts Setup", "Golden Rules of Accounting"] },
+            { title: "Tally Prime Basics", topics: ["Company Creation & Setup", "Voucher Entry", "Inventory Management Basics", "Godown & Stock Groups"] },
+            { title: "GST in Tally", topics: ["GST Concepts & Registration", "GST Voucher Entry", "GST Returns (GSTR-1, GSTR-3B)", "E-Way Bill & E-Invoicing Basics"] },
+            { title: "Banking & Reconciliation", topics: ["Bank Reconciliation", "Payment & Receipt Entries", "Cheque Printing", "Multi-Currency Basics"] },
+            { title: "Payroll & TDS", topics: ["Payroll Processing in Tally", "TDS Basics & Entries", "Statutory Compliance Overview", "PF/ESI Entries (Basics)"] },
+            { title: "Reports & Real Practice", topics: ["MIS & Financial Reports", "Balance Sheet & P&L in Tally", "Real Business Data Entry Practice", "Year-End Closing Basics"] },
         ],
         features: ["Tally Prime + GST Compliance Training", "Real Business Accounting Practice", "Covers Payroll & TDS Basics", "Job-Ready Accounting Software Skills", "Certificate"],
-        roles: ["Accounts Executive", "Tally Operator", "GST Executive", "Billing & Inventory Executive", "Junior Accountant"],
-        highlights: ["Most In-Demand Accounting Software Skill", "GST Compliance End-to-End", "Real Business Scenario Training", "Great for Commerce Students & Job Seekers"],
+        roles: ["Accounts Executive", "Tally Operator", "GST Executive", "Billing & Inventory Executive", "Junior Accountant", "Payroll & Compliance Executive"],
+        highlights: ["Most In-Demand Accounting Software Skill", "GST Compliance End-to-End", "Real Business Scenario Training", "Great for Commerce Students & Job Seekers", "Covers Payroll, TDS & GST Together", "Practical, Real Business Data-Entry Focused"],
     },
     "adfa": {
         title: "Advance Diploma In Finance and Accounting(ADFA)",
         description: "A complete finance and accounting career pathway — covering Tally, GST, taxation, financial reporting, payroll and Excel for finance in one structured diploma.",
         curriculum: [
-            { title: "Accounting Fundamentals", topics: ["Principles of Accounting", "Journal, Ledger & Trial Balance", "Financial Statements Basics"] },
-            { title: "Tally Prime & GST", topics: ["Company & Voucher Setup", "GST Compliance & Returns", "Inventory & Billing"] },
-            { title: "Taxation Basics", topics: ["Income Tax Fundamentals", "TDS Concepts", "GST Return Filing Practice"] },
-            { title: "Financial Reporting", topics: ["Balance Sheet & P&L Preparation", "MIS Reporting", "Bank Reconciliation"] },
-            { title: "Payroll & Compliance", topics: ["Payroll Processing", "Statutory Compliance (PF/ESI Basics)", "Audit Fundamentals"] },
-            { title: "Excel for Finance", topics: ["Financial Formulas & Functions", "Budgeting & Analysis", "Real Accounting Case Studies"] },
+            { title: "Accounting Fundamentals", topics: ["Principles of Accounting", "Journal, Ledger & Trial Balance", "Financial Statements Basics", "Double-Entry Bookkeeping"] },
+            { title: "Tally Prime & GST", topics: ["Company & Voucher Setup", "GST Compliance & Returns", "Inventory & Billing", "E-Way Bill & E-Invoicing Basics"] },
+            { title: "Taxation Basics", topics: ["Income Tax Fundamentals", "TDS Concepts", "GST Return Filing Practice", "Tax Computation Basics"] },
+            { title: "Financial Reporting", topics: ["Balance Sheet & P&L Preparation", "MIS Reporting", "Bank Reconciliation", "Cash Flow Statement Basics"] },
+            { title: "Payroll & Compliance", topics: ["Payroll Processing", "Statutory Compliance (PF/ESI Basics)", "Audit Fundamentals", "Compliance Calendar & Filing"] },
+            { title: "Excel for Finance", topics: ["Financial Formulas & Functions", "Budgeting & Analysis", "Real Accounting Case Studies", "Finance Dashboard Basics"] },
         ],
         features: ["Comprehensive Finance + Accounting Diploma", "Tally, GST, Taxation & Excel Together", "Real Accounting Case Study Practice", "Career-Focused, Job-Ready Curriculum", "Certificate"],
-        roles: ["Accountant", "Finance Executive", "Tax & GST Executive", "Accounts Payable/Receivable Executive", "Audit Assistant"],
-        highlights: ["Complete Finance & Accounting Career Pathway", "Software, Taxation & Reporting Together", "Strong Foundation for CA/CS/CMA Studies", "Practical, Employer-Ready Skillset"],
+        roles: ["Accountant", "Finance Executive", "Tax & GST Executive", "Accounts Payable/Receivable Executive", "Audit Assistant", "Finance Process Executive"],
+        highlights: ["Complete Finance & Accounting Career Pathway", "Software, Taxation & Reporting Together", "Strong Foundation for CA/CS/CMA Studies", "Practical, Employer-Ready Skillset", "One Diploma, Multiple Finance Career Paths", "Strong Base for CA/CS/CMA Aspirants"],
     },
     "typing": {
         title: "Hindi & English Typing",
         description: "Build speed and accuracy in both Hindi and English typing with structured, exam-pattern practice designed for government exams and office roles.",
         curriculum: [
-            { title: "Keyboard Fundamentals", topics: ["Touch Typing Technique", "Keyboard Layout Mastery", "Posture & Speed-Building Basics"] },
-            { title: "English Typing Practice", topics: ["Speed-Building Exercises", "Accuracy Drills", "Common Document Typing Practice"] },
-            { title: "Hindi Typing (Krutidev/Mangal/Unicode)", topics: ["Hindi Keyboard Layout", "Typing Tools & Fonts", "Speed & Accuracy Practice"] },
-            { title: "Formatting & Document Skills", topics: ["MS Word Formatting Basics", "Typing Government/Office Documents", "Proofreading Skills"] },
-            { title: "Speed & Accuracy Tests", topics: ["Timed Typing Tests", "Error Reduction Techniques", "Exam-Pattern Practice (SSC/Court Typing Tests)"] },
+            { title: "Keyboard Fundamentals", topics: ["Touch Typing Technique", "Keyboard Layout Mastery", "Posture & Speed-Building Basics", "Finger Placement Drills"] },
+            { title: "English Typing Practice", topics: ["Speed-Building Exercises", "Accuracy Drills", "Common Document Typing Practice", "Paragraph Typing Practice"] },
+            { title: "Hindi Typing (Krutidev/Mangal/Unicode)", topics: ["Hindi Keyboard Layout", "Typing Tools & Fonts", "Speed & Accuracy Practice", "Switching Between Fonts/Layouts"] },
+            { title: "Formatting & Document Skills", topics: ["MS Word Formatting Basics", "Typing Government/Office Documents", "Proofreading Skills", "Table & Form Typing"] },
+            { title: "Speed & Accuracy Tests", topics: ["Timed Typing Tests", "Error Reduction Techniques", "Exam-Pattern Practice (SSC/Court Typing Tests)", "Final Speed Certification Test"] },
         ],
         features: ["Both English & Hindi Typing", "Focus on Speed AND Accuracy", "Exam-Pattern Typing Test Practice", "Great for Government Exam Preparation", "Certificate with Speed/Accuracy Record"],
-        roles: ["Data Entry Operator", "Typist (Govt./Court/Office)", "Computer Operator", "Back Office Executive", "Admin Assistant"],
-        highlights: ["Essential Skill for Govt. Exams & Office Jobs", "Structured Speed-Building Method", "Covers Both Hindi & English Typing", "Practice Tests in Exam Format"],
+        roles: ["Data Entry Operator", "Typist (Govt./Court/Office)", "Computer Operator", "Back Office Executive", "Admin Assistant", "Court/Government Exam Aspirant"],
+        highlights: ["Essential Skill for Govt. Exams & Office Jobs", "Structured Speed-Building Method", "Covers Both Hindi & English Typing", "Practice Tests in Exam Format", "Exam-Format Practice Included Throughout", "Covers Both Speed and Accuracy Training"],
     },
     "logo-creative-design": {
         title: "Logo / Post & Creative Designing",
         description: "Learn logo design and social media creative design through real client-brief style projects, and build a ready-to-show freelance design portfolio.",
         curriculum: [
-            { title: "Design Fundamentals", topics: ["Color Theory & Typography", "Composition & Balance", "Branding Basics"] },
-            { title: "Logo Design", topics: ["Logo Design Process", "Vector Logo Creation", "Brand Identity Basics"] },
-            { title: "Social Media Post Design", topics: ["Platform-Specific Sizing", "Template-Based Design", "Engaging Visual Content Creation"] },
-            { title: "Creative Tools Practice", topics: ["Canva & CorelDRAW/Photoshop Basics", "Design Software Workflow", "Export & Delivery Formats"] },
-            { title: "Client Projects", topics: ["Logo Design Brief Project", "Social Media Content Pack", "Portfolio Building"] },
+            { title: "Design Fundamentals", topics: ["Color Theory & Typography", "Composition & Balance", "Branding Basics", "Choosing the Right Style"] },
+            { title: "Logo Design", topics: ["Logo Design Process", "Vector Logo Creation", "Brand Identity Basics", "Logo Variations & Usage"] },
+            { title: "Social Media Post Design", topics: ["Platform-Specific Sizing", "Template-Based Design", "Engaging Visual Content Creation", "Reel Cover & Story Design"] },
+            { title: "Creative Tools Practice", topics: ["Canva & CorelDRAW/Photoshop Basics", "Design Software Workflow", "Export & Delivery Formats", "Working with Client Assets"] },
+            { title: "Client Projects", topics: ["Logo Design Brief Project", "Social Media Content Pack", "Portfolio Building", "Presenting Work to Clients"] },
         ],
         features: ["Logo Design & Social Media Creatives", "Real Client-Brief Style Projects", "Beginner-Friendly Design Tool Training", "Ready-to-Show Design Portfolio", "Certificate"],
-        roles: ["Graphic Designer", "Social Media Content Designer", "Freelance Logo Designer", "Junior Brand Designer", "Creative Executive"],
-        highlights: ["Skills in Constant Business Demand", "Great Starting Point for Freelance Design", "Build a Strong, Visual Portfolio", "Practical Training on Real Design Briefs"],
+        roles: ["Graphic Designer", "Social Media Content Designer", "Freelance Logo Designer", "Junior Brand Designer", "Creative Executive", "Freelance Social Media Designer"],
+        highlights: ["Skills in Constant Business Demand", "Great Starting Point for Freelance Design", "Build a Strong, Visual Portfolio", "Practical Training on Real Design Briefs", "Real, Client-Brief Style Design Practice", "Strong Starting Point for Freelance Careers"],
     },
     "basic-computer-logic": {
         title: "Basic Computer & Logic Building",
         description: "The ideal starting point for computer beginners — covering OS, internet and MS Office fundamentals alongside real logical thinking and problem-solving skills.",
         curriculum: [
-            { title: "Computer Fundamentals", topics: ["Hardware & Software Basics", "Operating System Essentials", "File Management"] },
-            { title: "Internet & Digital Basics", topics: ["Browsing & Email Basics", "Online Safety Essentials", "Basic Troubleshooting"] },
-            { title: "MS Office Basics", topics: ["Word & Excel Essentials", "PowerPoint Basics", "Practical Document Creation"] },
-            { title: "Logic Building", topics: ["Flowcharts & Algorithms", "Problem-Solving Approach", "Basic Programming Logic (Pseudocode)"] },
-            { title: "Practical Application", topics: ["Everyday Computer Tasks", "Simple Logic-Building Exercises", "Foundation for Further Courses"] },
+            { title: "Computer Fundamentals", topics: ["Hardware & Software Basics", "Operating System Essentials", "File Management", "Using Peripherals & Storage Devices"] },
+            { title: "Internet & Digital Basics", topics: ["Browsing & Email Basics", "Online Safety Essentials", "Basic Troubleshooting", "Using Search Engines Effectively"] },
+            { title: "MS Office Basics", topics: ["Word & Excel Essentials", "PowerPoint Basics", "Practical Document Creation", "Printing & File Sharing"] },
+            { title: "Logic Building", topics: ["Flowcharts & Algorithms", "Problem-Solving Approach", "Basic Programming Logic (Pseudocode)", "Everyday Decision-Making Logic"] },
+            { title: "Practical Application", topics: ["Everyday Computer Tasks", "Simple Logic-Building Exercises", "Foundation for Further Courses", "Final Practice Assessment"] },
         ],
         features: ["Perfect Start for Computer Beginners", "Builds Real Logical Thinking Skills", "OS, Internet & MS Office Basics", "Hands-on, Practice-First Teaching", "Certificate"],
-        roles: ["Computer Operator (Trainee)", "Data Entry Operator", "Office Assistant", "Junior IT Support", "Entry-Level Admin Executive"],
-        highlights: ["Ideal First Step for Absolute Beginners", "Builds Confidence with Computers Quickly", "Strong Logical Foundation for Future Courses", "Practical, Everyday-Use Focused Training"],
+        roles: ["Computer Operator (Trainee)", "Data Entry Operator", "Office Assistant", "Junior IT Support", "Entry-Level Admin Executive", "Digital Literacy Trainer (Foundation)"],
+        highlights: ["Ideal First Step for Absolute Beginners", "Builds Confidence with Computers Quickly", "Strong Logical Foundation for Future Courses", "Practical, Everyday-Use Focused Training", "Builds Real Confidence with Computers Fast", "Strong Logical Base for Future Tech Courses"],
     },
     "internet-surfing": {
         title: "Internet Surfing",
         description: "Learn to use the internet safely and confidently for everyday tasks — from searching and email to online safety, government portals and digital payments.",
         curriculum: [
-            { title: "Internet Basics", topics: ["How the Internet Works", "Browsers & Search Engines", "Setting Up Accounts Safely"] },
-            { title: "Effective Searching", topics: ["Search Techniques & Filters", "Evaluating Reliable Sources", "Downloading & Saving Files Safely"] },
-            { title: "Email & Communication", topics: ["Email Setup & Etiquette", "Video Calling Tools", "Online Forms & Applications"] },
-            { title: "Online Safety", topics: ["Identifying Scams & Phishing", "Password & Privacy Basics", "Safe Online Shopping/Banking"] },
-            { title: "Practical Everyday Use", topics: ["Government Portal Navigation", "Online Bill Payments & Bookings", "Practical Assignments"] },
+            { title: "Internet Basics", topics: ["How the Internet Works", "Browsers & Search Engines", "Setting Up Accounts Safely", "Navigating Websites Confidently"] },
+            { title: "Effective Searching", topics: ["Search Techniques & Filters", "Evaluating Reliable Sources", "Downloading & Saving Files Safely", "Using Maps & Navigation Apps"] },
+            { title: "Email & Communication", topics: ["Email Setup & Etiquette", "Video Calling Tools", "Online Forms & Applications", "Sharing Files Online"] },
+            { title: "Online Safety", topics: ["Identifying Scams & Phishing", "Password & Privacy Basics", "Safe Online Shopping/Banking", "Recognizing Fake Websites"] },
+            { title: "Practical Everyday Use", topics: ["Government Portal Navigation", "Online Bill Payments & Bookings", "UPI & Digital Payments Basics", "Practical Assignments"] },
         ],
         features: ["Beginner-Friendly, Practical Internet Training", "Strong Focus on Online Safety", "Covers Everyday Digital Tasks", "Hands-on Practice on Real Websites", "Certificate"],
-        roles: ["Office Assistant", "Digital Literacy Trainer (Foundation)", "Cyber Café Operator", "Entry-Level Admin Support", "E-Governance Facilitator"],
-        highlights: ["Essential Digital Literacy for Daily Life", "Use the Internet Safely & Confidently", "Practical Training on Real, Everyday Tasks", "Great for All Age Groups"],
+        roles: ["Office Assistant", "Digital Literacy Trainer (Foundation)", "Cyber Café Operator", "Entry-Level Admin Support", "E-Governance Facilitator", "Digital Payments/Banking Support Executive"],
+        highlights: ["Essential Digital Literacy for Daily Life", "Use the Internet Safely & Confidently", "Practical Training on Real, Everyday Tasks", "Great for All Age Groups", "Covers Government Portals & Digital Payments", "Confidence to Use the Internet Safely Every Day"],
     },
     "ms-office": {
         title: "MS-Office",
         description: "Learn Word, Excel, PowerPoint and Outlook through practical, office-task focused training — building real documents and presentations from day one.",
         curriculum: [
-            { title: "MS Word", topics: ["Document Formatting", "Tables & Mail Merge", "Templates & Styles"] },
-            { title: "MS Excel", topics: ["Formulas & Functions", "Data Sorting & Filtering", "Charts & Basic Pivot Tables"] },
-            { title: "MS PowerPoint", topics: ["Slide Design & Layouts", "Animations & Transitions", "Presentation Delivery Tips"] },
-            { title: "MS Outlook", topics: ["Email Management", "Calendar & Scheduling", "Contacts & Tasks"] },
-            { title: "Integration & Practice", topics: ["Combining Office Tools", "Real Office Document Projects", "Practical Assignments"] },
+            { title: "MS Word", topics: ["Document Formatting", "Tables & Mail Merge", "Templates & Styles", "Headers, Footers & Page Setup"] },
+            { title: "MS Excel", topics: ["Formulas & Functions", "Data Sorting & Filtering", "Charts & Basic Pivot Tables", "Conditional Formatting"] },
+            { title: "MS PowerPoint", topics: ["Slide Design & Layouts", "Animations & Transitions", "Presentation Delivery Tips", "Working with Images & Charts"] },
+            { title: "MS Outlook", topics: ["Email Management", "Calendar & Scheduling", "Contacts & Tasks", "Attachments & Signatures"] },
+            { title: "Integration & Practice", topics: ["Combining Office Tools", "Real Office Document Projects", "Printing & File Sharing", "Practical Assignments"] },
         ],
         features: ["Word, Excel, PowerPoint & Outlook", "Practical, Office-Task Focused Training", "Real Document & Presentation Projects", "Beginner-Friendly, Step-by-Step Teaching", "Certificate"],
-        roles: ["Office Assistant", "Data Entry Operator", "Administrative Executive", "Computer Operator", "Back Office Executive"],
-        highlights: ["Covers the Most-Used Office Software Suite", "Practical Skills Needed in Almost Every Job", "Great Foundation for Further Computer Courses", "Hands-on Document & Presentation Projects"],
+        roles: ["Office Assistant", "Data Entry Operator", "Administrative Executive", "Computer Operator", "Back Office Executive", "Front Office/Reception Executive"],
+        highlights: ["Covers the Most-Used Office Software Suite", "Practical Skills Needed in Almost Every Job", "Great Foundation for Further Computer Courses", "Hands-on Document & Presentation Projects", "Most Practical Skillset for Any Office Job", "Real Document & Presentation Practice Throughout"],
     },
     "dca": {
         title: "DCA",
         description: "A foundational computer diploma covering computer basics, MS Office, internet, typing and basic accounting awareness — a strong starting point for office roles.",
         curriculum: [
-            { title: "Computer Fundamentals", topics: ["Hardware, Software & OS Basics", "File Management", "Basic Troubleshooting"] },
-            { title: "MS Office Suite", topics: ["Word, Excel & PowerPoint", "Practical Document Creation", "Office Task Practice"] },
-            { title: "Internet & Email", topics: ["Browsing & Searching", "Email & Communication Tools", "Online Safety Basics"] },
-            { title: "Basic Accounting Awareness", topics: ["Accounting Fundamentals", "Tally Basics Introduction", "Practical Entries"] },
-            { title: "Typing Skills", topics: ["English Typing Practice", "Speed & Accuracy Building", "Document Typing Practice"] },
-            { title: "Practical Projects", topics: ["Real Office Task Simulation", "Final Assessment Project", "Certificate Preparation"] },
+            { title: "Computer Fundamentals", topics: ["Hardware, Software & OS Basics", "File Management", "Basic Troubleshooting", "Using Peripherals & Storage"] },
+            { title: "MS Office Suite", topics: ["Word, Excel & PowerPoint", "Practical Document Creation", "Office Task Practice", "Basic Formulas & Formatting"] },
+            { title: "Internet & Email", topics: ["Browsing & Searching", "Email & Communication Tools", "Online Safety Basics", "Downloading & File Sharing"] },
+            { title: "Basic Accounting Awareness", topics: ["Accounting Fundamentals", "Tally Basics Introduction", "Practical Entries", "Invoicing Basics"] },
+            { title: "Typing Skills", topics: ["English Typing Practice", "Speed & Accuracy Building", "Document Typing Practice", "Timed Practice Tests"] },
+            { title: "Practical Projects", topics: ["Real Office Task Simulation", "Final Assessment Project", "Certificate Preparation", "Resume Basics"] },
         ],
         features: ["All-in-One Foundational Computer Diploma", "Office, Internet, Typing & Accounting Basics", "Practical, Job-Readiness Focused", "Beginner-Friendly Structured Curriculum", "Certificate"],
-        roles: ["Computer Operator", "Data Entry Operator", "Office Assistant", "Admin Executive", "Back Office Executive"],
-        highlights: ["Strong, Well-Rounded Computer Foundation", "Opens Doors to Office & Admin Roles", "Great Stepping Stone to ADCA", "Practical, Hands-on Teaching Throughout"],
+        roles: ["Computer Operator", "Data Entry Operator", "Office Assistant", "Admin Executive", "Back Office Executive", "Junior Accounts cum Computer Assistant"],
+        highlights: ["Strong, Well-Rounded Computer Foundation", "Opens Doors to Office & Admin Roles", "Great Stepping Stone to ADCA", "Practical, Hands-on Teaching Throughout", "Solid, Well-Rounded Computer Foundation", "Great Stepping Stone Toward ADCA"],
     },
     "adca": {
         title: "ADCA",
         description: "A comprehensive computer applications diploma covering advanced MS Office, Tally with GST, typing/DTP basics and an introduction to programming.",
         curriculum: [
-            { title: "Computer & OS Fundamentals", topics: ["Hardware/Software Basics", "Windows OS Essentials", "File & Folder Management"] },
-            { title: "MS Office Advanced", topics: ["Advanced Word & Excel", "PowerPoint Presentations", "Outlook Essentials"] },
-            { title: "Internet & Digital Skills", topics: ["Internet & Email Mastery", "Online Safety", "Basic Digital Tools"] },
-            { title: "Tally with GST", topics: ["Accounting Fundamentals", "Tally Prime & GST Basics", "Billing & Inventory"] },
-            { title: "Typing & DTP Basics", topics: ["English/Hindi Typing", "Basic DTP Concepts", "Document Design Basics"] },
-            { title: "Introduction to Programming", topics: ["Basic Programming Logic", "HTML Basics", "Database (SQL) Introduction"] },
-            { title: "Final Projects", topics: ["Combined Skills Project", "Practical Assessment", "Certificate & Portfolio"] },
+            { title: "Computer & OS Fundamentals", topics: ["Hardware/Software Basics", "Windows OS Essentials", "File & Folder Management", "Basic Troubleshooting"] },
+            { title: "MS Office Advanced", topics: ["Advanced Word & Excel", "PowerPoint Presentations", "Outlook Essentials", "Mail Merge & Templates"] },
+            { title: "Internet & Digital Skills", topics: ["Internet & Email Mastery", "Online Safety", "Basic Digital Tools", "Government Portal Navigation"] },
+            { title: "Tally with GST", topics: ["Accounting Fundamentals", "Tally Prime & GST Basics", "Billing & Inventory", "GST Return Filing Practice"] },
+            { title: "Typing & DTP Basics", topics: ["English/Hindi Typing", "Basic DTP Concepts", "Document Design Basics", "Speed & Accuracy Practice"] },
+            { title: "Introduction to Programming", topics: ["Basic Programming Logic", "HTML Basics", "Database (SQL) Introduction", "Simple Web Page Building"] },
+            { title: "Final Projects", topics: ["Combined Skills Project", "Practical Assessment", "Certificate & Portfolio", "Resume Building"] },
         ],
         features: ["Comprehensive Computer Applications Diploma", "Office, Accounting, Typing & Basic Programming", "Practical, Project-Based Structure", "Strong Foundation for Office & IT-Support Roles", "Certificate"],
-        roles: ["Computer Operator", "Accounts cum Computer Executive", "Office Administrator", "DTP Operator", "Junior IT Support Executive"],
-        highlights: ["Well-Rounded, Multi-Skill Computer Diploma", "Office, Accounting & Basic Tech Together", "Great Value for Career-Starters", "Practical, Real-Task Based Learning"],
+        roles: ["Computer Operator", "Accounts cum Computer Executive", "Office Administrator", "DTP Operator", "Junior IT Support Executive", "MIS Executive (Trainee)"],
+        highlights: ["Well-Rounded, Multi-Skill Computer Diploma", "Office, Accounting & Basic Tech Together", "Great Value for Career-Starters", "Practical, Real-Task Based Learning", "Multi-Skill, Job-Ready Diploma", "Strong Foundation for Office & IT-Support Careers"],
     },
     "adca-plus": {
         title: "ADCA PLUS",
         description: "Everything in ADCA plus advanced Excel automation, web and design basics, AI tools and career-readiness training — our most comprehensive computer diploma.",
         curriculum: [
-            { title: "Everything in ADCA", topics: ["MS Office, Tally with GST", "Typing & Internet Skills", "Basic Programming Introduction"] },
-            { title: "Advanced Excel & Automation", topics: ["Advanced Formulas & Power Query", "Macro & VBA Basics", "Dashboard Building"] },
-            { title: "Web & Design Basics", topics: ["HTML, CSS & Basic JavaScript", "Basic Graphic Design (Canva/Photoshop)", "Simple Website Building"] },
-            { title: "Digital Skills Add-on", topics: ["Digital Marketing Basics", "AI Tools for Productivity", "Social Media Basics for Business"] },
-            { title: "Career Readiness", topics: ["Resume Building", "Interview Preparation", "Practical Portfolio Project"] },
+            { title: "Everything in ADCA", topics: ["MS Office, Tally with GST", "Typing & Internet Skills", "Basic Programming Introduction", "Digital Document Handling"] },
+            { title: "Advanced Excel & Automation", topics: ["Advanced Formulas & Power Query", "Macro & VBA Basics", "Dashboard Building", "Pivot Tables & Data Analysis"] },
+            { title: "Web & Design Basics", topics: ["HTML, CSS & Basic JavaScript", "Basic Graphic Design (Canva/Photoshop)", "Simple Website Building", "Responsive Design Basics"] },
+            { title: "Digital Skills Add-on", topics: ["Digital Marketing Basics", "AI Tools for Productivity", "Social Media Basics for Business", "Basic SEO Awareness"] },
+            { title: "Career Readiness", topics: ["Resume Building", "Interview Preparation", "Practical Portfolio Project", "Freelancing Basics"] },
         ],
         features: ["ADCA Curriculum Plus Advanced Modules", "Excel Automation, Web & Design Basics", "AI Tools & Digital Marketing Exposure", "Stronger Job-Readiness & Portfolio Focus", "Certificate"],
-        roles: ["Computer Operator (Advanced)", "Executive Assistant", "Junior Web/Design Assistant", "MIS Executive (Trainee)", "Digital Skills Executive"],
-        highlights: ["Most Comprehensive Computer Diploma We Offer", "Office, Accounting, Web & Design Skills", "Includes Career-Readiness Training", "Best Long-Term Value Program"],
+        roles: ["Computer Operator (Advanced)", "Executive Assistant", "Junior Web/Design Assistant", "MIS Executive (Trainee)", "Digital Skills Executive", "Freelance Digital Skills Consultant"],
+        highlights: ["Most Comprehensive Computer Diploma We Offer", "Office, Accounting, Web & Design Skills", "Includes Career-Readiness Training", "Best Long-Term Value Program", "Includes AI, Web & Design Exposure", "Career-Readiness Training Built In"],
     },
     "o-level": {
         title: "O-LEVEL",
         description: "A NIELIT-aligned, government-recognized IT certification covering IT tools, web designing, programming, databases and structured exam preparation.",
         curriculum: [
-            { title: "IT Tools & Business Systems", topics: ["Computer Fundamentals", "MS Office Suite", "Internet & Digital Communication"] },
-            { title: "Web Designing", topics: ["HTML, CSS & JavaScript", "Responsive Web Design", "Basic Website Hosting"] },
-            { title: "Programming & Problem Solving", topics: ["Programming Logic (Python/C)", "Data Types & Control Structures", "Basic Algorithms"] },
-            { title: "Database Management", topics: ["DBMS Fundamentals", "SQL Basics", "Database Design Principles"] },
-            { title: "IT Applications", topics: ["Introduction to Multimedia", "Cyber Security Awareness", "Emerging Technology Overview"] },
-            { title: "Practical & Project Work", topics: ["Hands-on Lab Practice", "Project Submission", "O-Level Exam Preparation"] },
+            { title: "IT Tools & Business Systems", topics: ["Computer Fundamentals", "MS Office Suite", "Internet & Digital Communication", "Digital Financial Tools"] },
+            { title: "Web Designing", topics: ["HTML, CSS & JavaScript", "Responsive Web Design", "Basic Website Hosting", "Web Design Principles"] },
+            { title: "Programming & Problem Solving", topics: ["Programming Logic (Python/C)", "Data Types & Control Structures", "Basic Algorithms", "Functions & Modular Programming"] },
+            { title: "Database Management", topics: ["DBMS Fundamentals", "SQL Basics", "Database Design Principles", "Normalization Basics"] },
+            { title: "IT Applications", topics: ["Introduction to Multimedia", "Cyber Security Awareness", "Emerging Technology Overview", "IT Applications in Governance"] },
+            { title: "Practical & Project Work", topics: ["Hands-on Lab Practice", "Project Submission", "O-Level Exam Preparation", "Mock Test Practice"] },
         ],
         features: ["NIELIT-Aligned O-Level Curriculum", "IT Tools, Programming, Web & Databases", "Structured Exam Preparation Included", "Government-Recognized Certification", "Certificate"],
-        roles: ["Computer Operator", "Junior Programmer", "Web Designer (Trainee)", "IT Support Executive", "Government/PSU Computer Roles (Eligibility)"],
-        highlights: ["Government-Recognized IT Certification (NIELIT)", "Eligibility for Various Govt. IT Positions", "Well-Rounded IT & Programming Foundation", "Structured, Exam-Focused Preparation"],
+        roles: ["Computer Operator", "Junior Programmer", "Web Designer (Trainee)", "IT Support Executive", "Government/PSU Computer Roles (Eligibility)", "Database/Programming Trainee"],
+        highlights: ["Government-Recognized IT Certification (NIELIT)", "Eligibility for Various Govt. IT Positions", "Well-Rounded IT & Programming Foundation", "Structured, Exam-Focused Preparation", "Recognized Across Government & Private Sector", "Well-Rounded IT Foundation with Exam Prep"],
     },
     "indesign": {
         title: "INDESIGN",
         description: "Master the industry-standard Adobe InDesign for print and digital publishing — from typography and layout to brochures, magazines and interactive PDFs.",
         curriculum: [
-            { title: "InDesign Fundamentals", topics: ["Interface & Workspace", "Document Setup & Grids", "Working with Frames"] },
-            { title: "Typography & Layout", topics: ["Typography Principles", "Paragraph & Character Styles", "Multi-Page Layouts"] },
-            { title: "Print Design", topics: ["Brochures & Flyers", "Magazine/Newsletter Layouts", "Print-Ready Export Settings"] },
-            { title: "Digital Publishing", topics: ["Interactive PDFs", "Digital Magazine Basics", "Export for Web & Digital Use"] },
-            { title: "Real Design Projects", topics: ["Brochure Design Project", "Magazine Spread Project", "Portfolio Compilation"] },
+            { title: "InDesign Fundamentals", topics: ["Interface & Workspace", "Document Setup & Grids", "Working with Frames", "Master Pages Basics"] },
+            { title: "Typography & Layout", topics: ["Typography Principles", "Paragraph & Character Styles", "Multi-Page Layouts", "Tables in InDesign"] },
+            { title: "Print Design", topics: ["Brochures & Flyers", "Magazine/Newsletter Layouts", "Print-Ready Export Settings", "Bleed, Trim & Colour Basics"] },
+            { title: "Digital Publishing", topics: ["Interactive PDFs", "Digital Magazine Basics", "Export for Web & Digital Use", "Hyperlinks & Buttons"] },
+            { title: "Real Design Projects", topics: ["Brochure Design Project", "Magazine Spread Project", "Portfolio Compilation", "Client Feedback & Revisions"] },
         ],
         features: ["Industry-Standard Print & Publishing Tool", "Print & Digital Publishing Covered", "Typography & Layout Skills Emphasized", "Real Brochure/Magazine Design Projects", "Certificate"],
-        roles: ["Layout/Publication Designer", "DTP Operator (Advanced)", "Print Designer", "Editorial Designer", "Freelance Publication Designer"],
-        highlights: ["Master the Industry-Standard Publishing Software", "Ideal for Print & Editorial Design Careers", "Real, Portfolio-Ready Design Projects", "Covers Both Print and Digital Output"],
+        roles: ["Layout/Publication Designer", "DTP Operator (Advanced)", "Print Designer", "Editorial Designer", "Freelance Publication Designer", "Publishing House Design Assistant"],
+        highlights: ["Master the Industry-Standard Publishing Software", "Ideal for Print & Editorial Design Careers", "Real, Portfolio-Ready Design Projects", "Covers Both Print and Digital Output", "In-Demand Skill for Print & Publishing Houses", "Strong, Portfolio-Ready Design Projects"],
     },
     "graphic-design": {
         title: "GRAPHIC DESIGN",
         description: "A complete, career-ready graphic design program covering Photoshop, vector illustration, branding and social media design for a professional portfolio.",
         curriculum: [
-            { title: "Design Fundamentals", topics: ["Color Theory & Typography", "Composition & Visual Hierarchy", "Design Principles"] },
-            { title: "Adobe Photoshop", topics: ["Photo Editing & Retouching", "Layers & Compositing", "Digital Art Basics"] },
-            { title: "Adobe Illustrator/CorelDRAW", topics: ["Vector Illustration", "Logo & Icon Design", "Print-Ready Artwork"] },
-            { title: "Branding & Identity Design", topics: ["Brand Identity Systems", "Business Card & Stationery Design", "Brand Guideline Basics"] },
-            { title: "Digital & Social Media Design", topics: ["Social Media Creatives", "Marketing Collateral Design", "Web Graphics Basics"] },
-            { title: "Portfolio Projects", topics: ["Branding Project", "Social Media Design Set", "Final Portfolio Compilation"] },
+            { title: "Design Fundamentals", topics: ["Color Theory & Typography", "Composition & Visual Hierarchy", "Design Principles", "Grid Systems Basics"] },
+            { title: "Adobe Photoshop", topics: ["Photo Editing & Retouching", "Layers & Compositing", "Digital Art Basics", "Working with Masks & Filters"] },
+            { title: "Adobe Illustrator/CorelDRAW", topics: ["Vector Illustration", "Logo & Icon Design", "Print-Ready Artwork", "Working with Paths & Shapes"] },
+            { title: "Branding & Identity Design", topics: ["Brand Identity Systems", "Business Card & Stationery Design", "Brand Guideline Basics", "Colour Palette & Font Pairing"] },
+            { title: "Digital & Social Media Design", topics: ["Social Media Creatives", "Marketing Collateral Design", "Web Graphics Basics", "Ad Creative Design"] },
+            { title: "Portfolio Projects", topics: ["Branding Project", "Social Media Design Set", "Print Collateral Project", "Final Portfolio Compilation"] },
         ],
         features: ["Comprehensive Graphic Design Skillset", "Photo Editing, Vector Design & Branding", "Real Branding & Social Media Projects", "Industry-Standard Software Training", "Strong Design Portfolio", "Certificate"],
-        roles: ["Graphic Designer", "Brand Identity Designer", "Visual Designer", "Social Media Designer", "Freelance Graphic Designer"],
-        highlights: ["Complete, Career-Ready Graphic Design Training", "Build a Professional, Varied Portfolio", "High Demand Across Every Industry", "Great for Freelance or Agency Careers"],
+        roles: ["Graphic Designer", "Brand Identity Designer", "Visual Designer", "Social Media Designer", "Freelance Graphic Designer", "Print & Packaging Designer"],
+        highlights: ["Complete, Career-Ready Graphic Design Training", "Build a Professional, Varied Portfolio", "High Demand Across Every Industry", "Great for Freelance or Agency Careers", "Industry-Standard Software Training Throughout", "Strong Portfolio Ready for Agency or Freelance Work"],
     },
     "spoken-english": {
         title: "Spoken English",
         description: "Build real speaking confidence — not just grammar — through practical conversation, pronunciation, interview preparation and continuous speaking practice.",
         curriculum: [
-            { title: "Foundation & Confidence Building", topics: ["Basic Grammar Refresher", "Vocabulary Building", "Overcoming Hesitation to Speak"] },
-            { title: "Pronunciation & Fluency", topics: ["Pronunciation Practice", "Sentence Construction", "Everyday Conversation Practice"] },
-            { title: "Practical Communication", topics: ["Introducing Yourself Confidently", "Telephone & Email Etiquette", "Group Discussion Practice"] },
-            { title: "Interview & Professional English", topics: ["Interview Preparation", "Public Speaking Basics", "Presentation Skills"] },
-            { title: "Real Practice Sessions", topics: ["Role-Plays & Simulations", "Group Activities", "Continuous Speaking Practice"] },
+            { title: "Foundation & Confidence Building", topics: ["Basic Grammar Refresher", "Vocabulary Building", "Overcoming Hesitation to Speak", "Listening Skills Practice"] },
+            { title: "Pronunciation & Fluency", topics: ["Pronunciation Practice", "Sentence Construction", "Everyday Conversation Practice", "Common Phrases & Idioms"] },
+            { title: "Practical Communication", topics: ["Introducing Yourself Confidently", "Telephone & Email Etiquette", "Group Discussion Practice", "Small Talk & Networking"] },
+            { title: "Interview & Professional English", topics: ["Interview Preparation", "Public Speaking Basics", "Presentation Skills", "Resume & Cover Letter Basics"] },
+            { title: "Real Practice Sessions", topics: ["Role-Plays & Simulations", "Group Activities", "Mock Interviews", "Continuous Speaking Practice"] },
         ],
         features: ["Focus on Speaking Confidence, Not Just Grammar", "Practical, Everyday Conversation Practice", "Interview & Professional Communication", "Small-Group, Speaking-Focused Sessions", "Certificate"],
-        roles: ["Customer Service Executive", "Front Office/Receptionist", "Sales & Marketing Executive", "Call Center Executive", "Any Client-Facing Role"],
-        highlights: ["Builds Real Speaking Confidence, Not Just Theory", "Practical for Interviews & Workplace Communication", "Beneficial Across Every Career Path", "Supportive, Practice-Heavy Teaching Method"],
+        roles: ["Customer Service Executive", "Front Office/Receptionist", "Sales & Marketing Executive", "Call Center Executive", "Any Client-Facing Role", "HR/Front Desk Coordinator"],
+        highlights: ["Builds Real Speaking Confidence, Not Just Theory", "Practical for Interviews & Workplace Communication", "Beneficial Across Every Career Path", "Supportive, Practice-Heavy Teaching Method", "Small-Group, Practice-Heavy Sessions", "Useful for Every Career Path and Interview"],
     },
     "android": {
         title: "Android App Development",
         description: "A complete, project-based Android App Development course that takes you from Java fundamentals to publishing real apps on the Google Play Store, covering UI/UX, sensors, GPS, media, and backend integration along the way.",
         curriculum: [
-            { title: "Introduction to Android", topics: ["Android SDK & Android Studio setup", "Project structure and basic UI", "Android architecture"] },
-            { title: "Java for Android", topics: ["OOP principles", "J2ME basics", "Core Java concepts"] },
-            { title: "UI/UX Design", topics: ["Buttons, Text Fields, List Views", "Material Design principles", "Layouts and Views"] },
-            { title: "Activity & Fragment Lifecycle", topics: ["Activity stacks", "Fragment communication", "Intents and navigation"] },
-            { title: "Advanced Android Features", topics: ["GPS and Location Services", "Working with Sensors (Gyroscope, Accelerometer)", "Media Player and Audio/Video integration", "Sending SMS"] },
-            { title: "Data Handling", topics: ["Shared Preferences", "Content Providers & JSON parsing", "SQLite database"] },
-            { title: "Backend Integration", topics: ["Firebase Authentication & Realtime DB", "Push Notifications (FCM)", "API calls using Retrofit/Volley"] },
-            { title: "App Deployment", topics: ["Play Store guidelines", "Publishing apps on Google Play", "Testing & Debugging"] },
+            { title: "Introduction to Android", topics: ["Android SDK & Android Studio setup", "Project structure and basic UI", "Android architecture", "Emulator & Device Testing"] },
+            { title: "Java for Android", topics: ["OOP principles", "J2ME basics", "Core Java concepts", "Collections & Exception Handling"] },
+            { title: "UI/UX Design", topics: ["Buttons, Text Fields, List Views", "Material Design principles", "Layouts and Views", "RecyclerView & Adapters"] },
+            { title: "Activity & Fragment Lifecycle", topics: ["Activity stacks", "Fragment communication", "Intents and navigation", "Lifecycle-Aware Components"] },
+            { title: "Advanced Android Features", topics: ["GPS and Location Services", "Working with Sensors (Gyroscope, Accelerometer)", "Media Player and Audio/Video integration", "Sending SMS", "Camera Integration"] },
+            { title: "Data Handling", topics: ["Shared Preferences", "Content Providers & JSON parsing", "SQLite database", "Room Database Basics"] },
+            { title: "Backend Integration", topics: ["Firebase Authentication & Realtime DB", "Push Notifications (FCM)", "API calls using Retrofit/Volley", "Cloud Storage Basics"] },
+            { title: "App Deployment", topics: ["Play Store guidelines", "Publishing apps on Google Play", "Testing & Debugging", "App Signing & Versioning"] },
         ],
         features: ["Learn with hands-on Android app projects", "Strong Java & J2ME foundation", "Covers UI, sensors, GPS, media, and backend", "Full support from experienced mentors", "LMS access with recordings, code, and assignments"],
-        roles: ["Android App Developer", "Java Mobile Developer", "Mobile App Tester", "Android UI/UX Designer", "Firebase App Developer"],
-        highlights: ["Build production-ready Android apps and add them to your portfolio or resume", "Master Android development from Java basics to Play Store deployment, including sensors, GPS, and media", "Perfect for IT/CSE students aiming to break into mobile development with practical knowledge", "Learn from experienced instructors with real industry experience and personal guidance", "Integrate backend systems and publish mobile apps to the Play Store with Firebase"],
+        roles: ["Android App Developer", "Java Mobile Developer", "Mobile App Tester", "Android UI/UX Designer", "Firebase App Developer", "Freelance Android Developer"],
+        highlights: ["Build production-ready Android apps and add them to your portfolio or resume", "Master Android development from Java basics to Play Store deployment, including sensors, GPS, and media", "Perfect for IT/CSE students aiming to break into mobile development with practical knowledge", "Learn from experienced instructors with real industry experience and personal guidance", "Integrate backend systems and publish mobile apps to the Play Store with Firebase", "Strong Portfolio for Mobile Development Job Applications"],
     },
 };
 
@@ -545,6 +704,7 @@ function renderCourseCurriculum(courseKey) {
 
 
         let lastPage = 'home';
+        let lastServicesView = 'corporate';
 
         /* ---------- HOME / SERVICES SPLIT VIEW (existing behaviour, kept) ---------- */
         function filterView(targetView) {
@@ -566,6 +726,7 @@ function renderCourseCurriculum(courseKey) {
 
         function goServices(targetView) {
             const navView = targetView === 'corporate' ? 'corporate' : 'academic';
+            lastServicesView = navView;
             showPage('services', navView);
             filterView(targetView);
             const anchor = targetView === 'corporate' ? 'services-hub' : 'academy-hub';
@@ -703,7 +864,15 @@ function renderCourseCurriculum(courseKey) {
         }
 
         function goBackFromDetail() {
-            showPage(lastPage || 'services');
+            if ((lastPage || 'services') === 'services') {
+                // Returning to Services: restore whichever view (Services Studio /
+                // corporate, or Learning Campus / academic) the visitor was on
+                // before opening the detail page, instead of snapping to the
+                // default view and the very top of the page.
+                goServices(lastServicesView);
+            } else {
+                showPage(lastPage || 'services');
+            }
         }
 
         /* ---------- DETAIL-CARD IMAGE CAROUSEL (click prev/next or a dot) ---------- */
@@ -1363,7 +1532,21 @@ function openGalleryLightbox(itemEl) {
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt || '';
     lightboxCaption.textContent = caption ? caption.textContent : '';
+    lightbox.classList.remove('logo-mode');
     lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function openLogoLightbox() {
+    const lightbox = document.getElementById('galleryLightbox');
+    const lightboxImg = document.getElementById('galleryLightboxImg');
+    const lightboxCaption = document.getElementById('galleryLightboxCaption');
+    if (!lightbox || !lightboxImg) return;
+
+    lightboxImg.src = 'images/logo.png';
+    lightboxImg.alt = 'UMA Learning & Services — full logo';
+    if (lightboxCaption) lightboxCaption.textContent = 'UMA Learning & Services';
+    lightbox.classList.add('open', 'logo-mode');
     document.body.style.overflow = 'hidden';
 }
 
@@ -1387,9 +1570,8 @@ function setActiveNav(name, view) {
 
     const moreSubPages = ['reviews', 'branches', 'blogs', 'team', 'gallery'];
     if (moreSubPages.includes(name)) {
-        document.getElementById('moreDropdown').classList.add('nav-active');
-        const subLink = document.querySelector(`.nav-dropdown-menu [data-page="${name}"]`);
-        if (subLink) subLink.classList.add('nav-active');
+        // Intentionally not marking moreDropdown / the sub-link as active —
+        // the panel should just stay open, not flip into an "active" state.
     } else if (name === 'services' && view) {
         // Services Studio and Learning Campus both point to the same page,
         // so disambiguate using the view (corporate/academic) that was clicked.
