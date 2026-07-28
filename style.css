@@ -2407,6 +2407,15 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             border-radius: 10px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
+        /* Logo PNGs are usually transparent with dark artwork meant for a
+           white background — give it a light card so it's actually visible
+           against the dark lightbox backdrop, without affecting real photos. */
+        .gallery-lightbox.logo-mode img {
+            background: #ffffff;
+            padding: 36px 48px;
+            max-width: min(90vw, 420px);
+            max-height: 50vh;
+        }
         .gallery-lightbox-caption {
             position: absolute;
             bottom: 26px;
@@ -4098,7 +4107,7 @@ transform:translateX(-50%);
 
 /* ==================== SUCCESS JOURNEY (Our Team page) ==================== */
 .success-journey{
-    padding:90px 8% 60px 8%;
+    padding:140px 8% 60px 8%;
     text-align:center;
     background:linear-gradient(135deg,#ffffff 0%,#f4f9ff 100%);
 }
@@ -5255,6 +5264,34 @@ grid-template-columns:1fr;
 }
 .logo-container{
     perspective:1000px;
+    position:relative;
+}
+
+.logo-zoom-btn{
+    position:absolute;
+    top:-6px;
+    right:-10px;
+    width:20px;
+    height:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#0073e6;
+    color:#fff;
+    border:2px solid #fff;
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    cursor:pointer;
+    opacity:0;
+    transform:scale(0.8);
+    transition:opacity .18s ease, transform .18s ease;
+    padding:0;
+}
+
+.logo-container:hover .logo-zoom-btn,
+.logo-zoom-btn:focus-visible{
+    opacity:1;
+    transform:scale(1);
 }
 
 .logo-container img{
