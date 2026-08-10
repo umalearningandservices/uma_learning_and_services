@@ -2002,21 +2002,41 @@ function studentLogout() {
     document.getElementById('slDashboard').classList.remove('show');
 }
 function viewCertificate(studentName, courseName) {
-    alert(`Certificate of Completion\n\n${studentName} has successfully completed:\n"${courseName}"\n\n(This is a demo preview — a real downloadable/printable PDF certificate can be generated once this is connected to a backend.)`);
+    document.getElementById('certStudentName').textContent = studentName;
+    document.getElementById('certCourseName').textContent = courseName;
+    document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'long', year: 'numeric'
+    });
+    // Simple, readable certificate ID derived from the name + course + today's date
+    const raw = (studentName + courseName + new Date().toDateString()).toUpperCase();
+    let hash = 0;
+    for (let i = 0; i < raw.length; i++) { hash = (hash * 31 + raw.charCodeAt(i)) >>> 0; }
+    document.getElementById('certId').textContent = 'UMA-' + hash.toString(36).toUpperCase().slice(0, 8);
+
+    document.getElementById('certificateOverlay').classList.add('active');
 }
+function closeCertificate() {
+    document.getElementById('certificateOverlay').classList.remove('active');
+}
+function closeCertificateOnOverlay(e) {
+    if (e.target.id === 'certificateOverlay') closeCertificate();
+}
+function downloadCertificate() {
+    // No backend/PDF library needed: the print stylesheet hides everything
+    // except .certificate-print-area, so "Save as PDF" in the print dialog
+    // produces a clean, downloadable certificate file.
+    document.body.classList.add('printing-certificate');
+    window.print();
+}
+window.addEventListener('afterprint', () => {
+    document.body.classList.remove('printing-certificate');
+});
 
 
 const myBtn = document.getElementById("myBtn");
 
 window.addEventListener("scroll", () => {
-
     const scrollTop = document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-    const percent = (scrollTop / scrollHeight) * 100;
-
-    myBtn.style.background =
-        `conic-gradient(#0073e6 ${percent}%, #d9d9d9 ${percent}%)`;
 
     if (scrollTop > 300) {
         myBtn.style.display = "flex";
@@ -2026,11 +2046,35 @@ window.addEventListener("scroll", () => {
 });
 
 myBtn.onclick = () => {
+    launchRocket();
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
 };
+
+function launchRocket() {
+    if (myBtn.classList.contains('launching')) return; // don't stack launches
+    const rect = myBtn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    myBtn.classList.add('launching');
+    setTimeout(() => myBtn.classList.remove('launching'), 900);
+
+    // Spawn a short-lived trail of glowing sparks behind the rocket
+    const sparkCount = 12;
+    for (let i = 0; i < sparkCount; i++) {
+        const spark = document.createElement('span');
+        spark.className = 'rocket-spark';
+        spark.style.left = (cx - 3 + (Math.random() * 14 - 7)) + 'px';
+        spark.style.top = (cy - 3 + (Math.random() * 10)) + 'px';
+        spark.style.setProperty('--sx', (Math.random() * 50 - 10) + 'px');
+        spark.style.animationDelay = (i * 45) + 'ms';
+        document.body.appendChild(spark);
+        setTimeout(() => spark.remove(), 1000 + i * 45);
+    }
+}
 
 
 
