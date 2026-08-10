@@ -435,19 +435,6 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             background: rgba(255,255,255,0.18);
         }
-        .quick-enroll-pulse {
-            position: absolute;
-            inset: 0;
-            border-radius: 50px;
-            box-shadow: 0 0 0 0 rgba(0,115,230,0.55);
-            animation: quickEnrollPulse 2.2s infinite;
-            pointer-events: none;
-        }
-        @keyframes quickEnrollPulse {
-            0%   { box-shadow: 0 0 0 0 rgba(0,115,230,0.55); }
-            70%  { box-shadow: 0 0 0 16px rgba(0,115,230,0); }
-            100% { box-shadow: 0 0 0 0 rgba(0,115,230,0); }
-        }
         @media (max-width: 768px) {
             .quick-enroll-fab { left: 14px; bottom: 16px; padding: 9px 16px 9px 6px; font-size: 0.82rem; height: auto; }
             .quick-enroll-icon { width: 34px; height: 34px; font-size: 1.25rem; }
@@ -782,6 +769,121 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             transition: all 0.25s ease;
         }
         .sl-logout-btn:hover { background: #f7f9fb; color: #0c2340; }
+
+        /* ==================== CERTIFICATE OF COMPLETION MODAL ==================== */
+        .certificate-modal-box { max-width: 640px; padding: 24px; }
+        .certificate-card {
+            border-radius: 14px;
+            padding: 10px;
+            background: linear-gradient(135deg, #ffc400, #0073e6 45%, #0c2340);
+        }
+        .certificate-inner {
+            background: #fdfbf5;
+            border: 1.5px solid #e3c876;
+            border-radius: 10px;
+            padding: 40px 34px 30px 34px;
+            text-align: center;
+            position: relative;
+        }
+        .certificate-brand {
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #0c2340;
+            letter-spacing: 0.5px;
+        }
+        .certificate-brand span { color: #0073e6; font-weight: 700; }
+        .certificate-kicker {
+            margin-top: 14px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0c2340;
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+        .certificate-divider {
+            width: 70px;
+            height: 3px;
+            background: linear-gradient(90deg, #ffc400, #0073e6);
+            margin: 14px auto 22px auto;
+            border-radius: 2px;
+        }
+        .certificate-line { color: #486581; font-size: 0.92rem; margin: 4px 0; }
+        .certificate-name {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #0073e6;
+            margin: 10px 0;
+        }
+        .certificate-course {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0c2340;
+            margin: 6px 0 24px 0;
+        }
+        .certificate-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 26px;
+            margin-top: 8px;
+        }
+        .certificate-meta-item { display: flex; flex-direction: column; }
+        .certificate-meta-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.6px; color: #9aa5b1; }
+        .certificate-meta-value { font-size: 0.85rem; font-weight: 700; color: #0c2340; }
+        .certificate-seal {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffc400, #e5a800);
+            color: #0c2340;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 0 0 3px #fdfbf5, 0 0 0 4px #e3c876;
+        }
+        .certificate-signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 34px;
+            padding: 0 10px;
+        }
+        .certificate-sign { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 0.78rem; color: #627d98; }
+        .certificate-sign-line { width: 120px; height: 1px; background: #b0bac5; }
+        .certificate-actions { text-align: center; margin-top: 20px; }
+        .certificate-download-btn {
+            background: #0073e6;
+            color: #fff;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.2s ease;
+        }
+        .certificate-download-btn:hover { background: #005bb5; transform: translateY(-2px); }
+        @media (max-width: 600px) {
+            .certificate-inner { padding: 30px 18px 24px 18px; }
+            .certificate-name { font-size: 1.4rem; }
+            .certificate-course { font-size: 1rem; }
+            .certificate-meta { gap: 14px; }
+            .certificate-signatures { flex-direction: column; gap: 14px; }
+        }
+
+        /* Print: show only the certificate itself, full-page, no site chrome */
+        @media print {
+            body.printing-certificate * { visibility: hidden; }
+            body.printing-certificate .certificate-print-area,
+            body.printing-certificate .certificate-print-area * { visibility: visible; }
+            body.printing-certificate .certificate-print-area {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+            }
+            body.printing-certificate .certificate-card { width: 90%; max-width: 720px; }
+            body.printing-certificate .no-print { display: none !important; }
+        }
 
         /* ==================== LIVE COUNTERS ==================== */
         .live-counters {
@@ -1447,7 +1549,8 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
+            object-position: center;
             background: #f4f7fa;
             display: block;
             opacity: 0;
@@ -3918,16 +4021,17 @@ transform:translateX(-50%);
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   background: #f4f7fa;
   opacity: 0;
   animation: cardImgCycle 5s ease-in-out infinite;
 }
-/* Legacy alias — carousel images now always show in full (see rule above),
-   so .poster no longer needs to do anything extra. Kept so existing
-   class="card-image poster ci-1" markup still works unchanged. */
+/* Legacy alias — carousel images now always fill the frame edge-to-edge
+   (see rule above), so .poster no longer needs to do anything extra. Kept
+   so existing class="card-image poster ci-1" markup still works unchanged. */
 .card-image-carousel img.poster {
-  object-fit: contain;
+  object-fit: cover;
   background: #f4f7fa;
 }
 .card-image-carousel img:nth-of-type(1) { opacity: 1; animation-delay: 0s; }
@@ -3972,16 +4076,18 @@ transform:translateX(-50%);
 }
 
 
-  /* ==================== BACK TO TOP BUTTON ====================
-     Stacked directly above the Enroll Now pill (same left edge) so the
-     two never overlap — Enroll keeps the bottom-most, highest-priority spot. */
+  /* ==================== BACK TO TOP: ROCKET LAUNCH ====================
+     Sits above the Enroll Now pill (same left edge, never overlaps).
+     A round yellow "launch pad" holding a rocket icon. Click it and the
+     rocket fires upward out of the pad with an ignition shake + a trail
+     of glowing sparks (spawned in JS) while the page glides to the top. */
   #myBtn {
       display: none;
       position: fixed;
-      left: 22px;
+      left: 20px;
       bottom: 92px;
-      width: 46px;
-      height: 46px;
+      width: 52px;
+      height: 52px;
       padding: 0;
       border: none;
       border-radius: 50%;
@@ -3989,29 +4095,61 @@ transform:translateX(-50%);
       align-items: center;
       justify-content: center;
       z-index: 1400;
-      background: conic-gradient(#0073e6 0%, #d9d9d9 0%);
-      box-shadow: 0 8px 22px rgba(12,35,64,0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: radial-gradient(circle at 50% 40%, #ffe066, #ffc400 65%, #e5a800 100%);
+      box-shadow: 0 8px 20px rgba(12,35,64,0.3), inset 0 0 0 3px rgba(255,255,255,0.35);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   #myBtn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 10px 26px rgba(12,35,64,0.35);
+      transform: translateY(-4px) scale(1.07);
+      box-shadow: 0 12px 26px rgba(12,35,64,0.4), inset 0 0 0 3px rgba(255,255,255,0.5);
   }
+  #myBtn:active { transform: translateY(-1px) scale(0.97); }
   .myBtn-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #0073e6;
+      font-size: 1.35rem;
       line-height: 1;
+      transform: rotate(-45deg);
+      transition: transform 0.3s ease;
+  }
+  /* Ignition: pad rattles, rocket streaks up and out of view */
+  #myBtn.launching {
+      animation: padShake 0.5s ease-in-out;
+  }
+  #myBtn.launching .myBtn-inner {
+      animation: rocketBlastOff 0.9s cubic-bezier(0.55, 0, 0.85, 0.35) forwards;
+  }
+  @keyframes padShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-2px) translateY(1px); }
+      40% { transform: translateX(2px) translateY(-1px); }
+      60% { transform: translateX(-2px); }
+      80% { transform: translateX(2px); }
+  }
+  @keyframes rocketBlastOff {
+      0%   { transform: rotate(-45deg) translate(0, 0) scale(1); opacity: 1; }
+      25%  { transform: rotate(-45deg) translate(2px, -6px) scale(1.08); }
+      100% { transform: rotate(-45deg) translate(60px, -220px) scale(0.4); opacity: 0; }
+  }
+  /* Glowing spark trail — individual particles spawned in JS on launch */
+  .rocket-spark {
+      position: fixed;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff8d6 0%, #ffb020 55%, rgba(255,111,0,0) 75%);
+      z-index: 1399;
+      pointer-events: none;
+      animation: sparkRise 0.85s ease-out forwards;
+  }
+  @keyframes sparkRise {
+      0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--sx, 10px), -130px) scale(0.15); opacity: 0; }
   }
   @media (max-width: 768px) {
-      #myBtn { left: 14px; bottom: 78px; width: 42px; height: 42px; }
+      #myBtn { left: 14px; bottom: 78px; width: 44px; height: 44px; }
       .myBtn-inner { font-size: 1.1rem; }
   }
 
@@ -4679,33 +4817,6 @@ left:150%;
 
 }
 
-/* Floating */
-
-@keyframes floatCard{
-
-0%,100%{
-transform:translateY(0px);
-}
-
-50%{
-transform:translateY(-6px);
-}
-
-}
-
-.services-card{
-
-animation:floatCard 5s ease-in-out infinite;
-
-}
-
-.academy-card{
-
-animation:floatCard 5s ease-in-out infinite .8s;
-
-}
-
-
 /*=============================
     WHY CHOOSE SECTION
 =============================*/
@@ -5223,36 +5334,6 @@ box-shadow:
 
 }
 
-/* Floating */
-
-.why-card{
-
-animation:floatCard 5s ease-in-out infinite;
-
-}
-
-.academy-card{
-
-animation-delay:.7s;
-
-}
-
-@keyframes floatCard{
-
-0%,100%{
-
-transform:translateY(0);
-
-}
-
-50%{
-
-transform:translateY(-8px);
-
-}
-
-}
-
 @media(max-width:900px){
 
 .whyus-grid{
@@ -5628,16 +5709,27 @@ left:150%;
 }
 
 /* ==========================================================================
-   FINAL OVERRIDE: remove the flickering/blinking hover image-swap on the
-   main-page service & course listing cards. Each card now always shows just
-   its first photo, static, no matter what earlier rules in this file say.
+   FINAL OVERRIDE: one consistent, deliberate hover effect for EVERY card
+   image carousel (service cards, course cards — all of them alike).
+   Photo 1 sits still until hovered; on hover it slowly zooms in (Ken-Burns
+   style) while crossfading into photo 2, which then does the same. Nothing
+   flickers, nothing jumps, and every card behaves identically. Images fill
+   the frame edge-to-edge (object-fit: cover) — no letterboxing, no gaps.
    (The detail page's click-through image gallery is unaffected — that one
    stays as-is, controlled by the prev/next buttons.)
    ========================================================================== */
+.card-image-carousel,
 .card-image-carousel img,
 .card-image {
     animation: none !important;
-    transition: none !important;
+}
+.card-image-carousel img,
+.card-image {
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: scale(1) !important;
+    transition: opacity 0.9s ease, transform 6s ease !important;
+    will-change: opacity, transform;
 }
 .card-image-carousel img:nth-of-type(1),
 .card-image.ci-1 {
@@ -5647,13 +5739,77 @@ left:150%;
 .card-image.ci-2 {
     opacity: 0 !important;
 }
+/* Hover: crossfade to the second photo with a slow, gentle zoom-in */
 .card:hover .card-image-carousel img:nth-of-type(1),
 .card:hover .ci-1,
 .card:hover .card-image.ci-1 {
-    opacity: 1 !important;
+    opacity: 0 !important;
 }
 .card:hover .card-image-carousel img:nth-of-type(n+2),
 .card:hover .ci-2,
 .card:hover .card-image.ci-2 {
-    opacity: 0 !important;
+    opacity: 1 !important;
+    transform: scale(1.12) !important;
+}
+.card:hover .card-image-carousel img:nth-of-type(1),
+.card:hover .card-image.ci-1 {
+    transform: scale(1.06) !important;
+}
+
+/* ==========================================================================
+   FINAL OVERRIDE: ONE consistent hover effect for every card, in every
+   category (cat-data-auto, cat-software, cat-academy-creative, cat-literacy,
+   cat-ent-core, cat-hr-security, cat-web-systems, cat-media-studio).
+   Previously each category lifted, slid, or scaled differently on hover —
+   this makes the lift, shadow, border color and title color identical for
+   all of them, regardless of category or card shape.
+   ========================================================================== */
+.cat-data-auto:hover,
+.cat-software:hover,
+.cat-academy-creative:hover,
+.cat-literacy:hover,
+.cat-ent-core:hover,
+.cat-hr-security:hover,
+.cat-web-systems:hover,
+.cat-media-studio:hover {
+    border-color: #0073e6 !important;
+    background-color: #f4f9ff !important;
+    transform: translateY(-6px) !important;
+    box-shadow: 0 10px 24px rgba(0, 115, 230, 0.18) !important;
+    cursor: pointer;
+}
+
+.cat-data-auto:hover .card-text,
+.cat-software:hover .card-text,
+.cat-academy-creative:hover .card-text,
+.cat-literacy:hover .card-text,
+.cat-ent-core:hover .card-text,
+.cat-hr-security:hover .card-text,
+.cat-web-systems:hover .card-text,
+.cat-media-studio:hover .card-text {
+    transform: none !important;
+}
+
+.cat-data-auto:hover::before,
+.cat-software:hover::before,
+.cat-academy-creative:hover::before,
+.cat-literacy:hover::before,
+.cat-ent-core:hover::before,
+.cat-hr-security:hover::before,
+.cat-web-systems:hover::before,
+.cat-media-studio:hover::before {
+    right: 15px !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.cat-data-auto:hover .card-title,
+.cat-software:hover .card-title,
+.cat-academy-creative:hover .card-title,
+.cat-literacy:hover .card-title,
+.cat-ent-core:hover .card-title,
+.cat-hr-security:hover .card-title,
+.cat-web-systems:hover .card-title,
+.cat-media-studio:hover .card-title {
+    color: #0073e6 !important;
 }
