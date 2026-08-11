@@ -1582,11 +1582,12 @@
                     <textarea id="enqMessage" rows="4" placeholder="Tell us what you need... / अपनी आवश्यकता बताएं..."></textarea>
 
                     <div class="enquiry-form-actions">
-                        <button type="submit" class="btn btn-agency">Send via WhatsApp <span class="hi-text">| व्हाट्सएप पर भेजें</span></button>
+                        <button type="submit" class="btn btn-agency">Submit Enquiry <span class="hi-text">| पूछताछ भेजें</span></button>
                         <a href="https://forms.gle/QHnCYCDaoNZPu1cd9" target="_blank" rel="noopener" class="btn btn-form-alt">Fill Google Form Instead <span class="hi-text">| गूगल फॉर्म भरें</span></a>
                     </div>
 
-                    <p class="enquiry-success-msg" id="enquirySuccessMsg">Thanks! WhatsApp is opening with your details filled in — just hit send there to reach our team.</p>
+                    <p class="enquiry-success-msg" id="enquirySuccessMsg">Thanks! We've received your enquiry.</p>
+                    <p class="sl-switch-link" id="enqWhatsappLinkWrap" style="display:none; text-align:left; margin-top:6px;">Prefer WhatsApp? <a onclick="sendEnquiryViaWhatsApp()">Send via WhatsApp instead | व्हाट्सएप पर भेजें</a></p>
                     <p class="enquiry-trust-note">Your details are used only to respond to your enquiry — never shared or sold.</p>
                 </form>
             </div>
@@ -2068,6 +2069,7 @@
                 </div>
             </article>
             <article class="blog-card" onclick="openBlogDetail(this)" role="button" tabindex="0" data-date="2026-02-04" data-author="UMA Team">
+
                 <img class="blog-card-cover" src="images/blog/online-vs-offline-classes.jpg" alt="Online vs offline classes comparison">
                 <span class="blog-cat">Learning Tips</span>
                 <h4>Online vs Offline Classes: Which Should You Choose?</h4>
@@ -2153,7 +2155,7 @@
             <button type="button" class="gallery-filter-btn" data-filter="birthday" onclick="filterGallery('birthday', this)">Birthday</button>
             <button type="button" class="gallery-filter-btn" data-filter="festival" onclick="filterGallery('festival', this)">Festival</button>
             <button type="button" class="gallery-filter-btn" data-filter="celebration" onclick="filterGallery('celebration', this)">Celebration</button>
-            <button type="button" class="gallery-filter-btn" data-filter="Clients" onclick="filterGallery('Clients', this)">Celebration</button>
+            <button type="button" class="gallery-filter-btn" data-filter="Clients" onclick="filterGallery('Clients', this)">Clients</button>
 
 
         </div>
@@ -2204,10 +2206,7 @@
                 <img class="gallery-photo" src="images/anniversary celebration1.png" alt="UMA anniversary celebration">
                 <figcaption>UMA Anniversary</figcaption>
             </figure>
-            <figure class="gallery-item" data-category="celebration" onclick="openGalleryLightbox(this)">
-                <img class="gallery-photo" src="images/client1.jpeg" alt="Our Clients">
-                <figcaption>Our Clients</figcaption>
-            </figure>            <figure class="gallery-item" data-category="celebration" onclick="openGalleryLightbox(this)">
+            <figure class="gallery-item" data-category="Clients" onclick="openGalleryLightbox(this)">
                 <img class="gallery-photo" src="images/client1.jpeg" alt="Our Clients">
                 <figcaption>Our Clients</figcaption>
             </figure>
@@ -2324,7 +2323,8 @@
                     <a onclick="openLegal('privacy')" class="legal-link">Privacy Policy</a> ·
                     <a onclick="openLegal('terms')" class="legal-link">Terms & Conditions</a> ·
                     <a onclick="showPage('contact')" class="legal-link">Contact Us</a> ·
-                    <a onclick="showPage('whyus')" class="legal-link">Why Us?</a>
+                    <a onclick="showPage('whyus')" class="legal-link">Why Us?</a> ·
+                    <a onclick="openAdmin()" class="legal-link">Staff Login</a>
                 </p>
             </div>
         </div>
@@ -2383,9 +2383,13 @@
         </div>
     </div>
 
-    <!-- Student Login overlay — only reachable via the Student Login nav button.
-         Full demo flow: Login -> Student Dashboard -> Certificate preview.
-         See DEMO_STUDENTS in script.js for the sample login (ID: 9999999999 / Password: demo123). -->
+    <!-- Student Login overlay — reachable via the Student Login nav button.
+         Real flow: Register (Admission) -> saved in your Google Sheet -> Login
+         -> Student Dashboard -> Certificate. If the Sheet backend isn't
+         connected yet (see GOOGLE SHEET BACKEND SETUP note in script.js),
+         this quietly falls back to a local demo student so the site still
+         works while you finish setup.
+         Demo login — ID: 9999999999 / Password: demo123 -->
     <div class="legal-modal-overlay" id="studentLoginOverlay" onclick="closeStudentLoginOnOverlay(event)">
         <div class="legal-modal-box student-login-box">
             <a class="legal-close" onclick="closeStudentLogin()">✕</a>
@@ -2393,22 +2397,212 @@
 
             <div class="student-login-form" id="slLoginForm">
                 <h3>Student Login</h3>
-                <label for="slIdentifier">Student ID / Mobile Number</label>
-                <input type="text" id="slIdentifier" placeholder="Enter your Student ID or mobile number">
-                <label for="slPassword">Password</label>
-                <input type="password" id="slPassword" placeholder="Enter your password">
+                <label for="slIdentifier">Full Name</label>
+                <input type="text" id="slIdentifier" placeholder="Enter your full name (as given at admission)">
+                <label for="slPassword">Phone Number <span class="admission-optional-tag">(used as your password)</span></label>
+                <input type="password" id="slPassword" inputmode="numeric" maxlength="10" placeholder="Your 10-digit phone number">
                 <button type="button" onclick="studentLoginSubmit()">Login</button>
-                <p class="sl-error" id="slError">Incorrect Student ID/Mobile or Password. Please try again.</p>
-                <p class="sl-hint">Demo login — ID: <strong>9999999999</strong> &nbsp;|&nbsp; Password: <strong>demo123</strong></p>
+                <p class="sl-error" id="slError">Incorrect Name/Phone Number. Please try again.</p>
+                <p class="sl-hint" id="slLoadingHint" style="display:none;">Checking your details…</p>
+                <p class="sl-switch-link">New student? Please contact us via WhatsApp or visit our centre — our team will complete your admission.</p>
+                <p class="sl-hint">Demo login — Name: <strong>Demo Student</strong> &nbsp;|&nbsp; Phone: <strong>9999999999</strong></p>
             </div>
 
             <div class="sl-dashboard" id="slDashboard">
                 <h3>Welcome back, <span id="slStudentName"></span> </h3>
+                <p class="sl-hint" id="slStudentRefId" style="display:none;"></p>
                 <div class="sl-courses-list" id="slCoursesList"></div>
                 <button type="button" class="sl-logout-btn" onclick="studentLogout()">Logout</button>
             </div>
         </div>
     </div>
+
+    <!-- New Admission / Registration overlay — this is what actually creates a
+         student record so it shows up in Student Login. Backed by your Google
+         Sheet via a small Apps Script bridge (see SHEET BACKEND SETUP note at
+         the top of script.js). -->
+    <div class="legal-modal-overlay" id="admissionOverlay" onclick="closeAdmissionOnOverlay(event)">
+        <div class="legal-modal-box admission-modal-box">
+            <a class="legal-close" onclick="closeAdmission()">✕</a>
+            <span class="badge" style="background:#1565c0;">Learning Campus</span>
+
+            <div class="student-login-form admission-form-grid" id="admissionForm">
+                <h3>New Admission / Registration</h3>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="admName">Full Name</label>
+                        <input type="text" id="admName" placeholder="Your full name">
+                    </div>
+                    <div class="form-field">
+                        <label for="admMobile">Mobile Number</label>
+                        <input type="text" id="admMobile" inputmode="numeric" maxlength="10" placeholder="10-digit number">
+                        <span class="admission-field-hint">This becomes your Student ID</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="admDob">Date of Birth</label>
+                        <input type="date" id="admDob">
+                    </div>
+                    <div class="form-field">
+                        <label for="admEmail">Email <span class="admission-optional-tag">(optional)</span></label>
+                        <input type="email" id="admEmail" placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="admCourse">Course You're Enrolling In</label>
+                        <select id="admCourse" onchange="autofillAdmissionDuration()">
+                            <option value="" selected disabled>Select a course</option>
+                            <option value="Macro & VBA Engineering">Macro &amp; VBA Engineering</option>
+                            <option value="Advanced Excel + Macro/VBA with AI">Advanced Excel + Macro/VBA with AI</option>
+                            <option value="AI">AI</option>
+                            <option value="Looker Studio / Power BI / Tableau">Looker Studio / Power BI / Tableau</option>
+                            <option value="Data Analytics and Data Science with AI">Data Analytics and Data Science with AI</option>
+                            <option value="Google Workspace with AI">Google Workspace with AI</option>
+                            <option value="Google Apps Script">Google Apps Script</option>
+                            <option value="Python Programming">Python Programming</option>
+                            <option value="PHP Language">PHP Language</option>
+                            <option value="MERN Full Stack Development">MERN Full Stack Development</option>
+                            <option value="C,C Plus,C++ Programming">C, C Plus, C++ Programming</option>
+                            <option value="SQL Database Management">SQL Database Management</option>
+                            <option value="JavaScript, HTML5, CSS3">JavaScript, HTML5, CSS3</option>
+                            <option value="Website Development">Website Development</option>
+                            <option value="ERP Development">ERP Development</option>
+                            <option value="Rhino & Matrix Jewellery Designing">Rhino &amp; Matrix Jewellery Designing</option>
+                            <option value="CAD Designing">CAD Designing</option>
+                            <option value="Adobe Photoshop, Figma, Canva & CorelDRAW Designing">Adobe Photoshop, Figma, Canva &amp; CorelDRAW Designing</option>
+                            <option value="Digital Marketing & SEO">Digital Marketing &amp; SEO</option>
+                            <option value="Tally Prime with GST">Tally Prime with GST</option>
+                            <option value="Advance Diploma In Finance and Accounting (ADFA)">Advance Diploma In Finance and Accounting (ADFA)</option>
+                            <option value="Hindi & English Typing">Hindi &amp; English Typing</option>
+                            <option value="Logo / Post & Creative Designing">Logo / Post &amp; Creative Designing</option>
+                            <option value="Basic Computer & Logic Building">Basic Computer &amp; Logic Building</option>
+                            <option value="Internet Surfing">Internet Surfing</option>
+                            <option value="MS-Office">MS-Office</option>
+                            <option value="DCA">DCA</option>
+                            <option value="ADCA">ADCA</option>
+                            <option value="ADCA PLUS">ADCA PLUS</option>
+                            <option value="O-LEVEL">O-LEVEL</option>
+                            <option value="INDESIGN">INDESIGN</option>
+                            <option value="GRAPHIC DESIGN">GRAPHIC DESIGN</option>
+                            <option value="Spoken English">Spoken English</option>
+                            <option value="Android App Development">Android App Development</option>
+                            <option value="Other / Not Listed">Other / Not Listed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="admFee">Course Fee (₹) <span class="admission-optional-tag">(optional)</span></label>
+                        <input type="number" id="admFee" min="0" placeholder="e.g. 8000">
+                        <span class="admission-field-hint">Leave blank if unsure — staff can set/update this later</span>
+                    </div>
+                    <div class="form-field">
+                        <label for="admDuration">Course Duration</label>
+                        <input type="text" id="admDuration" placeholder="e.g. 2 Months">
+                        <span class="admission-field-hint">Auto-filled from the course selected above — edit it for a custom/accelerated batch</span>
+                    </div>
+                </div>
+
+                <p class="admission-field-hint" style="margin-top:6px; font-size:0.8rem;">
+                    Your login will be your <strong>Full Name</strong> (as entered above) with your
+                    <strong>Phone Number</strong> as the password — no separate password to remember.
+                </p>
+
+                <button type="button" onclick="submitAdmission()">Submit Admission</button>
+                <p class="sl-error" id="admError">Please fill all required fields correctly.</p>
+                <p class="sl-hint" id="admLoadingHint" style="display:none;">Submitting your admission…</p>
+                <p class="sl-hint" id="admSuccess" style="display:none;">Admission received! You can log in anytime with your Full Name and your Phone Number as the password.</p>
+                <p class="sl-hint">Already registered? <a onclick="closeAdmission(); openStudentLogin();">Login here</a> instead.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Staff / Admin panel — the ONLY place new admissions can be created
+         from, plus updating a student's course progress, fee, and marking
+         courses complete (this is what unlocks the certificate for that
+         student). Username/password-gated with ADMIN_USERNAME / ADMIN_PASSWORD
+         in script.js — change them before going live. -->
+    <div class="legal-modal-overlay" id="adminOverlay" onclick="closeAdminOnOverlay(event)">
+        <div class="legal-modal-box student-login-box admin-panel-box">
+            <a class="legal-close" onclick="closeAdmin()">✕</a>
+            <span class="badge" style="background:#0c2340;">Staff Panel</span>
+
+            <div class="student-login-form" id="adminLoginForm">
+                <h3>Staff Login</h3>
+                <label for="adminUsername">Username</label>
+                <input type="text" id="adminUsername" placeholder="Enter staff username" autocomplete="off">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" placeholder="Enter staff password">
+                <button type="button" onclick="adminLoginSubmit()">Login</button>
+                <p class="sl-error" id="adminError">Incorrect username or password.</p>
+            </div>
+
+            <div class="sl-dashboard" id="adminDashboard">
+                <div class="admin-tabs" role="tablist">
+                    <button type="button" class="admin-tab-btn active" id="adminTabBtnStudents" onclick="switchAdminTab('students')">Registered Students</button>
+                    <button type="button" class="admin-tab-btn" id="adminTabBtnEnquiries" onclick="switchAdminTab('enquiries')">
+                        Pending Enquiries
+                        <span class="admin-tab-count" id="adminEnquiryCount" style="display:none;">0</span>
+                    </button>
+                    <button type="button" class="admin-tab-btn" id="adminTabBtnInvoices" onclick="switchAdminTab('invoices')">Services &amp; Invoices</button>
+                </div>
+
+                <div class="admin-tab-panel" id="adminPanelStudents">
+                    <button type="button" class="sl-cert-btn" style="margin-bottom:16px;" onclick="openAdmission()">+ New Admission</button>
+                    <p class="sl-hint" id="adminEmptyHint" style="display:none;">No students registered yet — use "+ New Admission" above to add one.</p>
+                    <div class="sl-courses-list" id="adminStudentsList"></div>
+                </div>
+
+                <div class="admin-tab-panel" id="adminPanelEnquiries" style="display:none;">
+                    <p class="sl-hint" id="adminEnquiriesEmptyHint" style="display:none;">No enquiries yet — they'll show up here as soon as someone submits the enquiry form.</p>
+                    <div class="sl-courses-list" id="adminEnquiriesList"></div>
+                </div>
+
+                <!-- Services & Invoices tab — same staff login as Students/Enquiries.
+                     Lets staff bill a Services Studio client (or any one-off fee)
+                     and track partial payments; each invoice can be opened as a
+                     clean, printable PDF via "View / Download Invoice". Needs the
+                     three Code.gs actions described in invoice-backend-addon.gs. -->
+                <div class="admin-tab-panel" id="adminPanelInvoices" style="display:none;">
+                    <button type="button" class="sl-cert-btn" style="margin-bottom:16px;" onclick="openInvoiceForm()">+ New Invoice</button>
+
+                    <div class="student-login-form" id="invoiceCreateForm" style="display:none; margin-bottom:20px; background:#f5f8fb; border:1px solid #e4e7eb; border-radius:8px; padding:16px;">
+                        <h4 style="margin:0 0 10px 0; color:#0c2340;">New Invoice</h4>
+                        <label for="invClientName">Client Name</label>
+                        <input type="text" id="invClientName" placeholder="Client / company name">
+                        <label for="invPhone">Phone</label>
+                        <input type="tel" id="invPhone" placeholder="10-digit mobile number">
+                        <label for="invEmail">Email (optional)</label>
+                        <input type="email" id="invEmail" placeholder="Email address">
+                        <label for="invService">Service / Project</label>
+                        <input type="text" id="invService" placeholder="e.g. CRM setup, website development, automation project">
+                        <label for="invAmount">Total Amount ₹</label>
+                        <input type="number" min="0" id="invAmount" placeholder="Total fee for this service">
+                        <label for="invAdvance">Advance / Amount Paid Now ₹</label>
+                        <input type="number" min="0" id="invAdvance" placeholder="0 if nothing paid yet">
+                        <label for="invNotes">Notes (optional)</label>
+                        <input type="text" id="invNotes" placeholder="Anything worth noting on the invoice">
+                        <p class="sl-error" id="invoiceFormError">Please fill required fields.</p>
+                        <button type="button" onclick="submitInvoice()">Create Invoice</button>
+                        <button type="button" style="background:#627d98; margin-top:8px;" onclick="closeInvoiceForm()">Cancel</button>
+                    </div>
+
+                    <p class="sl-hint" id="adminInvoicesEmptyHint" style="display:none;">No invoices yet — use "+ New Invoice" above to bill a client.</p>
+                    <div class="sl-courses-list" id="adminInvoicesList"></div>
+                </div>
+
+                <button type="button" class="sl-logout-btn" onclick="adminLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Certificate of Completion overlay — opened from the Student Dashboard
          once a course shows status "completed". Only the .certificate-print-area
@@ -2419,9 +2613,38 @@
         <div class="legal-modal-box certificate-modal-box">
             <a class="legal-close no-print" onclick="closeCertificate()">✕</a>
 
+            <!-- Celebration banner — shown on screen only (no-print), not part
+                 of the actual certificate that gets downloaded/printed. -->
+            <div class="celebration-banner no-print" id="celebrationBanner">
+                <svg viewBox="0 0 200 90" class="celebration-svg" aria-hidden="true">
+                    <g class="confetti-piece" style="--d:0s;"><rect x="12" y="10" width="7" height="7" fill="#ffc400" transform="rotate(15 15 13)"/></g>
+                    <g class="confetti-piece" style="--d:0.15s;"><circle cx="34" cy="8" r="4" fill="#0073e6"/></g>
+                    <g class="confetti-piece" style="--d:0.3s;"><rect x="55" y="4" width="6" height="6" fill="#1f7a37" transform="rotate(-20 58 7)"/></g>
+                    <g class="confetti-piece" style="--d:0.45s;"><circle cx="150" cy="10" r="4" fill="#e5484d"/></g>
+                    <g class="confetti-piece" style="--d:0.2s;"><rect x="168" y="6" width="7" height="7" fill="#0c2340" transform="rotate(30 171 9)"/></g>
+                    <g class="confetti-piece" style="--d:0.35s;"><circle cx="185" cy="14" r="4" fill="#ffc400"/></g>
+                    <g class="confetti-piece" style="--d:0.1s;"><rect x="140" y="2" width="6" height="6" fill="#0073e6" transform="rotate(10 143 5)"/></g>
+                    <g class="confetti-piece" style="--d:0.4s;"><circle cx="100" cy="4" r="4" fill="#1f7a37"/></g>
+                    <!-- trophy -->
+                    <g transform="translate(80,18)">
+                        <path d="M10 0h20v10c0 8-4.5 13-10 13S10 18 10 10V0z" fill="#ffc400"/>
+                        <path d="M2 4h8v6c0 4-3 6-6 6S-1 14-1 10c0-3 1.5-5 3-6z" fill="#ffc400" opacity="0.85"/>
+                        <path d="M38 4h-8v6c0 4 3 6 6 6s7-2 7-6c0-3-1.5-5-5-6z" fill="#ffc400" opacity="0.85"/>
+                        <rect x="16" y="23" width="8" height="7" fill="#e3c876"/>
+                        <rect x="9" y="30" width="22" height="5" rx="1.5" fill="#0c2340"/>
+                    </g>
+                </svg>
+                <p class="celebration-text">🎉 Congratulations on completing your course! 🎉</p>
+            </div>
+
             <div class="certificate-print-area">
                 <div class="certificate-card">
                     <div class="certificate-inner">
+                        <div class="credential-badges-row">
+                            <img src="images/msme-logo-png_.png" alt="MSME Registered" class="credential-badge" title="MSME Registered">
+                            <img src="images/iso_png.png" alt="ISO Certified" class="credential-badge" title="ISO Certified">
+                        </div>
+                        <img src="images/logo.png" alt="UMA Learning & Services" class="certificate-logo">
                         <div class="certificate-brand">UMA <span>Learning &amp; Services</span></div>
                         <div class="certificate-kicker">Certificate of Completion</div>
                         <div class="certificate-divider"></div>
@@ -2456,6 +2679,69 @@
 
             <div class="certificate-actions no-print">
                 <button type="button" class="certificate-download-btn" onclick="downloadCertificate()">⬇ Download Certificate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice PDF overlay — opened from the Staff Panel's Services & Invoices
+         tab via "View / Download Invoice". Same print-only-this-area trick as
+         the certificate: .no-print is hidden by @media print in style.css so
+         Save-as-PDF from the browser's print dialog produces a clean invoice
+         with no page chrome. -->
+    <div class="legal-modal-overlay" id="invoiceOverlay" onclick="closeInvoiceOnOverlay(event)">
+        <div class="legal-modal-box certificate-modal-box">
+            <a class="legal-close no-print" onclick="closeInvoiceOverlay()">✕</a>
+
+            <div class="certificate-print-area invoice-print-area">
+                <div class="invoice-card">
+                    <div class="invoice-header">
+                        <img src="images/logo.png" alt="UMA Learning & Services" class="invoice-logo">
+                        <div class="invoice-header-text">
+                            <div class="certificate-brand" style="font-size:1.3rem;">UMA <span>Learning &amp; Services</span></div>
+                            <p style="margin:2px 0 0 0; font-size:0.8rem; color:#627d98;">Vatika Road, Jaipur, Rajasthan 303905 · +91 83404 34138</p>
+                        </div>
+                    </div>
+
+                    <div class="invoice-title-row">
+                        <h3 class="invoice-title">TAX INVOICE</h3>
+                        <div class="invoice-meta">
+                            <span>Invoice ID: <strong id="invPdfId"></strong></span>
+                            <span>Date: <strong id="invPdfDate"></strong></span>
+                        </div>
+                    </div>
+
+                    <div class="invoice-billto">
+                        <span class="certificate-meta-label">Billed To</span>
+                        <p class="invoice-client-name" id="invPdfClientName"></p>
+                        <p class="invoice-client-contact" id="invPdfContact"></p>
+                    </div>
+
+                    <table class="invoice-table">
+                        <thead><tr><th>Description</th><th style="text-align:right;">Amount</th></tr></thead>
+                        <tbody>
+                            <tr><td id="invPdfService"></td><td style="text-align:right;" id="invPdfAmount"></td></tr>
+                        </tbody>
+                        <tfoot>
+                            <tr><td>Amount Paid</td><td style="text-align:right; color:#1f7a37;" id="invPdfPaid"></td></tr>
+                            <tr class="invoice-balance-row"><td>Balance Due</td><td style="text-align:right;" id="invPdfBalance"></td></tr>
+                        </tfoot>
+                    </table>
+
+                    <p class="invoice-footer-note">Thank you for choosing UMA Learning &amp; Services. For any billing queries, please contact us on the number above.</p>
+                    <div class="invoice-bank-note">
+                        <p><strong>Note:</strong></p>
+                        <p>Bank Name: Axis Bank</p>
+                        <p>Account No: 924010031574019</p>
+                        <p>Account Name: Suraj Kumar Kushwaha</p>
+                        <p>IFSC: UTIB0000626</p>
+                        <p>Branch: Malviya Nagar, Jaipur — Haldiya Heights, 39, Sundar Nagar, Girdhar Marg, Malviya Nagar, Jawhar Lal Nehru Road, Jaipur, 302017, Rajasthan</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="certificate-actions no-print">
+                <button type="button" class="certificate-download-btn" onclick="downloadInvoiceAsPdf()">⬇ Download Invoice</button>
             </div>
         </div>
     </div>
