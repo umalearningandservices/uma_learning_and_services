@@ -1,5 +1,141 @@
 const WHATSAPP_NUMBER = '918340434138'; // Public Desk — update anytime
 
+/* ============================================================================
+   UNIQUE REFERENCE IDs — shared across every backend record type
+   ----------------------------------------------------------------------------
+   One consistent ID scheme for anything that gets saved to the Sheet backend,
+   so a person can be given a single code to reference no matter which "desk"
+   it belongs to: PREFIX-YYYYMMDD-XXXX
+     - PREFIX tells you the record type at a glance:
+         STU  = Student / Admission record
+         ENQ  = Enquiry (Learning Campus or Services Studio)
+         INV  = Invoice (Services Studio / paid course fee — added when the
+                invoicing feature is built)
+         SRV  = Service engagement / project (Services Studio clients)
+         CERT = Certificate (already has its own ID scheme in viewCertificate()
+                — kept as-is since it's derived from name+course+date and
+                needs to stay reproducible, not random)
+     - YYYYMMDD is today's date, so IDs sort/scan chronologically at a glance.
+     - XXXX is 4 random base-36 characters for uniqueness within the day.
+   This is generated client-side and sent to the backend as `uniqueId` on
+   every register/enquiry call — Code.gs just needs to store whatever value
+   arrives in that field rather than generating its own, so the same ID a
+   student/enquirer is shown on screen is exactly what staff see in the Sheet
+   and in the Staff Panel. See the GOOGLE SHEET BACKEND SETUP note below for
+   the extra Sheet column this needs. ============================ */
+function generateUniqueId(prefix) {
+    const now = new Date();
+    const datePart = now.getFullYear().toString() +
+        String(now.getMonth() + 1).padStart(2, '0') +
+        String(now.getDate()).padStart(2, '0');
+    const randomPart = Math.random().toString(36).slice(2, 6).toUpperCase();
+    return `${prefix}-${datePart}-${randomPart}`;
+}
+
+/* Every ID from generateUniqueId() embeds its creation date as YYYYMMDD
+   right after the prefix (STU-20260811-A1B2 -> 2026-08-11). Admin lists use
+   this to sort "newest to oldest" without needing a separate timestamp
+   column — if a record has no parseable ID, it sorts to the bottom. */
+/* Formats any date-ish value the Sheet backend might send back (a real
+   Date, an ISO string, or a Sheet-native date string) into a readable
+   "11 Aug 2026" style string. Returns '' for anything unparseable so
+   callers can just do `${formatDate(x) ? 'Enrolled: ' + formatDate(x) : ''}`
+   without extra checks. */
+function formatDate(value) {
+    if (!value) return '';
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function dateFromUniqueId(uniqueId) {
+    if (!uniqueId) return 0;
+    const match = String(uniqueId).match(/-(\d{8})-/);
+    if (!match) return 0;
+    const y = match[1].slice(0, 4), m = match[1].slice(4, 6), d = match[1].slice(6, 8);
+    const t = new Date(`${y}-${m}-${d}`).getTime();
+    return isNaN(t) ? 0 : t;
+}
+
+
+/* ============================================================================
+   COURSE DURATIONS
+   ----------------------------------------------------------------------------
+   Single source of truth for how long each course runs. Keyed by the EXACT
+   course name used in the "New Admission" dropdown (#admCourse) so the same
+   map drives three things:
+     1. The small duration ribbon shown on every course card (applyCourseDurations()).
+     2. The "Duration" field on the Detail page (openDetail() reads this too).
+     3. Auto-filling the Duration field on the New Admission form when staff
+        pick a course — staff can still overwrite it per-student (e.g. a
+        student doing an accelerated or extended batch) since admissions send
+        whatever is in that field, not this default.
+   Edit the values below any time — every place duration is shown updates
+   automatically, nothing else needs to change. ============================ */
+const COURSE_DURATIONS = {
+    "Macro & VBA Engineering": "2 Months",
+    "Advanced Excel + Macro/VBA with AI": "3 Months",
+    "AI": "6 Weeks",
+    "Looker Studio / Power BI / Tableau": "2 Months",
+    "Data Analytics and Data Science with AI": "4 Months",
+    "Google Workspace with AI": "1 Month",
+    "Google Apps Script": "6 Weeks",
+    "Python Programming": "2 Months",
+    "PHP Language": "2 Months",
+    "MERN Full Stack Development": "4 Months",
+    "C,C Plus,C++ Programming": "2 Months",
+    "SQL Database Management": "6 Weeks",
+    "JavaScript, HTML5, CSS3": "2 Months",
+    "Website Development": "3 Months",
+    "ERP Development": "4 Months",
+    "Rhino & Matrix Jewellery Designing": "2 Months",
+    "CAD Designing": "2 Months",
+    "Adobe Photoshop, Figma, Canva & CorelDRAW Designing": "2 Months",
+    "Digital Marketing & SEO": "3 Months",
+    "Tally Prime with GST": "2 Months",
+    "Advance Diploma In Finance and Accounting (ADFA)": "6 Months",
+    "Hindi & English Typing": "2 Months",
+    "Logo / Post & Creative Designing": "6 Weeks",
+    "Basic Computer & Logic Building": "1 Month",
+    "Internet Surfing": "15 Days",
+    "MS-Office": "6 Weeks",
+    "DCA": "6 Months",
+    "ADCA": "12 Months",
+    "ADCA PLUS": "15 Months",
+    "O-LEVEL": "12 Months",
+    "INDESIGN": "1 Month",
+    "GRAPHIC DESIGN": "3 Months",
+    "Spoken English": "2 Months",
+    "Android App Development": "3 Months"
+};
+
+/* Injects a duration ribbon onto every course card (Learning Campus column
+   only — Services Studio cards are project-based, not duration-based) and
+   sets data-duration on each card so openDetail()'s existing duration lookup
+   picks it up automatically. Matches purely by the card's visible title
+   against COURSE_DURATIONS, so it keeps working even if cards get reordered
+   or new ones get added — just add the new title to the map above. */
+function applyCourseDurations() {
+    document.querySelectorAll('.academy-column .card').forEach(card => {
+        const titleEl = card.querySelector('.card-title');
+        if (!titleEl) return;
+        const title = titleEl.textContent.trim();
+        const duration = COURSE_DURATIONS[title];
+        if (!duration) return;
+
+        card.setAttribute('data-duration', duration);
+
+        const carousel = card.querySelector('.card-image-carousel');
+        if (carousel && !carousel.querySelector('.card-duration-badge')) {
+            const badge = document.createElement('span');
+            badge.className = 'card-duration-badge';
+            badge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>' + duration;
+            carousel.appendChild(badge);
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', applyCourseDurations);
+
 /* ---------- COURSE CURRICULUM DATA (educational courses) ----------
    Keyed by a short slug (matches each course card's data-course attribute).
    Used by openDetail() to render the description + a structured
@@ -669,6 +805,70 @@ curriculum: [
     },
 };
 
+/* ============================================================================
+   SEO — STRUCTURED DATA (JSON-LD)
+   ----------------------------------------------------------------------------
+   The org-level schema in <head> already tells Google who UMA is. These two
+   functions add the two other schema types that matter most for a course +
+   FAQ site and are the ones most likely to earn rich results in search:
+     1. Course schema — one entry per course in COURSE_DURATIONS/`courses`,
+        so each course can surface as a distinct rich result with its own
+        name/description/provider instead of the whole site being one blob.
+     2. FAQPage schema — built by reading the FAQ accordion already on the
+        page, so it always matches what visitors actually see (no separate
+        list to keep in sync). Google can show these as expandable Q&As
+        directly in search results, which takes up more space than a normal
+        listing and tends to raise click-through rate.
+   Both are injected once, on load, as <script type="application/ld+json">
+   tags — safe to leave running permanently, and safe to extend (e.g. adding
+   AggregateRating once a real review count/average is available) later. */
+function injectCourseSchema() {
+    const courseList = Object.entries(courses).map(([slug, c]) => ({
+        "@type": "Course",
+        "name": c.title,
+        "description": c.description,
+        "provider": {
+            "@type": "EducationalOrganization",
+            "name": "UMA Learning & Services",
+            "sameAs": "https://umalearningservices.com/"
+        },
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": ["Online", "Offline"],
+            "courseWorkload": COURSE_DURATIONS[c.title] || undefined
+        }
+    }));
+    if (!courseList.length) return;
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'courseSchema';
+    script.textContent = JSON.stringify(courseList.length === 1 ? courseList[0] : courseList);
+    document.head.appendChild(script);
+}
+
+function injectFaqSchema() {
+    const items = [...document.querySelectorAll('.faq-item')].map(item => {
+        const q = item.querySelector('.faq-question')?.textContent?.replace('▾', '').trim();
+        const a = item.querySelector('.faq-answer')?.textContent?.trim();
+        if (!q || !a) return null;
+        return {
+            "@type": "Question",
+            "name": q,
+            "acceptedAnswer": { "@type": "Answer", "text": a }
+        };
+    }).filter(Boolean);
+    if (!items.length) return;
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faqSchema';
+    script.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": items });
+    document.head.appendChild(script);
+}
+document.addEventListener('DOMContentLoaded', () => {
+    injectCourseSchema();
+    injectFaqSchema();
+});
+
 function renderCourseCurriculum(courseKey) {
     const data = courses[courseKey];
     if (!data) return '';
@@ -1050,7 +1250,7 @@ function renderCourseCurriculum(courseKey) {
         }
 
         /* ---------- ENQUIRY FORM (WhatsApp powered — swap for a real backend later) ---------- */
-        function submitEnquiry(e) {
+        async function submitEnquiry(e) {
             e.preventDefault();
 
             const nameEl = document.getElementById('enqName');
@@ -1090,20 +1290,48 @@ function renderCourseCurriculum(courseKey) {
                 return false;
             }
 
+            // Build the WhatsApp message once and stash it — it's only actually
+            // sent if/when the person clicks the separate "Send via WhatsApp
+            // instead" link below, not automatically on every submit.
             let text = `Hi UMA Team, I'd like to enquire.\nName: ${name}\nPhone: ${phoneDigits}`;
             if (email) text += `\nEmail: ${email}`;
             text += `\nInterested In: ${type}`;
             if (service) text += `\nService/Course: ${service}`;
             if (message) text += `\nMessage: ${message}`;
-
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+            window._lastEnquiryWhatsAppText = text;
 
             const successMsg = document.getElementById('enquirySuccessMsg');
-            if (successMsg) {
-                successMsg.classList.add('show');
-                setTimeout(() => successMsg.classList.remove('show'), 8000);
+            const whatsappLinkWrap = document.getElementById('enqWhatsappLinkWrap');
+            const uniqueId = generateUniqueId('ENQ');
+
+            // Submit saves quietly into the "Enquiries" tab of the Sheet — no
+            // WhatsApp popup on every click. The link below stays available in
+            // case the person also wants to message us directly.
+            if (typeof sheetBackendReady !== 'undefined' && sheetBackendReady) {
+                try {
+                    const enqResult = await callSheetBackend({ action: 'enquiry', name, phone: phoneDigits, email, type, service, message, uniqueId });
+                    const finalId = (enqResult && enqResult.uniqueId) || uniqueId;
+                    successMsg.textContent = `Thanks! We\u2019ve received your enquiry \u2014 your Reference ID is ${finalId}. Our team will reach out soon.`;
+                    document.getElementById('enquiryForm').reset();
+                    if (isAdminAuthenticated) loadAdminEnquiries();
+                } catch (err) {
+                    console.error('Saving enquiry to Sheet failed:', err);
+                    successMsg.textContent = 'Couldn\u2019t save that automatically \u2014 please use the WhatsApp option below so we don\u2019t miss your enquiry.';
+                }
+            } else {
+                successMsg.textContent = 'Please use the WhatsApp option below to reach our team.';
             }
+
+            successMsg.classList.add('show');
+            if (whatsappLinkWrap) whatsappLinkWrap.style.display = 'block';
+            setTimeout(() => successMsg.classList.remove('show'), 8000);
             return false;
+        }
+
+        function sendEnquiryViaWhatsApp() {
+            const text = window._lastEnquiryWhatsAppText;
+            if (!text) return;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         /* ---------- LEGAL MODAL ---------- */
@@ -1225,7 +1453,20 @@ function switchFaqTab(tab, btnEl){
     document.querySelectorAll('.faq-item.active').forEach(item => item.classList.remove('active'));
 }
 
-        /* ---------- FAQ ACCORDION ---------- */
+        /* ---------- FAQ ACCORDION (with typewriter answer) ---------- */
+// Stops any in-progress typing animation on a given answer element
+// and, if requested, instantly shows its full text (used when closing / switching).
+function stopFaqTyping(ans, showFull) {
+    if (!ans) return;
+    if (ans._typeTimer) {
+        clearInterval(ans._typeTimer);
+        ans._typeTimer = null;
+    }
+    if (showFull && ans.dataset.fullText) {
+        ans.textContent = ans.dataset.fullText;
+    }
+}
+
 function toggleFaq(el){
     const wasOpen = el.classList.contains('active');
 
@@ -1233,6 +1474,7 @@ function toggleFaq(el){
     document.querySelectorAll(".faq-item").forEach(item => {
         if (item !== el && item.classList.contains('active')) {
             const ans = item.querySelector('.faq-answer');
+            stopFaqTyping(ans, true);
             if (ans) ans.style.maxHeight = ans.scrollHeight + 'px';
             requestAnimationFrame(() => {
                 item.classList.remove("active");
@@ -1244,18 +1486,42 @@ function toggleFaq(el){
     const answer = el.querySelector('.faq-answer');
     if (wasOpen) {
         // closing
+        stopFaqTyping(answer, true);
         if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
         requestAnimationFrame(() => {
             el.classList.remove('active');
             if (answer) answer.style.maxHeight = '0px';
         });
     } else {
-        // opening
+        // opening — type the answer out letter by letter
         el.classList.add('active');
         if (answer) {
+            // cache the original full answer text the first time only
+            if (!answer.dataset.fullText) {
+                answer.dataset.fullText = answer.textContent.trim();
+            }
+            const fullText = answer.dataset.fullText;
+
+            stopFaqTyping(answer, false);
+            answer.textContent = fullText; // fill in fully first so we can measure real height
+            const fullHeight = answer.scrollHeight;
+            answer.textContent = ''; // then clear, ready to type
+
             answer.style.maxHeight = '0px';
             requestAnimationFrame(() => {
-                answer.style.maxHeight = answer.scrollHeight + 'px';
+                // lock the height to its final size so typing never causes jumpy resizing
+                answer.style.maxHeight = fullHeight + 'px';
+
+                let i = 0;
+                const typingSpeedMs = 14; // ms per character — tweak for faster/slower typing
+                answer._typeTimer = setInterval(() => {
+                    i++;
+                    answer.textContent = fullText.slice(0, i);
+                    if (i >= fullText.length) {
+                        clearInterval(answer._typeTimer);
+                        answer._typeTimer = null;
+                    }
+                }, typingSpeedMs);
             });
         }
     }
@@ -1926,23 +2192,105 @@ function initScrollPin(wrapperId) {
     update();
 }
 
-/* ---------- Student Login (DEMO MODE ONLY) ----------
-   No real backend — data lives in this array + the browser's localStorage.
-   Anything typed here is NOT secure and is only meant as a working preview
-   of the login → dashboard → certificate flow. Swap this out for real
-   authentication + a database before going live. */
+/* ============================================================================
+   GOOGLE SHEET BACKEND SETUP — READ THIS FIRST
+   ----------------------------------------------------------------------------
+   This powers real Student Admissions + Login + Dashboard using your Google
+   Sheet as the database:
+   https://docs.google.com/spreadsheets/d/1v5YnBFr_EBl7PpnPR6AzFr_2etNFTIcPHWAo71izWkM/edit?gid=0
+
+   A browser can't write to a Google Sheet directly — it needs a small bridge
+   script in between. Google Apps Script (free, built into every Sheet) is
+   that bridge. Setup takes about 5 minutes:
+
+   1. In that Sheet, put this exact header row in row 1 (tab "Sheet1"):
+        A: Mobile | B: Name | C: Email | D: Password | E: Course | F: Progress | G: Status | H: CreatedAt | I: Fee | J: FeePaid | K: Duration | L: DOB | M: UniqueID
+      (Columns K: Duration, L: DOB, and M: UniqueID were added for the
+      "Course Duration" / "Date of Birth" fields and the new shared reference
+      ID scheme — once you share/paste your Code.gs I'll wire them in so
+      they're actually read/written, not just sent from the form. For
+      UniqueID specifically: the frontend already generates and sends one
+      (see generateUniqueId() near the top of this file) as `uniqueId` on
+      every register/enquiry call — Code.gs just needs to save whatever
+      value arrives in that field into this column, not generate its own,
+      so the ID shown on screen matches the ID in the Sheet.)
+      (Enquiry form submissions are saved automatically into a second tab
+      called "Enquiries" — no setup needed for that one, the backend script
+      creates it the first time it's needed. For the new "Pending Enquiries"
+      staff tab to work, that tab needs a Status column and a UniqueID column:
+        A: Timestamp | B: Name | C: Phone | D: Email | E: Type | F: Service | G: Message | H: Status | I: UniqueID
+      and the backend needs two more actions, 'listEnquiries' and
+      'updateEnquiry' — same shape as the existing 'list'/'update' actions
+      for students, just against the Enquiries tab. I'll add these to your
+      Code.gs once you share it, or write a fresh one with all of this
+      included if you'd rather I start from scratch.)
+
+   2. Go to Extensions -> Apps Script. Delete any starter code, paste in the
+      Code.gs script provided alongside this file (see "admission-sheet-backend.gs"
+      in your download), then click Save.
+
+   3. Click Deploy -> New deployment -> gear icon -> "Web app".
+        - Execute as: Me
+        - Who has access: Anyone
+      Click Deploy, authorize the permissions it asks for, then copy the
+      "Web app URL" it gives you (ends in /exec).
+
+   4. Paste that URL into SHEET_API_URL below, replacing the placeholder.
+
+   Until you do this, the site automatically falls back to a local demo
+   student so Student Login still works for testing (Name: Demo Student /
+   Phone: 9999999999).
+
+   Student login model: at admission, the student's Full Name becomes their
+   login ID and their Phone Number doubles as their password — there's no
+   separate password to set or remember. (Phone numbers are checked for
+   uniqueness at registration, so this stays unambiguous even if two
+   students happen to share a name.)
+
+   Security note: the phone-as-password value is stored in plain text in the
+   Staff Panel below is only gated by ADMIN_PASSWORD in this file — that's a
+   soft UI lock, not real security (anyone who reads this file could see it).
+   Fine for a small team on the honour system; avoid putting highly sensitive
+   data through it.
+   ============================================================================ */
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbw9C-UJLLXKdgCCcvBTW1nHr-MKG-9JyJ0oVrXeIL5ftKHgs-tN7-i6r4JtWuJ72qSk/exec";
+
+// Change these before going live — it only gates the Staff Panel UI, see note above.
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "95043";
+
+const sheetBackendReady = SHEET_API_URL && SHEET_API_URL !== "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+// Apps Script Web Apps don't send CORS headers for JSON requests, but a
+// text/plain POST body avoids the browser's CORS preflight entirely, which
+// is why every call below uses this content-type even though the body is JSON.
+async function callSheetBackend(payload) {
+    const res = await fetch(SHEET_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+    });
+    return res.json();
+}
+
+/* ---------- DEMO FALLBACK (used only while the Sheet backend isn't connected) ----------
+   No real backend — data lives in this array only, purely so you can test the
+   Login -> Dashboard -> Certificate flow before Apps Script is wired up.
+   Demo login — Name: Demo Student / Phone (password): 9999999999 */
 const DEMO_STUDENTS = [
     {
-        identifiers: ['9999999999', 'demo@umalearning.com'],
-        password: 'demo123',
         name: 'Demo Student',
+        mobile: '9999999999',
+        password: '9999999999',
+        uniqueId: 'STU-20260101-DEM0',
         courses: [
-            { name: 'Advanced Excel + Macro/VBA with AI', progress: 100, status: 'completed' },
-            { name: 'ADCA Plus', progress: 60, status: 'progress' }
+            { name: 'Advanced Excel + Macro/VBA with AI', progress: 100, status: 'completed', duration: '3 Months' },
+            { name: 'ADCA Plus', progress: 60, status: 'progress', duration: '15 Months' }
         ]
     }
 ];
 
+/* ---------- STUDENT LOGIN OVERLAY ---------- */
 function openStudentLogin() {
     document.getElementById('studentLoginOverlay').classList.add('active');
     const saved = localStorage.getItem('umaLoggedInStudent');
@@ -1959,40 +2307,82 @@ function closeStudentLogin() {
 function closeStudentLoginOnOverlay(e) {
     if (e.target.id === 'studentLoginOverlay') closeStudentLogin();
 }
-function studentLoginSubmit() {
+
+async function studentLoginSubmit() {
     const idVal = document.getElementById('slIdentifier').value.trim().toLowerCase();
     const pwVal = document.getElementById('slPassword').value.trim();
     const errorEl = document.getElementById('slError');
+    const loadingHint = document.getElementById('slLoadingHint');
+    errorEl.classList.remove('show');
 
-    const match = DEMO_STUDENTS.find(s =>
-        s.identifiers.some(id => id.toLowerCase() === idVal) && s.password === pwVal
-    );
+    let match = null;
+
+    if (sheetBackendReady) {
+        loadingHint.style.display = 'block';
+        try {
+            const result = await callSheetBackend({ action: 'login', identifier: idVal, password: pwVal });
+            if (result.success) match = result.student;
+        } catch (e) {
+            console.error('Sheet backend login failed:', e);
+        }
+        loadingHint.style.display = 'none';
+    }
+
+    // fall back to the local demo list too (handy while testing / if the Sheet backend is down)
+    if (!match) {
+        match = DEMO_STUDENTS.find(s => s.name.toLowerCase() === idVal && s.password === pwVal);
+    }
 
     if (!match) {
         errorEl.classList.add('show');
         return;
     }
-    errorEl.classList.remove('show');
     localStorage.setItem('umaLoggedInStudent', JSON.stringify(match));
     renderStudentDashboard(match);
 }
+
 function renderStudentDashboard(student) {
     document.getElementById('slLoginForm').style.display = 'none';
     document.getElementById('slDashboard').classList.add('show');
     document.getElementById('slStudentName').textContent = student.name;
 
+    const refIdEl = document.getElementById('slStudentRefId');
+    if (refIdEl) {
+        if (student.uniqueId) {
+            refIdEl.textContent = `Your Student Reference ID: ${student.uniqueId}`;
+            refIdEl.style.display = 'block';
+        } else {
+            refIdEl.style.display = 'none';
+        }
+    }
+
     const listEl = document.getElementById('slCoursesList');
-    listEl.innerHTML = student.courses.map(c => `
+    listEl.innerHTML = student.courses.map(c => {
+        const hasFee = typeof c.fee === 'number' && c.fee > 0;
+        const due = hasFee ? Math.max(0, (c.fee || 0) - (c.feePaid || 0)) : 0;
+        const feeHtml = hasFee ? `
+            <div style="display:flex; gap:16px; flex-wrap:wrap; margin:8px 0; font-size:0.8rem; color:#486581;">
+                <span>Total Fee: <strong style="color:#0c2340;">₹${c.fee}</strong></span>
+                <span>Paid: <strong style="color:#1f7a37;">₹${c.feePaid || 0}</strong></span>
+                <span>Due: <strong style="color:${due > 0 ? '#e5484d' : '#1f7a37'};">₹${due}</strong></span>
+            </div>` : '';
+        const durationText = c.duration || COURSE_DURATIONS[c.name] || '';
+        const enrolledDateText = formatDate(c.enrolledDate);
+        return `
         <div class="sl-course-card">
             <h4>${c.name}</h4>
             <span class="sl-status-badge ${c.status === 'completed' ? 'completed' : 'progress'}">
                 ${c.status === 'completed' ? 'Completed' : 'In Progress'}
             </span>
+            ${durationText ? `<span style="font-size:0.78rem; color:#0073e6; font-weight:700; display:block; margin-top:4px;">⏱ Duration: ${durationText}</span>` : ''}
+            ${enrolledDateText ? `<span style="font-size:0.78rem; color:#627d98; display:block; margin-top:2px;">📅 Enrolled: ${enrolledDateText}</span>` : ''}
             <div class="sl-progress-bar"><div class="sl-progress-fill" style="width:${c.progress}%;"></div></div>
-            <span style="font-size:0.8rem; color:#627d98;">${c.progress}% complete</span><br>
+            <span style="font-size:0.8rem; color:#627d98;">${c.progress}% complete</span>
+            ${feeHtml}
             ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${student.name}', '${c.name}')">View Certificate</button>` : ''}
         </div>
-    `).join('');
+    `;
+    }).join('');
 }
 function studentLogout() {
     localStorage.removeItem('umaLoggedInStudent');
@@ -2001,6 +2391,533 @@ function studentLogout() {
     document.getElementById('slLoginForm').style.display = 'block';
     document.getElementById('slDashboard').classList.remove('show');
 }
+
+/* ---------- NEW ADMISSION / REGISTRATION ----------
+   Admissions are staff-only now — this form only opens from inside the
+   authenticated Staff Panel (see the "+ New Admission" button in
+   adminDashboard). If it's somehow triggered without an admin session
+   (isAdminAuthenticated below), it sends the person to Staff Login instead
+   of letting them register anyone. */
+function openAdmission() {
+    if (!isAdminAuthenticated) {
+        openAdmin();
+        return;
+    }
+    closeStudentLogin();
+    document.getElementById('admissionOverlay').classList.add('active');
+    document.getElementById('admissionForm').style.display = 'block';
+    document.getElementById('admSuccess').style.display = 'none';
+    document.getElementById('admLoadingHint').style.display = 'none';
+    document.getElementById('admError').classList.remove('show');
+    const durationEl = document.getElementById('admDuration');
+    if (durationEl) durationEl.value = '';
+    const dobEl = document.getElementById('admDob');
+    if (dobEl) dobEl.value = '';
+}
+function closeAdmission() {
+    document.getElementById('admissionOverlay').classList.remove('active');
+}
+function closeAdmissionOnOverlay(e) {
+    if (e.target.id === 'admissionOverlay') closeAdmission();
+}
+
+/* Auto-fills the Duration field from COURSE_DURATIONS the moment staff pick
+   a course in the New Admission form. Staff can still type over it (e.g. a
+   student joining a fast-track or extended batch) — this only sets a
+   starting value, it never overwrites something already typed in. */
+function autofillAdmissionDuration() {
+    const courseEl = document.getElementById('admCourse');
+    const durationEl = document.getElementById('admDuration');
+    if (!courseEl || !durationEl) return;
+    const known = COURSE_DURATIONS[courseEl.value];
+    if (known && !durationEl.value.trim()) durationEl.value = known;
+}
+
+async function submitAdmission() {
+    const name = document.getElementById('admName').value.trim();
+    const mobile = document.getElementById('admMobile').value.trim();
+    const dob = document.getElementById('admDob').value; // yyyy-mm-dd, or '' if left blank
+    const email = document.getElementById('admEmail').value.trim().toLowerCase();
+    const course = document.getElementById('admCourse').value;
+    // Password isn't collected separately anymore — the student's phone
+    // number doubles as their login password (see the note under the form).
+    const password = mobile;
+    const feeEl = document.getElementById('admFee');
+    const fee = feeEl ? (parseFloat(feeEl.value) || 0) : 0;
+    const durationEl = document.getElementById('admDuration');
+    const duration = durationEl ? durationEl.value.trim() || (COURSE_DURATIONS[course] || '') : (COURSE_DURATIONS[course] || '');
+    const uniqueId = generateUniqueId('STU');
+    const errorEl = document.getElementById('admError');
+    const loadingHint = document.getElementById('admLoadingHint');
+
+    const mobileValid = /^[0-9]{10}$/.test(mobile);
+    if (!name || !mobileValid || !course) {
+        errorEl.textContent = 'Please check: full name, a valid 10-digit mobile number, and a selected course.';
+        errorEl.classList.add('show');
+        return;
+    }
+
+    if (!sheetBackendReady) {
+        errorEl.textContent = 'The Sheet backend isn\u2019t connected yet \u2014 check the Apps Script Web App URL in script.js.';
+        errorEl.classList.add('show');
+        return;
+    }
+
+    errorEl.classList.remove('show');
+    loadingHint.style.display = 'block';
+    try {
+        const result = await callSheetBackend({ action: 'register', name, mobile, email, course, password, fee, duration, dob, uniqueId });
+        loadingHint.style.display = 'none';
+        if (!result.success) {
+            errorEl.textContent = result.error || 'This mobile number may already be registered.';
+            errorEl.classList.add('show');
+            return;
+        }
+        document.getElementById('admissionForm').style.display = 'none';
+        document.getElementById('admSuccess').style.display = 'block';
+        // Prefer the ID the backend actually stored (result.uniqueId) in case
+        // Code.gs ever generates its own instead of echoing this one back —
+        // falls back to the client-generated one so it still shows something
+        // even before that backend action exists.
+        const finalId = result.uniqueId || uniqueId;
+        const admSuccessEl = document.getElementById('admSuccess');
+        if (admSuccessEl) {
+            admSuccessEl.innerHTML = `Admission received! Your Student Reference ID is <strong>${finalId}</strong> — save it for any queries. You can log in anytime with your Full Name and your Phone Number as the password.`;
+        }
+        if (isAdminAuthenticated) loadAdminStudents();
+    } catch (e) {
+        console.error('Admission save failed:', e);
+        loadingHint.style.display = 'none';
+        errorEl.textContent = 'Something went wrong saving this admission. Please try again.';
+        errorEl.classList.add('show');
+    }
+}
+
+/* ---------- STAFF / ADMIN PANEL ----------
+   Lets staff mark a student's course progress and completion status, which is
+   what makes "View Certificate" appear on the student's dashboard.
+   See the security note in GOOGLE SHEET BACKEND SETUP above — this password
+   only hides the panel from casual visitors, it is not real authentication. */
+let isAdminAuthenticated = false;
+
+function openAdmin() {
+    document.getElementById('adminOverlay').classList.add('active');
+    if (isAdminAuthenticated) {
+        document.getElementById('adminLoginForm').style.display = 'none';
+        document.getElementById('adminDashboard').classList.add('show');
+        switchAdminTab('students');
+        loadAdminStudents();
+        loadAdminEnquiries();
+    } else {
+        document.getElementById('adminLoginForm').style.display = 'block';
+        document.getElementById('adminDashboard').classList.remove('show');
+        document.getElementById('adminError').classList.remove('show');
+    }
+}
+function closeAdmin() {
+    document.getElementById('adminOverlay').classList.remove('active');
+}
+function closeAdminOnOverlay(e) {
+    if (e.target.id === 'adminOverlay') closeAdmin();
+}
+function adminLoginSubmit() {
+    const user = document.getElementById('adminUsername').value.trim();
+    const pw = document.getElementById('adminPassword').value.trim();
+    const errorEl = document.getElementById('adminError');
+    if (user !== ADMIN_USERNAME || pw !== ADMIN_PASSWORD) {
+        errorEl.classList.add('show');
+        return;
+    }
+    errorEl.classList.remove('show');
+    isAdminAuthenticated = true;
+    document.getElementById('adminLoginForm').style.display = 'none';
+    document.getElementById('adminDashboard').classList.add('show');
+    switchAdminTab('students');
+    loadAdminStudents();
+    loadAdminEnquiries();
+}
+function adminLogout() {
+    isAdminAuthenticated = false;
+    document.getElementById('adminUsername').value = '';
+    document.getElementById('adminPassword').value = '';
+    closeAdmin();
+    document.getElementById('adminLoginForm').style.display = 'block';
+    document.getElementById('adminDashboard').classList.remove('show');
+}
+
+async function loadAdminStudents() {
+    const listEl = document.getElementById('adminStudentsList');
+    const emptyHint = document.getElementById('adminEmptyHint');
+    if (!sheetBackendReady) {
+        listEl.innerHTML = '';
+        emptyHint.style.display = 'block';
+        emptyHint.textContent = 'The Sheet backend isn\u2019t connected yet \u2014 see the GOOGLE SHEET BACKEND SETUP note at the top of script.js.';
+        return;
+    }
+    listEl.innerHTML = '<p class="sl-hint">Loading students…</p>';
+    try {
+        const result = await callSheetBackend({ action: 'list' });
+        if (!result.success || !result.students || result.students.length === 0) {
+            listEl.innerHTML = '';
+            emptyHint.style.display = 'block';
+            emptyHint.textContent = 'No students registered yet — once someone submits the Admission form, they\u2019ll appear here.';
+            return;
+        }
+        emptyHint.style.display = 'none';
+
+        // Flatten every (student, course) pair into its own row so a single
+        // student with one completed + one in-progress course shows up in
+        // BOTH buckets below, instead of the whole student card being forced
+        // into just one group. Each row still carries the student's date
+        // (from their uniqueId) so both buckets can sort newest -> oldest.
+        const rows = [];
+        result.students.forEach(s => {
+            (s.courses || []).forEach(c => {
+                rows.push({ student: s, course: c, ts: dateFromUniqueId(s.uniqueId) });
+            });
+        });
+        rows.sort((a, b) => b.ts - a.ts);
+
+        const renderRow = r => {
+            const s = r.student, c = r.course;
+            const admissionDateText = formatDate(s.admissionDate) || formatDate(dateFromUniqueId(s.uniqueId) || null);
+            const enrolledDateText = formatDate(c.enrolledDate);
+            return `
+                <div class="sl-course-card admin-student-row">
+                    <h4>${s.name} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${s.mobile}${s.email ? ' · ' + s.email : ''}${s.dob ? ' · DOB: ' + s.dob : ''})</span></h4>
+                    ${s.uniqueId ? `<span class="admin-ref-id">ID: ${s.uniqueId}</span>` : ''}
+                    ${admissionDateText ? `<span style="font-size:0.75rem; color:#627d98; display:block; margin-top:2px;">📅 First Admission: ${admissionDateText}</span>` : ''}
+                    <div style="margin:10px 0; padding:10px; background:#fff; border:1px solid #e4e7eb; border-radius:6px;">
+                        <strong style="font-size:0.88rem; color:#0c2340;">${c.name}</strong>
+                        <span style="font-size:0.75rem; color:#0073e6; font-weight:700; margin-left:8px;">⏱ ${c.duration || COURSE_DURATIONS[c.name] || 'Not set'}</span>
+                        ${enrolledDateText ? `<span style="font-size:0.75rem; color:#627d98; margin-left:8px;">📅 Enrolled: ${enrolledDateText}</span>` : ''}<br>
+                        <label style="font-size:0.75rem;">Progress %</label>
+                        <input type="number" min="0" max="100" value="${c.progress}" id="prog-row-${c.rowIndex}" style="width:70px; margin-left:6px; padding:4px 6px;">
+                        <label style="font-size:0.75rem; margin-left:10px;">Status</label>
+                        <select id="status-row-${c.rowIndex}" style="margin-left:6px; padding:4px 6px;">
+                            <option value="progress" ${c.status !== 'completed' ? 'selected' : ''}>In Progress</option>
+                            <option value="completed" ${c.status === 'completed' ? 'selected' : ''}>Completed</option>
+                        </select>
+                        <br>
+                        <label style="font-size:0.75rem; margin-top:6px; display:inline-block;">Total Fee ₹</label>
+                        <input type="number" min="0" value="${c.fee || 0}" id="fee-row-${c.rowIndex}" style="width:90px; margin-left:6px; padding:4px 6px;">
+                        <label style="font-size:0.75rem; margin-left:10px;">Paid ₹</label>
+                        <input type="number" min="0" value="${c.feePaid || 0}" id="feepaid-row-${c.rowIndex}" style="width:90px; margin-left:6px; padding:4px 6px;">
+                        <br>
+                        <button class="sl-cert-btn" style="margin-top:6px;" onclick="saveAdminCourseRow(${c.rowIndex})">Save</button>
+                    </div>
+                </div>
+            `;
+        };
+
+        const progressRows = rows.filter(r => r.course.status !== 'completed');
+        const completedRows = rows.filter(r => r.course.status === 'completed');
+
+        const section = (label, icon, list) => `
+            <div class="admin-status-section">
+                <h4 class="admin-status-heading">${icon} ${label} <span class="admin-tab-count" style="display:inline-flex;">${list.length}</span></h4>
+                ${list.length
+                    ? list.map(renderRow).join('')
+                    : `<p class="sl-hint">Nothing here right now.</p>`}
+            </div>
+        `;
+
+        listEl.innerHTML = section('In Progress', '🟡', progressRows) + section('Completed', '✅', completedRows);
+    } catch (e) {
+        console.error('Loading admin student list failed:', e);
+        listEl.innerHTML = '<p class="sl-hint">Could not load students — check the Apps Script Web App URL in script.js and that it\u2019s deployed with "Anyone" access.</p>';
+    }
+}
+
+async function saveAdminCourseRow(rowIndex) {
+    const progress = parseInt(document.getElementById(`prog-row-${rowIndex}`).value, 10) || 0;
+    const status = document.getElementById(`status-row-${rowIndex}`).value;
+    const feeEl = document.getElementById(`fee-row-${rowIndex}`);
+    const feePaidEl = document.getElementById(`feepaid-row-${rowIndex}`);
+    const fee = feeEl ? (parseFloat(feeEl.value) || 0) : 0;
+    const feePaid = feePaidEl ? (parseFloat(feePaidEl.value) || 0) : 0;
+    try {
+        const result = await callSheetBackend({ action: 'update', rowIndex, progress, status, fee, feePaid });
+        if (result.success) {
+            alert('Saved!');
+            loadAdminStudents();
+        } else {
+            alert('Could not save — please try again.');
+        }
+    } catch (e) {
+        console.error('Saving student update failed:', e);
+        alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
+    }
+}
+
+/* ---------- STAFF PANEL TABS (Registered Students / Pending Enquiries) ---------- */
+function switchAdminTab(tab) {
+    const tabs = {
+        students:  { btn: 'adminTabBtnStudents',  panel: 'adminPanelStudents' },
+        enquiries: { btn: 'adminTabBtnEnquiries', panel: 'adminPanelEnquiries' },
+        invoices:  { btn: 'adminTabBtnInvoices',   panel: 'adminPanelInvoices' }
+    };
+    Object.keys(tabs).forEach(key => {
+        const btnEl = document.getElementById(tabs[key].btn);
+        const panelEl = document.getElementById(tabs[key].panel);
+        if (!btnEl || !panelEl) return;
+        const active = key === tab;
+        btnEl.classList.toggle('active', active);
+        panelEl.style.display = active ? '' : 'none';
+    });
+    if (tab === 'invoices') loadAdminInvoices();
+}
+
+/* Pulls every row from the "Enquiries" tab and shows the ones still marked
+   Pending first, newest submission first — Contacted/Closed ones stay
+   visible further down so staff have a full history, not just an inbox
+   that vanishes once handled. Needs 'listEnquiries' + 'updateEnquiry'
+   actions in Code.gs — see the GOOGLE SHEET BACKEND SETUP note above. */
+async function loadAdminEnquiries() {
+    const listEl = document.getElementById('adminEnquiriesList');
+    const emptyHint = document.getElementById('adminEnquiriesEmptyHint');
+    const countBadge = document.getElementById('adminEnquiryCount');
+    if (!listEl) return;
+
+    if (!sheetBackendReady) {
+        listEl.innerHTML = '';
+        emptyHint.style.display = 'block';
+        emptyHint.textContent = 'The Sheet backend isn\u2019t connected yet \u2014 see the GOOGLE SHEET BACKEND SETUP note at the top of script.js.';
+        return;
+    }
+
+    listEl.innerHTML = '<p class="sl-hint">Loading enquiries…</p>';
+    try {
+        const result = await callSheetBackend({ action: 'listEnquiries' });
+        if (!result.success || !result.enquiries || result.enquiries.length === 0) {
+            listEl.innerHTML = '';
+            emptyHint.style.display = 'block';
+            emptyHint.textContent = result.success
+                ? 'No enquiries yet — they\u2019ll show up here as soon as someone submits the enquiry form.'
+                : 'Could not load enquiries \u2014 your Code.gs may not have the \u2018listEnquiries\u2019 action yet.';
+            if (countBadge) countBadge.style.display = 'none';
+            return;
+        }
+        emptyHint.style.display = 'none';
+
+        // Newest first, and Pending ones surfaced above Contacted/Closed ones.
+        const sorted = [...result.enquiries].sort((a, b) => {
+            const aPending = (a.status || 'Pending') === 'Pending';
+            const bPending = (b.status || 'Pending') === 'Pending';
+            if (aPending !== bPending) return aPending ? -1 : 1;
+            return new Date(b.timestamp || 0) - new Date(a.timestamp || 0);
+        });
+
+        const pendingCount = sorted.filter(en => (en.status || 'Pending') === 'Pending').length;
+        if (countBadge) {
+            countBadge.style.display = pendingCount > 0 ? 'inline-flex' : 'none';
+            countBadge.textContent = pendingCount;
+        }
+
+        listEl.innerHTML = sorted.map(en => {
+            const statusVal = en.status || 'Pending';
+            const whenText = en.timestamp ? new Date(en.timestamp).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+            return `
+                <div class="sl-course-card admin-enquiry-card status-${statusVal.toLowerCase()}">
+                    <h4>${en.name || 'Unnamed'} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${en.phone || ''}${en.email ? ' · ' + en.email : ''})</span></h4>
+                    ${en.uniqueId ? `<span class="admin-ref-id">ID: ${en.uniqueId}</span>` : ''}
+                    ${whenText ? `<span style="font-size:0.75rem; color:#627d98;">${whenText}</span><br>` : ''}
+                    ${en.type ? `<span style="font-size:0.78rem; color:#0073e6; font-weight:700;">${en.type}</span>` : ''}
+                    ${en.service ? `<span style="font-size:0.78rem; color:#486581;"> · ${en.service}</span>` : ''}
+                    ${en.message ? `<p style="font-size:0.82rem; color:#334e68; margin:6px 0;">${en.message}</p>` : ''}
+                    <label style="font-size:0.75rem;">Status</label>
+                    <select id="enq-status-row-${en.rowIndex}" style="margin-left:6px; padding:4px 6px;">
+                        <option value="Pending" ${statusVal === 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Contacted" ${statusVal === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                        <option value="Closed" ${statusVal === 'Closed' ? 'selected' : ''}>Closed</option>
+                    </select>
+                    <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px;" onclick="saveAdminEnquiryStatus(${en.rowIndex})">Save</button>
+                </div>
+            `;
+        }).join('');
+    } catch (e) {
+        console.error('Loading admin enquiry list failed:', e);
+        listEl.innerHTML = '<p class="sl-hint">Could not load enquiries — check the Apps Script Web App URL in script.js and that it\u2019s deployed with "Anyone" access.</p>';
+    }
+}
+
+async function saveAdminEnquiryStatus(rowIndex) {
+    const statusEl = document.getElementById(`enq-status-row-${rowIndex}`);
+    const status = statusEl ? statusEl.value : 'Pending';
+    try {
+        const result = await callSheetBackend({ action: 'updateEnquiry', rowIndex, status });
+        if (result.success) {
+            loadAdminEnquiries();
+        } else {
+            alert('Could not save — please try again.');
+        }
+    } catch (e) {
+        console.error('Saving enquiry status failed:', e);
+        alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
+    }
+}
+
+/* ---------- SERVICES / INVOICES ----------
+   Staff Panel's 3rd tab — lets staff bill a Services Studio client (or a
+   course fee outside the student flow) and track how much of it has been
+   paid. Needs three new actions in Code.gs: 'createInvoice', 'listInvoices',
+   'updateInvoicePayment'. See the companion "invoice-backend-addon.gs" file
+   for ready-to-paste handlers + the new "Invoices" Sheet tab layout. Until
+   those exist in Code.gs, this tab will show a friendly error instead of
+   breaking anything else on the site. */
+let adminInvoicesCache = [];
+
+function openInvoiceForm() {
+    const form = document.getElementById('invoiceCreateForm');
+    if (form) form.style.display = 'block';
+}
+function closeInvoiceForm() {
+    const form = document.getElementById('invoiceCreateForm');
+    if (form) form.style.display = 'none';
+    ['invClientName', 'invPhone', 'invEmail', 'invService', 'invAmount', 'invAdvance', 'invNotes'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+}
+
+async function submitInvoice() {
+    const clientName = document.getElementById('invClientName').value.trim();
+    const phone = document.getElementById('invPhone').value.trim();
+    const email = document.getElementById('invEmail').value.trim();
+    const service = document.getElementById('invService').value.trim();
+    const amount = parseFloat(document.getElementById('invAmount').value) || 0;
+    const amountPaid = parseFloat(document.getElementById('invAdvance').value) || 0;
+    const notes = document.getElementById('invNotes').value.trim();
+    const errorEl = document.getElementById('invoiceFormError');
+
+    if (!clientName || !phone || !service || amount <= 0) {
+        if (errorEl) { errorEl.textContent = 'Client name, phone, service/project and a fee amount above ₹0 are required.'; errorEl.classList.add('show'); }
+        return;
+    }
+    if (errorEl) errorEl.classList.remove('show');
+
+    const uniqueId = generateUniqueId('INV');
+    try {
+        const result = await callSheetBackend({ action: 'createInvoice', clientName, phone, email, service, amount, amountPaid, notes, uniqueId });
+        if (result.success) {
+            closeInvoiceForm();
+            loadAdminInvoices();
+        } else {
+            if (errorEl) { errorEl.textContent = result.error || 'Could not save the invoice — your Code.gs may not have the \u2018createInvoice\u2019 action yet.'; errorEl.classList.add('show'); }
+        }
+    } catch (e) {
+        console.error('Creating invoice failed:', e);
+        if (errorEl) { errorEl.textContent = 'Could not reach the backend — check the Apps Script Web App URL.'; errorEl.classList.add('show'); }
+    }
+}
+
+async function loadAdminInvoices() {
+    const listEl = document.getElementById('adminInvoicesList');
+    const emptyHint = document.getElementById('adminInvoicesEmptyHint');
+    if (!listEl) return;
+
+    if (!sheetBackendReady) {
+        listEl.innerHTML = '';
+        emptyHint.style.display = 'block';
+        emptyHint.textContent = 'The Sheet backend isn\u2019t connected yet \u2014 see the GOOGLE SHEET BACKEND SETUP note at the top of script.js.';
+        return;
+    }
+
+    listEl.innerHTML = '<p class="sl-hint">Loading invoices…</p>';
+    try {
+        const result = await callSheetBackend({ action: 'listInvoices' });
+        if (!result.success || !result.invoices || result.invoices.length === 0) {
+            listEl.innerHTML = '';
+            emptyHint.style.display = 'block';
+            emptyHint.textContent = result.success
+                ? 'No invoices yet — use "+ New Invoice" above to bill a client.'
+                : 'Could not load invoices \u2014 your Code.gs may not have the \u2018listInvoices\u2019 action yet (see invoice-backend-addon.gs).';
+            return;
+        }
+        emptyHint.style.display = 'none';
+
+        // Newest first, using the date embedded in each INV-... id.
+        adminInvoicesCache = [...result.invoices].sort((a, b) => dateFromUniqueId(b.uniqueId) - dateFromUniqueId(a.uniqueId));
+
+        listEl.innerHTML = adminInvoicesCache.map(inv => {
+            const balance = Math.max(0, (inv.amount || 0) - (inv.amountPaid || 0));
+            const statusLabel = balance <= 0 ? 'Paid' : (inv.amountPaid > 0 ? 'Partial' : 'Unpaid');
+            const statusClass = balance <= 0 ? 'paid' : (inv.amountPaid > 0 ? 'partial' : 'unpaid');
+            return `
+                <div class="sl-course-card admin-invoice-card">
+                    <h4>${inv.clientName} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${inv.phone}${inv.email ? ' · ' + inv.email : ''})</span></h4>
+                    ${inv.uniqueId ? `<span class="admin-ref-id">ID: ${inv.uniqueId}</span>` : ''}
+                    <span class="invoice-status-badge ${statusClass}">${statusLabel}</span>
+                    ${formatDate(inv.timestamp) ? `<span style="font-size:0.75rem; color:#627d98; display:block; margin-top:2px;">📅 Service Date: ${formatDate(inv.timestamp)}</span>` : ''}
+                    <p style="font-size:0.85rem; color:#334e68; margin:6px 0;"><strong>${inv.service}</strong>${inv.notes ? ' — ' + inv.notes : ''}</p>
+                    <div style="display:flex; gap:16px; flex-wrap:wrap; margin:8px 0; font-size:0.82rem; color:#486581;">
+                        <span>Total: <strong style="color:#0c2340;">₹${inv.amount}</strong></span>
+                        <span>Paid: <strong style="color:#1f7a37;">₹${inv.amountPaid || 0}</strong></span>
+                        <span>Balance: <strong style="color:${balance > 0 ? '#e5484d' : '#1f7a37'};">₹${balance}</strong></span>
+                    </div>
+                    <label style="font-size:0.75rem;">Update Paid ₹</label>
+                    <input type="number" min="0" value="${inv.amountPaid || 0}" id="inv-paid-row-${inv.rowIndex}" style="width:90px; margin-left:6px; padding:4px 6px;">
+                    <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px;" onclick="saveInvoicePayment(${inv.rowIndex})">Save</button>
+                    <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px; background:#0c2340;" onclick="downloadInvoicePDF(${inv.rowIndex})">🧾 View / Download Invoice</button>
+                </div>
+            `;
+        }).join('');
+    } catch (e) {
+        console.error('Loading admin invoice list failed:', e);
+        listEl.innerHTML = '<p class="sl-hint">Could not load invoices — check the Apps Script Web App URL in script.js and that it\u2019s deployed with "Anyone" access.</p>';
+    }
+}
+
+async function saveInvoicePayment(rowIndex) {
+    const paidEl = document.getElementById(`inv-paid-row-${rowIndex}`);
+    const amountPaid = paidEl ? (parseFloat(paidEl.value) || 0) : 0;
+    try {
+        const result = await callSheetBackend({ action: 'updateInvoicePayment', rowIndex, amountPaid });
+        if (result.success) {
+            loadAdminInvoices();
+        } else {
+            alert('Could not save — please try again.');
+        }
+    } catch (e) {
+        console.error('Saving invoice payment failed:', e);
+        alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
+    }
+}
+
+/* Opens the printable invoice overlay (same "hide everything except the
+   printable area, then window.print()" pattern as the student certificate)
+   so staff can hand the client a clean PDF via the browser's Save as PDF. */
+function downloadInvoicePDF(rowIndex) {
+    const inv = adminInvoicesCache.find(i => i.rowIndex === rowIndex);
+    if (!inv) return;
+    const balance = Math.max(0, (inv.amount || 0) - (inv.amountPaid || 0));
+
+    document.getElementById('invPdfClientName').textContent = inv.clientName;
+    document.getElementById('invPdfContact').textContent = `${inv.phone}${inv.email ? ' · ' + inv.email : ''}`;
+    document.getElementById('invPdfService').textContent = inv.service + (inv.notes ? ' — ' + inv.notes : '');
+    document.getElementById('invPdfAmount').textContent = `₹${inv.amount}`;
+    document.getElementById('invPdfPaid').textContent = `₹${inv.amountPaid || 0}`;
+    document.getElementById('invPdfBalance').textContent = `₹${balance}`;
+    document.getElementById('invPdfId').textContent = inv.uniqueId || '—';
+    document.getElementById('invPdfDate').textContent = formatDate(inv.timestamp) || formatDate(dateFromUniqueId(inv.uniqueId)) || formatDate(Date.now());
+
+    document.getElementById('invoiceOverlay').classList.add('active');
+}
+function closeInvoiceOverlay() {
+    document.getElementById('invoiceOverlay').classList.remove('active');
+}
+function closeInvoiceOnOverlay(event) {
+    if (event.target.id === 'invoiceOverlay') closeInvoiceOverlay();
+}
+function downloadInvoiceAsPdf() {
+    // Same trick as downloadCertificate(): the print stylesheet only shows
+    // .certificate-print-area when this class is on <body>, so "Save as PDF"
+    // from the print dialog produces a clean invoice with no page chrome.
+    document.body.classList.add('printing-certificate');
+    window.print();
+}
+
+/* ---------- CERTIFICATE ---------- */
 function viewCertificate(studentName, courseName) {
     document.getElementById('certStudentName').textContent = studentName;
     document.getElementById('certCourseName').textContent = courseName;
@@ -2014,9 +2931,63 @@ function viewCertificate(studentName, courseName) {
     document.getElementById('certId').textContent = 'UMA-' + hash.toString(36).toUpperCase().slice(0, 8);
 
     document.getElementById('certificateOverlay').classList.add('active');
+    launchConfettiBurst();
+}
+
+/* Lightweight confetti burst — pure canvas, no external library, plays once
+   for ~2.2s across the full screen when a certificate is unlocked. */
+function launchConfettiBurst() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'confettiCanvas';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+
+    const colors = ['#ffc400', '#0073e6', '#1f7a37', '#e5484d', '#0c2340'];
+    const pieces = Array.from({ length: 90 }, () => ({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * canvas.height * 0.4,
+        w: 6 + Math.random() * 5,
+        h: 6 + Math.random() * 5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speedY: 2 + Math.random() * 3,
+        speedX: -1.5 + Math.random() * 3,
+        rotation: Math.random() * 360,
+        rotationSpeed: -6 + Math.random() * 12
+    }));
+
+    const startTime = performance.now();
+    const durationMs = 2200;
+
+    function frame(now) {
+        const elapsed = now - startTime;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+            p.x += p.speedX;
+            p.y += p.speedY;
+            p.rotation += p.rotationSpeed;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            ctx.restore();
+        });
+        if (elapsed < durationMs) {
+            requestAnimationFrame(frame);
+        } else {
+            canvas.remove();
+        }
+    }
+    requestAnimationFrame(frame);
 }
 function closeCertificate() {
     document.getElementById('certificateOverlay').classList.remove('active');
+    const canvas = document.getElementById('confettiCanvas');
+    if (canvas) canvas.remove();
 }
 function closeCertificateOnOverlay(e) {
     if (e.target.id === 'certificateOverlay') closeCertificate();
@@ -2175,3 +3146,4 @@ function liveSearch(value) {
         }
     });
 }
+
