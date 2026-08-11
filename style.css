@@ -622,7 +622,45 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             .contact-fab-wrap::after { right: 14px; bottom: 16px; width: 48px; height: 48px; }
         }
 
-        /* ==================== STUDENT LOGIN (Learning Campus only) ==================== */
+        /* ==================== CERTIFICATE CELEBRATION ==================== */
+        .celebration-banner {
+            text-align: center;
+            margin-bottom: 4px;
+            animation: celebrationPop 0.5s cubic-bezier(.22,1,.36,1);
+        }
+        .celebration-svg { width: 180px; height: auto; display: block; margin: 0 auto; }
+        .confetti-piece {
+            transform-origin: center;
+            animation: confettiFall 1.4s ease-in var(--d, 0s) infinite;
+        }
+        @keyframes confettiFall {
+            0%   { transform: translateY(-6px) rotate(0deg); opacity: 0; }
+            15%  { opacity: 1; }
+            100% { transform: translateY(22px) rotate(200deg); opacity: 0; }
+        }
+        .celebration-text {
+            font-weight: 800;
+            font-size: 1rem;
+            color: #0c2340;
+            margin-top: 2px;
+        }
+        @keyframes celebrationPop {
+            0%   { opacity: 0; transform: scale(0.8) translateY(-8px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .confetti-piece, .celebration-banner { animation: none !important; }
+        }
+        #confettiCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+
         .nav-student-login {
             display: none;
             background: #1565c0;
@@ -694,6 +732,64 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             text-align: center;
         }
         .sl-hint strong { color: #627d98; }
+        .sl-switch-link {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            text-align: center;
+            color: #627d98;
+        }
+        .sl-switch-link a {
+            color: #1565c0;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .admin-panel-box { max-width: 620px; }
+
+        /* ---- Admission form: wider box, two-column layout, matches enquiry form ---- */
+        .admission-modal-box { max-width: 560px; }
+        .admission-form-grid .form-row {
+            display: flex;
+            gap: 16px;
+        }
+        .admission-form-grid .form-row .form-field {
+            flex: 1 1 0;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .admission-form-grid .form-field label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #486581;
+            margin-top: 10px;
+        }
+        .admission-form-grid .form-field input,
+        .admission-form-grid .form-field select {
+            padding: 11px 14px;
+            border: 1px solid #d9e2ec;
+            border-radius: 6px;
+            font-size: 0.92rem;
+            font-family: inherit;
+            width: 100%;
+            box-sizing: border-box;
+            background: #fff;
+        }
+        .admission-form-grid .form-field input:focus,
+        .admission-form-grid .form-field select:focus {
+            outline: none;
+            border-color: #1565c0;
+        }
+        .admission-field-hint {
+            font-size: 0.72rem;
+            color: #9aa5b1;
+            margin-top: 3px;
+        }
+        .admission-optional-tag { font-weight: 400; color: #9aa5b1; }
+        .admission-password-field { margin-top: 4px; }
+        @media (max-width: 640px) {
+            .admission-form-grid .form-row { flex-direction: column; gap: 0; }
+        }
 
         .sl-dashboard { display: none; }
         .sl-dashboard.show { display: block; }
@@ -728,6 +824,59 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
         .sl-status-badge.completed { background: #e3f7e9; color: #1f7a37; }
         .sl-status-badge.progress { background: #fef3d9; color: #9a6b00; }
+
+        /* Staff panel tabs — Registered Students / Pending Enquiries */
+        .admin-tabs {
+            display: flex;
+            gap: 6px;
+            margin: 8px 0 18px 0;
+            border-bottom: 1px solid #e4e7eb;
+        }
+        .admin-tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 10px 4px;
+            margin-right: 18px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #627d98;
+            cursor: pointer;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .admin-tab-btn:hover { color: #0c2340; }
+        .admin-tab-btn.active { color: #0073e6; border-bottom-color: #0073e6; }
+        .admin-tab-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 20px;
+            background: #e5484d;
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 800;
+        }
+        .admin-enquiry-card.status-pending { border-left: 3px solid #e5484d; }
+        .admin-enquiry-card.status-contacted { border-left: 3px solid #f5a623; }
+        .admin-enquiry-card.status-closed { border-left: 3px solid #1f7a37; opacity: 0.75; }
+        .admin-ref-id {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.3px;
+            color: #0c2340;
+            background: #eef2f6;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
         .sl-progress-bar {
             width: 100%;
             height: 8px;
@@ -784,6 +933,14 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             padding: 40px 34px 30px 34px;
             text-align: center;
             position: relative;
+        }
+        .certificate-logo {
+            display: block;
+            height: 56px;
+            width: auto;
+            max-width: 220px;
+            margin: 0 auto 10px auto;
+            object-fit: contain;
         }
         .certificate-brand {
             font-weight: 900;
@@ -882,7 +1039,121 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
                 background: #fff;
             }
             body.printing-certificate .certificate-card { width: 90%; max-width: 720px; }
+            body.printing-certificate .invoice-card { width: 90%; max-width: 720px; }
             body.printing-certificate .no-print { display: none !important; }
+        }
+
+        /* ==================== CREDENTIAL BADGES (MSME / ISO) ====================
+           Small accreditation marks on the certificate. Best-practice for
+           certificate design keeps the issuer's own logo/brand as the first
+           thing seen — verification/accreditation marks belong small and
+           out of that sightline, so this renders as a subtle footer strip
+           below the signatures rather than competing with the UMA logo up
+           top. Expects images/msme-logo-png_.png and images/iso_png.png to
+           exist in your images folder — drop the two files in and these
+           appear automatically, nothing else to wire up. */
+        .credential-badges-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 22px;
+            padding-top: 14px;
+            border-top: 1px solid #e3c876;
+        }
+        .credential-badge {
+            height: 22px;
+            width: auto;
+            max-width: 64px;
+            object-fit: contain;
+            opacity: 0.75;
+        }
+
+        /* ==================== ADMIN: PROGRESS / COMPLETED SECTIONS ==================== */
+        .admin-status-section { margin-bottom: 22px; }
+        .admin-status-heading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #0c2340;
+            margin: 0 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #e4e7eb;
+        }
+
+        /* ==================== ADMIN: SERVICES & INVOICES TAB ==================== */
+        .invoice-status-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .invoice-status-badge.paid { background: #e3f7e9; color: #1f7a37; }
+        .invoice-status-badge.partial { background: #fef3d9; color: #9a6b00; }
+        .invoice-status-badge.unpaid { background: #fde8e8; color: #c22; }
+
+        /* ---- printable invoice card ---- */
+        .invoice-print-area .certificate-card,
+        .invoice-card {
+            border-radius: 14px;
+            padding: 28px 30px;
+            background: #fff;
+            border: 1.5px solid #d9e2ec;
+            text-align: left;
+        }
+        .invoice-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 2px solid #0c2340;
+            padding-bottom: 16px;
+            margin-bottom: 18px;
+        }
+        .invoice-logo { height: 44px; width: auto; max-width: 160px; object-fit: contain; }
+        .invoice-header-text { flex: 1; }
+        .invoice-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .invoice-title { margin: 0; font-size: 1.3rem; letter-spacing: 1px; color: #0c2340; }
+        .invoice-meta { display: flex; flex-direction: column; gap: 4px; font-size: 0.82rem; color: #486581; text-align: right; }
+        .invoice-billto {
+            background: #f5f8fb;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 18px;
+        }
+        .invoice-client-name { font-size: 1.05rem; font-weight: 800; color: #0c2340; margin: 4px 0 2px 0; }
+        .invoice-client-contact { font-size: 0.85rem; color: #627d98; margin: 0; }
+        .invoice-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+        .invoice-table th, .invoice-table td { padding: 10px 8px; text-align: left; font-size: 0.9rem; }
+        .invoice-table thead th { border-bottom: 2px solid #0c2340; color: #0c2340; }
+        .invoice-table tbody td { border-bottom: 1px solid #e4e7eb; }
+        .invoice-table tfoot td { border-top: 1px solid #e4e7eb; padding-top: 10px; font-weight: 700; }
+        .invoice-balance-row td { font-size: 1.05rem; color: #0c2340; }
+        .invoice-footer-note { font-size: 0.8rem; color: #627d98; margin: 10px 0 0 0; }
+        .invoice-bank-note {
+            margin-top: 16px;
+            padding: 12px 14px;
+            background: #f5f8fb;
+            border: 1px solid #d9e2ec;
+            border-radius: 8px;
+        }
+        .invoice-bank-note p { margin: 2px 0; font-size: 0.82rem; color: #334e68; line-height: 1.5; }
+        .invoice-bank-note p:first-child { color: #0c2340; font-size: 0.85rem; margin-bottom: 4px; }
+        @media (max-width: 600px) {
+            .invoice-header { flex-wrap: wrap; }
+            .invoice-title-row { flex-direction: column; align-items: flex-start; }
+            .invoice-meta { text-align: left; }
         }
 
         /* ==================== LIVE COUNTERS ==================== */
@@ -1543,6 +1814,34 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             background-color: #eef2f6;
             border-bottom: 1px solid #e4e7eb;
         }
+
+        /* Course duration ribbon — auto-injected by JS (see applyCourseDurations()
+           in script.js) onto the top-right corner of every course card's image,
+           so learners see the time commitment before opening the detail page. */
+        .card-duration-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 4;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(12, 35, 64, 0.88);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            pointer-events: none;
+        }
+        .card-duration-badge svg { width: 11px; height: 11px; flex-shrink: 0; }
+        .cat-data-auto .card-duration-badge,
+        .cat-software .card-duration-badge,
+        .cat-academy-creative .card-duration-badge,
+        .cat-literacy .card-duration-badge { background: rgba(21, 101, 192, 0.9); }
 
         .card-image {
             position: absolute;
@@ -5812,4 +6111,46 @@ left:150%;
 .cat-web-systems:hover .card-title,
 .cat-media-studio:hover .card-title {
     color: #0073e6 !important;
+}
+/* ==========================================================================
+   FINAL OVERRIDE: on the "Why Choose Us" page, make the Services Studio
+   card (.services-card) look identical to the Learning Campus card
+   (.academy-card) — same white/light background, border, header underline,
+   heading/paragraph colors, and feature-row styling. Only the *content*
+   (icons, text, links) still differs between the two; the visual style is
+   now unified. Nothing above is deleted; this simply wins the cascade.
+   ========================================================================== */
+.services-card {
+    background: linear-gradient(145deg, #ffffff, #f8fcff) !important;
+    border: 2px solid #d8ecff !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,.08) !important;
+    color: #222 !important;
+}
+.services-card::after {
+    background: linear-gradient(160deg, #ffffff, #f5fbff, #edf7ff) !important;
+}
+.services-card:hover {
+    box-shadow: 0 30px 70px rgba(13,71,161,.18) !important;
+}
+.services-card .why-card-header {
+    border-color: #dfefff !important;
+}
+.services-card h2 {
+    color: #0D47A1 !important;
+}
+.services-card p {
+    color: #666 !important;
+}
+.services-card .why-feature {
+    background: #f6fff8 !important;
+    border: 1px solid #dff5e6 !important;
+}
+.services-card .why-feature:hover {
+    background: #ebfff0 !important;
+}
+.services-card strong {
+    color: #15803d !important;
+}
+.services-card span {
+    color: #555 !important;
 }
