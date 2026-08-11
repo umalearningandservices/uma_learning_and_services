@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://umalearningservices.com/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+<!--
+  NOTE: This site is a single-page app (one index.html, JS-driven sections
+  like Home / Services Studio / Learning Campus / Reviews / Blogs), so there
+  is only one crawlable URL today. If you later split any section into its
+  own real URL (e.g. a dedicated /blog/some-post-title page), add a <url>
+  block for each one here — separate URLs index and rank far better than
+  JS-only sections, especially for blog posts, which is one of the highest-
+  leverage SEO moves available for this site.
+-->
