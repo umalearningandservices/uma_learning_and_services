@@ -1025,22 +1025,39 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             .certificate-signatures { flex-direction: column; gap: 14px; }
         }
 
-        /* Print: show only the certificate itself, full-page, no site chrome */
+        /* Print: show only the certificate (or invoice) itself, one page,
+           no site chrome.
+           IMPORTANT: this targets .print-target specifically (added by JS
+           right before window.print(), removed on afterprint) rather than
+           ".active" — a student can have BOTH the Student Login overlay AND
+           the Certificate overlay marked "active" at once (the dashboard
+           stays open underneath by design), so keying off ".active" printed
+           both of them stacked one after another. .print-target is only
+           ever on the ONE overlay actually being printed. */
         @media print {
-            body.printing-certificate * { visibility: hidden; }
-            body.printing-certificate .certificate-print-area,
-            body.printing-certificate .certificate-print-area * { visibility: visible; }
+            body.printing-certificate > *:not(.print-target) {
+                display: none !important;
+            }
+            body.printing-certificate .print-target {
+                display: flex !important;
+                position: static !important;
+                inset: auto !important;
+                background: #fff !important;
+                min-height: 0 !important;
+            }
+            body.printing-certificate .print-target .no-print {
+                display: none !important;
+            }
             body.printing-certificate .certificate-print-area {
-                position: fixed;
-                inset: 0;
+                position: static !important;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: #fff;
             }
-            body.printing-certificate .certificate-card { width: 90%; max-width: 720px; }
-            body.printing-certificate .invoice-card { width: 90%; max-width: 720px; }
-            body.printing-certificate .no-print { display: none !important; }
+            body.printing-certificate .certificate-card { width: 90%; max-width: 720px; margin: 0 auto; }
+            body.printing-certificate .invoice-card { width: 90%; max-width: 720px; margin: 0 auto; }
+            @page { margin: 0.4in; }
         }
 
         /* ==================== CREDENTIAL BADGES (MSME / ISO) ====================
@@ -1068,6 +1085,51 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             object-fit: contain;
             opacity: 0.75;
         }
+
+        /* ==================== ADMIN PANEL: toolbar + refresh ====================
+           "+ New Admission" / "+ New Invoice" and the manual refresh button
+           now sit together above each list so the panel reads faster and
+           doesn't need a click to know how to get fresh data. */
+        .admin-panel-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .admin-refresh-btn {
+            background: #eef4fa;
+            color: #0c2340;
+            border: 1px solid #d3e0ec;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .admin-refresh-btn:hover { background: #dce8f5; }
+
+        /* Per-payment ledger rows (admin student/invoice panels + the
+           printable invoice PDF) — each installment gets its own line with
+           its own date instead of one lump "paid" number. */
+        .payment-history {
+            margin: 4px 0 10px 0;
+            border: 1px solid #e4e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .payment-history-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            color: #334e68;
+        }
+        .payment-history-row:nth-child(even) { background: #f5f8fb; }
+        .payment-history-row span:last-child { font-weight: 700; color: #1f7a37; }
+        .invoice-payments-table { margin-top: 6px; }
 
         /* ==================== ADMIN: PROGRESS / COMPLETED SECTIONS ==================== */
         .admin-status-section { margin-bottom: 22px; }
@@ -1842,6 +1904,28 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         .cat-software .card-duration-badge,
         .cat-academy-creative .card-duration-badge,
         .cat-literacy .card-duration-badge { background: rgba(21, 101, 192, 0.9); }
+
+        /* Star-rating badge \u2014 auto-injected by JS (see applyCourseRatings() in
+           script.js) onto the top-left corner of every course card's image,
+           mirroring the duration ribbon on the top-right. */
+        .card-rating-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 4;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: rgba(240, 165, 0, 0.95);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            pointer-events: none;
+        }
 
         .card-image {
             position: absolute;
@@ -2687,6 +2771,13 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             color: #fff;
             font-weight: 700;
         }
+        .btn-email {
+            background: #fff;
+            color: #0c2340;
+            border: 2px solid #0c2340;
+            font-weight: 700;
+        }
+        .btn-email:hover { background: #f2f6fa; }
         @media (max-width: 640px) {
             .detail-meta-grid { grid-template-columns: 1fr; }
         }
