@@ -23,7 +23,8 @@ const WHATSAPP_NUMBER = '918340434138'; // Public Desk — update anytime
    student/enquirer is shown on screen is exactly what staff see in the Sheet
    and in the Staff Panel. See the GOOGLE SHEET BACKEND SETUP note below for
    the extra Sheet column this needs. ============================ */
-function generateUniqueId(prefix) {
+    
+   function generateUniqueId(prefix) {
     const now = new Date();
     const datePart = now.getFullYear().toString() +
         String(now.getMonth() + 1).padStart(2, '0') +
@@ -73,41 +74,97 @@ function dateFromUniqueId(uniqueId) {
    Edit the values below any time — every place duration is shown updates
    automatically, nothing else needs to change. ============================ */
 const COURSE_DURATIONS = {
-    "Macro & VBA Engineering": "2 Months",
-    "Advanced Excel + Macro/VBA with AI": "3 Months",
-    "AI": "6 Weeks",
-    "Looker Studio / Power BI / Tableau": "2 Months",
-    "Data Analytics and Data Science with AI": "4 Months",
-    "Google Workspace with AI": "1 Month",
-    "Google Apps Script": "6 Weeks",
-    "Python Programming": "2 Months",
-    "PHP Language": "2 Months",
-    "MERN Full Stack Development": "4 Months",
-    "C,C Plus,C++ Programming": "2 Months",
-    "SQL Database Management": "6 Weeks",
-    "JavaScript, HTML5, CSS3": "2 Months",
-    "Website Development": "3 Months",
-    "ERP Development": "4 Months",
-    "Rhino & Matrix Jewellery Designing": "2 Months",
-    "CAD Designing": "2 Months",
-    "Adobe Photoshop, Figma, Canva & CorelDRAW Designing": "2 Months",
-    "Digital Marketing & SEO": "3 Months",
-    "Tally Prime with GST": "2 Months",
-    "Advance Diploma In Finance and Accounting (ADFA)": "6 Months",
-    "Hindi & English Typing": "2 Months",
-    "Logo / Post & Creative Designing": "6 Weeks",
-    "Basic Computer & Logic Building": "1 Month",
-    "Internet Surfing": "15 Days",
-    "MS-Office": "6 Weeks",
-    "DCA": "6 Months",
-    "ADCA": "12 Months",
-    "ADCA PLUS": "15 Months",
-    "O-LEVEL": "12 Months",
-    "INDESIGN": "1 Month",
-    "GRAPHIC DESIGN": "3 Months",
-    "Spoken English": "2 Months",
-    "Android App Development": "3 Months"
+    /* These three were fixed by the owner directly \u2014 not auto-adjusted. */
+    "Advanced Excel + Macro/VBA with AI": "1.5 Months",
+    "Data Analytics and Data Science with AI": "6 Months",
+    "Python Programming": "1.5 Months",
+
+    /* Everyone else: set to the typical duration charged by local Jaipur
+       computer institutes for that subject, then +1 week on top so our
+       course still reads as more thorough than the market average. */
+    "Macro & VBA Engineering": "2 Months 1 Week",
+    "AI": "7 Weeks",
+    "Looker Studio / Power BI / Tableau": "2 Months 1 Week",
+    "Google Workspace with AI": "1 Month 1 Week",
+    "Google Apps Script": "7 Weeks",
+    "PHP Language": "2 Months 1 Week",
+    "MERN Full Stack Development": "4 Months 1 Week",
+    "C,C Plus,C++ Programming": "2 Months 1 Week",
+    "SQL Database Management": "7 Weeks",
+    "JavaScript, HTML5, CSS3": "2 Months 1 Week",
+    "Website Development": "3 Months 1 Week",
+    "ERP Development": "4 Months 1 Week",
+    "Rhino & Matrix Jewellery Designing": "2 Months 1 Week",
+    "CAD Designing": "2 Months 1 Week",
+    "Adobe Photoshop, Figma, Canva & CorelDRAW Designing": "2 Months 1 Week",
+    "Digital Marketing & SEO": "3 Months 1 Week",
+    "Tally Prime with GST": "2 Months 1 Week",
+    "Advance Diploma In Finance and Accounting (ADFA)": "6 Months 1 Week",
+    "Hindi & English Typing": "2 Months 1 Week",
+    "Logo / Post & Creative Designing": "7 Weeks",
+    "Basic Computer & Logic Building": "1 Month 1 Week",
+    "Internet Surfing": "22 Days",
+    "MS-Office": "7 Weeks",
+    "DCA": "6 Months 1 Week",
+    "ADCA": "12 Months 1 Week",
+    "ADCA PLUS": "15 Months 1 Week",
+    "O-LEVEL": "12 Months 1 Week",
+    "INDESIGN": "1 Month 1 Week",
+    "GRAPHIC DESIGN": "3 Months 1 Week",
+    "Spoken English": "2 Months 1 Week",
+    "Android App Development": "3 Months 1 Week"
 };
+
+/* ============================================================================
+   COURSE RATINGS
+   ----------------------------------------------------------------------------
+   Same pattern as COURSE_DURATIONS above \u2014 keyed by the exact course title,
+   drives the star badge on every course card (applyCourseRatings()) AND the
+   star row on the Detail page (openDetail() reads this too). Values are out
+   of 5. Edit any time. ============================================ */
+const COURSE_RATINGS = {
+    "Advanced Excel + Macro/VBA with AI": 5.0,
+    "Data Analytics and Data Science with AI": 5.0,
+    "Python Programming": 4.8,
+    "Macro & VBA Engineering": 4.8,
+    "AI": 4.9,
+    "Looker Studio / Power BI / Tableau": 4.7,
+    "Google Workspace with AI": 4.6,
+    "Google Apps Script": 4.6,
+    "PHP Language": 4.6,
+    "MERN Full Stack Development": 4.8,
+    "C,C Plus,C++ Programming": 4.5,
+    "SQL Database Management": 4.6,
+    "JavaScript, HTML5, CSS3": 4.6,
+    "Website Development": 4.7,
+    "ERP Development": 4.6,
+    "Rhino & Matrix Jewellery Designing": 4.7,
+    "CAD Designing": 4.6,
+    "Adobe Photoshop, Figma, Canva & CorelDRAW Designing": 4.6,
+    "Digital Marketing & SEO": 4.7,
+    "Tally Prime with GST": 4.8,
+    "Advance Diploma In Finance and Accounting (ADFA)": 4.7,
+    "Hindi & English Typing": 4.5,
+    "Logo / Post & Creative Designing": 4.5,
+    "Basic Computer & Logic Building": 4.5,
+    "Internet Surfing": 4.5,
+    "MS-Office": 4.6,
+    "DCA": 4.6,
+    "ADCA": 4.7,
+    "ADCA PLUS": 4.8,
+    "O-LEVEL": 4.6,
+    "INDESIGN": 4.5,
+    "GRAPHIC DESIGN": 4.6,
+    "Spoken English": 4.7,
+    "Android App Development": 4.7
+};
+
+/* Renders a 5-star row (rounded to the nearest whole star for the icons)
+   plus the exact numeric score, e.g. "\u2605\u2605\u2605\u2605\u2605 5.0" or "\u2605\u2605\u2605\u2605\u2606 4.5". */
+function renderStars(rating) {
+    const filled = Math.max(0, Math.min(5, Math.round(rating)));
+    return '\u2605'.repeat(filled) + '\u2606'.repeat(5 - filled) + ' ' + rating.toFixed(1);
+}
 
 /* Injects a duration ribbon onto every course card (Learning Campus column
    only — Services Studio cards are project-based, not duration-based) and
@@ -135,6 +192,30 @@ function applyCourseDurations() {
     });
 }
 document.addEventListener('DOMContentLoaded', applyCourseDurations);
+
+/* Injects a star-rating badge onto every course card (top-left of the image,
+   mirrors the duration ribbon on the top-right) using COURSE_RATINGS above,
+   and sets data-rating on the card so openDetail() picks it up too. */
+function applyCourseRatings() {
+    document.querySelectorAll('.academy-column .card').forEach(card => {
+        const titleEl = card.querySelector('.card-title');
+        if (!titleEl) return;
+        const title = titleEl.textContent.trim();
+        const rating = COURSE_RATINGS[title];
+        if (!rating) return;
+
+        card.setAttribute('data-rating', rating);
+
+        const carousel = card.querySelector('.card-image-carousel');
+        if (carousel && !carousel.querySelector('.card-rating-badge')) {
+            const badge = document.createElement('span');
+            badge.className = 'card-rating-badge';
+            badge.innerHTML = '\u2605 ' + rating.toFixed(1);
+            carousel.appendChild(badge);
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', applyCourseRatings);
 
 /* ---------- COURSE CURRICULUM DATA (educational courses) ----------
    Keyed by a short slug (matches each course card's data-course attribute).
@@ -905,6 +986,10 @@ function renderCourseCurriculum(courseKey) {
 
         let lastPage = 'home';
         let lastServicesView = 'corporate';
+        // Scroll offset the visitor was at right before opening a detail
+        // page, so the "\u2190 Back" link can put them back in the same spot
+        // instead of resetting to the top of the listing page.
+        let detailReturnScrollY = null;
 
         /* ---------- HOME / SERVICES SPLIT VIEW (existing behaviour, kept) ---------- */
         function filterView(targetView) {
@@ -924,11 +1009,13 @@ function renderCourseCurriculum(courseKey) {
             }
         }
 
-        function goServices(targetView) {
+        function goServices(targetView, opts) {
             const navView = targetView === 'corporate' ? 'corporate' : 'academic';
             lastServicesView = navView;
-            showPage('services', navView);
+            const restoring = !!(opts && opts.restoreScroll);
+            showPage('services', navView, { skipScrollTop: restoring });
             filterView(targetView);
+            if (restoring) return; // caller (goBackFromDetail) restores the exact scroll offset itself
             const anchor = targetView === 'corporate' ? 'services-hub' : 'academy-hub';
             setTimeout(() => {
                 document.getElementById(anchor).scrollIntoView({ behavior: 'smooth' });
@@ -945,6 +1032,11 @@ function renderCourseCurriculum(courseKey) {
 
         /* ---------- SERVICE / COURSE DETAIL PAGE ---------- */
         function openDetail(cardEl) {
+            // Remember exactly where the visitor was on the listing page so
+            // goBackFromDetail() can put them back in the same spot instead
+            // of resetting to the top of the page.
+            detailReturnScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+
             const title = (cardEl.querySelector('.card-title') || {}).textContent?.trim() || 'UMA Service';
             const fullDesc = cardEl.getAttribute('data-full');
             const detailEls = cardEl.querySelectorAll('.card-details');
@@ -977,8 +1069,9 @@ function renderCourseCurriculum(courseKey) {
 
             const ratingEl = document.getElementById('detailRating');
             if (ratingEl) {
+                const ratingValue = COURSE_RATINGS[title] || 4.5;
                 ratingEl.innerHTML = courseData
-                    ? '<span class="dr-stars">★★★★☆</span><span class="dr-label">Professional Course</span>'
+                    ? '<span class="dr-stars">' + renderStars(ratingValue) + '</span><span class="dr-label">Professional Course</span>'
                     : '';
                 ratingEl.style.display = courseData ? '' : 'none';
             }
@@ -1010,7 +1103,7 @@ function renderCourseCurriculum(courseKey) {
             document.getElementById('detailCategory').textContent = segmentHeading;
             document.getElementById('detailTitle').textContent = title;
 
-            const fee = cardEl.getAttribute('data-fee') || 'Contact for Fee';
+            const fee = cardEl.getAttribute('data-fee') || (isAgency ? 'Contact for Service Charge' : 'Contact for Fee');
             const duration = cardEl.getAttribute('data-duration') || 'Flexible (as per batch)';
             const modeAttr = cardEl.getAttribute('data-mode'); // e.g. "Offline,Online"
             const modes = modeAttr ? modeAttr.split(',').map(m => m.trim()).filter(Boolean) : ['Offline', 'Online'];
@@ -1024,6 +1117,13 @@ function renderCourseCurriculum(courseKey) {
 
             const waMsg = encodeURIComponent(`Hi UMA Team, I'm interested in "${title}". Please share more details.`);
             document.getElementById('detailWhatsapp').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`;
+
+            const emailEl = document.getElementById('detailEmail');
+            if (emailEl) {
+                const emailSubject = encodeURIComponent(`Enquiry: ${title}`);
+                const emailBody = encodeURIComponent(`Hi UMA Team,\n\nI'm interested in "${title}". Please share more details on fee, duration, and batch timings.\n\nThanks!`);
+                emailEl.href = `mailto:umalearingandservices@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+            }
 
             const enquiryServiceField = document.getElementById('enquiryService');
             if (enquiryServiceField) enquiryServiceField.value = title;
@@ -1064,15 +1164,25 @@ function renderCourseCurriculum(courseKey) {
         }
 
         function goBackFromDetail() {
+            const restoreY = detailReturnScrollY;
             if ((lastPage || 'services') === 'services') {
                 // Returning to Services: restore whichever view (Services Studio /
                 // corporate, or Learning Campus / academic) the visitor was on
                 // before opening the detail page, instead of snapping to the
                 // default view and the very top of the page.
-                goServices(lastServicesView);
+                goServices(lastServicesView, { restoreScroll: restoreY !== null });
             } else {
-                showPage(lastPage || 'services');
+                showPage(lastPage || 'services', undefined, { skipScrollTop: restoreY !== null });
             }
+            if (restoreY !== null) {
+                // Wait a tick for the page swap/render above to finish, then
+                // jump straight back to the exact spot \u2014 no smooth animation,
+                // so it feels like the page never left that position.
+                requestAnimationFrame(() => {
+                    window.scrollTo({ top: restoreY, behavior: 'auto' });
+                });
+            }
+            detailReturnScrollY = null;
         }
 
         /* ---------- DETAIL-CARD IMAGE CAROUSEL (click prev/next or a dot) ---------- */
@@ -1659,7 +1769,7 @@ window.addEventListener('resize', () => {
         }
 
         /* ---------- FOOTER NEWSLETTER SUBSCRIBE (placeholder — connect an email/SMS service later) ---------- */
-        function subscribeNewsletter(e) {
+        async function subscribeNewsletter(e) {
             e.preventDefault();
             const emailInput = document.getElementById('subscribeEmail');
             const phoneInput = document.getElementById('subscribePhone');
@@ -1691,6 +1801,23 @@ window.addEventListener('resize', () => {
             const parts = [];
             if (emailGiven) parts.push(email);
             if (phoneGiven) parts.push(phone);
+
+            // Saves into its own "Subscribers" tab in the same Sheet backend
+            // (see callSheetBackend / SHEET_API_URL below) — kept separate
+            // from the Students and Enquiries tabs so this list stays a
+            // clean marketing/updates list. Requires a 'subscribe' action
+            // added to Code.gs (see the comment above SHEET_API_URL).
+            if (typeof sheetBackendReady !== 'undefined' && sheetBackendReady) {
+                try {
+                    await callSheetBackend({ action: 'subscribe', email, phone });
+                } catch (err) {
+                    console.error('Saving subscriber to Sheet failed:', err);
+                    // Still show the success message below — we don't want a
+                    // backend hiccup to make a genuine subscriber think their
+                    // signup was rejected outright.
+                }
+            }
+
             msgEl.textContent = `Thanks! ${parts.join(' & ')} added to our updates list.`;
             msgEl.style.color = '#9fd0ff';
             emailInput.value = '';
@@ -1745,7 +1872,7 @@ window.addEventListener('resize', () => {
         window.addEventListener('popstate', restorePageFromHash);
 
 
-function showPage(name, view) {
+function showPage(name, view, opts) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const target = document.getElementById('page-' + name);
     if (target) target.classList.add('active');
@@ -1757,7 +1884,12 @@ function showPage(name, view) {
     closeMoreDropdown();
     persistPageState(name, view);
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Skipped when returning from the Detail page's "\u2190 Back" link, so the
+    // caller (goBackFromDetail) can restore the visitor's exact previous
+    // scroll position instead of it being reset to the top here first.
+    if (!(opts && opts.skipScrollTop)) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
 
 /* ---------- "More ▾ > FAQ" now opens Contact Us and scrolls to its FAQ block ---------- */
@@ -2379,7 +2511,7 @@ function renderStudentDashboard(student) {
             <div class="sl-progress-bar"><div class="sl-progress-fill" style="width:${c.progress}%;"></div></div>
             <span style="font-size:0.8rem; color:#627d98;">${c.progress}% complete</span>
             ${feeHtml}
-            ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${student.name}', '${c.name}')">View Certificate</button>` : ''}
+            ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${student.name}', '${c.name}', '${student.uniqueId || ''}', '${c.rowIndex != null ? c.rowIndex : ''}')">View Certificate</button>` : ''}
         </div>
     `;
     }).join('');
@@ -2409,10 +2541,7 @@ function openAdmission() {
     document.getElementById('admSuccess').style.display = 'none';
     document.getElementById('admLoadingHint').style.display = 'none';
     document.getElementById('admError').classList.remove('show');
-    const durationEl = document.getElementById('admDuration');
-    if (durationEl) durationEl.value = '';
-    const dobEl = document.getElementById('admDob');
-    if (dobEl) dobEl.value = '';
+    resetAdmissionForm();
 }
 function closeAdmission() {
     document.getElementById('admissionOverlay').classList.remove('active');
@@ -2473,8 +2602,6 @@ async function submitAdmission() {
             errorEl.classList.add('show');
             return;
         }
-        document.getElementById('admissionForm').style.display = 'none';
-        document.getElementById('admSuccess').style.display = 'block';
         // Prefer the ID the backend actually stored (result.uniqueId) in case
         // Code.gs ever generates its own instead of echoing this one back —
         // falls back to the client-generated one so it still shows something
@@ -2482,8 +2609,14 @@ async function submitAdmission() {
         const finalId = result.uniqueId || uniqueId;
         const admSuccessEl = document.getElementById('admSuccess');
         if (admSuccessEl) {
-            admSuccessEl.innerHTML = `Admission received! Your Student Reference ID is <strong>${finalId}</strong> — save it for any queries. You can log in anytime with your Full Name and your Phone Number as the password.`;
+            admSuccessEl.innerHTML = `✅ Admission received! Student Reference ID: <strong>${finalId}</strong> — save it for any queries.`;
+            admSuccessEl.style.display = 'block';
         }
+        // The form used to get hidden here and replaced with just the
+        // success message — meaning staff had to close this panel and click
+        // "+ New Admission" again for every single student. Now it just
+        // clears itself and stays open/ready for the next one instead.
+        resetAdmissionForm();
         if (isAdminAuthenticated) loadAdminStudents();
     } catch (e) {
         console.error('Admission save failed:', e);
@@ -2493,12 +2626,28 @@ async function submitAdmission() {
     }
 }
 
+/* Clears every admission field so the form is ready for the next student
+   without closing/reopening the panel. Called after a successful submit,
+   and also from openAdmission() so reopening the panel never shows a stale
+   previous entry. */
+function resetAdmissionForm() {
+    ['admName', 'admMobile', 'admDob', 'admEmail', 'admFee', 'admDuration'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+    const courseEl = document.getElementById('admCourse');
+    if (courseEl) courseEl.selectedIndex = 0;
+}
+
 /* ---------- STAFF / ADMIN PANEL ----------
    Lets staff mark a student's course progress and completion status, which is
    what makes "View Certificate" appear on the student's dashboard.
    See the security note in GOOGLE SHEET BACKEND SETUP above — this password
    only hides the panel from casual visitors, it is not real authentication. */
 let isAdminAuthenticated = false;
+let adminStudentsLoaded = false;
+let adminEnquiriesLoaded = false;
+let adminInvoicesLoaded = false;
 
 function openAdmin() {
     document.getElementById('adminOverlay').classList.add('active');
@@ -2506,8 +2655,11 @@ function openAdmin() {
         document.getElementById('adminLoginForm').style.display = 'none';
         document.getElementById('adminDashboard').classList.add('show');
         switchAdminTab('students');
-        loadAdminStudents();
-        loadAdminEnquiries();
+        // Load enquiries eagerly too (not just on tab click) so the pending-
+        // count badge on the Enquiries tab button is accurate even before
+        // it's clicked — but only if we don't already have it cached from
+        // earlier in this session, so reopening the panel stays instant.
+        if (!adminEnquiriesLoaded) loadAdminEnquiries();
     } else {
         document.getElementById('adminLoginForm').style.display = 'block';
         document.getElementById('adminDashboard').classList.remove('show');
@@ -2533,7 +2685,6 @@ function adminLoginSubmit() {
     document.getElementById('adminLoginForm').style.display = 'none';
     document.getElementById('adminDashboard').classList.add('show');
     switchAdminTab('students');
-    loadAdminStudents();
     loadAdminEnquiries();
 }
 function adminLogout() {
@@ -2546,9 +2697,11 @@ function adminLogout() {
 }
 
 async function loadAdminStudents() {
+    adminStudentsLoaded = true;
     const listEl = document.getElementById('adminStudentsList');
     const emptyHint = document.getElementById('adminEmptyHint');
     if (!sheetBackendReady) {
+        adminStudentsLoaded = false; // backend wasn't ready — allow retrying later
         listEl.innerHTML = '';
         emptyHint.style.display = 'block';
         emptyHint.textContent = 'The Sheet backend isn\u2019t connected yet \u2014 see the GOOGLE SHEET BACKEND SETUP note at the top of script.js.';
@@ -2582,9 +2735,21 @@ async function loadAdminStudents() {
             const s = r.student, c = r.course;
             const admissionDateText = formatDate(s.admissionDate) || formatDate(dateFromUniqueId(s.uniqueId) || null);
             const enrolledDateText = formatDate(c.enrolledDate);
+            const dobText = formatDate(s.dob); // was showing the raw ISO string before (e.g. 2000-04-04T18:30:00.000Z)
+            const balance = Math.max(0, (c.fee || 0) - (c.feePaid || 0));
+            const payments = c.payments || [];
+            const paymentsHtml = payments.length
+                ? `<div class="payment-history">
+                        ${payments.map(p => `
+                            <div class="payment-history-row">
+                                <span>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}</span>
+                                <span>₹${p.amount}</span>
+                            </div>`).join('')}
+                   </div>`
+                : `<p class="sl-hint" style="margin:6px 0;">No payments received yet.</p>`;
             return `
                 <div class="sl-course-card admin-student-row">
-                    <h4>${s.name} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${s.mobile}${s.email ? ' · ' + s.email : ''}${s.dob ? ' · DOB: ' + s.dob : ''})</span></h4>
+                    <h4>${s.name} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${s.mobile}${s.email ? ' · ' + s.email : ''}${dobText ? ' · DOB: ' + dobText : ''})</span></h4>
                     ${s.uniqueId ? `<span class="admin-ref-id">ID: ${s.uniqueId}</span>` : ''}
                     ${admissionDateText ? `<span style="font-size:0.75rem; color:#627d98; display:block; margin-top:2px;">📅 First Admission: ${admissionDateText}</span>` : ''}
                     <div style="margin:10px 0; padding:10px; background:#fff; border:1px solid #e4e7eb; border-radius:6px;">
@@ -2601,10 +2766,19 @@ async function loadAdminStudents() {
                         <br>
                         <label style="font-size:0.75rem; margin-top:6px; display:inline-block;">Total Fee ₹</label>
                         <input type="number" min="0" value="${c.fee || 0}" id="fee-row-${c.rowIndex}" style="width:90px; margin-left:6px; padding:4px 6px;">
-                        <label style="font-size:0.75rem; margin-left:10px;">Paid ₹</label>
-                        <input type="number" min="0" value="${c.feePaid || 0}" id="feepaid-row-${c.rowIndex}" style="width:90px; margin-left:6px; padding:4px 6px;">
-                        <br>
-                        <button class="sl-cert-btn" style="margin-top:6px;" onclick="saveAdminCourseRow(${c.rowIndex})">Save</button>
+                        <button class="sl-cert-btn" style="margin-top:6px;" onclick="saveAdminCourseRow(${c.rowIndex})">Save Progress / Status / Fee</button>
+
+                        <div style="margin-top:12px; padding-top:10px; border-top:1px dashed #d3e0ec;">
+                            <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:6px; font-size:0.82rem; color:#486581;">
+                                <span>Received: <strong style="color:#1f7a37;">₹${c.feePaid || 0}</strong></span>
+                                <span>Balance: <strong style="color:${balance > 0 ? '#e5484d' : '#1f7a37'};">₹${balance}</strong></span>
+                            </div>
+                            <label style="font-size:0.75rem; color:#627d98; display:block;">Payment History</label>
+                            ${paymentsHtml}
+                            <label style="font-size:0.75rem;">Add Payment ₹</label>
+                            <input type="number" min="0" placeholder="e.g. 25000" id="newpay-row-${c.rowIndex}" style="width:110px; margin-left:6px; padding:4px 6px;">
+                            <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px;" onclick="addStudentPayment(${c.rowIndex})">+ Add Payment</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -2625,6 +2799,7 @@ async function loadAdminStudents() {
         listEl.innerHTML = section('In Progress', '🟡', progressRows) + section('Completed', '✅', completedRows);
     } catch (e) {
         console.error('Loading admin student list failed:', e);
+        adminStudentsLoaded = false; // allow retry on next tab click / refresh
         listEl.innerHTML = '<p class="sl-hint">Could not load students — check the Apps Script Web App URL in script.js and that it\u2019s deployed with "Anyone" access.</p>';
     }
 }
@@ -2633,19 +2808,44 @@ async function saveAdminCourseRow(rowIndex) {
     const progress = parseInt(document.getElementById(`prog-row-${rowIndex}`).value, 10) || 0;
     const status = document.getElementById(`status-row-${rowIndex}`).value;
     const feeEl = document.getElementById(`fee-row-${rowIndex}`);
-    const feePaidEl = document.getElementById(`feepaid-row-${rowIndex}`);
     const fee = feeEl ? (parseFloat(feeEl.value) || 0) : 0;
-    const feePaid = feePaidEl ? (parseFloat(feePaidEl.value) || 0) : 0;
     try {
-        const result = await callSheetBackend({ action: 'update', rowIndex, progress, status, fee, feePaid });
+        // Fee paid-so-far is no longer sent here — it's tracked as its own
+        // payment ledger now (see addStudentPayment below), so this call
+        // only ever touches Progress / Status / the Total Fee target.
+        const result = await callSheetBackend({ action: 'update', rowIndex, progress, status, fee });
         if (result.success) {
-            alert('Saved!');
             loadAdminStudents();
         } else {
             alert('Could not save — please try again.');
         }
     } catch (e) {
         console.error('Saving student update failed:', e);
+        alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
+    }
+}
+
+/* Records a single fee payment with today's date, on top of whatever has
+   already been paid — instead of overwriting one "total paid" number. Lets
+   staff enter each installment (e.g. 25000, then 32000, then 2000) as its
+   own dated line, and the student's total received / balance due is always
+   the sum of all of them. */
+async function addStudentPayment(rowIndex) {
+    const amountEl = document.getElementById(`newpay-row-${rowIndex}`);
+    const amount = amountEl ? (parseFloat(amountEl.value) || 0) : 0;
+    if (amount <= 0) {
+        alert('Enter an amount greater than 0.');
+        return;
+    }
+    try {
+        const result = await callSheetBackend({ action: 'addStudentPayment', rowIndex, amount });
+        if (result.success) {
+            loadAdminStudents();
+        } else {
+            alert(result.error || 'Could not save — please try again.');
+        }
+    } catch (e) {
+        console.error('Adding student payment failed:', e);
         alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
     }
 }
@@ -2665,7 +2865,16 @@ function switchAdminTab(tab) {
         btnEl.classList.toggle('active', active);
         panelEl.style.display = active ? '' : 'none';
     });
-    if (tab === 'invoices') loadAdminInvoices();
+    // Only hit the network the FIRST time a tab is opened in this session —
+    // switching back to a tab you already loaded just re-shows what's
+    // already in the DOM instantly, instead of re-fetching from the Sheet
+    // every click (that round trip to Apps Script is what made tabs feel
+    // like they "weren't opening" — it's not broken, it was just re-loading
+    // every time). Each panel has its own 🔄 Refresh button for when you
+    // actually want the latest data.
+    if (tab === 'students' && !adminStudentsLoaded) loadAdminStudents();
+    if (tab === 'enquiries' && !adminEnquiriesLoaded) loadAdminEnquiries();
+    if (tab === 'invoices' && !adminInvoicesLoaded) loadAdminInvoices();
 }
 
 /* Pulls every row from the "Enquiries" tab and shows the ones still marked
@@ -2678,8 +2887,10 @@ async function loadAdminEnquiries() {
     const emptyHint = document.getElementById('adminEnquiriesEmptyHint');
     const countBadge = document.getElementById('adminEnquiryCount');
     if (!listEl) return;
+    adminEnquiriesLoaded = true;
 
     if (!sheetBackendReady) {
+        adminEnquiriesLoaded = false;
         listEl.innerHTML = '';
         emptyHint.style.display = 'block';
         emptyHint.textContent = 'The Sheet backend isn\u2019t connected yet \u2014 see the GOOGLE SHEET BACKEND SETUP note at the top of script.js.';
@@ -2737,6 +2948,7 @@ async function loadAdminEnquiries() {
         }).join('');
     } catch (e) {
         console.error('Loading admin enquiry list failed:', e);
+        adminEnquiriesLoaded = false;
         listEl.innerHTML = '<p class="sl-hint">Could not load enquiries — check the Apps Script Web App URL in script.js and that it\u2019s deployed with "Anyone" access.</p>';
     }
 }
@@ -2815,8 +3027,10 @@ async function loadAdminInvoices() {
     const listEl = document.getElementById('adminInvoicesList');
     const emptyHint = document.getElementById('adminInvoicesEmptyHint');
     if (!listEl) return;
+    adminInvoicesLoaded = true;
 
     if (!sheetBackendReady) {
+        adminInvoicesLoaded = false;
         listEl.innerHTML = '';
         emptyHint.style.display = 'block';
         emptyHint.textContent = 'The Sheet backend isn\u2019t connected yet \u2014 see the GOOGLE SHEET BACKEND SETUP note at the top of script.js.';
@@ -2843,6 +3057,19 @@ async function loadAdminInvoices() {
             const balance = Math.max(0, (inv.amount || 0) - (inv.amountPaid || 0));
             const statusLabel = balance <= 0 ? 'Paid' : (inv.amountPaid > 0 ? 'Partial' : 'Unpaid');
             const statusClass = balance <= 0 ? 'paid' : (inv.amountPaid > 0 ? 'partial' : 'unpaid');
+            const payments = inv.payments || [];
+            // Every payment this client has made, its own row with its own
+            // date — instead of one lump "Amount Paid" number that hides
+            // when/how many installments made it up.
+            const paymentsHtml = payments.length
+                ? `<div class="payment-history">
+                        ${payments.map(p => `
+                            <div class="payment-history-row">
+                                <span>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}</span>
+                                <span>₹${p.amount}</span>
+                            </div>`).join('')}
+                   </div>`
+                : `<p class="sl-hint" style="margin:6px 0;">No payments received yet.</p>`;
             return `
                 <div class="sl-course-card admin-invoice-card">
                     <h4>${inv.clientName} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${inv.phone}${inv.email ? ' · ' + inv.email : ''})</span></h4>
@@ -2852,34 +3079,41 @@ async function loadAdminInvoices() {
                     <p style="font-size:0.85rem; color:#334e68; margin:6px 0;"><strong>${inv.service}</strong>${inv.notes ? ' — ' + inv.notes : ''}</p>
                     <div style="display:flex; gap:16px; flex-wrap:wrap; margin:8px 0; font-size:0.82rem; color:#486581;">
                         <span>Total: <strong style="color:#0c2340;">₹${inv.amount}</strong></span>
-                        <span>Paid: <strong style="color:#1f7a37;">₹${inv.amountPaid || 0}</strong></span>
+                        <span>Received: <strong style="color:#1f7a37;">₹${inv.amountPaid || 0}</strong></span>
                         <span>Balance: <strong style="color:${balance > 0 ? '#e5484d' : '#1f7a37'};">₹${balance}</strong></span>
                     </div>
-                    <label style="font-size:0.75rem;">Update Paid ₹</label>
-                    <input type="number" min="0" value="${inv.amountPaid || 0}" id="inv-paid-row-${inv.rowIndex}" style="width:90px; margin-left:6px; padding:4px 6px;">
-                    <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px;" onclick="saveInvoicePayment(${inv.rowIndex})">Save</button>
+                    <label style="font-size:0.75rem; color:#627d98; display:block;">Payment History</label>
+                    ${paymentsHtml}
+                    <label style="font-size:0.75rem;">Add Payment ₹</label>
+                    <input type="number" min="0" placeholder="e.g. 25000" id="inv-newpay-row-${inv.rowIndex}" style="width:110px; margin-left:6px; padding:4px 6px;">
+                    <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px;" onclick="addInvoicePayment(${inv.rowIndex})">+ Add Payment</button>
                     <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px; background:#0c2340;" onclick="downloadInvoicePDF(${inv.rowIndex})">🧾 View / Download Invoice</button>
                 </div>
             `;
         }).join('');
     } catch (e) {
         console.error('Loading admin invoice list failed:', e);
+        adminInvoicesLoaded = false;
         listEl.innerHTML = '<p class="sl-hint">Could not load invoices — check the Apps Script Web App URL in script.js and that it\u2019s deployed with "Anyone" access.</p>';
     }
 }
 
-async function saveInvoicePayment(rowIndex) {
-    const paidEl = document.getElementById(`inv-paid-row-${rowIndex}`);
-    const amountPaid = paidEl ? (parseFloat(paidEl.value) || 0) : 0;
+async function addInvoicePayment(rowIndex) {
+    const amountEl = document.getElementById(`inv-newpay-row-${rowIndex}`);
+    const amount = amountEl ? (parseFloat(amountEl.value) || 0) : 0;
+    if (amount <= 0) {
+        alert('Enter an amount greater than 0.');
+        return;
+    }
     try {
-        const result = await callSheetBackend({ action: 'updateInvoicePayment', rowIndex, amountPaid });
+        const result = await callSheetBackend({ action: 'addInvoicePayment', rowIndex, amount });
         if (result.success) {
             loadAdminInvoices();
         } else {
-            alert('Could not save — please try again.');
+            alert(result.error || 'Could not save — please try again.');
         }
     } catch (e) {
-        console.error('Saving invoice payment failed:', e);
+        console.error('Adding invoice payment failed:', e);
         alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
     }
 }
@@ -2901,6 +3135,18 @@ function downloadInvoicePDF(rowIndex) {
     document.getElementById('invPdfId').textContent = inv.uniqueId || '—';
     document.getElementById('invPdfDate').textContent = formatDate(inv.timestamp) || formatDate(dateFromUniqueId(inv.uniqueId)) || formatDate(Date.now());
 
+    // Every payment the client has made, each on its own row with its own
+    // date — instead of just one lump "Amount Paid" figure.
+    const paymentsBody = document.getElementById('invPdfPaymentsBody');
+    const payments = inv.payments || [];
+    paymentsBody.innerHTML = payments.length
+        ? payments.map(p => `
+            <tr>
+                <td>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}</td>
+                <td style="text-align:right;">₹${p.amount}</td>
+            </tr>`).join('')
+        : `<tr><td colspan="2" style="color:#8798ab;">No payments received yet</td></tr>`;
+
     document.getElementById('invoiceOverlay').classList.add('active');
 }
 function closeInvoiceOverlay() {
@@ -2910,22 +3156,36 @@ function closeInvoiceOnOverlay(event) {
     if (event.target.id === 'invoiceOverlay') closeInvoiceOverlay();
 }
 function downloadInvoiceAsPdf() {
-    // Same trick as downloadCertificate(): the print stylesheet only shows
-    // .certificate-print-area when this class is on <body>, so "Save as PDF"
-    // from the print dialog produces a clean invoice with no page chrome.
+    // Marks THIS overlay (and only this one) as the thing to print — see the
+    // CSS comment on .print-target for why ".active" alone isn't enough
+    // (the Admin/Student panel underneath can also be "active" at the same
+    // time, since it stays open behind this one).
+    document.getElementById('invoiceOverlay').classList.add('print-target');
     document.body.classList.add('printing-certificate');
     window.print();
 }
 
 /* ---------- CERTIFICATE ---------- */
-function viewCertificate(studentName, courseName) {
+/* studentRefId = the student's own uniqueId (e.g. STU-20260811-A1B2, see
+   generateUniqueId() near the top of this file); courseRowIndex = that
+   course's row number in the Sheet (c.rowIndex), which is unique per
+   student+course enrollment even if the same student later re-enrolls in
+   the same course. Together they make a certificate ID that is STABLE —
+   it will be the exact same ID every time this same course is opened,
+   today, next year, whenever — instead of being re-derived from "today's
+   date" (the old behaviour), which silently produced a DIFFERENT ID every
+   time a student re-opened their own certificate. A stable ID is what
+   makes a certificate ID actually useful for verification. */
+function viewCertificate(studentName, courseName, studentRefId, courseRowIndex) {
     document.getElementById('certStudentName').textContent = studentName;
     document.getElementById('certCourseName').textContent = courseName;
     document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-IN', {
         day: '2-digit', month: 'long', year: 'numeric'
     });
-    // Simple, readable certificate ID derived from the name + course + today's date
-    const raw = (studentName + courseName + new Date().toDateString()).toUpperCase();
+
+    const raw = (
+        (studentRefId || studentName) + '|' + courseName + '|' + (courseRowIndex || '0')
+    ).toUpperCase();
     let hash = 0;
     for (let i = 0; i < raw.length; i++) { hash = (hash * 31 + raw.charCodeAt(i)) >>> 0; }
     document.getElementById('certId').textContent = 'UMA-' + hash.toString(36).toUpperCase().slice(0, 8);
@@ -2993,14 +3253,18 @@ function closeCertificateOnOverlay(e) {
     if (e.target.id === 'certificateOverlay') closeCertificate();
 }
 function downloadCertificate() {
-    // No backend/PDF library needed: the print stylesheet hides everything
-    // except .certificate-print-area, so "Save as PDF" in the print dialog
-    // produces a clean, downloadable certificate file.
+    // Marks THIS overlay (and only this one) as the thing to print — the
+    // Student Login dashboard stays open underneath (by design) even while
+    // the certificate is showing, so we can't rely on ".active" alone to
+    // know which overlay to print (see the CSS comment on .print-target).
+    document.getElementById('certificateOverlay').classList.add('print-target');
     document.body.classList.add('printing-certificate');
     window.print();
 }
 window.addEventListener('afterprint', () => {
     document.body.classList.remove('printing-certificate');
+    document.getElementById('certificateOverlay').classList.remove('print-target');
+    document.getElementById('invoiceOverlay').classList.remove('print-target');
 });
 
 
@@ -3146,4 +3410,3 @@ function liveSearch(value) {
         }
     });
 }
-
