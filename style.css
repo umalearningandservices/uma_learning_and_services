@@ -4468,6 +4468,12 @@ transform:translateX(-50%);
     margin-bottom: 20px;
     border-radius: 8px;
 }
+/* Services Studio uses the same marquee mechanics/markup but its own
+   agency-blue gradient (matching .agency-column's #0073e6 accent) so it
+   reads as "corporate" rather than reusing the Academy's navy banner. */
+.batch-marquee.service-marquee {
+    background: linear-gradient(90deg, #0073e6, #005bb5, #0073e6);
+}
 .batch-marquee-track {
     display: inline-flex;
     width: max-content;
