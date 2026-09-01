@@ -1033,7 +1033,14 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
            the Certificate overlay marked "active" at once (the dashboard
            stays open underneath by design), so keying off ".active" printed
            both of them stacked one after another. .print-target is only
-           ever on the ONE overlay actually being printed. */
+           ever on the ONE overlay actually being printed.
+
+           Full A4, narrow margins: on screen these live inside a capped
+           .legal-modal-box (max-width 640px, 90% width, 35px padding) so
+           they read as a popup card. For print, that cap is removed so the
+           certificate/invoice card fills the actual printable A4 area
+           instead of shrinking down to a small block with big white
+           borders on the page. */
         @media print {
             body.printing-certificate > *:not(.print-target) {
                 display: none !important;
@@ -1048,16 +1055,36 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
             body.printing-certificate .print-target .no-print {
                 display: none !important;
             }
+            body.printing-certificate .legal-modal-box {
+                max-width: none !important;
+                width: 100% !important;
+                max-height: none !important;
+                overflow: visible !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
             body.printing-certificate .certificate-print-area {
                 position: static !important;
                 display: flex;
-                align-items: center;
+                align-items: stretch;
                 justify-content: center;
                 background: #fff;
+                width: 100%;
             }
-            body.printing-certificate .certificate-card { width: 90%; max-width: 720px; margin: 0 auto; }
-            body.printing-certificate .invoice-card { width: 90%; max-width: 720px; margin: 0 auto; }
-            @page { margin: 0.4in; }
+            body.printing-certificate .certificate-card,
+            body.printing-certificate .invoice-card {
+                width: 100% !important;
+                max-width: none !important;
+                height: auto;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+            body.printing-certificate .certificate-inner {
+                padding: 50px 40px 34px 40px;
+            }
+            @page { size: A4; margin: 8mm; }
         }
 
         /* ==================== CREDENTIAL BADGES (MSME / ISO) ====================
@@ -1839,10 +1866,98 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 
         .detail-actions {
             display: flex;
-            gap: 15px;
+            gap: 14px;
             flex-wrap: wrap;
+            align-items: stretch;
         }
         .detail-actions a { text-decoration: none; }
+
+        /* Unify all four action buttons to the same height/shape/padding,
+           regardless of which .btn-* color variant they use, so the row
+           reads as one consistent set instead of mixed pill/rectangle styles.
+           flex-grow lets them share the full row width evenly instead of
+           clustering to the left with dead space at the end; max-width keeps
+           any single button from ballooning when the row has fewer items. */
+        .detail-actions .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1 1 200px;
+            max-width: 270px;
+            padding: 15px 24px;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            box-shadow: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+        .detail-actions .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Same tinted-outline pill "layout" on all four buttons — light
+           brand-tinted background, matching border and text color, filling
+           to a solid color with a soft glow on hover. Only the color per
+           button changes, so the row reads as one consistent family. */
+        .detail-actions .btn-agency {
+            background: #e8f9ee;
+            color: #1f9d55;
+            border: 2px solid #b9ecc9;
+        }
+        .detail-actions .btn-agency:hover {
+            background: #1f9d55;
+            color: #fff;
+            border-color: #1f9d55;
+            box-shadow: 0 4px 14px rgba(31,157,85,0.25);
+        }
+        .detail-actions .btn-email {
+            background: #eaf3ff;
+            color: #0073e6;
+            border: 2px solid #b9dcff;
+        }
+        .detail-actions .btn-email:hover {
+            background: #0073e6;
+            color: #fff;
+            border-color: #0073e6;
+            box-shadow: 0 4px 14px rgba(0,115,230,0.25);
+        }
+        .detail-actions .btn-academy {
+            background: #eaf0fb;
+            color: #1565c0;
+            border: 2px solid #c3d6f5;
+        }
+        .detail-actions .btn-academy:hover {
+            background: #1565c0;
+            color: #fff;
+            border-color: #1565c0;
+            box-shadow: 0 4px 14px rgba(21,101,192,0.25);
+        }
+        .detail-actions .btn-paynow {
+            background: #eef0f3;
+            color: #0c2340;
+            border: 2px solid #d3d8e0;
+        }
+        .detail-actions .btn-paynow:hover {
+            background: #0c2340;
+            color: #fff;
+            border-color: #0c2340;
+            box-shadow: 0 4px 14px rgba(12,35,64,0.25);
+        }
+
+        /* Tablet: settle into a tidy 2x2 grid instead of an uneven wrap
+           where a lone button drops to its own line. */
+        @media (max-width: 900px) and (min-width: 641px) {
+            .detail-actions { gap: 12px; }
+            .detail-actions .btn { flex: 1 1 calc(50% - 6px); max-width: none; }
+        }
+
+        @media (max-width: 640px) {
+            .detail-actions { gap: 10px; }
+            .detail-actions .btn { flex: 1 1 100%; max-width: none; padding: 14px 22px; }
+        }
 
         @media (max-width: 950px) {
             .whyus-grid, .contact-grid { grid-template-columns: 1fr !important; }
