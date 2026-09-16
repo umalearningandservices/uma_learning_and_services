@@ -205,14 +205,9 @@ function applyCourseRatings() {
         if (!rating) return;
 
         card.setAttribute('data-rating', rating);
-
-        const carousel = card.querySelector('.card-image-carousel');
-        if (carousel && !carousel.querySelector('.card-rating-badge')) {
-            const badge = document.createElement('span');
-            badge.className = 'card-rating-badge';
-            badge.innerHTML = '\u2605 ' + rating.toFixed(1);
-            carousel.appendChild(badge);
-        }
+        // Rating badge is intentionally NOT shown on the card image itself
+        // anymore (front of the card) — it's only shown on the course's
+        // Detail page (see openDetail()'s #detailRating block below).
     });
 }
 document.addEventListener('DOMContentLoaded', applyCourseRatings);
@@ -3270,14 +3265,23 @@ window.addEventListener('afterprint', () => {
 
 const myBtn = document.getElementById("myBtn");
 
+let lastScrollTopForBtn = document.documentElement.scrollTop;
+
 window.addEventListener("scroll", () => {
     const scrollTop = document.documentElement.scrollTop;
 
-    if (scrollTop > 300) {
+    // Only reveal the button while the visitor is scrolling UP (even a slow,
+    // small upward movement counts) and they're far enough down the page.
+    // Scrolling DOWN always hides it, no matter how far down they are.
+    const isScrollingUp = scrollTop < lastScrollTopForBtn;
+
+    if (scrollTop > 300 && isScrollingUp) {
         myBtn.style.display = "flex";
     } else {
         myBtn.style.display = "none";
     }
+
+    lastScrollTopForBtn = scrollTop <= 0 ? 0 : scrollTop;
 });
 
 myBtn.onclick = () => {
