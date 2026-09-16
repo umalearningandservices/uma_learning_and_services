@@ -403,42 +403,6 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
         /* ==================== FLOATING CONTACT BUTTON (all pages) ==================== */
-        /* ==================== QUICK ENROLL FLOATING CTA ==================== */
-        .quick-enroll-fab {
-            position: fixed;
-            left: 22px;
-            height: 54px;
-            bottom: 22px;
-            z-index: 500;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 5px 22px 5px 6px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, #0073e6 0%, #0c2340 100%);
-            color: #fff;
-            font-weight: 800;
-            font-size: 1.02rem;
-            letter-spacing: 0.2px;
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(0,115,230,0.45);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        .quick-enroll-fab:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 30px rgba(0,115,230,0.65); }
-        .quick-enroll-icon {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.18);
-        }
-        @media (max-width: 768px) {
-            .quick-enroll-fab { left: 14px; bottom: 16px; padding: 9px 16px 9px 6px; font-size: 0.82rem; height: auto; }
-            .quick-enroll-icon { width: 34px; height: 34px; font-size: 1.25rem; }
-        }
 
         /* ==================== WHATSAPP LIVE CHAT WIDGET ==================== */
         .whatsapp-widget-btn {
