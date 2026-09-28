@@ -694,6 +694,599 @@
                 </div>
             </div>
 
+            <div class="segment-wrapper" id="caCategoryBar">
+                <div class="segment-heading">CA, Accounting &amp; Finance Automation</div>
+                <div class="gallery-filter-bar" id="caFilterBar" role="tablist" aria-label="Filter CA automation services by category">
+                    <button type="button" class="gallery-filter-btn active" onclick="caFilter('all', this)">All</button>
+                    <button type="button" class="gallery-filter-btn" onclick="caFilter('aud', this)">Company Audit</button>
+                    <button type="button" class="gallery-filter-btn" onclick="caFilter('tax', this)">Tax Audit</button>
+                    <button type="button" class="gallery-filter-btn" onclick="caFilter('inc', this)">Income Tax</button>
+                    <button type="button" class="gallery-filter-btn" onclick="caFilter('gst', this)">Indirect Tax &amp; GST</button>
+                    <button type="button" class="gallery-filter-btn" onclick="caFilter('cor', this)">Corporate Compliance</button>
+                    <button type="button" class="gallery-filter-btn" onclick="caFilter('fin', this)">Finance</button>
+                    <button type="button" class="gallery-filter-btn" onclick="caFilter('acc', this)">Accounting</button>
+                    <button type="button" class="gallery-filter-btn" onclick="caFilter('dat', this)">Data Analytics</button>
+                </div>
+            </div>
+            <script>
+            function caFilter(key, btn) {
+                document.querySelectorAll('.ca-seg').forEach(function (s) {
+                    s.style.display = (key === 'all' || s.getAttribute('data-ca') === key) ? '' : 'none';
+                });
+                document.querySelectorAll('#caFilterBar .gallery-filter-btn').forEach(function (b) {
+                    b.classList.toggle('active', b === btn);
+                });
+            }
+            </script>
+
+            <div class="segment-wrapper ca-seg" data-ca="aud">
+                <div class="segment-heading">Company Audit Automation</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_01.svg|images/ca_aud_01.svg" data-full="Scans bank statements for circular fund movements between related parties and lists suspicious chains for review. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_01.svg" alt="Round-Trip Fraud Detector for Bank Statements" class="card-image ci-1">
+                            <img src="images/ca_aud_01.svg" alt="Round-Trip Fraud Detector for Bank Statements" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Round-Trip Fraud Detector for Bank Statements</span>
+                            <span class="card-details">Scans bank statements for circular fund movements between related parties and lists suspicious chains for review.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_02.svg|images/ca_aud_02.svg" data-full="Ready checklists and exception reports for internal audits of clients who keep books in Tally. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_02.svg" alt="Internal Audit Checklist for Tally-Based Accounts" class="card-image ci-1">
+                            <img src="images/ca_aud_02.svg" alt="Internal Audit Checklist for Tally-Based Accounts" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Internal Audit Checklist for Tally-Based Accounts</span>
+                            <span class="card-details">Ready checklists and exception reports for internal audits of clients who keep books in Tally.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_03.svg|images/ca_aud_03.svg" data-full="Tests an existing risk control matrix for gaps and weak controls and produces a corrected version. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_03.svg" alt="Risk Control Matrix Review" class="card-image ci-1">
+                            <img src="images/ca_aud_03.svg" alt="Risk Control Matrix Review" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Risk Control Matrix Review</span>
+                            <span class="card-details">Tests an existing risk control matrix for gaps and weak controls and produces a corrected version.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_04.svg|images/ca_aud_04.svg" data-full="Turns audit areas into client-specific audit programs with step tracking and sign-off. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_04.svg" alt="Practical Audit Program Builder" class="card-image ci-1">
+                            <img src="images/ca_aud_04.svg" alt="Practical Audit Program Builder" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Practical Audit Program Builder</span>
+                            <span class="card-details">Turns audit areas into client-specific audit programs with step tracking and sign-off.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_05.svg|images/ca_aud_05.svg" data-full="Builds audit plans covering materiality, team allocation, timelines and milestones. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_05.svg" alt="Automated Audit Planning Blueprint" class="card-image ci-1">
+                            <img src="images/ca_aud_05.svg" alt="Automated Audit Planning Blueprint" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Automated Audit Planning Blueprint</span>
+                            <span class="card-details">Builds audit plans covering materiality, team allocation, timelines and milestones.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_06.svg|images/ca_aud_06.svg" data-full="Maps financial data to a ranked risk register with suggested audit responses. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_06.svg" alt="Audit Risk Mapper" class="card-image ci-1">
+                            <img src="images/ca_aud_06.svg" alt="Audit Risk Mapper" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Audit Risk Mapper</span>
+                            <span class="card-details">Maps financial data to a ranked risk register with suggested audit responses.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_07.svg|images/ca_aud_07.svg" data-full="A full set of Companies Act audit emails and letters with scheduling and a sent-log. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_07.svg" alt="Statutory Audit Communication Library" class="card-image ci-1">
+                            <img src="images/ca_aud_07.svg" alt="Statutory Audit Communication Library" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Statutory Audit Communication Library</span>
+                            <span class="card-details">A full set of Companies Act audit emails and letters with scheduling and a sent-log.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_08.svg|images/ca_aud_08.svg" data-full="Drafts report sections and opinion wording from working-paper conclusions, leaving judgment with the auditor. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_08.svg" alt="Audit Opinion Drafting Assistant" class="card-image ci-1">
+                            <img src="images/ca_aud_08.svg" alt="Audit Opinion Drafting Assistant" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Audit Opinion Drafting Assistant</span>
+                            <span class="card-details">Drafts report sections and opinion wording from working-paper conclusions, leaving judgment with the auditor.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_aud_09.svg|images/ca_aud_09.svg" data-full="Imports a bank statement, flags unusual entries and generates a formatted scrutiny report. Built around your audit workflow, with no advance payment and lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_aud_09.svg" alt="Bank Account Scrutiny Report Generator" class="card-image ci-1">
+                            <img src="images/ca_aud_09.svg" alt="Bank Account Scrutiny Report Generator" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Bank Account Scrutiny Report Generator</span>
+                            <span class="card-details">Imports a bank statement, flags unusual entries and generates a formatted scrutiny report.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper ca-seg" data-ca="tax">
+                <div class="segment-heading">Tax Audit Automation</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_tax_01.svg|images/ca_tax_01.svg" data-full="Identifies risk areas across a tax audit file and produces a structured findings report. Made for CA firms running many tax audit files, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_tax_01.svg" alt="Section 44AB Tax Audit Risk Report" class="card-image ci-1">
+                            <img src="images/ca_tax_01.svg" alt="Section 44AB Tax Audit Risk Report" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Section 44AB Tax Audit Risk Report</span>
+                            <span class="card-details">Identifies risk areas across a tax audit file and produces a structured findings report.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_tax_02.svg|images/ca_tax_02.svg" data-full="Creates a clause-aware tax audit program with checklists and sign-off tracking. Made for CA firms running many tax audit files, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_tax_02.svg" alt="Tax Audit Program Builder" class="card-image ci-1">
+                            <img src="images/ca_tax_02.svg" alt="Tax Audit Program Builder" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Tax Audit Program Builder</span>
+                            <span class="card-details">Creates a clause-aware tax audit program with checklists and sign-off tracking.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_tax_03.svg|images/ca_tax_03.svg" data-full="Captures Form 3CD data clause by clause and turns it into observations for the client. Made for CA firms running many tax audit files, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_tax_03.svg" alt="Form 3CD Data Capture &amp; Observations" class="card-image ci-1">
+                            <img src="images/ca_tax_03.svg" alt="Form 3CD Data Capture &amp; Observations" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Form 3CD Data Capture &amp; Observations</span>
+                            <span class="card-details">Captures Form 3CD data clause by clause and turns it into observations for the client.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_tax_04.svg|images/ca_tax_04.svg" data-full="Email templates for Section 44AB engagements, from information requests to reminders. Made for CA firms running many tax audit files, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_tax_04.svg" alt="Tax Audit Communication Email Library" class="card-image ci-1">
+                            <img src="images/ca_tax_04.svg" alt="Tax Audit Communication Email Library" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Tax Audit Communication Email Library</span>
+                            <span class="card-details">Email templates for Section 44AB engagements, from information requests to reminders.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_tax_05.svg|images/ca_tax_05.svg" data-full="Checks ESI payment dates against due dates and lists late payments for reporting. Made for CA firms running many tax audit files, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_tax_05.svg" alt="ESI Due-Date Compliance Analyzer" class="card-image ci-1">
+                            <img src="images/ca_tax_05.svg" alt="ESI Due-Date Compliance Analyzer" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">ESI Due-Date Compliance Analyzer</span>
+                            <span class="card-details">Checks ESI payment dates against due dates and lists late payments for reporting.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_tax_06.svg|images/ca_tax_06.svg" data-full="Matches two data sources such as ledger and returns and lists differences automatically. Made for CA firms running many tax audit files, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_tax_06.svg" alt="Automated Dataset Reconciliation" class="card-image ci-1">
+                            <img src="images/ca_tax_06.svg" alt="Automated Dataset Reconciliation" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Automated Dataset Reconciliation</span>
+                            <span class="card-details">Matches two data sources such as ledger and returns and lists differences automatically.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_tax_07.svg|images/ca_tax_07.svg" data-full="Clause-by-clause guidance and data capture so nothing is missed while preparing the report. Made for CA firms running many tax audit files, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_tax_07.svg" alt="Tax Audit Clause Guide" class="card-image ci-1">
+                            <img src="images/ca_tax_07.svg" alt="Tax Audit Clause Guide" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Tax Audit Clause Guide</span>
+                            <span class="card-details">Clause-by-clause guidance and data capture so nothing is missed while preparing the report.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper ca-seg" data-ca="inc">
+                <div class="segment-heading">Income Tax Automation</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_inc_01.svg|images/ca_inc_01.svg" data-full="A privacy-conscious questionnaire that collects everything needed for return preparation. Designed for tax practitioners and finance teams, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_inc_01.svg" alt="ITR Client Questionnaire (DPDP-Aware)" class="card-image ci-1">
+                            <img src="images/ca_inc_01.svg" alt="ITR Client Questionnaire (DPDP-Aware)" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">ITR Client Questionnaire (DPDP-Aware)</span>
+                            <span class="card-details">A privacy-conscious questionnaire that collects everything needed for return preparation.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_inc_02.svg|images/ca_inc_02.svg" data-full="An Excel calculator with formulas for computing tax under the new regime. Designed for tax practitioners and finance teams, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_inc_02.svg" alt="New-Regime Income Tax Excel Calculator" class="card-image ci-1">
+                            <img src="images/ca_inc_02.svg" alt="New-Regime Income Tax Excel Calculator" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">New-Regime Income Tax Excel Calculator</span>
+                            <span class="card-details">An Excel calculator with formulas for computing tax under the new regime.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_inc_03.svg|images/ca_inc_03.svg" data-full="Computes capital gains from transaction data with holding-period classification. Designed for tax practitioners and finance teams, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_inc_03.svg" alt="Capital Gains Computation Helper" class="card-image ci-1">
+                            <img src="images/ca_inc_03.svg" alt="Capital Gains Computation Helper" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Capital Gains Computation Helper</span>
+                            <span class="card-details">Computes capital gains from transaction data with holding-period classification.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_inc_04.svg|images/ca_inc_04.svg" data-full="Finds emails with Form 26AS attachments and saves them to organised client folders. Designed for tax practitioners and finance teams, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_inc_04.svg" alt="Automatic Form 26AS Email Downloader" class="card-image ci-1">
+                            <img src="images/ca_inc_04.svg" alt="Automatic Form 26AS Email Downloader" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Automatic Form 26AS Email Downloader</span>
+                            <span class="card-details">Finds emails with Form 26AS attachments and saves them to organised client folders.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_inc_05.svg|images/ca_inc_05.svg" data-full="Generates a client-wise compliance calendar across income tax, TDS and GST. Designed for tax practitioners and finance teams, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_inc_05.svg" alt="Income Tax, TDS &amp; GST Compliance Calendar" class="card-image ci-1">
+                            <img src="images/ca_inc_05.svg" alt="Income Tax, TDS &amp; GST Compliance Calendar" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Income Tax, TDS &amp; GST Compliance Calendar</span>
+                            <span class="card-details">Generates a client-wise compliance calendar across income tax, TDS and GST.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_inc_06.svg|images/ca_inc_06.svg" data-full="Sends timed reminder emails to clients to file returns, with a log of what was sent. Designed for tax practitioners and finance teams, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_inc_06.svg" alt="Automatic ITR Filing Reminder Emails" class="card-image ci-1">
+                            <img src="images/ca_inc_06.svg" alt="Automatic ITR Filing Reminder Emails" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Automatic ITR Filing Reminder Emails</span>
+                            <span class="card-details">Sends timed reminder emails to clients to file returns, with a log of what was sent.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_inc_07.svg|images/ca_inc_07.svg" data-full="Reads a redacted notice, summarises the demand and drafts a structured reply. Designed for tax practitioners and finance teams, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_inc_07.svg" alt="Income Tax Notice Analyzer &amp; Reply Drafter" class="card-image ci-1">
+                            <img src="images/ca_inc_07.svg" alt="Income Tax Notice Analyzer &amp; Reply Drafter" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Income Tax Notice Analyzer &amp; Reply Drafter</span>
+                            <span class="card-details">Reads a redacted notice, summarises the demand and drafts a structured reply.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_inc_08.svg|images/ca_inc_08.svg" data-full="Produces professional condonation requests for delayed filings on the income tax portal. Designed for tax practitioners and finance teams, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_inc_08.svg" alt="Condonation Request Drafting Tool" class="card-image ci-1">
+                            <img src="images/ca_inc_08.svg" alt="Condonation Request Drafting Tool" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Condonation Request Drafting Tool</span>
+                            <span class="card-details">Produces professional condonation requests for delayed filings on the income tax portal.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper ca-seg" data-ca="gst">
+                <div class="segment-heading">Indirect Tax &amp; GST Automation</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_gst_01.svg|images/ca_gst_01.svg" data-full="Matches purchase records against GSTR-2B and lists missing or mismatched invoices and ITC differences. Built for accountants and CA firms managing multiple GSTINs, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_gst_01.svg" alt="GSTR-2B &amp; ITC Reconciliation" class="card-image ci-1">
+                            <img src="images/ca_gst_01.svg" alt="GSTR-2B &amp; ITC Reconciliation" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">GSTR-2B &amp; ITC Reconciliation</span>
+                            <span class="card-details">Matches purchase records against GSTR-2B and lists missing or mismatched invoices and ITC differences.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_gst_02.svg|images/ca_gst_02.svg" data-full="Reconciles transactions across sources and flags anomalies before the department does. Built for accountants and CA firms managing multiple GSTINs, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_gst_02.svg" alt="GST Transaction Reconciliation &amp; Red-Flag Finder" class="card-image ci-1">
+                            <img src="images/ca_gst_02.svg" alt="GST Transaction Reconciliation &amp; Red-Flag Finder" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">GST Transaction Reconciliation &amp; Red-Flag Finder</span>
+                            <span class="card-details">Reconciles transactions across sources and flags anomalies before the department does.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_gst_03.svg|images/ca_gst_03.svg" data-full="Drafts reasoned replies to GST notices, show cause notices and ITC mismatch notices. Built for accountants and CA firms managing multiple GSTINs, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_gst_03.svg" alt="GST Notice &amp; SCN Reply Drafting" class="card-image ci-1">
+                            <img src="images/ca_gst_03.svg" alt="GST Notice &amp; SCN Reply Drafting" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">GST Notice &amp; SCN Reply Drafting</span>
+                            <span class="card-details">Drafts reasoned replies to GST notices, show cause notices and ITC mismatch notices.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_gst_04.svg|images/ca_gst_04.svg" data-full="Tracks notices, replies, hearings and appeals with due dates and drafting support. Built for accountants and CA firms managing multiple GSTINs, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_gst_04.svg" alt="GST Litigation Tracker &amp; Assistant" class="card-image ci-1">
+                            <img src="images/ca_gst_04.svg" alt="GST Litigation Tracker &amp; Assistant" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">GST Litigation Tracker &amp; Assistant</span>
+                            <span class="card-details">Tracks notices, replies, hearings and appeals with due dates and drafting support.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_gst_05.svg|images/ca_gst_05.svg" data-full="Gathers provisions, circulars and case law from multiple sources to draft a reasoned opinion. Built for accountants and CA firms managing multiple GSTINs, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_gst_05.svg" alt="GST Research &amp; Opinion Builder" class="card-image ci-1">
+                            <img src="images/ca_gst_05.svg" alt="GST Research &amp; Opinion Builder" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">GST Research &amp; Opinion Builder</span>
+                            <span class="card-details">Gathers provisions, circulars and case law from multiple sources to draft a reasoned opinion.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper ca-seg" data-ca="cor">
+                <div class="segment-heading">Corporate Compliance Automation</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_cor_01.svg|images/ca_cor_01.svg" data-full="Generates partnership deeds from a simple form with clauses tailored to the firm. Suited to companies, CS and CA firms, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_cor_01.svg" alt="Partnership Deed Automation" class="card-image ci-1">
+                            <img src="images/ca_cor_01.svg" alt="Partnership Deed Automation" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Partnership Deed Automation</span>
+                            <span class="card-details">Generates partnership deeds from a simple form with clauses tailored to the firm.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_cor_02.svg|images/ca_cor_02.svg" data-full="Drafts board report sections, notices and AGM documents from company data. Suited to companies, CS and CA firms, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_cor_02.svg" alt="Board Report &amp; AGM Assistant" class="card-image ci-1">
+                            <img src="images/ca_cor_02.svg" alt="Board Report &amp; AGM Assistant" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Board Report &amp; AGM Assistant</span>
+                            <span class="card-details">Drafts board report sections, notices and AGM documents from company data.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_cor_03.svg|images/ca_cor_03.svg" data-full="Creates a first-year compliance checklist for newly incorporated companies. Suited to companies, CS and CA firms, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_cor_03.svg" alt="Post-Incorporation Compliance Checklist" class="card-image ci-1">
+                            <img src="images/ca_cor_03.svg" alt="Post-Incorporation Compliance Checklist" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Post-Incorporation Compliance Checklist</span>
+                            <span class="card-details">Creates a first-year compliance checklist for newly incorporated companies.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_cor_04.svg|images/ca_cor_04.svg" data-full="Compares a company&#x27;s current practices with requirements and lists the gaps. Suited to companies, CS and CA firms, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_cor_04.svg" alt="Compliance Review &amp; Gap Analysis" class="card-image ci-1">
+                            <img src="images/ca_cor_04.svg" alt="Compliance Review &amp; Gap Analysis" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Compliance Review &amp; Gap Analysis</span>
+                            <span class="card-details">Compares a company&#x27;s current practices with requirements and lists the gaps.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_cor_05.svg|images/ca_cor_05.svg" data-full="Tells you which provisions apply to a company based on its size and structure. Suited to companies, CS and CA firms, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_cor_05.svg" alt="Company Law Applicability Calculator" class="card-image ci-1">
+                            <img src="images/ca_cor_05.svg" alt="Company Law Applicability Calculator" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Company Law Applicability Calculator</span>
+                            <span class="card-details">Tells you which provisions apply to a company based on its size and structure.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_cor_06.svg|images/ca_cor_06.svg" data-full="Builds the full yearly folder structure for all clients with one click. Suited to companies, CS and CA firms, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_cor_06.svg" alt="Annual Folder Structure Automation" class="card-image ci-1">
+                            <img src="images/ca_cor_06.svg" alt="Annual Folder Structure Automation" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Annual Folder Structure Automation</span>
+                            <span class="card-details">Builds the full yearly folder structure for all clients with one click.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper ca-seg" data-ca="fin">
+                <div class="segment-heading">Finance Automation</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_fin_01.svg|images/ca_fin_01.svg" data-full="Scans planning and budgeting workbooks for broken formulas, hardcodes and inconsistent logic. Made for owners, finance heads and CA advisers, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_fin_01.svg" alt="FP&amp;A Spreadsheet Formula Integrity Checker" class="card-image ci-1">
+                            <img src="images/ca_fin_01.svg" alt="FP&amp;A Spreadsheet Formula Integrity Checker" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">FP&amp;A Spreadsheet Formula Integrity Checker</span>
+                            <span class="card-details">Scans planning and budgeting workbooks for broken formulas, hardcodes and inconsistent logic.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_fin_02.svg|images/ca_fin_02.svg" data-full="Builds structured financial models with assumptions, projections and scenario sheets. Made for owners, finance heads and CA advisers, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_fin_02.svg" alt="Financial Modelling Co-Creator" class="card-image ci-1">
+                            <img src="images/ca_fin_02.svg" alt="Financial Modelling Co-Creator" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Financial Modelling Co-Creator</span>
+                            <span class="card-details">Builds structured financial models with assumptions, projections and scenario sheets.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_fin_03.svg|images/ca_fin_03.svg" data-full="Produces ratio, trend and cash-flow analysis with commentary from financial statements. Made for owners, finance heads and CA advisers, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_fin_03.svg" alt="Financial Statement Analysis Report" class="card-image ci-1">
+                            <img src="images/ca_fin_03.svg" alt="Financial Statement Analysis Report" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Financial Statement Analysis Report</span>
+                            <span class="card-details">Produces ratio, trend and cash-flow analysis with commentary from financial statements.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_fin_04.svg|images/ca_fin_04.svg" data-full="A simple, client-friendly financial analysis for unlisted businesses, firms and individual clients. Made for owners, finance heads and CA advisers, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_fin_04.svg" alt="Financial Health Report for Small Firms &amp; Individuals" class="card-image ci-1">
+                            <img src="images/ca_fin_04.svg" alt="Financial Health Report for Small Firms &amp; Individuals" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Financial Health Report for Small Firms &amp; Individuals</span>
+                            <span class="card-details">A simple, client-friendly financial analysis for unlisted businesses, firms and individual clients.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper ca-seg" data-ca="acc">
+                <div class="segment-heading">Accounting Automation</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_acc_01.svg|images/ca_acc_01.svg" data-full="Converts bank statements from PDFs or photos into clean, structured Excel data. Made for accounting teams and bookkeeping practices, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_acc_01.svg" alt="Bank Statement (PDF/Photo) to Excel" class="card-image ci-1">
+                            <img src="images/ca_acc_01.svg" alt="Bank Statement (PDF/Photo) to Excel" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Bank Statement (PDF/Photo) to Excel</span>
+                            <span class="card-details">Converts bank statements from PDFs or photos into clean, structured Excel data.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_acc_02.svg|images/ca_acc_02.svg" data-full="Converts bank statements into Tally-ready voucher files for bulk import. Made for accounting teams and bookkeeping practices, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_acc_02.svg" alt="Bank Statement to Tally Vouchers" class="card-image ci-1">
+                            <img src="images/ca_acc_02.svg" alt="Bank Statement to Tally Vouchers" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Bank Statement to Tally Vouchers</span>
+                            <span class="card-details">Converts bank statements into Tally-ready voucher files for bulk import.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_acc_03.svg|images/ca_acc_03.svg" data-full="Reviews the fixed asset register and checks depreciation against Schedule II and Ind AS 16. Made for accounting teams and bookkeeping practices, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_acc_03.svg" alt="Fixed Asset Register Reviewer" class="card-image ci-1">
+                            <img src="images/ca_acc_03.svg" alt="Fixed Asset Register Reviewer" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Fixed Asset Register Reviewer</span>
+                            <span class="card-details">Reviews the fixed asset register and checks depreciation against Schedule II and Ind AS 16.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_acc_04.svg|images/ca_acc_04.svg" data-full="Suggests the applicable accounting treatment for a transaction with references and journal entries. Made for accounting teams and bookkeeping practices, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_acc_04.svg" alt="AS / Ind AS Accounting Treatment Advisor" class="card-image ci-1">
+                            <img src="images/ca_acc_04.svg" alt="AS / Ind AS Accounting Treatment Advisor" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">AS / Ind AS Accounting Treatment Advisor</span>
+                            <span class="card-details">Suggests the applicable accounting treatment for a transaction with references and journal entries.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_acc_05.svg|images/ca_acc_05.svg" data-full="Checklists, reconciliations and exception lists to speed up the monthly close. Made for accounting teams and bookkeeping practices, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_acc_05.svg" alt="Month-End Accounting Close Assistant" class="card-image ci-1">
+                            <img src="images/ca_acc_05.svg" alt="Month-End Accounting Close Assistant" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Month-End Accounting Close Assistant</span>
+                            <span class="card-details">Checklists, reconciliations and exception lists to speed up the monthly close.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_acc_06.svg|images/ca_acc_06.svg" data-full="Maps trial balance to Schedule III format and drafts statements with notes. Made for accounting teams and bookkeeping practices, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_acc_06.svg" alt="Schedule III &amp; Ind AS Financial Statement Generator" class="card-image ci-1">
+                            <img src="images/ca_acc_06.svg" alt="Schedule III &amp; Ind AS Financial Statement Generator" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Schedule III &amp; Ind AS Financial Statement Generator</span>
+                            <span class="card-details">Maps trial balance to Schedule III format and drafts statements with notes.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="segment-wrapper ca-seg" data-ca="dat">
+                <div class="segment-heading">Data Analytics for CA &amp; Finance</div>
+                <div class="items-grid">
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_dat_01.svg|images/ca_dat_01.svg" data-full="Matches data across several Excel files and columns and reports differences. Built for finance and audit data, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_dat_01.svg" alt="Multi-File Excel Reconciliation" class="card-image ci-1">
+                            <img src="images/ca_dat_01.svg" alt="Multi-File Excel Reconciliation" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Multi-File Excel Reconciliation</span>
+                            <span class="card-details">Matches data across several Excel files and columns and reports differences.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_dat_02.svg|images/ca_dat_02.svg" data-full="Traces fund flow in stock audits to highlight possible diversion of funds. Built for finance and audit data, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_dat_02.svg" alt="Fund Flow Verification &amp; Diversion Analysis" class="card-image ci-1">
+                            <img src="images/ca_dat_02.svg" alt="Fund Flow Verification &amp; Diversion Analysis" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Fund Flow Verification &amp; Diversion Analysis</span>
+                            <span class="card-details">Traces fund flow in stock audits to highlight possible diversion of funds.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_dat_03.svg|images/ca_dat_03.svg" data-full="Forecasts cash flow, tax liability and trends from historical data. Built for finance and audit data, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_dat_03.svg" alt="Predictive Analytics for Finance &amp; Tax" class="card-image ci-1">
+                            <img src="images/ca_dat_03.svg" alt="Predictive Analytics for Finance &amp; Tax" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Predictive Analytics for Finance &amp; Tax</span>
+                            <span class="card-details">Forecasts cash flow, tax liability and trends from historical data.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_dat_04.svg|images/ca_dat_04.svg" data-full="Builds a refreshable monthly MIS dashboard in Excel using Power Query. Built for finance and audit data, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_dat_04.svg" alt="Monthly MIS Dashboard (Power Query)" class="card-image ci-1">
+                            <img src="images/ca_dat_04.svg" alt="Monthly MIS Dashboard (Power Query)" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Monthly MIS Dashboard (Power Query)</span>
+                            <span class="card-details">Builds a refreshable monthly MIS dashboard in Excel using Power Query.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_dat_05.svg|images/ca_dat_05.svg" data-full="Turns raw spreadsheets into interactive dashboards with automatic insights. Built for finance and audit data, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_dat_05.svg" alt="Spreadsheet-to-Insights Dashboard" class="card-image ci-1">
+                            <img src="images/ca_dat_05.svg" alt="Spreadsheet-to-Insights Dashboard" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Spreadsheet-to-Insights Dashboard</span>
+                            <span class="card-details">Turns raw spreadsheets into interactive dashboards with automatic insights.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_dat_06.svg|images/ca_dat_06.svg" data-full="Runs exception tests and analytics on transaction data for internal audits. Built for finance and audit data, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_dat_06.svg" alt="Internal Audit Data Analysis" class="card-image ci-1">
+                            <img src="images/ca_dat_06.svg" alt="Internal Audit Data Analysis" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Internal Audit Data Analysis</span>
+                            <span class="card-details">Runs exception tests and analytics on transaction data for internal audits.</span>
+                        </div>
+                    </div>
+                    <div class="card cat-ent-core" onclick="openDetail(this)" role="button" tabindex="0" data-images="images/ca_dat_07.svg|images/ca_dat_07.svg" data-full="Analyses transactions for duplicates, patterns and anomalies in forensic reviews. Built for finance and audit data, with lifetime support.">
+                        <div class="card-image-carousel">
+                            <img src="images/ca_dat_07.svg" alt="Forensic Transaction Analysis" class="card-image ci-1">
+                            <img src="images/ca_dat_07.svg" alt="Forensic Transaction Analysis" class="card-image ci-2">
+                        </div>
+                        <div class="card-text">
+                            <span class="card-title">Forensic Transaction Analysis</span>
+                            <span class="card-details">Analyses transactions for duplicates, patterns and anomalies in forensic reviews.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="segment-wrapper">
                 <div class="segment-heading">Creative Production & Media Studio</div>
                 <div class="items-grid">
@@ -2705,6 +3298,7 @@
          the certificate: .no-print is hidden by @media print in style.css so
          Save-as-PDF from the browser's print dialog produces a clean invoice
          with no page chrome. -->
+         
     <div class="legal-modal-overlay" id="invoiceOverlay" onclick="closeInvoiceOnOverlay(event)">
         <div class="legal-modal-box certificate-modal-box">
             <a class="legal-close no-print" onclick="closeInvoiceOverlay()">✕</a>
@@ -2761,6 +3355,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div class="certificate-actions no-print">
                 <button type="button" class="certificate-download-btn" onclick="downloadInvoiceAsPdf()">⬇ Download Invoice</button>
