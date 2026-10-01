@@ -80,9 +80,12 @@
     <a role="button" tabindex="0" onclick="showAllViews()" data-page="home">Home</a>
     <a role="button" tabindex="0" onclick="goServices('corporate')" class="nav-studio" data-page="services" data-view="corporate">Services Studio</a>
     <a role="button" tabindex="0" onclick="goServices('academic')" class="nav-campus" data-page="services" data-view="academic">Learning Campus</a>
-    <a role="button" tabindex="0" onclick="openStudentLogin()" class="nav-student-login">🎓 Student Login</a>
     <a role="button" tabindex="0" onclick="showPage('whyus')" data-page="whyus">Why Us?</a>
     <a role="button" tabindex="0" onclick="showPage('contact')" data-page="contact">Contact Us</a>
+    <a role="button" tabindex="0" onclick="openStudentLogin()" class="nav-student-login" title="Student Login" aria-label="Student Login">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><path d="M22 10v6"/></svg>
+        <span class="nav-login-text">Student Login</span>
+    </a>
     <div class="nav-dropdown" id="moreDropdown">
         <a role="button" tabindex="0" onclick="toggleMoreDropdown(event)" data-page="more" class="nav-more-toggle" title="More" aria-label="More">
             <span class="hamburger-box">
