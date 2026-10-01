@@ -647,21 +647,7 @@ text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
 
-        .nav-student-login {
-            display: none;
-            background: #1565c0;
-            color: #fff !important;
-            padding: 8px 16px !important;
-            border-radius: 20px;
-            font-weight: 700;
-        }
-        .nav-student-login:hover { background: #0d47a1; }
-
-        /* Only reveal the Student Login nav button while the Services page is
-           active AND the Learning Campus (academic) view is selected. */
-        body:has(#page-services.active):has(#mainShowcase.view-academic) .nav-student-login {
-            display: inline-block;
-        }
+        /* Student Login: shown only on the Learning Campus view, at the right end of the menu (see "STUDENT LOGIN BUTTON" block at the end of this file) */
 
         .student-login-box { max-width: 420px; }
         .student-login-box h3 { margin-top: 12px; margin-bottom: 18px; }
@@ -6974,4 +6960,101 @@ img.img-coming-soon {
     object-fit: cover !important;
     object-position: center !important;
     background: #eef2f6;
+}
+
+/* ==========================================================================
+   STUDENT LOGIN BUTTON (header)
+   Shown ONLY while the Learning Campus (academic) view is open, at the right
+   end of the menu just before the "More" icon - hidden on every other page.
+   Full label on large screens, icon-only on mid-size laptops (so the menu
+   never wraps), full label again when the menu stacks on tablets/phones.
+   ========================================================================== */
+nav > a.nav-student-login {
+    display: none;                               /* hidden by default */
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-left: 22px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #0c2340 0%, #0073e6 100%);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    line-height: 1;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(12, 35, 64, 0.18);
+    transition: box-shadow .25s ease, transform .25s ease, filter .25s ease;
+}
+/* reveal only on Services page + Learning Campus (academic) view */
+body:has(#page-services.active):has(#mainShowcase.view-academic) nav > a.nav-student-login {
+    display: inline-flex;
+}
+nav > a.nav-student-login svg { flex: none; }
+nav > a.nav-student-login:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+    box-shadow: 0 8px 18px rgba(0, 115, 230, 0.32);
+}
+nav > a.nav-student-login:active { transform: translateY(0); }
+@media (min-width: 951px) {
+    nav > a { white-space: nowrap; }            /* menu links never break onto 2 lines */
+}
+@media (min-width: 951px) and (max-width: 1499px) {
+    nav .nav-search { width: 270px; }           /* gives the menu room on laptops */
+    nav > a.nav-student-login { width: 40px; height: 40px; padding: 0; margin-left: 16px; }
+    nav > a.nav-student-login .nav-login-text {
+        position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+    }
+}
+@media (min-width: 951px) and (max-width: 1120px) {
+    nav .nav-search { width: 210px; }
+    nav > a { margin-left: 16px; font-size: 0.9rem; }
+    nav > a.nav-student-login { margin-left: 12px; }
+    nav .nav-dropdown > a { margin-left: 10px; }
+}
+@media (max-width: 950px) {
+    nav > a.nav-student-login { margin-left: 0; padding: 8px 16px; }
+}
+
+
+/* ==========================================================================
+   DETAIL ACTION BUTTONS: unified white style, light-blue hover
+   ========================================================================== */
+.detail-actions .btn.btn-agency,
+.detail-actions .btn.btn-academy,
+.detail-actions .btn.btn-email,
+.detail-actions .btn.btn-paynow {
+    background: #ffffff !important;
+    color: #0c2340 !important;
+    border: 2px solid #d3dde8 !important;
+    box-shadow: 0 2px 8px rgba(12, 35, 64, 0.06) !important;
+    animation: none !important;
+}
+
+.detail-actions .btn.btn-agency:hover,
+.detail-actions .btn.btn-academy:hover,
+.detail-actions .btn.btn-email:hover,
+.detail-actions .btn.btn-paynow:hover,
+.detail-actions .btn.btn-agency:focus-visible,
+.detail-actions .btn.btn-academy:focus-visible,
+.detail-actions .btn.btn-email:focus-visible,
+.detail-actions .btn.btn-paynow:focus-visible {
+    background: #e6f2ff !important;      /* light blue */
+    color: #0059b3 !important;           /* dark blue text stays readable */
+    border-color: #7fb8f5 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 115, 230, 0.18) !important;
+    outline: none;
+}
+
+.detail-actions .btn.btn-agency:active,
+.detail-actions .btn.btn-academy:active,
+.detail-actions .btn.btn-email:active,
+.detail-actions .btn.btn-paynow:active {
+    background: #d4e8ff !important;
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 8px rgba(0, 115, 230, 0.15) !important;
 }
