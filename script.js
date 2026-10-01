@@ -1,3 +1,6 @@
+/* Shown whenever a course / service photo is missing or can't be loaded.
+   Put the file in the /images folder with exactly this name. */
+const COMING_SOON_IMG = 'images/photo_coming_soon_2048.webp';
 const WHATSAPP_NUMBER = '918340434138'; // Public Desk — update anytime
 
 /* ============================================================================
@@ -1076,7 +1079,8 @@ function renderCourseCurriculum(courseKey) {
 
             // Build the photo gallery from this card's data-images attribute
             const imagesAttr = cardEl.getAttribute('data-images') || '';
-            const imageList = imagesAttr.split('|').filter(Boolean);
+            const imageList = imagesAttr.split('|').map(x => x.trim()).filter(Boolean);
+            if (!imageList.length) imageList.push(COMING_SOON_IMG);   // no photo listed -> "photo coming soon"
             const carouselEl = document.getElementById('detailImageCarousel');
             const dotsEl = document.getElementById('detailGalleryDots');
             carouselEl.querySelectorAll('img').forEach(img => img.remove());
@@ -1380,8 +1384,14 @@ function renderCourseCurriculum(courseKey) {
                 nameError.classList.remove('show');
             }
 
-            const phoneDigits = phone.replace(/\D/g, '');
-            if (phoneDigits.length !== 10) {
+            // Country-aware phone check (India = exactly 10 digits; elsewhere 5-14 digits,
+            // and country code + number can't exceed 15 digits - the international E.164 limit).
+            const phoneInfo = getEnquiryPhone();
+            const phoneDigits = phoneInfo.national;
+            phoneError.textContent = phoneInfo.isIndia
+                ? 'Enter a valid 10-digit mobile number.'
+                : 'Enter a valid phone number (without the country code).';
+            if (!phoneInfo.valid) {
                 phoneEl.classList.add('field-error');
                 phoneError.classList.add('show');
                 valid = false;
@@ -1398,7 +1408,9 @@ function renderCourseCurriculum(courseKey) {
             // Build the WhatsApp message once and stash it — it's only actually
             // sent if/when the person clicks the separate "Send via WhatsApp
             // instead" link below, not automatically on every submit.
-            let text = `Hi UMA Team, I'd like to enquire.\nName: ${name}\nPhone: ${phoneDigits}`;
+            // India keeps the original 10-digit format; other countries are saved as +<code><number>.
+            const phoneToSend = phoneInfo.isIndia ? phoneDigits : phoneInfo.full;
+            let text = `Hi UMA Team, I'd like to enquire.\nName: ${name}\nPhone: ${phoneToSend}`;
             if (email) text += `\nEmail: ${email}`;
             text += `\nInterested In: ${type}`;
             if (service) text += `\nService/Course: ${service}`;
@@ -1414,7 +1426,7 @@ function renderCourseCurriculum(courseKey) {
             // case the person also wants to message us directly.
             if (typeof sheetBackendReady !== 'undefined' && sheetBackendReady) {
                 try {
-                    const enqResult = await callSheetBackend({ action: 'enquiry', name, phone: phoneDigits, email, type, service, message, uniqueId });
+                    const enqResult = await callSheetBackend({ action: 'enquiry', name, phone: phoneToSend, email, type, service, message, uniqueId });
                     const finalId = (enqResult && enqResult.uniqueId) || uniqueId;
                     successMsg.textContent = `Thanks! We\u2019ve received your enquiry \u2014 your Reference ID is ${finalId}. Our team will reach out soon.`;
                     document.getElementById('enquiryForm').reset();
@@ -1729,7 +1741,7 @@ window.addEventListener('resize', () => {
                 item.setAttribute('data-index', i);
                 const titleMatch = title.toLowerCase().includes(query);
                 item.innerHTML = `
-                    ${thumbSrc ? `<img class="search-result-thumb" src="${thumbSrc}" alt="" loading="lazy">` : ''}
+                    <img class="search-result-thumb" src="${thumbSrc || COMING_SOON_IMG}" alt="" loading="lazy">
                     <div class="search-result-text">
                         <span class="srt">${titleMatch ? highlightMatch(title, rawQuery) : escapeHtml(title)}</span>
                         ${details ? `<span class="srd">${titleMatch ? escapeHtml(details) : highlightMatch(details, rawQuery)}</span>` : ''}
@@ -3448,13 +3460,7 @@ function liveSearch(value) {
         });
     });
 
-    /* Phone: digits only */
-    var phone = document.getElementById("enqPhone");
-    if (phone) {
-        phone.addEventListener("input", function () {
-            phone.value = phone.value.replace(/\D/g, "").slice(0, 10);
-        });
-    }
+    /* Phone: country picker + digits only (see initEnquiryCountry below) */
 })();
 
 
@@ -3546,4 +3552,135 @@ function updatePageSeo(name, view) {
         e.preventDefault();
         el.click();
     });
+})();
+
+
+/* ==========================================================
+   ENQUIRY FORM - COUNTRY CODE PICKER (international numbers)
+   ========================================================== */
+function flagFromIso(iso) {
+    // Regional-indicator letters -> flag emoji (Windows shows the 2 letters instead)
+    return String.fromCodePoint.apply(null, iso.toUpperCase().split('').map(function (c) { return 127397 + c.charCodeAt(0); }));
+}
+
+function getEnquiryPhone() {
+    const sel = document.getElementById('enqCountry');
+    const input = document.getElementById('enqPhone');
+    const cc = sel ? sel.value : '91';
+    const isIndia = cc === '91';
+    let national = (input ? input.value : '').replace(/\D/g, '');
+    if (!isIndia) national = national.replace(/^0+/, '');          // drop local trunk "0" (e.g. UK 07...)
+    const valid = isIndia
+        ? national.length === 10
+        : (national.length >= 5 && national.length <= 14 && (cc.length + national.length) <= 15);
+    return { cc: cc, isIndia: isIndia, national: national, full: '+' + cc + national, valid: valid };
+}
+
+(function initEnquiryCountry() {
+    function init() {
+        const sel = document.getElementById('enqCountry');
+        const input = document.getElementById('enqPhone');
+        const flagEl = document.getElementById('enqCcFlag');
+        const codeEl = document.getElementById('enqCcCode');
+        if (!sel || !input) return;
+
+        const dialCodes = Array.prototype.map.call(sel.options, function (o) { return o.value; })
+            .filter(function (v, i, a) { return a.indexOf(v) === i; })
+            .sort(function (a, b) { return b.length - a.length; });   // longest first for +971 vs +9
+
+        function sync() {
+            const opt = sel.options[sel.selectedIndex];
+            if (flagEl) flagEl.textContent = flagFromIso(opt.getAttribute('data-iso') || 'IN');
+            if (codeEl) codeEl.textContent = '+' + sel.value;
+            const india = sel.value === '91';
+            input.placeholder = india ? '10-digit mobile number' : 'Phone number';
+            input.maxLength = 20;   // real limit is enforced below (allows a pasted "+91 ..." number)
+            input.value = input.value.replace(/\D/g, '').slice(0, india ? 10 : 15);
+        }
+
+        input.addEventListener('input', function () {
+            let v = input.value;
+            // Pasted/typed international format, e.g. +44 7911 123456 -> pick the country automatically
+            if (/^\s*\+/.test(v)) {
+                const digits = v.replace(/\D/g, '');
+                const hit = dialCodes.filter(function (c) { return digits.indexOf(c) === 0; })[0];
+                if (hit) {
+                    sel.value = hit;
+                    sync();
+                    input.value = digits.slice(hit.length).slice(0, hit === '91' ? 10 : 15);
+                    return;
+                }
+                // still typing the code (e.g. "+9", "+97") - keep the plus so it isn't lost
+                input.value = '+' + digits.slice(0, 15);
+                return;
+            }
+            const india = sel.value === '91';
+            input.value = v.replace(/\D/g, '').slice(0, india ? 10 : 15);
+        });
+
+        sel.addEventListener('change', function () {
+            sync();
+            input.classList.remove('field-error');
+            const msg = document.getElementById('enqPhoneError');
+            if (msg) msg.classList.remove('show');
+        });
+
+        const form = document.getElementById('enquiryForm');
+        if (form) form.addEventListener('reset', function () { setTimeout(sync, 0); });
+        sync();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+
+/* ==========================================================
+   "PHOTO COMING SOON" FALLBACK - courses & services
+   Any course/service image that is missing or fails to load
+   (cards, detail gallery, search thumbnails) is swapped for
+   COMING_SOON_IMG. If that file is missing too, a built-in
+   placeholder is drawn so the box is never left empty.
+   ========================================================== */
+(function comingSoonFallback() {
+    const SEL = '.card[data-images] img, #detailImageCarousel img, .search-result-thumb';
+
+    function builtInPlaceholder() {
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">' +
+            '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaf3ff"/><stop offset="1" stop-color="#d3e5fb"/></linearGradient></defs>' +
+            '<rect width="800" height="600" fill="url(#g)"/>' +
+            '<rect x="300" y="190" width="200" height="140" rx="16" fill="none" stroke="#0073e6" stroke-width="10"/>' +
+            '<circle cx="400" cy="260" r="34" fill="none" stroke="#0073e6" stroke-width="10"/>' +
+            '<text x="400" y="410" font-family="Arial,sans-serif" font-size="44" font-weight="700" fill="#0c2340" text-anchor="middle">Photo coming soon</text>' +
+            '</svg>';
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    function swap(img) {
+        if (!img || img.tagName !== 'IMG' || !img.matches(SEL)) return;
+        if (img.dataset.csLevel === '2') return;                       // already on the last-resort placeholder
+        // 2nd photo of a card's hover-flip: just hide it, so the card never flashes "coming soon"
+        const car = img.closest('.card-image-carousel');
+        if (car && img !== car.querySelector('img')) { img.style.display = 'none'; return; }
+        if (img.dataset.csLevel === '1') {                              // the coming-soon file itself is missing
+            img.dataset.csLevel = '2';
+            img.src = builtInPlaceholder();
+            return;
+        }
+        img.dataset.csLevel = '1';
+        img.removeAttribute('srcset');
+        img.removeAttribute('loading');                                 // load it right away
+        img.src = COMING_SOON_IMG;
+        img.classList.add('img-coming-soon');
+    }
+
+    // Fires for images that fail now or later (lazy-loaded, created by JS, detail gallery...)
+    document.addEventListener('error', function (e) { swap(e.target); }, true);
+
+    // Catches images that had already failed before this script ran
+    function sweep() {
+        document.querySelectorAll(SEL).forEach(function (img) {
+            if (img.complete && img.naturalWidth === 0 && img.getAttribute('src') && !img.dataset.csLevel) swap(img);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', sweep);
+    window.addEventListener('load', sweep);
 })();
