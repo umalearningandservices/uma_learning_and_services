@@ -1642,7 +1642,7 @@ window.addEventListener('resize', () => {
         /* ---------- PAY NOW (placeholder — connect a real payment gateway later) ---------- */
         function payNowClicked() {
             const title = document.getElementById('detailTitle').textContent || 'this course/service';
-            alert(`Online payment is coming soon for "${title}".\n\nFor now, please use "Enquire on WhatsApp" or "Fill Enquiry Form" and our team will share secure payment options with you.`);
+            showToast(`Online payment is coming soon for "${title}".\n\nFor now, please use "Enquire on WhatsApp" or "Fill Enquiry Form" and our team will share secure payment options with you.`);
         }
 
         /* ---------- SITE SEARCH ---------- */
@@ -1878,6 +1878,7 @@ function showPage(name, view, opts) {
     animatePageText(target);
     closeMoreDropdown();
     persistPageState(name, view);
+    if (typeof updatePageSeo === 'function') updatePageSeo(name, view);
 
     // Skipped when returning from the Detail page's "\u2190 Back" link, so the
     // caller (goBackFromDetail) can restore the visitor's exact previous
@@ -2168,7 +2169,8 @@ const HERO_IMAGES = {
 function initHeroRotator(sectionId, dotsId, images) {
     const section = document.getElementById(sectionId);
     const dotsWrap = document.getElementById(dotsId);
-    if (!section || !images.length) return;
+    // dots wrapper is commented out in index.html; without it the rotator used to crash on load
+    if (!section || !dotsWrap || !images.length) return;
 
     const layers = section.querySelectorAll('.hero-bg-layer');
     let current = 0;
@@ -2812,11 +2814,11 @@ async function saveAdminCourseRow(rowIndex) {
         if (result.success) {
             loadAdminStudents();
         } else {
-            alert('Could not save — please try again.');
+            showToast('Could not save — please try again.');
         }
     } catch (e) {
         console.error('Saving student update failed:', e);
-        alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
+        showToast('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
     }
 }
 
@@ -2829,7 +2831,7 @@ async function addStudentPayment(rowIndex) {
     const amountEl = document.getElementById(`newpay-row-${rowIndex}`);
     const amount = amountEl ? (parseFloat(amountEl.value) || 0) : 0;
     if (amount <= 0) {
-        alert('Enter an amount greater than 0.');
+        showToast('Enter an amount greater than 0.');
         return;
     }
     try {
@@ -2837,11 +2839,11 @@ async function addStudentPayment(rowIndex) {
         if (result.success) {
             loadAdminStudents();
         } else {
-            alert(result.error || 'Could not save — please try again.');
+            showToast(result.error || 'Could not save — please try again.');
         }
     } catch (e) {
         console.error('Adding student payment failed:', e);
-        alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
+        showToast('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
     }
 }
 
@@ -2956,11 +2958,11 @@ async function saveAdminEnquiryStatus(rowIndex) {
         if (result.success) {
             loadAdminEnquiries();
         } else {
-            alert('Could not save — please try again.');
+            showToast('Could not save — please try again.');
         }
     } catch (e) {
         console.error('Saving enquiry status failed:', e);
-        alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
+        showToast('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
     }
 }
 
@@ -3097,7 +3099,7 @@ async function addInvoicePayment(rowIndex) {
     const amountEl = document.getElementById(`inv-newpay-row-${rowIndex}`);
     const amount = amountEl ? (parseFloat(amountEl.value) || 0) : 0;
     if (amount <= 0) {
-        alert('Enter an amount greater than 0.');
+        showToast('Enter an amount greater than 0.');
         return;
     }
     try {
@@ -3105,11 +3107,11 @@ async function addInvoicePayment(rowIndex) {
         if (result.success) {
             loadAdminInvoices();
         } else {
-            alert(result.error || 'Could not save — please try again.');
+            showToast(result.error || 'Could not save — please try again.');
         }
     } catch (e) {
         console.error('Adding invoice payment failed:', e);
-        alert('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
+        showToast('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
     }
 }
 
@@ -3401,6 +3403,7 @@ function launchRocket() {
 
 
 
+
 function liveSearch(value) {
     value = value.toLowerCase();
 
@@ -3414,3 +3417,133 @@ function liveSearch(value) {
         }
     });
 }
+
+/* ---------- ENQUIRY FORM polish: loading state + clear errors while typing ---------- */
+(function () {
+    var form = document.getElementById("enquiryForm");
+    if (!form) return;
+
+    /* Spinner on the Submit button while the enquiry is being saved */
+    var original = window.submitEnquiry;
+    if (typeof original === "function") {
+        window.submitEnquiry = async function (e) {
+            var btn = form.querySelector(".enq-submit");
+            if (btn) { btn.classList.add("is-loading"); btn.disabled = true; }
+            try {
+                return await original.call(this, e);
+            } finally {
+                if (btn) { btn.classList.remove("is-loading"); btn.disabled = false; }
+            }
+        };
+    }
+
+    /* Remove the red error state as soon as the visitor starts fixing a field */
+    [["enqName", "enqNameError"], ["enqPhone", "enqPhoneError"]].forEach(function (pair) {
+        var input = document.getElementById(pair[0]);
+        var msg = document.getElementById(pair[1]);
+        if (!input) return;
+        input.addEventListener("input", function () {
+            input.classList.remove("field-error");
+            if (msg) msg.classList.remove("show");
+        });
+    });
+
+    /* Phone: digits only */
+    var phone = document.getElementById("enqPhone");
+    if (phone) {
+        phone.addEventListener("input", function () {
+            phone.value = phone.value.replace(/\D/g, "").slice(0, 10);
+        });
+    }
+})();
+
+
+/* ==========================================================
+   SITE IMPROVEMENTS (added)
+   1) showToast()      - non-blocking message, replaces alert()
+   2) updatePageSeo()  - page title / description / OG tags per page
+   3) keyboard access  - clickable cards, FAQ rows, logo etc.
+   ========================================================== */
+
+/* 1) Toast ------------------------------------------------ */
+function showToast(message, type) {
+    if (!type) type = /could not|enter an amount|error|failed|invalid/i.test(String(message)) ? 'error' : 'info';
+    let wrap = document.getElementById('toastWrap');
+    if (!wrap) {
+        wrap = document.createElement('div');
+        wrap.id = 'toastWrap';
+        wrap.setAttribute('role', 'status');
+        wrap.setAttribute('aria-live', 'polite');
+        document.body.appendChild(wrap);
+    }
+    const t = document.createElement('div');
+    t.className = 'site-toast site-toast-' + type;
+    t.textContent = String(message);
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'site-toast-close';
+    close.setAttribute('aria-label', 'Dismiss message');
+    close.textContent = '\u00d7';
+    const remove = () => { t.classList.add('out'); setTimeout(() => t.remove(), 250); };
+    close.addEventListener('click', remove);
+    t.appendChild(close);
+    wrap.appendChild(t);
+    setTimeout(remove, type === 'error' ? 7000 : 9000);
+}
+
+/* 2) Per-page SEO ---------------------------------------- */
+const PAGE_SEO = {
+    home:     null, // keeps the defaults from index.html
+    services: {
+        corporate: ['Business Automation, CRM & Web Solutions | UMA Services Studio', 'Business automation, CRM and web solutions from UMA Services Studio, Jaipur.'],
+        academic:  ['Professional Courses | UMA Learning Campus', 'Certified professional courses with practical training and real projects at UMA Learning Campus, Jaipur.']
+    },
+    whyus:    ['Why Choose UMA Learning & Services', 'See what sets UMA Learning & Services apart: practical training, expert trainers and dependable support.'],
+    team:     ['Our Team | UMA Learning & Services', 'Meet the trainers and professionals behind UMA Learning & Services.'],
+    contact:  ['Contact & Enquiry | UMA Learning & Services', 'Send a quick enquiry or contact UMA Learning & Services, Jaipur, by phone, email or WhatsApp.'],
+    reviews:  ['Student & Client Reviews | UMA Learning & Services', 'Read what students and clients say about UMA Learning & Services.'],
+    branches: ['Our Branches | UMA Learning & Services', 'Find UMA Learning & Services branches and how to reach them.'],
+    blogs:    ['Blog | UMA Learning & Services', 'Career, skills and business guides from UMA Learning & Services.'],
+    gallery:  ['Gallery | UMA Learning & Services', 'Photos from classes, events and the UMA Learning & Services campus.']
+};
+function updatePageSeo(name, view) {
+    if (name === 'detail' || name === 'blogdetail' || name === 'home') return; // home/blog posts handled elsewhere
+    let entry = PAGE_SEO[name];
+    if (name === 'services') entry = PAGE_SEO.services[view === 'academic' ? 'academic' : 'corporate'];
+    if (!entry) return;
+    const title = entry[0], desc = entry[1];
+    document.title = title;
+    const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.setAttribute('content', val); };
+    set('meta[name="description"]', desc);
+    set('#ogTitle', title);        set('#twitterTitle', title);
+    set('#ogDescription', desc);   set('#twitterDescription', desc);
+}
+
+/* 3) Keyboard access for click-only elements ------------- */
+(function () {
+    const SEL = '.card[onclick], .faq-item[onclick], .blog-card[onclick], .gallery-item[onclick], ' +
+                '.logo-container[onclick], .nav-search[onclick], .search-clear[onclick], .search-close[onclick], ' +
+                'a[onclick]:not([href])';
+    function enhance(root) {
+        (root || document).querySelectorAll(SEL).forEach(el => {
+            if (!el.hasAttribute('role'))     el.setAttribute('role', 'button');
+            if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+        });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        enhance(document);
+        let queued = false;
+        new MutationObserver(() => {
+            if (queued) return; queued = true;
+            requestAnimationFrame(() => { queued = false; enhance(document); });
+        }).observe(document.body, { childList: true, subtree: true });
+    });
+    // Enter / Space activates them, like a real button
+    document.addEventListener('keydown', e => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const el = e.target;
+        if (!el || el.getAttribute('role') !== 'button' || !el.hasAttribute('onclick') || el.hasAttribute('onkeydown')) return;
+        e.preventDefault();
+        el.click();
+    });
+})();
