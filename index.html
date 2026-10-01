@@ -2150,13 +2150,85 @@
                         <div class="enq-field">
                             <label for="enqPhone">Phone Number <b class="req">*</b> <span class="hi-text">| फ़ोन नंबर</span></label>
                             <div class="enq-phone">
-                                <span class="enq-cc" aria-hidden="true">
-                                    <svg class="enq-flag" viewBox="0 0 24 16" width="22" height="15"><rect width="24" height="5.34" fill="#ff9933"/><rect y="5.33" width="24" height="5.34" fill="#ffffff"/><rect y="10.66" width="24" height="5.34" fill="#138808"/><circle cx="12" cy="8" r="1.9" fill="none" stroke="#000080" stroke-width=".7"/></svg>
-                                    +91
+                                <span class="enq-cc">
+                                    <span class="enq-cc-flag" id="enqCcFlag" aria-hidden="true">&#127470;&#127475;</span>
+                                    <span class="enq-cc-code" id="enqCcCode" aria-hidden="true">+91</span>
+                                    <span class="enq-cc-caret" aria-hidden="true"></span>
+                                    <select id="enqCountry" class="enq-cc-select" aria-label="Country code" autocomplete="tel-country-code">
+                                        <option value="91" data-iso="IN" selected>India (+91)</option>
+                                        <option value="93" data-iso="AF">Afghanistan (+93)</option>
+                                        <option value="54" data-iso="AR">Argentina (+54)</option>
+                                        <option value="61" data-iso="AU">Australia (+61)</option>
+                                        <option value="43" data-iso="AT">Austria (+43)</option>
+                                        <option value="973" data-iso="BH">Bahrain (+973)</option>
+                                        <option value="880" data-iso="BD">Bangladesh (+880)</option>
+                                        <option value="32" data-iso="BE">Belgium (+32)</option>
+                                        <option value="975" data-iso="BT">Bhutan (+975)</option>
+                                        <option value="55" data-iso="BR">Brazil (+55)</option>
+                                        <option value="1" data-iso="CA">Canada (+1)</option>
+                                        <option value="56" data-iso="CL">Chile (+56)</option>
+                                        <option value="86" data-iso="CN">China (+86)</option>
+                                        <option value="57" data-iso="CO">Colombia (+57)</option>
+                                        <option value="420" data-iso="CZ">Czechia (+420)</option>
+                                        <option value="45" data-iso="DK">Denmark (+45)</option>
+                                        <option value="20" data-iso="EG">Egypt (+20)</option>
+                                        <option value="251" data-iso="ET">Ethiopia (+251)</option>
+                                        <option value="358" data-iso="FI">Finland (+358)</option>
+                                        <option value="33" data-iso="FR">France (+33)</option>
+                                        <option value="49" data-iso="DE">Germany (+49)</option>
+                                        <option value="233" data-iso="GH">Ghana (+233)</option>
+                                        <option value="30" data-iso="GR">Greece (+30)</option>
+                                        <option value="852" data-iso="HK">Hong Kong (+852)</option>
+                                        <option value="62" data-iso="ID">Indonesia (+62)</option>
+                                        <option value="964" data-iso="IQ">Iraq (+964)</option>
+                                        <option value="353" data-iso="IE">Ireland (+353)</option>
+                                        <option value="972" data-iso="IL">Israel (+972)</option>
+                                        <option value="39" data-iso="IT">Italy (+39)</option>
+                                        <option value="81" data-iso="JP">Japan (+81)</option>
+                                        <option value="962" data-iso="JO">Jordan (+962)</option>
+                                        <option value="254" data-iso="KE">Kenya (+254)</option>
+                                        <option value="965" data-iso="KW">Kuwait (+965)</option>
+                                        <option value="961" data-iso="LB">Lebanon (+961)</option>
+                                        <option value="60" data-iso="MY">Malaysia (+60)</option>
+                                        <option value="960" data-iso="MV">Maldives (+960)</option>
+                                        <option value="230" data-iso="MU">Mauritius (+230)</option>
+                                        <option value="52" data-iso="MX">Mexico (+52)</option>
+                                        <option value="977" data-iso="NP">Nepal (+977)</option>
+                                        <option value="31" data-iso="NL">Netherlands (+31)</option>
+                                        <option value="64" data-iso="NZ">New Zealand (+64)</option>
+                                        <option value="234" data-iso="NG">Nigeria (+234)</option>
+                                        <option value="47" data-iso="NO">Norway (+47)</option>
+                                        <option value="968" data-iso="OM">Oman (+968)</option>
+                                        <option value="92" data-iso="PK">Pakistan (+92)</option>
+                                        <option value="51" data-iso="PE">Peru (+51)</option>
+                                        <option value="63" data-iso="PH">Philippines (+63)</option>
+                                        <option value="48" data-iso="PL">Poland (+48)</option>
+                                        <option value="351" data-iso="PT">Portugal (+351)</option>
+                                        <option value="974" data-iso="QA">Qatar (+974)</option>
+                                        <option value="40" data-iso="RO">Romania (+40)</option>
+                                        <option value="7" data-iso="RU">Russia (+7)</option>
+                                        <option value="966" data-iso="SA">Saudi Arabia (+966)</option>
+                                        <option value="65" data-iso="SG">Singapore (+65)</option>
+                                        <option value="27" data-iso="ZA">South Africa (+27)</option>
+                                        <option value="82" data-iso="KR">South Korea (+82)</option>
+                                        <option value="34" data-iso="ES">Spain (+34)</option>
+                                        <option value="94" data-iso="LK">Sri Lanka (+94)</option>
+                                        <option value="46" data-iso="SE">Sweden (+46)</option>
+                                        <option value="41" data-iso="CH">Switzerland (+41)</option>
+                                        <option value="255" data-iso="TZ">Tanzania (+255)</option>
+                                        <option value="66" data-iso="TH">Thailand (+66)</option>
+                                        <option value="90" data-iso="TR">Turkey (+90)</option>
+                                        <option value="256" data-iso="UG">Uganda (+256)</option>
+                                        <option value="380" data-iso="UA">Ukraine (+380)</option>
+                                        <option value="971" data-iso="AE">United Arab Emirates (+971)</option>
+                                        <option value="44" data-iso="GB">United Kingdom (+44)</option>
+                                        <option value="1" data-iso="US">United States (+1)</option>
+                                        <option value="84" data-iso="VN">Vietnam (+84)</option>
+                                    </select>
                                 </span>
-                                <input type="tel" id="enqPhone" required inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit mobile number" autocomplete="tel-national">
+                                <input type="tel" id="enqPhone" required inputmode="tel" maxlength="20" placeholder="10-digit mobile number" autocomplete="tel-national">
                             </div>
-                            <span class="field-error-msg" id="enqPhoneError">Enter a valid 10-digit mobile number.</span>
+                            <span class="field-error-msg" id="enqPhoneError" aria-live="polite">Enter a valid 10-digit mobile number.</span>
                         </div>
                     </div>
 
