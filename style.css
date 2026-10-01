@@ -6937,3 +6937,41 @@ a[role="button"] { cursor: pointer; }
     .whatsapp-widget-btn { right: 12px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); width: 46px; height: 46px; }
     #myBtn { left: 12px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 42px; height: 42px; }
 }
+
+/* --- Enquiry phone: country-code picker (international numbers) --- */
+.enq-cc { position: relative; cursor: pointer; gap: 7px; padding: 0 12px; transition: background .2s ease; }
+.enq-cc:hover { background: rgba(0, 115, 230, 0.07); }
+.enq-cc:focus-within { background: rgba(0, 115, 230, 0.10); }
+.enq-cc-flag { font-size: 1.15rem; line-height: 1; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+.enq-cc-code { min-width: 2.2em; }
+.enq-cc-caret {
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #627d98;
+    margin-left: 1px;
+}
+.enq-shell .enq-cc .enq-cc-select {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;
+    cursor: pointer;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 16px;            /* stops iOS zoom on focus */
+    box-shadow: none !important;
+}
+@media (max-width: 480px) {
+    .enq-cc { padding: 0 9px; gap: 5px; }
+    .enq-cc-flag { font-size: 1.05rem; }
+}
+
+/* --- "Photo coming soon" fallback image (course & service photos) --- */
+img.img-coming-soon {
+    object-fit: cover !important;
+    object-position: center !important;
+    background: #eef2f6;
+}
