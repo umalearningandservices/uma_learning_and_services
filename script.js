@@ -1345,8 +1345,8 @@ function renderCourseCurriculum(courseKey) {
         }
 
         function resetBlogSeoTags() {
-            document.title = 'UMA Learning & Services | Skills, Automation & Career';
-            const desc = 'UMA Learning & Services, Jaipur — certified professional courses (Advanced Excel, ADCA, Digital Marketing, Web Development, Data Analytics) plus business automation, CRM & web solutions. Practical training, real projects, placement support.';
+            document.title = 'Courses & Business Automation in Jaipur | UMA Learning';
+            const desc = 'UMA in Jaipur: professional courses (Advanced Excel, Tally, ADCA, Python, web development) plus business automation, CRM, ERP & website services.';
             const descTag = document.querySelector('meta[name="description"]');
             if (descTag) descTag.setAttribute('content', desc);
             const schemaTag = document.getElementById('blogPostSchema');
@@ -2397,8 +2397,8 @@ function initScrollPin(wrapperId) {
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbw9C-UJLLXKdgCCcvBTW1nHr-MKG-9JyJ0oVrXeIL5ftKHgs-tN7-i6r4JtWuJ72qSk/exec";
 
 // Change these before going live — it only gates the Staff Panel UI, see note above.
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "95043";
+const ADMIN_USERNAME = ""; // login now checked on the server (see admin-auth.js)
+const ADMIN_PASSWORD = "";
 
 const sheetBackendReady = SHEET_API_URL && SHEET_API_URL !== "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
