@@ -1,0 +1,16 @@
+/* heading demoted from h1 to h2 for SEO; keeps the exact same look */
+.left-hero h2.hero-h{font-size:clamp(1.6rem,5vw + 0.8rem,2.8rem);color:#0c2340;margin-bottom:10px;font-weight:700;animation:fadeUp .6s ease both;animation-delay:.45s}
+
+/* Phones/tablets: keep the logo at the far left instead of centred */
+@media (max-width: 950px) {
+    header { align-items: stretch; }
+    header .logo-container { align-self: flex-start; text-align: left; margin-right: auto; }
+    header nav { align-self: stretch; width: 100%; }
+}
+
+/* Professional look: logo stays still (no 3D floating animation) */
+.logo-container img {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+}
