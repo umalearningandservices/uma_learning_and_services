@@ -1660,8 +1660,18 @@ window.addEventListener('resize', () => {
         /* ---------- SITE SEARCH ---------- */
         let searchDebounceTimer = null;
         let searchActiveIndex = -1;
+        let searchFilter = 'all'; // 'all' | 'services' | 'courses'
 
+        function setSearchFilter(f) {
+            searchFilter = f;
+            document.querySelectorAll('.search-filter-btn').forEach(b => b.classList.toggle('active', b.dataset.sf === f));
+            performSiteSearch();
+            document.getElementById('searchInput').focus();
+        }
         function openSearch() {
+            searchFilter = 'all';
+            document.querySelectorAll('.search-filter-btn').forEach(b => b.classList.toggle('active', b.dataset.sf === 'all'));
+            ['sfCountAll','sfCountServices','sfCountCourses'].forEach(id => { const e = document.getElementById(id); if (e) e.textContent = ''; });
             document.getElementById('searchOverlay').classList.add('active');
             const input = document.getElementById('searchInput');
             input.value = '';
@@ -1706,19 +1716,32 @@ window.addEventListener('resize', () => {
             searchActiveIndex = -1;
 
             if (!query) {
+                ['sfCountAll','sfCountServices','sfCountCourses'].forEach(id => { const e = document.getElementById(id); if (e) e.textContent = ''; });
                 resultsEl.innerHTML = '<p class="search-hint">Start typing to search across all courses and services.<br><span class="search-hint-sub">Tip: try "Excel", "web development", "ERP" or "certification".</span></p>';
                 return;
             }
             const cards = Array.from(document.querySelectorAll('.card'));
-            const matches = cards.filter(card => {
+            const allMatches = cards.filter(card => {
                 const titleEl = card.querySelector('.card-title');
                 const detailsEl = card.querySelector('.card-details');
                 const fullDesc = card.getAttribute('data-full') || '';
                 const text = ((titleEl?.textContent || '') + ' ' + (detailsEl?.textContent || '') + ' ' + fullDesc).toLowerCase();
                 return text.includes(query);
             });
+            const nServices = allMatches.filter(c => !!c.closest('.agency-column')).length;
+            const nCourses = allMatches.length - nServices;
+            document.getElementById('sfCountAll').textContent = allMatches.length;
+            document.getElementById('sfCountServices').textContent = nServices;
+            document.getElementById('sfCountCourses').textContent = nCourses;
+            const matches = allMatches.filter(c => {
+                const isSvc = !!c.closest('.agency-column');
+                return searchFilter === 'all' || (searchFilter === 'services' ? isSvc : !isSvc);
+            });
             if (matches.length === 0) {
-                resultsEl.innerHTML = '<p class="search-empty">No matching courses or services found for "' + escapeHtml(rawQuery) + '". Try a different keyword.</p>';
+                const what = searchFilter === 'services' ? 'services' : searchFilter === 'courses' ? 'courses' : 'courses or services';
+                let msg = 'No matching ' + what + ' found for "' + escapeHtml(rawQuery) + '". Try a different keyword.';
+                if (searchFilter !== 'all' && allMatches.length) msg += ' (' + allMatches.length + ' result' + (allMatches.length === 1 ? '' : 's') + ' in ' + (searchFilter === 'services' ? 'Courses' : 'Services') + ' — switch the tab above.)';
+                resultsEl.innerHTML = '<p class="search-empty">' + msg + '</p>';
                 return;
             }
             resultsEl.innerHTML = '';
@@ -1974,7 +1997,7 @@ function setActiveNav(name, view) {
     document.querySelectorAll('nav [data-page]').forEach(el => el.classList.remove('nav-active'));
     document.querySelectorAll('.nav-dropdown').forEach(el => el.classList.remove('nav-active'));
 
-    const moreSubPages = ['reviews', 'branches', 'blogs', 'team', 'gallery'];
+    const moreSubPages = ['reviews', 'branches', 'blogs', 'team', 'gallery', 'about'];
     if (moreSubPages.includes(name)) {
         // Intentionally not marking moreDropdown / the sub-link as active —
         // the panel should just stay open, not flip into an "active" state.
@@ -3500,6 +3523,7 @@ function showToast(message, type) {
 /* 2) Per-page SEO ---------------------------------------- */
 const PAGE_SEO = {
     home:     null, // keeps the defaults from index.html
+    about:    ['About Our Organization | UMA Learning & Services', 'Vision, mission, policies, organization chart and the admission, fee and record systems of UMA Learning & Services, Jaipur.'],
     services: {
         corporate: ['Business Automation, CRM & Web Solutions | UMA Services Studio', 'Business automation, CRM and web solutions from UMA Services Studio, Jaipur.'],
         academic:  ['Professional Courses | UMA Learning Campus', 'Certified professional courses with practical training and real projects at UMA Learning Campus, Jaipur.']
@@ -3684,3 +3708,24 @@ function getEnquiryPhone() {
     document.addEventListener('DOMContentLoaded', sweep);
     window.addEventListener('load', sweep);
 })();
+
+/* About page: smooth-scroll to a section */
+function orgScroll(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* Reviews: add a round initial avatar before each reviewer name (also for reviews added later via the content manager) */
+function addReviewAvatars() {
+    document.querySelectorAll('.review-card .review-author').forEach(function (a) {
+        if (a.querySelector('.ra-avatar')) return;
+        var n = a.querySelector('.ra-name');
+        var name = n ? n.textContent.trim() : '';
+        if (!name) return;
+        var av = document.createElement('span');
+        av.className = 'ra-avatar';
+        av.setAttribute('aria-hidden', 'true');
+        av.textContent = (name.replace(/[^\p{L}\p{N}\s]/gu, '').trim().charAt(0) || '?').toUpperCase();
+        a.insertBefore(av, a.firstChild);
+    });
+}
+document.addEventListener('DOMContentLoaded', addReviewAvatars);
+document.addEventListener('cms-rendered', addReviewAvatars);
+addReviewAvatars();
