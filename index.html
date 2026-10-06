@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="style.css?v=20261001">
     <link rel="stylesheet" href="addons.css">
     <script type="application/ld+json" id="orgSchema">
-    {
+   {
       "@context": "https://schema.org",
       "@type": ["EducationalOrganization", "LocalBusiness"],
       "openingHours": "Mo-Sa 09:00-21:30",
@@ -102,36 +102,45 @@
             </span>
         </a>
         <div class="nav-dropdown-menu">
-
-            <a role="button" tabindex="0" onclick="showPage('reviews')" data-page="reviews">
-                <img src="images/rating.png" alt="Reviews" class="dropdown-icon">
-                <span>Reviews</span>
+            <div class="dd-label">Organization</div>
+            <a role="button" tabindex="0" onclick="showPage('about')" data-page="about">
+                <svg class="dropdown-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0073e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l7-4 7 4v13"/><path d="M9 21v-5h6v5"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg>
+                <span>About Us</span>
             </a>
 
             <a role="button" tabindex="0" onclick="showPage('team')" data-page="team">
-                <img src="images/team.png" alt="Our Team" class="dropdown-icon">
+                <img src="images/team.png" alt="" class="dropdown-icon">
                 <span>Our Team</span>
             </a>
 
             <a role="button" tabindex="0" onclick="showPage('branches')" data-page="branches">
-                <img src="images/branch.png" alt="Our Branches" class="dropdown-icon">
+                <img src="images/branch.png" alt="" class="dropdown-icon">
                 <span>Our Branches</span>
             </a>
 
+            <div class="dd-sep"></div>
+            <div class="dd-label">Community</div>
+            <a role="button" tabindex="0" onclick="showPage('reviews')" data-page="reviews">
+                <img src="images/rating.png" alt="" class="dropdown-icon">
+                <span>Reviews</span>
+            </a>
+
             <a role="button" tabindex="0" onclick="showPage('blogs')" data-page="blogs">
-                <img src="images/blog.png" alt="Our Blogs" class="dropdown-icon">
+                <img src="images/blog.png" alt="" class="dropdown-icon">
                 <span>Our Blogs</span>
             </a>
 
             <a role="button" tabindex="0" onclick="showPage('gallery')" data-page="gallery">
-                <img src="images/gallery.png" alt="Gallery" class="dropdown-icon">
+                <img src="images/gallery.png" alt="" class="dropdown-icon">
                 <span>Gallery</span>
             </a>
 
+            <div class="dd-sep"></div>
             <a role="button" tabindex="0" onclick="goToContactFAQ()" data-page="FAQ">
-                <img src="images/faq.png" alt="FAQ" class="dropdown-icon">
+                <img src="images/faq.png" alt="" class="dropdown-icon">
                 <span>FAQ</span>
             </a>
+
 
         </div>
     </div>
@@ -148,6 +157,11 @@
             <input type="text" id="searchInput" placeholder="Search courses & services (e.g. Excel,ADCA,FMS,Design, CRM, Web Development)..." oninput="runSiteSearch()" onkeydown="handleSearchKeydown(event)" autocomplete="off">
             <span class="search-clear" id="searchClear" onclick="clearSearchInput()" title="Clear">✕</span>
             <span class="search-close" onclick="closeSearch()">Close</span>
+            </div>
+            <div class="search-filter-bar" id="searchFilterBar" role="tablist" aria-label="Filter search results">
+                <button type="button" class="search-filter-btn active" data-sf="all" onclick="setSearchFilter('all')">All <span class="sf-count" id="sfCountAll"></span></button>
+                <button type="button" class="search-filter-btn" data-sf="services" onclick="setSearchFilter('services')">Services <span class="sf-count" id="sfCountServices"></span></button>
+                <button type="button" class="search-filter-btn" data-sf="courses" onclick="setSearchFilter('courses')">Courses <span class="sf-count" id="sfCountCourses"></span></button>
             </div>
             <div class="search-results" id="searchResults">
                 <p class="search-hint">Start typing to search across all courses and services.<br><span class="search-hint-sub">Tip: try "Excel", "web development", "ERP" or "certification".</span></p>
@@ -2083,26 +2097,33 @@
             <p class="section-subtitle">The trainers and creators behind UMA Learning & Services.</p>
 
             <div class="team-grid">
-                <div class="team-card">
+                <article class="team-card">
                     <div class="team-photo"><img src="images/teacher1.jpg" alt="Suraj Kumar Kushwaha — Data Analyst Trainer at UMA Learning & Services" loading="lazy" decoding="async"></div>
-                    <h3>Suraj Kumar Kushwaha</h3>
-                    <span class="team-role">Data Analyst </span>
-                    <ul class="team-tags">
-                        <li>5+ Work Experience,3+ Teaching Experience</li>
-                        <li>30+ Certifications</li>
-                    </ul>
-                </div>
+                    <div class="team-body">
+                        <h3>Suraj Kumar Kushwaha</h3>
+                        <span class="team-role">Data Analyst</span>
+                        <div class="team-stats">
+                            <div class="team-stat"><b>5+</b><span>Work Experience</span></div>
+                            <div class="team-stat"><b>3+</b><span>Teaching Experience</span></div>
+                            <div class="team-stat"><b>30+</b><span>Certifications</span></div>
+                        </div>
+                    </div>
+                </article>
 
-                <div class="team-card">
+                <article class="team-card">
                     <div class="team-photo"><img src="images/teacher2.jpg" alt="Suraj Narayan Mahto — Visual & Graphic Design Trainer at UMA Learning & Services" loading="lazy" decoding="async"></div>
-                    <h3>Suraj Narayan Mahto</h3>
-                    <span class="team-role">Visual & Graphic Design Trainer</span>
-                    <ul class="team-tags">
-                        <li>3+ Years Experience</li>
-                        <li>B.DES (Bachelor of Design)</li>
-                        <li>Visual & Graphic Designer</li>
-                    </ul>
-                </div>
+                    <div class="team-body">
+                        <h3>Suraj Narayan Mahto</h3>
+                        <span class="team-role">Visual &amp; Graphic Design Trainer</span>
+                        <div class="team-stats">
+                            <div class="team-stat"><b>3+</b><span>Years Experience</span></div>
+                        </div>
+                        <ul class="team-creds">
+                            <li>B.DES (Bachelor of Design)</li>
+                            <li>Visual &amp; Graphic Designer</li>
+                        </ul>
+                    </div>
+                </article>
 
                 <!-- Add more mentors as the team grows — just copy a .team-card block above -->
             </div>
@@ -2317,7 +2338,7 @@
                 </div>
 
                 <div class="enq-map">
-                    <iframe src="https://maps.google.com/maps?q=Vatika%20Road,%20Jaipur&t=&z=13&ie=UTF8&iwloc=&output=embed" loading="lazy" title="UMA Learning &amp; Services location"></iframe>
+                    <iframe src="https://maps.google.com/maps?q=Vatika%20Road,%20Jaipur&t=&z=13&ie=UTF8&iwloc=&output=embed" onload="this.parentNode.classList.add('map-loaded')" loading="lazy" title="UMA Learning &amp; Services location"></iframe>
                 </div>
 
             </aside>
@@ -2753,6 +2774,228 @@
         <p class="u11">* Second location coming soon — check back for updates</p>
     </div>
 
+    <!-- ================= ABOUT / OUR ORGANIZATION PAGE ================= -->
+    <div class="page" id="page-about">
+        <div class="why-hero">
+            <span class="badge">About Our Organization</span>
+            <h2 class="section-title">UMA Learning &amp; Services</h2>
+            <p class="section-subtitle">Our identity, purpose, policies and the systems that keep every student's journey organised and transparent.</p>
+        </div>
+
+        <div class="org-wrap">
+            <nav class="org-jump" aria-label="Organization sections">
+                <a href="javascript:void(0)" onclick="orgScroll('org-profile')">Profile</a>
+                <a href="javascript:void(0)" onclick="orgScroll('org-direction')">Vision &amp; Mission</a>
+                <a href="javascript:void(0)" onclick="orgScroll('org-offer')">Services &amp; Courses</a>
+                <a href="javascript:void(0)" onclick="orgScroll('org-structure')">Structure &amp; Roles</a>
+                <a href="javascript:void(0)" onclick="orgScroll('org-systems')">Our Systems</a>
+            </nav>
+
+            <!-- 1. PROFILE -->
+            <section class="org-section" id="org-profile">
+                <h3 class="org-h">Organization Profile</h3>
+                <div class="org-grid">
+                    <div class="org-card t-navy">
+                        <div class="org-ico">🏢</div>
+                        <h4>Business Registration / Entity</h4>
+                        <dl class="org-dl">
+                            <dt>Trade name</dt><dd>UMA Learning &amp; Services</dd>
+                            <dt>Entity type</dt><dd class="org-blank">&nbsp;</dd>
+                            <dt>Registration no.</dt><dd class="org-blank">&nbsp;</dd>
+                            <dt>Registered office</dt><dd>Jaipur, Rajasthan, India</dd>
+                        </dl>
+                    </div>
+                    <div class="org-card t-teal">
+                        <div class="org-ico">📍</div>
+                        <h4>Institute Premises</h4>
+                        <ul class="org-list">
+                            <li>Dedicated training premises in Jaipur</li>
+                            <li>Classroom and computer-lab style learning space</li>
+                            <li>Software-equipped systems for hands-on practice</li>
+                            <li>Separate reception / counselling area</li>
+                        </ul>
+                        <p class="org-link"><a href="javascript:void(0)" onclick="showPage('branches')">View our branches →</a></p>
+                    </div>
+                    <div class="org-card t-indigo">
+                        <div class="org-ico">🎯</div>
+                        <h4>Scope of the Organization</h4>
+                        <ul class="org-list">
+                            <li>Professional skill-development courses (design, software, office &amp; career skills)</li>
+                            <li>Classroom and guided practical training</li>
+                            <li>Student assessment and course-completion certificates</li>
+                            <li>Career guidance and placement support</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. DIRECTION -->
+            <section class="org-section" id="org-direction">
+                <h3 class="org-h">Vision, Mission &amp; Policy</h3>
+                <div class="org-grid org-grid-2">
+                    <div class="org-card t-blue">
+                        <div class="org-ico">👁️</div>
+                        <h4>Vision</h4>
+                        <p>To be a trusted centre for practical, job-ready skills — empowering every learner in Jaipur and beyond to build a confident career.</p>
+                    </div>
+                    <div class="org-card t-orange">
+                        <div class="org-ico">🚀</div>
+                        <h4>Mission</h4>
+                        <p>To deliver quality, hands-on training through experienced trainers, industry-relevant courses and transparent student support — from admission to certification.</p>
+                    </div>
+                    <div class="org-card t-purple">
+                        <div class="org-ico">📘</div>
+                        <h4>Educational Policy</h4>
+                        <ul class="org-list">
+                            <li>Practical, learning-by-doing approach in every course</li>
+                            <li>Fair, transparent admission without discrimination</li>
+                            <li>Regular assessment and feedback to every student</li>
+                            <li>Certificate issued only on completion of the course</li>
+                            <li>Respectful, safe and disciplined learning environment</li>
+                        </ul>
+                    </div>
+                    <div class="org-card t-green">
+                        <div class="org-ico">✅</div>
+                        <h4>Quality Objectives</h4>
+                        <ul class="org-list">
+                            <li>Start every batch with a defined syllabus and schedule</li>
+                            <li>Maintain qualified, up-to-date trainers</li>
+                            <li>Keep complete, accurate student and fee records</li>
+                            <li>Respond to enquiries and concerns promptly</li>
+                            <li>Review student feedback regularly and improve</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2b. WHAT WE OFFER: SERVICES + COURSES -->
+            <section class="org-section" id="org-offer">
+                <h3 class="org-h">What We Offer: Services &amp; Courses</h3>
+                <div class="org-grid org-grid-2">
+                    <div class="org-card t-navy">
+                        <div class="org-ico">⚙️</div>
+                        <h4>Services Studio (for Businesses)</h4>
+                        <ul class="org-list">
+                            <li>Business process automation, custom FMS and WhatsApp / Google Workspace automation</li>
+                            <li>CRM, help desk, ERP and custom web apps</li>
+                            <li>HR, payroll, stock and task-monitoring systems</li>
+                            <li>Audit, income-tax and GST productivity tools</li>
+                        </ul>
+                        <p class="org-link"><a href="javascript:void(0)" onclick="goServices('corporate')">Explore services →</a></p>
+                    </div>
+                    <div class="org-card t-blue">
+                        <div class="org-ico">🎓</div>
+                        <h4>Learning Campus (for Students &amp; Professionals)</h4>
+                        <ul class="org-list">
+                            <li>30+ practical courses with defined duration and syllabus</li>
+                            <li>Software, web, design, data and office-automation skills</li>
+                            <li>Spoken English, communication and career skills</li>
+                            <li>Hands-on projects, assessment and certificate</li>
+                        </ul>
+                        <p class="org-link"><a href="javascript:void(0)" onclick="goServices('academic')">Explore courses →</a></p>
+                    </div>
+                </div>
+                <p class="org-note">Both arms work together: our trainers also build real business systems, so students learn from live, practical work.</p>
+            </section>
+
+            <!-- 3. STRUCTURE -->
+            <section class="org-section" id="org-structure">
+                <h3 class="org-h">Organization Chart &amp; Responsibilities</h3>
+                <div class="org-chart" role="img" aria-label="Organization chart: Director, then Process Coordinator and Academic Head, then Trainers, Counsellor and Accounts">
+                    <div class="org-node org-top">Director / Owner</div>
+                    <div class="org-line"></div>
+                    <div class="org-row">
+                        <div class="org-node">Process Coordinator<small>Admissions · Records · Compliance</small></div>
+                        <div class="org-node">Academic Head<small>Courses · Quality · Assessment</small></div>
+                    </div>
+                    <div class="org-line"></div>
+                    <div class="org-row">
+                        <div class="org-node org-leaf">Trainers / Faculty</div>
+                        <div class="org-node org-leaf">Counsellor / Front Desk</div>
+                        <div class="org-node org-leaf">Accounts &amp; Fees</div>
+                    </div>
+                </div>
+
+                <div class="org-table-wrap">
+                    <table class="org-table">
+                        <thead><tr><th>Role</th><th>Key responsibilities</th></tr></thead>
+                        <tbody>
+                            <tr><td>Director / Owner</td><td>Overall direction, policies, approvals, quality review</td></tr>
+                            <tr><td>Process Coordinator</td><td>Admission process, student &amp; trainer records, documentation, compliance</td></tr>
+                            <tr><td>Academic Head</td><td>Course structure, syllabus, batch planning, assessments, certificates</td></tr>
+                            <tr><td>Trainers / Faculty</td><td>Delivering classes, practicals, evaluating and mentoring students</td></tr>
+                            <tr><td>Counsellor / Front Desk</td><td>Enquiries, counselling, admission support, parent communication</td></tr>
+                            <tr><td>Accounts &amp; Fees</td><td>Fee collection, receipts/invoices, payment history</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="org-note">Meet the people behind the institute on our <a href="javascript:void(0)" onclick="showPage('team')">Our Team</a> page.</p>
+            </section>
+
+            <!-- 4. SYSTEMS -->
+            <section class="org-section" id="org-systems">
+                <h3 class="org-h">How We Run: Our Systems</h3>
+                <div class="org-grid">
+                    <div class="org-card t-blue">
+                        <div class="org-step">1</div>
+                        <h4>Student Admission System</h4>
+                        <ul class="org-list">
+                            <li>Enquiry / counselling and course selection</li>
+                            <li>Admission form and ID details submitted</li>
+                            <li>Fee plan agreed and first payment recorded</li>
+                            <li>Student enrolled in a batch</li>
+                        </ul>
+                        <p class="org-link"><a href="javascript:void(0)" onclick="showPage('contact')">Enquire now →</a></p>
+                    </div>
+                    <div class="org-card t-indigo">
+                        <div class="org-step">2</div>
+                        <h4>Course Structure</h4>
+                        <ul class="org-list">
+                            <li>Every course has a defined duration and syllabus</li>
+                            <li>Module-wise theory followed by practical work</li>
+                            <li>Periodic assessment and final evaluation</li>
+                            <li>Certificate on successful completion</li>
+                        </ul>
+                        <p class="org-link"><a href="javascript:void(0)" onclick="goServices('academic')">Explore courses →</a></p>
+                    </div>
+                    <div class="org-card t-green">
+                        <div class="org-step">3</div>
+                        <h4>Fee Receipts</h4>
+                        <ul class="org-list">
+                            <li>Receipt / invoice issued for every payment</li>
+                            <li>Instalment-wise payment history maintained</li>
+                            <li>Balance and due dates tracked</li>
+                        </ul>
+                    </div>
+                    <div class="org-card t-teal">
+                        <div class="org-step">4</div>
+                        <h4>Student Records</h4>
+                        <ul class="org-list">
+                            <li>Personal and admission details stored securely</li>
+                            <li>Course, batch, fee and attendance history</li>
+                            <li>Certificate and completion records</li>
+                            <li>Access restricted to authorised staff</li>
+                        </ul>
+                    </div>
+                    <div class="org-card t-orange">
+                        <div class="org-step">5</div>
+                        <h4>Trainer Records</h4>
+                        <ul class="org-list">
+                            <li>Qualification and experience on file</li>
+                            <li>Subjects and batches assigned</li>
+                            <li>Periodic performance and feedback review</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="org-cta">
+                <h4>Have a question about admissions or our policies?</h4>
+                <a class="org-btn" role="button" tabindex="0" onclick="showPage('contact')">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
     <!-- ================= OUR BLOGS PAGE ================= -->
     <div class="page" id="page-blogs">
         <section class="why-hero">
@@ -2959,7 +3202,7 @@
             <div class="footer-map-col">
                 <a class="map-container map-link-clickable" href="https://www.google.com/maps/search/?api=1&query=Vatika+Road,+Jaipur,+Rajasthan" target="_blank" rel="noopener" aria-label="Open UMA Learning & Services location in Google Maps">
                     <div class="map-cursor-overlay"></div>
-                    <iframe src="https://maps.google.com/maps?q=Vatika%20Road,%20Jaipur&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" title="UMA Learning &amp; Services location map"></iframe>
+                    <iframe src="https://maps.google.com/maps?q=Vatika%20Road,%20Jaipur&t=&z=13&ie=UTF8&iwloc=&output=embed" onload="this.parentNode.classList.add('map-loaded')" allowfullscreen loading="lazy" title="UMA Learning &amp; Services location map"></iframe>
                     <span class="map-click-hint">Click to open in Google Maps</span>
                 </a>
             </div>
