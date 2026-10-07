@@ -3356,23 +3356,43 @@
          connected yet (see GOOGLE SHEET BACKEND SETUP note in script.js),
          this quietly falls back to a local demo student so the site still
          works while you finish setup.
-         Demo login — ID: 9999999999 / Password: demo123 -->
+         -->
     <div class="legal-modal-overlay" id="studentLoginOverlay" onclick="closeStudentLoginOnOverlay(event)">
         <div class="legal-modal-box student-login-box">
             <a role="button" tabindex="0" class="legal-close" onclick="closeStudentLogin()">✕</a>
             <span class="badge u8">Learning Campus</span>
 
-            <div class="student-login-form" id="slLoginForm">
-                <h3>Student Login</h3>
+            <div class="sl-tabs" id="slTabs" role="tablist">
+                <button type="button" class="sl-tab active" id="slTabLogin" onclick="slShowTab('login')">Student Login</button>
+                <button type="button" class="sl-tab" id="slTabVerify" onclick="slShowTab('verify')">Verify Certificate</button>
+            </div>
+
+            <div class="student-login-form sl-pro" id="slVerifyForm" style="display:none;">
+                <div class="sl-head">
+                    <div class="sl-head-ico" aria-hidden="true">🔍</div>
+                    <h3>Verify a Certificate</h3>
+                    <p class="sl-sub">Scan the QR code on the certificate, or type its number to confirm it is genuine.</p>
+                </div>
+                <label for="slVerifyInput">Certificate Number</label>
+                <input type="text" id="slVerifyInput" maxlength="40" autocomplete="off" placeholder="e.g. UMA-26-00123">
+                <button type="button" id="slVerifyBtn" onclick="slVerifySubmit()">Verify</button>
+                <div id="slVerifyResult" aria-live="polite"></div>
+            </div>
+
+            <div class="student-login-form sl-pro" id="slLoginForm">
+                <div class="sl-head">
+                    <div class="sl-head-ico" aria-hidden="true">🎓</div>
+                    <h3>Student Login</h3>
+                    <p class="sl-sub">View your courses, fee status and certificates.</p>
+                </div>
                 <label for="slIdentifier">Full Name</label>
-                <input type="text" id="slIdentifier" placeholder="Enter your full name (as given at admission)">
-                <label for="slPassword">Phone Number <span class="admission-optional-tag">(used as your password)</span></label>
-                <input type="password" id="slPassword" inputmode="numeric" maxlength="10" placeholder="Your 10-digit phone number">
-                <button type="button" onclick="studentLoginSubmit()">Login</button>
+                <input type="text" id="slIdentifier" placeholder="Name as given at admission" autocomplete="name">
+                <label for="slPassword">Phone Number <span class="admission-optional-tag">(your password)</span></label>
+                <input type="password" id="slPassword" inputmode="numeric" maxlength="10" placeholder="10-digit phone number" autocomplete="current-password">
+                <button type="button" id="slLoginBtn" onclick="studentLoginSubmit()">Login</button>
                 <p class="sl-error" id="slError">Incorrect Name/Phone Number. Please try again.</p>
                 <p class="sl-hint" id="slLoadingHint" style="display:none;">Checking your details…</p>
-                <p class="sl-switch-link">New student? Please contact us via WhatsApp or visit our centre — our team will complete your admission.</p>
-                <p class="sl-hint">Demo login — Name: <strong>Demo Student</strong> &nbsp;|&nbsp; Phone: <strong>9999999999</strong></p>
+                <p class="sl-switch-link">New student? Contact us on WhatsApp or visit our centre &mdash; our team will complete your admission.</p>
             </div>
 
             <div class="sl-dashboard" id="slDashboard">
@@ -3409,6 +3429,10 @@
                 </div>
 
                 <div class="form-row">
+                    <div class="form-field">
+                        <label for="admFather">Father's Name</label>
+                        <input type="text" id="admFather" placeholder="Father / guardian name">
+                    </div>
                     <div class="form-field">
                         <label for="admDob">Date of Birth</label>
                         <input type="date" id="admDob">
@@ -3501,8 +3525,8 @@
             <a role="button" tabindex="0" class="legal-close" onclick="closeAdmin()">✕</a>
             <span class="badge u15">Staff Panel</span>
 
-            <div class="student-login-form" id="adminLoginForm">
-                <h3>Staff Login</h3>
+            <div class="student-login-form sl-pro" id="adminLoginForm">
+                <div class="sl-head"><div class="sl-head-ico" aria-hidden="true">🔐</div><h3>Staff Login</h3><p class="sl-sub">Authorised staff only.</p></div>
                 <label for="adminUsername">Username</label>
                 <input type="text" id="adminUsername" placeholder="Enter staff username" autocomplete="off">
                 <label for="adminPassword">Password</label>
@@ -3558,11 +3582,19 @@
                         <label for="invEmail">Email (optional)</label>
                         <input type="email" id="invEmail" placeholder="Email address">
                         <label for="invService">Service / Project</label>
-                        <input type="text" id="invService" placeholder="e.g. CRM setup, website development, automation project">
-                        <label for="invAmount">Total Amount ₹</label>
-                        <input type="number" min="0" id="invAmount" placeholder="Total fee for this service">
+                        <input type="text" id="invService" list="invServiceList" autocomplete="off" placeholder="Pick from the list or type your own"><datalist id="invServiceList"></datalist>
+                        <label for="invAmount">Fee Amount ₹ (before discount &amp; tax)</label>
+                        <input type="number" min="0" id="invAmount" placeholder="Fee for this service">
+                        <label for="invDiscount">Discount ₹ (optional)</label>
+                        <input type="number" min="0" id="invDiscount" placeholder="0">
+                        <label for="invTax">Tax / GST % (optional)</label>
+                        <input type="number" min="0" max="100" step="0.01" id="invTax" placeholder="0 if no tax, e.g. 18">
                         <label for="invAdvance">Advance / Amount Paid Now ₹</label>
                         <input type="number" min="0" id="invAdvance" placeholder="0 if nothing paid yet">
+                        <label for="invMode">Payment Mode</label>
+                        <select id="invMode"><option value="">— select —</option><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Card</option><option>Cheque</option><option>Other</option></select>
+                        <label for="invRef">Transaction / Reference No. (optional)</label>
+                        <input type="text" id="invRef" maxlength="60" placeholder="UPI / bank reference">
                         <label for="invNotes">Notes (optional)</label>
                         <input type="text" id="invNotes" placeholder="Anything worth noting on the invoice">
                         <p class="sl-error" id="invoiceFormError">Please fill required fields.</p>
@@ -3579,6 +3611,14 @@
         </div>
     </div>
 
+
+    <!-- Certificate verification popup — opened by scanning the QR code on a certificate (?verify=NUMBER) or from About Us -->
+    <div class="legal-modal-overlay" id="verifyOverlay" onclick="closeVerifyOnOverlay(event)">
+        <div class="legal-modal-box verify-box" role="dialog" aria-modal="true" aria-labelledby="verifyTitle">
+            <a role="button" tabindex="0" class="legal-close" aria-label="Close" onclick="closeCertVerify()">✕</a>
+            <div id="verifyBody"></div>
+        </div>
+    </div>
 
     <!-- Certificate of Completion overlay — opened from the Student Dashboard
          once a course shows status "completed". Only the .certificate-print-area
@@ -3614,41 +3654,64 @@
             </div>
 
             <div class="certificate-print-area">
-                <div class="certificate-card">
-                    <div class="certificate-inner">
-                        <img src="images/logo.png" alt="UMA Learning & Services" class="certificate-logo" loading="lazy" decoding="async">
-                        <div class="certificate-brand">UMA <span>Learning &amp; Services</span></div>
-                        <div class="certificate-kicker">Certificate of Completion</div>
-                        <div class="certificate-divider"></div>
-                        <p class="certificate-line">This certificate is proudly presented to</p>
-                        <p class="certificate-name" id="certStudentName">Student Name</p>
-                        <p class="certificate-line">for successfully completing the course</p>
-                        <p class="certificate-course" id="certCourseName">Course Name</p>
-                        <div class="certificate-meta">
-                            <div class="certificate-meta-item">
-                                <span class="certificate-meta-label">Date of Issue</span>
-                                <span class="certificate-meta-value" id="certDate"></span>
+                <div class="certificate-card cert2">
+                    <div class="cert2-frame">
+                        <div class="cert2-corner tl"></div><div class="cert2-corner tr"></div>
+                        <div class="cert2-corner bl"></div><div class="cert2-corner br"></div>
+
+                        <div class="cert2-head">
+                            <img src="images/logo.png" alt="UMA Learning & Services" class="cert2-logo" decoding="async">
+                            <div class="cert2-org">
+                                <div class="cert2-brand">UMA <span>Learning &amp; Services</span></div>
+                                <div class="cert2-tag">Training &nbsp;|&nbsp; Technology &nbsp;|&nbsp; Solutions &nbsp;|&nbsp; Success</div>
+                                <div class="cert2-reg">MSME Registered &nbsp;&bull;&nbsp; ISO Certified Organization</div>
                             </div>
-                            <div class="certificate-seal">✦</div>
-                            <div class="certificate-meta-item">
-                                <span class="certificate-meta-label">Certificate ID</span>
-                                <span class="certificate-meta-value" id="certId"></span>
+                            <div class="cert2-idbox">
+                                <span class="cert2-label">Certificate No.</span>
+                                <span class="cert2-value" id="certId"></span>
+                                <span class="cert2-label">Date of Completion</span>
+                                <span class="cert2-value" id="certDate"></span>
                             </div>
                         </div>
-                        <div class="certificate-signatures">
-                            <div class="certificate-sign">
-                                <span class="certificate-sign-line"></span>
-                                <span>Program Director</span>
-                            </div>
-                            <div class="certificate-sign">
-                                <span class="certificate-sign-line"></span>
-                                <span>UMA Learning &amp; Services</span>
+
+                        <div class="cert2-ribbon">Certificate of Completion</div>
+
+                        <div class="cert2-body">
+                            <p class="cert2-line">This is to certify that</p>
+                            <p class="cert2-name" id="certStudentName">Student Name</p>
+                            <p class="cert2-line">has successfully completed the course of</p>
+                            <p class="cert2-course" id="certCourseName">Course Name</p>
+                            <p class="cert2-duration" id="certDurationLine"></p>
+                            <div class="cert2-details" id="certDetails">
+                                <div id="certFatherWrap"><span>Father's Name</span><b id="certFather"></b></div>
+                                <div id="certDobWrap"><span>Date of Birth</span><b id="certDob"></b></div>
+                                <div id="certRegdWrap"><span>Regd. No.</span><b id="certRegd"></b></div>
+                                <div id="certRollWrap"><span>Roll No.</span><b id="certRoll"></b></div>
                             </div>
                         </div>
-                        <div class="credential-badges-row">
-                            <img src="images/msme-logo-png_.png" alt="MSME Registered" class="credential-badge" title="MSME Registered" loading="lazy" decoding="async">
-                            <img src="images/iso_png.png" alt="ISO Certified" class="credential-badge" title="ISO Certified" loading="lazy" decoding="async">
+
+                        <div class="cert2-foot">
+                            <div class="cert2-qr">
+                                <div class="cert2-qr-box" id="certQr" aria-label="QR code to verify this certificate"></div>
+                                <span class="cert2-qr-text">Scan to Verify</span>
+                            </div>
+
+                            <div class="cert2-stamp" aria-hidden="true"><span>Official Stamp</span></div>
+
+                            <div class="cert2-sign">
+                                <span class="cert2-sign-space"></span>
+                                <span class="cert2-sign-line"></span>
+                                <strong>Authorised Signature</strong>
+                                <small>UMA Learning &amp; Services</small>
+                            </div>
                         </div>
+
+                        <!-- ADD MORE CERTIFICATIONS: copy one <img class="credential-badge"> line below, change src/alt/title. They wrap automatically. -->
+                        <div class="cert2-badges credential-badges-row">
+                            <img src="images/msme-logo-png_.png" alt="MSME Registered" class="credential-badge" title="MSME Registered" decoding="async">
+                            <img src="images/iso_png.png" alt="ISO Certified" class="credential-badge" title="ISO Certified" decoding="async">
+                        </div>
+                        <div class="cert2-address">Vatika Road, Jaipur, Rajasthan &ndash; 303905 &nbsp;&bull;&nbsp; umalearningservices.com</div>
                     </div>
                 </div>
             </div>
@@ -3670,54 +3733,85 @@
             <a role="button" tabindex="0" class="legal-close no-print" onclick="closeInvoiceOverlay()">✕</a>
 
             <div class="certificate-print-area invoice-print-area">
-                <div class="invoice-card">
-                    <div class="invoice-header">
-                        <img src="images/logo.png" alt="UMA Learning & Services" class="invoice-logo" loading="lazy" decoding="async">
-                        <div class="invoice-header-text">
-                            <div class="certificate-brand u18">UMA <span>Learning &amp; Services</span></div>
-                            <p class="u19">Vatika Road, Jaipur, Rajasthan 303905 · +91 83404 34138</p>
+                <div class="invoice-card inv2">
+                    <div class="inv2-top">
+                        <img src="images/logo.png" alt="UMA Learning & Services" class="invoice-logo" decoding="async">
+                        <div class="inv2-org">
+                            <div class="inv2-brand">UMA <span>Learning &amp; Services</span></div>
+                            <p>Vatika Road, Jaipur, Rajasthan &ndash; 303905</p>
+                            <p>+91 83404 34138 &nbsp;|&nbsp; umalearningservices.com</p>
+                        </div>
+                        <div class="inv2-title">
+                            <h3 id="invPdfTitle">TAX INVOICE</h3>
+                            <span class="inv2-status" id="invPdfStatus"></span>
                         </div>
                     </div>
 
-                    <div class="invoice-title-row">
-                        <h3 class="invoice-title">TAX INVOICE</h3>
-                        <div class="invoice-meta">
-                            <span>Invoice ID: <strong id="invPdfId"></strong></span>
-                            <span>Date: <strong id="invPdfDate"></strong></span>
+                    <div class="inv2-meta">
+                        <div class="inv2-box">
+                            <span class="inv2-label">Billed To</span>
+                            <p class="inv2-client" id="invPdfClientName"></p>
+                            <p id="invPdfContact"></p>
+                        </div>
+                        <div class="inv2-box inv2-box-right">
+                            <span class="inv2-label">Invoice No.</span>
+                            <p class="inv2-big" id="invPdfId"></p>
+                            <span class="inv2-label">Date</span>
+                            <p id="invPdfDate"></p>
+                            <span class="inv2-label" id="invPdfRefLabel" style="display:none;">Client Ref. ID</span>
+                            <p id="invPdfRefId" style="display:none;"></p>
                         </div>
                     </div>
 
-                    <div class="invoice-billto">
-                        <span class="certificate-meta-label">Billed To</span>
-                        <p class="invoice-client-name" id="invPdfClientName"></p>
-                        <p class="invoice-client-contact" id="invPdfContact"></p>
-                    </div>
-
-                    <table class="invoice-table">
-                        <thead><tr><th>Description</th><th class="u20">Amount</th></tr></thead>
+                    <table class="inv2-table">
+                        <thead><tr><th>#</th><th>Description</th><th class="r">Qty</th><th class="r">Rate</th><th class="r">Amount</th></tr></thead>
                         <tbody>
-                            <tr><td id="invPdfService"></td><td style="text-align:right;" id="invPdfAmount"></td></tr>
+                            <tr><td>1</td><td id="invPdfService"></td><td class="r">1</td><td class="r" id="invPdfRate"></td><td class="r" id="invPdfAmount"></td></tr>
                         </tbody>
                     </table>
 
-                    <table class="invoice-table invoice-payments-table" id="invPdfPaymentsTable">
-                        <thead><tr><th>Payment Date</th><th class="u20">Amount Received</th></tr></thead>
-                        <tbody id="invPdfPaymentsBody"></tbody>
-                        <tfoot>
-                            <tr><td>Total Received</td><td style="text-align:right; color:#1f7a37;" id="invPdfPaid"></td></tr>
-                            <tr class="invoice-balance-row"><td>Balance Due</td><td style="text-align:right;" id="invPdfBalance"></td></tr>
-                        </tfoot>
-                    </table>
+                    <div class="inv2-lower">
+                        <div class="inv2-pay">
+                            <span class="inv2-label">Payment Details</span>
+                            <table class="inv2-paytable">
+                                <thead><tr><th>Date</th><th>Mode</th><th>Reference</th><th class="r">Amount</th></tr></thead>
+                                <tbody id="invPdfPaymentsBody"></tbody>
+                            </table>
+                            <p class="inv2-words"><span class="inv2-label">Amount in words</span><span id="invPdfWords"></span></p>
+                        </div>
+                        <table class="inv2-totals">
+                            <tr><td>Subtotal</td><td class="r" id="invPdfSubtotal"></td></tr>
+                            <tr id="invPdfDiscountRow"><td>Discount</td><td class="r" id="invPdfDiscount"></td></tr>
+                            <tr id="invPdfTaxRow"><td id="invPdfTaxLabel">Tax</td><td class="r" id="invPdfTax"></td></tr>
+                            <tr class="grand"><td>Grand Total</td><td class="r" id="invPdfTotal"></td></tr>
+                            <tr><td>Amount Paid</td><td class="r paid" id="invPdfPaid"></td></tr>
+                            <tr class="bal"><td>Balance Due</td><td class="r" id="invPdfBalance"></td></tr>
+                        </table>
+                    </div>
 
-                    <p class="invoice-footer-note">Thank you for choosing UMA Learning &amp; Services. For any billing queries, please contact us on the number above.</p>
-                    <div class="invoice-bank-note">
-                        <p><strong>Note:</strong></p>
-                        <p>Bank Name: Axis Bank</p>
-                        <p>Account No: 924010031574019</p>
-                        <p>Account Name: Suraj Kumar Kushwaha</p>
-                        <p>IFSC: UTIB0000626</p>
-                        <p>Branch: Malviya Nagar, Jaipur — Haldiya Heights, 39, Sundar Nagar, Girdhar Marg, Malviya Nagar, Jawhar Lal Nehru Road, Jaipur, 302017, Rajasthan</p>
+                    <div class="inv2-bottom">
+                        <div class="inv2-bank">
+                            <span class="inv2-label">Bank Details</span>
+                            <p>Bank: Axis Bank &nbsp;|&nbsp; A/c No: 924010031574019</p>
+                            <p>A/c Name: Suraj Kumar Kushwaha &nbsp;|&nbsp; IFSC: UTIB0000626</p>
+                            <p>Branch: Malviya Nagar, Jaipur &ndash; Haldiya Heights, 39, Sundar Nagar, Girdhar Marg, Jaipur 302017, Rajasthan</p>
+                        </div>
+                        <div class="inv2-sign">
+                            <span class="inv2-sign-space"></span>
+                            <span class="inv2-sign-line"></span>
+                            <strong>Authorised Signature</strong>
+                            <small>UMA Learning &amp; Services</small>
+                        </div>
+                    </div>
 
+                    <div class="inv2-terms">
+                        <span class="inv2-label">Terms &amp; Conditions</span>
+                        <ol>
+                            <li>Fees once paid are non-refundable and non-transferable, except as agreed in writing.</li>
+                            <li>Please quote the invoice number in every payment and billing query.</li>
+                            <li>This is a computer-generated invoice; it is valid with an authorised signature or stamp.</li>
+                        </ol>
+                        <p class="inv2-thanks">Thank you for choosing UMA Learning &amp; Services.</p>
                     </div>
                 </div>
             </div>
@@ -3729,6 +3823,7 @@
         </div>
     </div>
 
+    <script src="qrcode.js" defer></script>
     <script src="script.js?v=20261003" defer></script>
     <script src="seo-addon.js" defer></script>
     <script src="admin-auth.js" defer></script>
