@@ -2441,18 +2441,6 @@ async function callSheetBackend(payload) {
    No real backend — data lives in this array only, purely so you can test the
    Login -> Dashboard -> Certificate flow before Apps Script is wired up.
    Demo login — Name: Demo Student / Phone (password): 9999999999 */
-const DEMO_STUDENTS = [
-    {
-        name: 'Demo Student',
-        mobile: '9999999999',
-        password: '9999999999',
-        uniqueId: 'STU-20260101-DEM0',
-        courses: [
-            { name: 'Advanced Excel + Macro/VBA with AI', progress: 100, status: 'completed', duration: '3 Months' },
-            { name: 'ADCA Plus', progress: 60, status: 'progress', duration: '15 Months' }
-        ]
-    }
-];
 
 /* ---------- STUDENT LOGIN OVERLAY ---------- */
 function openStudentLogin() {
@@ -2477,35 +2465,55 @@ async function studentLoginSubmit() {
     const pwVal = document.getElementById('slPassword').value.trim();
     const errorEl = document.getElementById('slError');
     const loadingHint = document.getElementById('slLoadingHint');
+    const btn = document.getElementById('slLoginBtn');
+    const fail = msg => { errorEl.textContent = msg; errorEl.classList.add('show'); };
     errorEl.classList.remove('show');
 
-    let match = null;
+    if (!idVal || !pwVal) { fail('Please enter your full name and phone number.'); return; }
+    if (!sheetBackendReady) { fail('Login is not available right now. Please contact the centre.'); return; }
 
-    if (sheetBackendReady) {
-        loadingHint.style.display = 'block';
-        try {
-            const result = await callSheetBackend({ action: 'login', identifier: idVal, password: pwVal });
-            if (result.success) match = result.student;
-        } catch (e) {
-            console.error('Sheet backend login failed:', e);
-        }
-        loadingHint.style.display = 'none';
+    // instant feedback: Apps Script can take a few seconds to answer
+    if (btn) { btn.disabled = true; btn.textContent = 'Logging in…'; }
+    loadingHint.style.display = 'block';
+    let match = null, errMsg = '';
+    try {
+        const result = await callSheetBackend({ action: 'login', identifier: idVal, password: pwVal });
+        if (result && result.success) match = result.student;
+        else errMsg = (result && result.error) || '';
+    } catch (e) {
+        console.error('Sheet backend login failed:', e);
+        errMsg = 'Could not reach the server. Please check your internet and try again.';
     }
+    loadingHint.style.display = 'none';
+    if (btn) { btn.disabled = false; btn.textContent = 'Login'; }
 
-    // fall back to the local demo list too (handy while testing / if the Sheet backend is down)
-    if (!match) {
-        match = DEMO_STUDENTS.find(s => s.name.toLowerCase() === idVal && s.password === pwVal);
-    }
-
-    if (!match) {
-        errorEl.classList.add('show');
-        return;
-    }
+    if (!match) { fail(errMsg || 'Incorrect Name/Phone Number. Please try again.'); return; }
     localStorage.setItem('umaLoggedInStudent', JSON.stringify(match));
     renderStudentDashboard(match);
 }
+// Enter key submits the student login
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target && (e.target.id === 'slIdentifier' || e.target.id === 'slPassword')) {
+        e.preventDefault(); studentLoginSubmit();
+    }
+});
+
+function slShowTab(tab) {
+    const verify = tab === 'verify';
+    const lf = document.getElementById('slLoginForm'), vf = document.getElementById('slVerifyForm');
+    if (lf) lf.style.display = verify ? 'none' : 'block';
+    if (vf) vf.style.display = verify ? 'block' : 'none';
+    const tl = document.getElementById('slTabLogin'), tv = document.getElementById('slTabVerify');
+    if (tl) tl.classList.toggle('active', !verify);
+    if (tv) tv.classList.toggle('active', verify);
+    const inp = document.getElementById(verify ? 'slVerifyInput' : 'slIdentifier');
+    if (inp) setTimeout(() => inp.focus(), 50);
+}
 
 function renderStudentDashboard(student) {
+    const tabsEl = document.getElementById('slTabs'), vForm = document.getElementById('slVerifyForm');
+    if (tabsEl) tabsEl.style.display = 'none';
+    if (vForm) vForm.style.display = 'none';
     document.getElementById('slLoginForm').style.display = 'none';
     document.getElementById('slDashboard').classList.add('show');
     document.getElementById('slStudentName').textContent = student.name;
@@ -2543,7 +2551,7 @@ function renderStudentDashboard(student) {
             <div class="sl-progress-bar"><div class="sl-progress-fill" style="width:${c.progress}%;"></div></div>
             <span style="font-size:0.8rem; color:#627d98;">${c.progress}% complete</span>
             ${feeHtml}
-            ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${student.name}', '${c.name}', '${student.uniqueId || ''}', '${c.rowIndex != null ? c.rowIndex : ''}')">View Certificate</button>` : ''}
+            ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${student.name}', '${c.name}', '${student.uniqueId || ''}', '${c.rowIndex != null ? c.rowIndex : ''}', '${durationText}')">View Certificate</button>` : ''}
         </div>
     `;
     }).join('');
@@ -2552,7 +2560,8 @@ function studentLogout() {
     localStorage.removeItem('umaLoggedInStudent');
     document.getElementById('slIdentifier').value = '';
     document.getElementById('slPassword').value = '';
-    document.getElementById('slLoginForm').style.display = 'block';
+    const tabsEl = document.getElementById('slTabs'); if (tabsEl) tabsEl.style.display = '';
+    slShowTab('login');
     document.getElementById('slDashboard').classList.remove('show');
 }
 
@@ -2599,6 +2608,8 @@ async function submitAdmission() {
     const mobile = document.getElementById('admMobile').value.trim();
     const dob = document.getElementById('admDob').value; // yyyy-mm-dd, or '' if left blank
     const email = document.getElementById('admEmail').value.trim().toLowerCase();
+    const fatherEl = document.getElementById('admFather');
+    const fatherName = fatherEl ? fatherEl.value.trim() : '';
     const course = document.getElementById('admCourse').value;
     // Password isn't collected separately anymore — the student's phone
     // number doubles as their login password (see the note under the form).
@@ -2627,7 +2638,7 @@ async function submitAdmission() {
     errorEl.classList.remove('show');
     loadingHint.style.display = 'block';
     try {
-        const result = await callSheetBackend({ action: 'register', name, mobile, email, course, password, fee, duration, dob, uniqueId });
+        const result = await callSheetBackend({ action: 'register', name, mobile, email, fatherName, course, password, fee, duration, dob, uniqueId });
         loadingHint.style.display = 'none';
         if (!result.success) {
             errorEl.textContent = result.error || 'This mobile number may already be registered.';
@@ -2641,7 +2652,7 @@ async function submitAdmission() {
         const finalId = result.uniqueId || uniqueId;
         const admSuccessEl = document.getElementById('admSuccess');
         if (admSuccessEl) {
-            admSuccessEl.innerHTML = `✅ Admission received! Student Reference ID: <strong>${finalId}</strong> — save it for any queries.`;
+            admSuccessEl.innerHTML = `✅ Admission received! Student Reference ID: <strong>${finalId}</strong>${result.rollNo ? ` · Roll No: <strong>${result.rollNo}</strong>` : ''}${result.certNo ? ` · Certificate No: <strong>${result.certNo}</strong>` : ''} — save it for any queries.`;
             admSuccessEl.style.display = 'block';
         }
         // The form used to get hidden here and replaced with just the
@@ -2663,7 +2674,7 @@ async function submitAdmission() {
    and also from openAdmission() so reopening the panel never shows a stale
    previous entry. */
 function resetAdmissionForm() {
-    ['admName', 'admMobile', 'admDob', 'admEmail', 'admFee', 'admDuration'].forEach(id => {
+    ['admName', 'admMobile', 'admFather', 'admDob', 'admEmail', 'admFee', 'admDuration'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
@@ -2728,6 +2739,7 @@ function adminLogout() {
     document.getElementById('adminDashboard').classList.remove('show');
 }
 
+let adminCertMap = {};
 async function loadAdminStudents() {
     adminStudentsLoaded = true;
     const listEl = document.getElementById('adminStudentsList');
@@ -2745,7 +2757,7 @@ async function loadAdminStudents() {
         if (!result.success || !result.students || result.students.length === 0) {
             listEl.innerHTML = '';
             emptyHint.style.display = 'block';
-            emptyHint.textContent = 'No students registered yet — once someone submits the Admission form, they\u2019ll appear here.';
+            emptyHint.textContent = !result.success ? ('Could not load students: ' + (result.error || 'unknown error')) : 'No students registered yet \u2014 once someone submits the Admission form, they\u2019ll appear here.';
             return;
         }
         emptyHint.style.display = 'none';
@@ -2798,6 +2810,12 @@ async function loadAdminStudents() {
                         <br>
                         <label style="font-size:0.75rem; margin-top:6px; display:inline-block;">Total Fee ₹</label>
                         <input type="number" min="0" value="${c.fee || 0}" id="fee-row-${c.rowIndex}" style="width:90px; margin-left:6px; padding:4px 6px;">
+                        <br>
+                        <label style="font-size:0.75rem; margin-top:6px; display:inline-block;">Certificate No.</label>
+                        <input type="text" maxlength="40" id="cert-row-${c.rowIndex}" value="${c.certNo || ('UMA-' + String(c.rowIndex).padStart(5, '0'))}" style="width:150px; margin-left:6px; padding:4px 6px;" title="Used when status is Completed. Default = sheet row number; type your own number if you prefer.">
+                        <span style="font-size:0.7rem; color:#8798ab;">(auto-generated; you can change it)</span>
+                        ${(c.rollNo || c.regdNo) ? `<span style="font-size:0.72rem; color:#486581; display:block; margin-top:4px;">${c.rollNo ? 'Roll No: <strong>' + c.rollNo + '</strong>' : ''}${c.rollNo && c.regdNo ? ' · ' : ''}${c.regdNo ? 'Regd. No: <strong>' + c.regdNo + '</strong>' : ''}${s.fatherName ? ' · Father: <strong>' + s.fatherName + '</strong>' : ''}</span>` : ''}
+                        <br>
                         <button class="sl-cert-btn" style="margin-top:6px;" onclick="saveAdminCourseRow(${c.rowIndex})">Save Progress / Status / Fee</button>
 
                         <div style="margin-top:12px; padding-top:10px; border-top:1px dashed #d3e0ec;">
@@ -2847,6 +2865,13 @@ async function saveAdminCourseRow(rowIndex) {
         // only ever touches Progress / Status / the Total Fee target.
         const result = await callSheetBackend({ action: 'update', rowIndex, progress, status, fee });
         if (result.success) {
+            const certEl = document.getElementById(`cert-row-${rowIndex}`);
+            if (status === 'completed' && certEl && certEl.value.trim()) {
+                try {
+                    const cr = await callSheetBackend({ action: 'setCertificate', rowIndex, certNo: certEl.value.trim() });
+                    if (cr && cr.success === false && cr.error && !/Unknown action/i.test(cr.error)) showToast(cr.error);
+                } catch (e) { /* certificate add-on not installed yet — row-number default still works */ }
+            }
             loadAdminStudents();
         } else {
             showToast('Could not save — please try again.');
@@ -2937,7 +2962,7 @@ async function loadAdminEnquiries() {
             emptyHint.style.display = 'block';
             emptyHint.textContent = result.success
                 ? 'No enquiries yet — they\u2019ll show up here as soon as someone submits the enquiry form.'
-                : 'Could not load enquiries \u2014 your Code.gs may not have the \u2018listEnquiries\u2019 action yet.';
+                : ('Could not load enquiries: ' + (result.error || 'unknown error'));
             if (countBadge) countBadge.style.display = 'none';
             return;
         }
@@ -3018,7 +3043,7 @@ function openInvoiceForm() {
 function closeInvoiceForm() {
     const form = document.getElementById('invoiceCreateForm');
     if (form) form.style.display = 'none';
-    ['invClientName', 'invPhone', 'invEmail', 'invService', 'invAmount', 'invAdvance', 'invNotes'].forEach(id => {
+    ['invClientName', 'invPhone', 'invEmail', 'invService', 'invAmount', 'invDiscount', 'invTax', 'invAdvance', 'invMode', 'invRef', 'invNotes'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
@@ -3031,6 +3056,10 @@ async function submitInvoice() {
     const service = document.getElementById('invService').value.trim();
     const amount = parseFloat(document.getElementById('invAmount').value) || 0;
     const amountPaid = parseFloat(document.getElementById('invAdvance').value) || 0;
+    const discount = parseFloat((document.getElementById('invDiscount') || {}).value) || 0;
+    const taxPercent = parseFloat((document.getElementById('invTax') || {}).value) || 0;
+    const payMode = (document.getElementById('invMode') || {}).value || '';
+    const payRef = ((document.getElementById('invRef') || {}).value || '').trim();
     const notes = document.getElementById('invNotes').value.trim();
     const errorEl = document.getElementById('invoiceFormError');
 
@@ -3042,7 +3071,7 @@ async function submitInvoice() {
 
     const uniqueId = generateUniqueId('INV');
     try {
-        const result = await callSheetBackend({ action: 'createInvoice', clientName, phone, email, service, amount, amountPaid, notes, uniqueId });
+        const result = await callSheetBackend({ action: 'createInvoice', clientName, phone, email, service, amount, discount, taxPercent, amountPaid, payMode, payRef, notes, uniqueId });
         if (result.success) {
             closeInvoiceForm();
             loadAdminInvoices();
@@ -3077,7 +3106,7 @@ async function loadAdminInvoices() {
             emptyHint.style.display = 'block';
             emptyHint.textContent = result.success
                 ? 'No invoices yet — use "+ New Invoice" above to bill a client.'
-                : 'Could not load invoices \u2014 your Code.gs may not have the \u2018listInvoices\u2019 action yet (see invoice-backend-addon.gs).';
+                : ('Could not load invoices: ' + (result.error || 'unknown error'));
             return;
         }
         emptyHint.style.display = 'none';
@@ -3097,7 +3126,7 @@ async function loadAdminInvoices() {
                 ? `<div class="payment-history">
                         ${payments.map(p => `
                             <div class="payment-history-row">
-                                <span>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}</span>
+                                <span>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}${p.mode ? ' · ' + p.mode : ''}${p.ref ? ' · ' + p.ref : ''}</span>
                                 <span>₹${p.amount}</span>
                             </div>`).join('')}
                    </div>`
@@ -3105,11 +3134,12 @@ async function loadAdminInvoices() {
             return `
                 <div class="sl-course-card admin-invoice-card">
                     <h4>${inv.clientName} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${inv.phone}${inv.email ? ' · ' + inv.email : ''})</span></h4>
-                    ${inv.uniqueId ? `<span class="admin-ref-id">ID: ${inv.uniqueId}</span>` : ''}
+                    ${inv.invoiceNo ? `<span class="admin-ref-id">Invoice No: ${inv.invoiceNo}</span>` : (inv.uniqueId ? `<span class="admin-ref-id">ID: ${inv.uniqueId}</span>` : '')}
                     <span class="invoice-status-badge ${statusClass}">${statusLabel}</span>
                     ${formatDate(inv.timestamp) ? `<span style="font-size:0.75rem; color:#627d98; display:block; margin-top:2px;">📅 Service Date: ${formatDate(inv.timestamp)}</span>` : ''}
                     <p style="font-size:0.85rem; color:#334e68; margin:6px 0;"><strong>${inv.service}</strong>${inv.notes ? ' — ' + inv.notes : ''}</p>
                     <div style="display:flex; gap:16px; flex-wrap:wrap; margin:8px 0; font-size:0.82rem; color:#486581;">
+                        ${(inv.discount || inv.tax) ? `<span>Fee: ₹${inv.subtotal}${inv.discount ? ' − ₹' + inv.discount + ' discount' : ''}${inv.tax ? ' + ₹' + inv.tax + ' tax (' + inv.taxPercent + '%)' : ''}</span>` : ''}
                         <span>Total: <strong style="color:#0c2340;">₹${inv.amount}</strong></span>
                         <span>Received: <strong style="color:#1f7a37;">₹${inv.amountPaid || 0}</strong></span>
                         <span>Balance: <strong style="color:${balance > 0 ? '#e5484d' : '#1f7a37'};">₹${balance}</strong></span>
@@ -3118,6 +3148,8 @@ async function loadAdminInvoices() {
                     ${paymentsHtml}
                     <label style="font-size:0.75rem;">Add Payment ₹</label>
                     <input type="number" min="0" placeholder="e.g. 25000" id="inv-newpay-row-${inv.rowIndex}" style="width:110px; margin-left:6px; padding:4px 6px;">
+                    <select id="inv-paymode-row-${inv.rowIndex}" style="margin-left:6px; padding:4px 6px;"><option value="">Mode</option><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Card</option><option>Cheque</option><option>Other</option></select>
+                    <input type="text" maxlength="60" placeholder="Reference no. (optional)" id="inv-payref-row-${inv.rowIndex}" style="width:150px; margin-left:6px; padding:4px 6px;">
                     <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px;" onclick="addInvoicePayment(${inv.rowIndex})">+ Add Payment</button>
                     <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px; background:#0c2340;" onclick="downloadInvoicePDF(${inv.rowIndex})">🧾 View / Download Invoice</button>
                 </div>
@@ -3138,7 +3170,8 @@ async function addInvoicePayment(rowIndex) {
         return;
     }
     try {
-        const result = await callSheetBackend({ action: 'addInvoicePayment', rowIndex, amount });
+        const modeEl = document.getElementById(`inv-paymode-row-${rowIndex}`), refEl = document.getElementById(`inv-payref-row-${rowIndex}`);
+        const result = await callSheetBackend({ action: 'addInvoicePayment', rowIndex, amount, mode: modeEl ? modeEl.value : '', ref: refEl ? refEl.value.trim() : '' });
         if (result.success) {
             loadAdminInvoices();
         } else {
@@ -3156,30 +3189,71 @@ async function addInvoicePayment(rowIndex) {
 function downloadInvoicePDF(rowIndex) {
     const inv = adminInvoicesCache.find(i => i.rowIndex === rowIndex);
     if (!inv) return;
-    const balance = Math.max(0, (inv.amount || 0) - (inv.amountPaid || 0));
+    const money = n => '₹' + (Number(n) || 0).toLocaleString('en-IN', { minimumFractionDigits: (Number(n) % 1 ? 2 : 0), maximumFractionDigits: 2 });
+    const total = Number(inv.amount) || 0, paid = Number(inv.amountPaid) || 0;
+    const subtotal = inv.subtotal != null ? Number(inv.subtotal) : total;
+    const discount = Number(inv.discount) || 0, tax = Number(inv.tax) || 0;
+    const balance = Math.max(0, total - paid);
+    const $ = id => document.getElementById(id);
 
-    document.getElementById('invPdfClientName').textContent = inv.clientName;
-    document.getElementById('invPdfContact').textContent = `${inv.phone}${inv.email ? ' · ' + inv.email : ''}`;
-    document.getElementById('invPdfService').textContent = inv.service + (inv.notes ? ' — ' + inv.notes : '');
-    document.getElementById('invPdfAmount').textContent = `₹${inv.amount}`;
-    document.getElementById('invPdfPaid').textContent = `₹${inv.amountPaid || 0}`;
-    document.getElementById('invPdfBalance').textContent = `₹${balance}`;
-    document.getElementById('invPdfId').textContent = inv.uniqueId || '—';
-    document.getElementById('invPdfDate').textContent = formatDate(inv.timestamp) || formatDate(dateFromUniqueId(inv.uniqueId)) || formatDate(Date.now());
+    $('invPdfClientName').textContent = inv.clientName;
+    $('invPdfContact').textContent = `${inv.phone}${inv.email ? ' · ' + inv.email : ''}`;
+    $('invPdfService').textContent = inv.service + (inv.notes ? ' — ' + inv.notes : '');
+    $('invPdfRate').textContent = money(subtotal);
+    $('invPdfAmount').textContent = money(subtotal);
+    $('invPdfSubtotal').textContent = money(subtotal);
+    $('invPdfDiscountRow').style.display = discount ? '' : 'none';
+    $('invPdfDiscount').textContent = '− ' + money(discount);
+    $('invPdfTaxRow').style.display = tax ? '' : 'none';
+    $('invPdfTaxLabel').textContent = 'Tax' + (inv.taxPercent ? ' (' + inv.taxPercent + '%)' : '');
+    $('invPdfTax').textContent = money(tax);
+    $('invPdfTotal').textContent = money(total);
+    $('invPdfPaid').textContent = money(paid);
+    $('invPdfBalance').textContent = money(balance);
+    $('invPdfWords').textContent = amountInWords(total);
+    $('invPdfId').textContent = inv.invoiceNo || inv.uniqueId || '—';
+    $('invPdfDate').textContent = formatDate(inv.timestamp) || formatDate(dateFromUniqueId(inv.uniqueId)) || formatDate(Date.now());
+    const refShow = !!(inv.invoiceNo && inv.uniqueId);
+    $('invPdfRefLabel').style.display = refShow ? '' : 'none';
+    $('invPdfRefId').style.display = refShow ? '' : 'none';
+    $('invPdfRefId').textContent = refShow ? inv.uniqueId : '';
+    const st = $('invPdfStatus');
+    st.textContent = balance <= 0 ? 'PAID' : (paid > 0 ? 'PARTLY PAID' : 'UNPAID');
+    st.className = 'inv2-status ' + (balance <= 0 ? 'paid' : (paid > 0 ? 'partial' : 'unpaid'));
+    $('invPdfTitle').textContent = discount || tax ? 'TAX INVOICE' : 'INVOICE';
 
-    // Every payment the client has made, each on its own row with its own
-    // date — instead of just one lump "Amount Paid" figure.
-    const paymentsBody = document.getElementById('invPdfPaymentsBody');
     const payments = inv.payments || [];
-    paymentsBody.innerHTML = payments.length
+    $('invPdfPaymentsBody').innerHTML = payments.length
         ? payments.map(p => `
             <tr>
                 <td>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}</td>
-                <td style="text-align:right;">₹${p.amount}</td>
+                <td>${p.mode || '—'}</td>
+                <td>${p.ref || '—'}</td>
+                <td class="r">${money(p.amount)}</td>
             </tr>`).join('')
-        : `<tr><td colspan="2" style="color:#8798ab;">No payments received yet</td></tr>`;
+        : `<tr><td colspan="4" style="color:#8798ab;">No payments received yet</td></tr>`;
 
     document.getElementById('invoiceOverlay').classList.add('active');
+}
+
+/* 123456 -> "Rupees One Lakh Twenty Three Thousand Four Hundred Fifty Six Only"  (Indian numbering) */
+function amountInWords(amount) {
+    const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const two = n => n < 20 ? ones[n] : tens[Math.floor(n / 10)] + (n % 10 ? ' ' + ones[n % 10] : '');
+    const three = n => (n >= 100 ? ones[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' ' : '') : '') + (n % 100 ? two(n % 100) : '');
+    const rupees = Math.floor(Math.abs(amount)), paise = Math.round((Math.abs(amount) - rupees) * 100);
+    if (rupees === 0 && paise === 0) return 'Zero Rupees Only';
+    const parts = [];
+    const crore = Math.floor(rupees / 10000000), lakh = Math.floor(rupees / 100000) % 100,
+          thousand = Math.floor(rupees / 1000) % 100, rest = rupees % 1000;
+    if (crore) parts.push(three(crore) + ' Crore');
+    if (lakh) parts.push(two(lakh) + ' Lakh');
+    if (thousand) parts.push(two(thousand) + ' Thousand');
+    if (rest) parts.push(three(rest));
+    let out = 'Rupees ' + (parts.join(' ') || 'Zero');
+    if (paise) out += ' and ' + two(paise) + ' Paise';
+    return out + ' Only';
 }
 function closeInvoiceOverlay() {
     document.getElementById('invoiceOverlay').classList.remove('active');
@@ -3208,19 +3282,44 @@ function downloadInvoiceAsPdf() {
    date" (the old behaviour), which silently produced a DIFFERENT ID every
    time a student re-opened their own certificate. A stable ID is what
    makes a certificate ID actually useful for verification. */
-function viewCertificate(studentName, courseName, studentRefId, courseRowIndex) {
+function viewCertificate(studentName, courseName, studentRefId, courseRowIndex, durationText) {
     document.getElementById('certStudentName').textContent = studentName;
     document.getElementById('certCourseName').textContent = courseName;
-    document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-IN', {
-        day: '2-digit', month: 'long', year: 'numeric'
-    });
+    const dur = durationText || (typeof COURSE_DURATIONS !== 'undefined' ? COURSE_DURATIONS[courseName] : '') || '';
+    document.getElementById('certDurationLine').textContent = dur ? 'Course Duration: ' + dur : '';
+    const todayText = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
+    document.getElementById('certDate').textContent = todayText;
 
-    const raw = (
-        (studentRefId || studentName) + '|' + courseName + '|' + (courseRowIndex || '0')
-    ).toUpperCase();
-    let hash = 0;
-    for (let i = 0; i < raw.length; i++) { hash = (hash * 31 + raw.charCodeAt(i)) >>> 0; }
-    document.getElementById('certId').textContent = 'UMA-' + hash.toString(36).toUpperCase().slice(0, 8);
+    // Certificate number = the sheet ROW number (e.g. row 123 -> UMA-00123), unless staff typed their own
+    // number in the Staff Panel — the sheet's saved number is fetched just below and replaces this one.
+    const rowNo = parseInt(courseRowIndex, 10);
+    let certNo;
+    if (rowNo > 0) {
+        certNo = 'UMA-' + String(rowNo).padStart(5, '0');
+    } else {
+        // demo student (no sheet) — stable made-up number so the preview still works
+        const raw = ((studentRefId || studentName) + '|' + courseName).toUpperCase();
+        let hash = 0;
+        for (let i = 0; i < raw.length; i++) { hash = (hash * 31 + raw.charCodeAt(i)) >>> 0; }
+        certNo = 'UMA-' + hash.toString(36).toUpperCase().slice(0, 8);
+    }
+    document.getElementById('certId').textContent = certNo;
+    renderCertificateQr(certNo);
+    fillCertificateDetails({});
+
+    if (typeof sheetBackendReady !== 'undefined' && sheetBackendReady && rowNo > 0) {
+        callSheetBackend({ action: 'getCertificate', rowIndex: rowNo, uniqueId: studentRefId || '' })
+            .then(r => {
+                if (!r || !r.success) return;
+                if (r.certNo) {
+                    document.getElementById('certId').textContent = r.certNo;
+                    renderCertificateQr(r.certNo);
+                }
+                if (r.date) document.getElementById('certDate').textContent = r.date;
+                fillCertificateDetails(r);
+            })
+            .catch(() => { /* keep the row-based number */ });
+    }
 
     document.getElementById('certificateOverlay').classList.add('active');
     launchConfettiBurst();
@@ -3729,3 +3828,184 @@ function addReviewAvatars() {
 document.addEventListener('DOMContentLoaded', addReviewAvatars);
 document.addEventListener('cms-rendered', addReviewAvatars);
 addReviewAvatars();
+
+/* Blogs page: category filter chips built from the posts that exist (works for posts added later too) */
+function buildBlogFilters() {
+    var grid = document.querySelector('#page-blogs .blogs-grid');
+    if (!grid) return;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.blog-card'));
+    var cats = [];
+    cards.forEach(function (c) {
+        var el = c.querySelector('.blog-cat');
+        var t = el ? el.textContent.trim() : '';
+        if (t && cats.indexOf(t) < 0) cats.push(t);
+    });
+    var bar = document.getElementById('blogFilterBar');
+    if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'blogFilterBar';
+        bar.className = 'blog-filter-bar';
+        bar.setAttribute('role', 'tablist');
+        bar.setAttribute('aria-label', 'Filter blog posts');
+        grid.parentNode.insertBefore(bar, grid);
+    }
+    var current = bar.getAttribute('data-current') || 'all';
+    if (current !== 'all' && cats.indexOf(current) < 0) current = 'all';
+    bar.innerHTML = '';
+    ['all'].concat(cats).forEach(function (cat) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'blog-filter-btn' + (cat === current ? ' active' : '');
+        b.textContent = cat === 'all' ? 'All Posts' : cat;
+        b.onclick = function () { bar.setAttribute('data-current', cat); buildBlogFilters(); };
+        bar.appendChild(b);
+    });
+    cards.forEach(function (c) {
+        var el = c.querySelector('.blog-cat');
+        var t = el ? el.textContent.trim() : '';
+        c.classList.toggle('is-hidden', current !== 'all' && t !== current);
+    });
+}
+document.addEventListener('DOMContentLoaded', buildBlogFilters);
+document.addEventListener('cms-rendered', buildBlogFilters);
+buildBlogFilters();
+
+
+/* QR code on the certificate. It carries a link to the site with the certificate details,
+   so anyone can scan it with a phone camera. (Bundled library: qrcode.js — works offline.) */
+function renderCertificateQr(certNo) {
+    const box = document.getElementById('certQr');
+    if (!box) return;
+    box.innerHTML = '';
+    if (typeof qrcode !== 'function') return;
+    const url = 'https://umalearningservices.com/?verify=' + encodeURIComponent(certNo);
+    try {
+        const qr = qrcode(0, 'M');
+        qr.addData(url, 'Byte');
+        qr.make();
+        box.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+    } catch (e) { console.warn('QR generation failed', e); }
+}
+
+
+/* ---------- Certificate verification (QR scan or manual) ---------- */
+function closeCertVerify() { document.getElementById('verifyOverlay').classList.remove('active'); }
+function closeVerifyOnOverlay(e) { if (e.target.id === 'verifyOverlay') closeCertVerify(); }
+function verifyEsc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+function slVerifySubmit() {
+    const v = (document.getElementById('slVerifyInput').value || '').trim();
+    if (!v) { document.getElementById('slVerifyResult').innerHTML = '<div class="verify-result verify-bad"><div class="verify-icon">!</div><p>Please enter the certificate number.</p></div>'; return; }
+    return openCertVerify(v);
+}
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target && e.target.id === 'slVerifyInput') { e.preventDefault(); slVerifySubmit(); }
+});
+
+/* Certificate verification now lives inside the Student Login popup (Verify Certificate tab).
+   A scanned QR code (?verify=NUMBER) opens that tab and runs the check automatically. */
+async function openCertVerify(certNo) {
+    certNo = String(certNo || '').trim().slice(0, 40);
+    // show the popup on the Verify tab (unless a student is already logged in on this device)
+    document.getElementById('studentLoginOverlay').classList.add('active');
+    const dash = document.getElementById('slDashboard');
+    if (dash && dash.classList.contains('show')) {
+        const saved = localStorage.getItem('umaLoggedInStudent'); if (saved) studentLogout();   // QR scan: leave the dashboard, show verification
+    }
+    const tabsEl = document.getElementById('slTabs'); if (tabsEl) tabsEl.style.display = '';
+    slShowTab('verify');
+    const inp = document.getElementById('slVerifyInput'); if (inp) inp.value = certNo;
+    const body = document.getElementById('slVerifyResult'), btn = document.getElementById('slVerifyBtn');
+    if (!body) return;
+    if (btn) { btn.disabled = true; btn.textContent = 'Checking…'; }
+    body.innerHTML = '<div class="verify-loading"><span class="verify-spinner"></span>Checking certificate ' + verifyEsc(certNo) + '…</div>';
+    const done = () => { if (btn) { btn.disabled = false; btn.textContent = 'Verify'; } };
+    if (typeof sheetBackendReady === 'undefined' || !sheetBackendReady) {
+        body.innerHTML = '<div class="verify-result verify-bad"><div class="verify-icon">!</div><h3>Verification unavailable</h3><p>The verification service is not connected right now. Please contact UMA Learning &amp; Services.</p></div>';
+        return done();
+    }
+    try {
+        const r = await callSheetBackend({ action: 'verifyCertificate', certNo });
+        if (r && r.success && r.found) {
+            body.innerHTML = `
+              <div class="verify-result verify-ok">
+                <div class="verify-icon">✓</div>
+                <h3>Certificate Verified</h3>
+                <p class="verify-sub">This certificate was issued by UMA Learning &amp; Services.</p>
+                <dl class="verify-details">
+                  <dt>Certificate No.</dt><dd>${verifyEsc(r.certNo)}</dd>
+                  ${r.regdNo ? `<dt>Regd. No.</dt><dd>${verifyEsc(r.regdNo)}</dd>` : ''}
+                  ${r.rollNo ? `<dt>Roll No.</dt><dd>${verifyEsc(r.rollNo)}</dd>` : ''}
+                  <dt>Student Name</dt><dd>${verifyEsc(r.name)}</dd>
+                  <dt>Course</dt><dd>${verifyEsc(r.course)}</dd>
+                  ${r.duration ? `<dt>Duration</dt><dd>${verifyEsc(r.duration)}</dd>` : ''}
+                  ${r.date ? `<dt>Date of Completion</dt><dd>${verifyEsc(r.date)}</dd>` : ''}
+                  <dt>Status</dt><dd class="verify-status">Completed</dd>
+                </dl>
+              </div>`;
+        } else if (r && r.success) {
+            body.innerHTML = '<div class="verify-result verify-bad"><div class="verify-icon">✕</div><h3>Certificate Not Found</h3><p>No completed course matches certificate number <strong>' + verifyEsc(certNo) + '</strong>. Please check the number or contact UMA Learning &amp; Services at +91 83404 34138.</p></div>';
+        } else {
+            body.innerHTML = '<div class="verify-result verify-bad"><div class="verify-icon">!</div><h3>Could not verify</h3><p>' + verifyEsc((r && r.error) || 'Verification is not available right now. Please try again later.') + '</p></div>';
+        }
+    } catch (e) {
+        body.innerHTML = '<div class="verify-result verify-bad"><div class="verify-icon">!</div><h3>Could not verify</h3><p>Please check your internet connection and try again.</p></div>';
+    }
+    done();
+}
+/* Opens automatically when a certificate QR code is scanned:  yoursite.com/?verify=UMA-00123 */
+(function () {
+    function check() {
+        let v = '';
+        try { v = new URLSearchParams(location.search).get('verify') || ''; } catch (e) {}
+        if (!v) return;
+        try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+        openCertVerify(v);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', check); else check();
+})();
+
+/* ---------- Hidden quick access to the Staff Login (nothing visible on the public site) ----------
+   1) Keyboard:  Alt + Shift + S
+   2) Tap/click the "© 2026" line in the footer 5 times quickly
+   3) Address bar:  yoursite.com/#staff   (already worked)
+   Staff login itself is still checked on the server — this only opens the login box. */
+(function () {
+    document.addEventListener('keydown', function (e) {
+        if (e.altKey && e.shiftKey && (e.key === 'S' || e.key === 's')) {
+            e.preventDefault();
+            if (typeof openAdmin === 'function') openAdmin();
+        }
+    });
+    var taps = 0, timer = null;
+    document.addEventListener('click', function (e) {
+        var t = e.target.closest && e.target.closest('.bottom-copyright');
+        if (!t) return;
+        taps++;
+        clearTimeout(timer);
+        timer = setTimeout(function () { taps = 0; }, 1800);
+        if (taps >= 5) { taps = 0; if (typeof openAdmin === 'function') openAdmin(); }
+    });
+})();
+
+
+/* Father's name, date of birth, Regd. No. and Roll No. on the certificate — each line only shows if the sheet has it.
+   (The mobile number is never printed.) */
+function fillCertificateDetails(r) {
+    const fmtDob = v => { if (!v) return ''; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }); };
+    const set = (id, val) => {
+        const el = document.getElementById(id), wrap = document.getElementById(id + 'Wrap');
+        if (el) el.textContent = val || '';
+        if (wrap) wrap.style.display = val ? '' : 'none';
+    };
+    set('certFather', r.fatherName);
+    set('certDob', fmtDob(r.dob));
+    set('certRegd', r.regdNo);
+    set('certRoll', r.rollNo);
+    const box = document.getElementById('certDetails');
+    if (box) box.style.display = (r.fatherName || r.dob || r.regdNo || r.rollNo) ? '' : 'none';
+    if (r.duration) {
+        const d = document.getElementById('certDurationLine');
+        if (d && !d.textContent) d.textContent = 'Course Duration: ' + r.duration;
+    }
+}
