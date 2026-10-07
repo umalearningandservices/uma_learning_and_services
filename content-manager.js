@@ -45,7 +45,7 @@
     }
     function explain(e) {
         var m = String((e && e.message) || e);
-        if (m === 'NOTJSON') return 'Apps Script sent back an error page instead of data. Check: (1) new code pasted, (2) the 3-line hook is inside doPost, (3) Deploy > Manage deployments > edit > New version > Deploy. Then open Apps Script > Executions to see the exact error.';
+        if (m === 'NOTJSON') return 'Apps Script cannot open your Google Sheet (it sent an error page). In Apps Script: run setupSheets once and approve permissions, check SPREADSHEET_ID at the top of Code.gs, then Deploy > Manage deployments > Edit > New version > Deploy. Executions shows the exact error.';
         if (/Failed to fetch|NetworkError|Load failed/i.test(m)) return 'Could not reach your Apps Script URL. Make sure the deployment access is set to "Anyone" and that you redeployed.';
         return m;
     }
