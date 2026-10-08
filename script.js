@@ -2419,9 +2419,16 @@ function initScrollPin(wrapperId) {
    ============================================================================ */
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbw9C-UJLLXKdgCCcvBTW1nHr-MKG-9JyJ0oVrXeIL5ftKHgs-tN7-i6r4JtWuJ72qSk/exec";
 
-// Change these before going live — it only gates the Staff Panel UI, see note above.
-const ADMIN_USERNAME = ""; // login now checked on the server (see admin-auth.js)
-const ADMIN_PASSWORD = "";
+// Staff login is checked on the server only (see admin-auth.js). No username or password lives in this file.
+
+// Escape any text that came from a form or the Sheet before it goes into innerHTML.
+function escHtml(v) {
+    return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+// Same, for a value placed inside a quoted JS string in an inline onclick="...('HERE')" attribute.
+function escJsArg(v) {
+    return escHtml(String(v == null ? '' : v).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/[\r\n]+/g, ' '));
+}
 
 const sheetBackendReady = SHEET_API_URL && SHEET_API_URL !== "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
@@ -2445,7 +2452,11 @@ async function callSheetBackend(payload) {
 /* ---------- STUDENT LOGIN OVERLAY ---------- */
 function openStudentLogin() {
     document.getElementById('studentLoginOverlay').classList.add('active');
-    const saved = localStorage.getItem('umaLoggedInStudent');
+    let saved = localStorage.getItem('umaLoggedInStudent');
+    const savedAt = Number(localStorage.getItem('umaLoggedInStudentAt') || 0);
+    if (saved && (!savedAt || Date.now() - savedAt > 7 * 24 * 3600 * 1000)) { // sessions last 7 days
+        localStorage.removeItem('umaLoggedInStudent'); localStorage.removeItem('umaLoggedInStudentAt'); saved = null;
+    }
     if (saved) {
         renderStudentDashboard(JSON.parse(saved));
     } else {
@@ -2489,6 +2500,7 @@ async function studentLoginSubmit() {
 
     if (!match) { fail(errMsg || 'Incorrect Name/Phone Number. Please try again.'); return; }
     localStorage.setItem('umaLoggedInStudent', JSON.stringify(match));
+    localStorage.setItem('umaLoggedInStudentAt', String(Date.now()));
     renderStudentDashboard(match);
 }
 // Enter key submits the student login
@@ -2517,6 +2529,7 @@ function renderStudentDashboard(student) {
     document.getElementById('slLoginForm').style.display = 'none';
     document.getElementById('slDashboard').classList.add('show');
     document.getElementById('slStudentName').textContent = student.name;
+    window._slStudent = student; // kept so the certificate can use father name, DOB, roll no. already sent at login
 
     const refIdEl = document.getElementById('slStudentRefId');
     if (refIdEl) {
@@ -2542,7 +2555,7 @@ function renderStudentDashboard(student) {
         const enrolledDateText = formatDate(c.enrolledDate);
         return `
         <div class="sl-course-card">
-            <h4>${c.name}</h4>
+            <h4>${escHtml(c.name)}</h4>
             <span class="sl-status-badge ${c.status === 'completed' ? 'completed' : 'progress'}">
                 ${c.status === 'completed' ? 'Completed' : 'In Progress'}
             </span>
@@ -2551,13 +2564,14 @@ function renderStudentDashboard(student) {
             <div class="sl-progress-bar"><div class="sl-progress-fill" style="width:${c.progress}%;"></div></div>
             <span style="font-size:0.8rem; color:#627d98;">${c.progress}% complete</span>
             ${feeHtml}
-            ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${student.name}', '${c.name}', '${student.uniqueId || ''}', '${c.rowIndex != null ? c.rowIndex : ''}', '${durationText}')">View Certificate</button>` : ''}
+            ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${escJsArg(student.name)}', '${escJsArg(c.name)}', '${escJsArg(student.uniqueId || '')}', '${escJsArg(c.rowIndex != null ? c.rowIndex : '')}', '${escJsArg(durationText)}')">View Certificate</button>` : ''}
         </div>
     `;
     }).join('');
 }
 function studentLogout() {
     localStorage.removeItem('umaLoggedInStudent');
+    localStorage.removeItem('umaLoggedInStudentAt');
     document.getElementById('slIdentifier').value = '';
     document.getElementById('slPassword').value = '';
     const tabsEl = document.getElementById('slTabs'); if (tabsEl) tabsEl.style.display = '';
@@ -2716,19 +2730,11 @@ function closeAdminOnOverlay(e) {
     if (e.target.id === 'adminOverlay') closeAdmin();
 }
 function adminLoginSubmit() {
-    const user = document.getElementById('adminUsername').value.trim();
-    const pw = document.getElementById('adminPassword').value.trim();
+    // Real staff login is handled on the server by admin-auth.js. If that file did not load,
+    // never log anyone in from here.
     const errorEl = document.getElementById('adminError');
-    if (user !== ADMIN_USERNAME || pw !== ADMIN_PASSWORD) {
-        errorEl.classList.add('show');
-        return;
-    }
-    errorEl.classList.remove('show');
-    isAdminAuthenticated = true;
-    document.getElementById('adminLoginForm').style.display = 'none';
-    document.getElementById('adminDashboard').classList.add('show');
-    switchAdminTab('students');
-    loadAdminEnquiries();
+    errorEl.textContent = 'Staff login is unavailable right now. Please refresh the page and try again.';
+    errorEl.classList.add('show');
 }
 function adminLogout() {
     isAdminAuthenticated = false;
@@ -2793,11 +2799,11 @@ async function loadAdminStudents() {
                 : `<p class="sl-hint" style="margin:6px 0;">No payments received yet.</p>`;
             return `
                 <div class="sl-course-card admin-student-row">
-                    <h4>${s.name} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${s.mobile}${s.email ? ' · ' + s.email : ''}${dobText ? ' · DOB: ' + dobText : ''})</span></h4>
-                    ${s.uniqueId ? `<span class="admin-ref-id">ID: ${s.uniqueId}</span>` : ''}
+                    <h4>${escHtml(s.name)} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${escHtml(s.mobile)}${s.email ? ' · ' + escHtml(s.email) : ''}${dobText ? ' · DOB: ' + dobText : ''})</span></h4>
+                    ${s.uniqueId ? `<span class="admin-ref-id">ID: ${escHtml(s.uniqueId)}</span>` : ''}
                     ${admissionDateText ? `<span style="font-size:0.75rem; color:#627d98; display:block; margin-top:2px;">📅 First Admission: ${admissionDateText}</span>` : ''}
                     <div style="margin:10px 0; padding:10px; background:#fff; border:1px solid #e4e7eb; border-radius:6px;">
-                        <strong style="font-size:0.88rem; color:#0c2340;">${c.name}</strong>
+                        <strong style="font-size:0.88rem; color:#0c2340;">${escHtml(c.name)}</strong>
                         <span style="font-size:0.75rem; color:#0073e6; font-weight:700; margin-left:8px;">⏱ ${c.duration || COURSE_DURATIONS[c.name] || 'Not set'}</span>
                         ${enrolledDateText ? `<span style="font-size:0.75rem; color:#627d98; margin-left:8px;">📅 Enrolled: ${enrolledDateText}</span>` : ''}<br>
                         <label style="font-size:0.75rem;">Progress %</label>
@@ -2812,9 +2818,9 @@ async function loadAdminStudents() {
                         <input type="number" min="0" value="${c.fee || 0}" id="fee-row-${c.rowIndex}" style="width:90px; margin-left:6px; padding:4px 6px;">
                         <br>
                         <label style="font-size:0.75rem; margin-top:6px; display:inline-block;">Certificate No.</label>
-                        <input type="text" maxlength="40" id="cert-row-${c.rowIndex}" value="${c.certNo || ('UMA-' + String(c.rowIndex).padStart(5, '0'))}" style="width:150px; margin-left:6px; padding:4px 6px;" title="Used when status is Completed. Default = sheet row number; type your own number if you prefer.">
+                        <input type="text" maxlength="40" id="cert-row-${c.rowIndex}" value="${escHtml(c.certNo || ('UMA-' + String(c.rowIndex).padStart(5, '0')))}" style="width:150px; margin-left:6px; padding:4px 6px;" title="Used when status is Completed. Default = sheet row number; type your own number if you prefer.">
                         <span style="font-size:0.7rem; color:#8798ab;">(auto-generated; you can change it)</span>
-                        ${(c.rollNo || c.regdNo) ? `<span style="font-size:0.72rem; color:#486581; display:block; margin-top:4px;">${c.rollNo ? 'Roll No: <strong>' + c.rollNo + '</strong>' : ''}${c.rollNo && c.regdNo ? ' · ' : ''}${c.regdNo ? 'Regd. No: <strong>' + c.regdNo + '</strong>' : ''}${s.fatherName ? ' · Father: <strong>' + s.fatherName + '</strong>' : ''}</span>` : ''}
+                        ${(c.rollNo || c.regdNo) ? `<span style="font-size:0.72rem; color:#486581; display:block; margin-top:4px;">${c.rollNo ? 'Roll No: <strong>' + escHtml(c.rollNo) + '</strong>' : ''}${c.rollNo && c.regdNo ? ' · ' : ''}${c.regdNo ? 'Regd. No: <strong>' + escHtml(c.regdNo) + '</strong>' : ''}${s.fatherName ? ' · Father: <strong>' + s.fatherName + '</strong>' : ''}</span>` : ''}
                         <br>
                         <button class="sl-cert-btn" style="margin-top:6px;" onclick="saveAdminCourseRow(${c.rowIndex})">Save Progress / Status / Fee</button>
 
@@ -2986,13 +2992,13 @@ async function loadAdminEnquiries() {
             const statusVal = en.status || 'Pending';
             const whenText = en.timestamp ? new Date(en.timestamp).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
             return `
-                <div class="sl-course-card admin-enquiry-card status-${statusVal.toLowerCase()}">
-                    <h4>${en.name || 'Unnamed'} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${en.phone || ''}${en.email ? ' · ' + en.email : ''})</span></h4>
-                    ${en.uniqueId ? `<span class="admin-ref-id">ID: ${en.uniqueId}</span>` : ''}
+                <div class="sl-course-card admin-enquiry-card status-${escHtml(String(statusVal).toLowerCase().replace(/[^a-z]/g, ''))}">
+                    <h4>${escHtml(en.name || 'Unnamed')} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${escHtml(en.phone || '')}${en.email ? ' · ' + escHtml(en.email) : ''})</span></h4>
+                    ${en.uniqueId ? `<span class="admin-ref-id">ID: ${escHtml(en.uniqueId)}</span>` : ''}
                     ${whenText ? `<span style="font-size:0.75rem; color:#627d98;">${whenText}</span><br>` : ''}
-                    ${en.type ? `<span style="font-size:0.78rem; color:#0073e6; font-weight:700;">${en.type}</span>` : ''}
-                    ${en.service ? `<span style="font-size:0.78rem; color:#486581;"> · ${en.service}</span>` : ''}
-                    ${en.message ? `<p style="font-size:0.82rem; color:#334e68; margin:6px 0;">${en.message}</p>` : ''}
+                    ${en.type ? `<span style="font-size:0.78rem; color:#0073e6; font-weight:700;">${escHtml(en.type)}</span>` : ''}
+                    ${en.service ? `<span style="font-size:0.78rem; color:#486581;"> · ${escHtml(en.service)}</span>` : ''}
+                    ${en.message ? `<p style="font-size:0.82rem; color:#334e68; margin:6px 0;">${escHtml(en.message)}</p>` : ''}
                     <label style="font-size:0.75rem;">Status</label>
                     <select id="enq-status-row-${en.rowIndex}" style="margin-left:6px; padding:4px 6px;">
                         <option value="Pending" ${statusVal === 'Pending' ? 'selected' : ''}>Pending</option>
@@ -3292,7 +3298,15 @@ function viewCertificate(studentName, courseName, studentRefId, courseRowIndex, 
 
     // Certificate number = the sheet ROW number (e.g. row 123 -> UMA-00123), unless staff typed their own
     // number in the Staff Panel — the sheet's saved number is fetched just below and replaces this one.
-    const rowNo = parseInt(courseRowIndex, 10);
+    const st = window._slStudent || {};
+    const co = (st.courses || []).find(c => courseRowIndex !== '' && courseRowIndex != null && String(c.rowIndex) === String(courseRowIndex))
+        || (st.courses || []).find(c => c.name === courseName) || {};
+    const rowNo = parseInt(courseRowIndex || co.rowIndex, 10);
+    // details the login response already carries (used first, so the certificate is never blank)
+    const localDetails = {
+        fatherName: co.fatherName || st.fatherName || '', dob: co.dob || st.dob || '',
+        regdNo: co.regdNo || st.regdNo || '', rollNo: co.rollNo || st.rollNo || '', duration: co.duration || ''
+    };
     let certNo;
     if (rowNo > 0) {
         certNo = 'UMA-' + String(rowNo).padStart(5, '0');
@@ -3305,20 +3319,25 @@ function viewCertificate(studentName, courseName, studentRefId, courseRowIndex, 
     }
     document.getElementById('certId').textContent = certNo;
     renderCertificateQr(certNo);
-    fillCertificateDetails({});
+    fillCertificateDetails(localDetails);
 
     if (typeof sheetBackendReady !== 'undefined' && sheetBackendReady && rowNo > 0) {
-        callSheetBackend({ action: 'getCertificate', rowIndex: rowNo, uniqueId: studentRefId || '' })
+        const fetchCert = () => callSheetBackend({ action: 'getCertificate', rowIndex: rowNo, uniqueId: studentRefId || '' });
+        fetchCert().catch(() => new Promise(res => setTimeout(res, 1500)).then(fetchCert)) // one retry on a weak connection
             .then(r => {
-                if (!r || !r.success) return;
+                if (!r || !r.success) { console.warn('getCertificate failed:', r && r.error); return; }
+                const have = ['fatherName', 'dob', 'regdNo', 'rollNo'].filter(k => r[k]);
+                if (!have.length && !localDetails.fatherName && !localDetails.dob) console.warn('getCertificate returned no father name / DOB / roll no. - the backend must send fatherName, dob, regdNo, rollNo.', Object.keys(r));
                 if (r.certNo) {
                     document.getElementById('certId').textContent = r.certNo;
                     renderCertificateQr(r.certNo);
                 }
                 if (r.date) document.getElementById('certDate').textContent = r.date;
-                fillCertificateDetails(r);
+                const merged = Object.assign({}, localDetails);
+                ['fatherName', 'dob', 'regdNo', 'rollNo', 'duration'].forEach(k => { if (r[k]) merged[k] = r[k]; });
+                fillCertificateDetails(merged);
             })
-            .catch(() => { /* keep the row-based number */ });
+            .catch(() => { /* keep the details already shown */ });
     }
 
     document.getElementById('certificateOverlay').classList.add('active');
@@ -3481,58 +3500,52 @@ function launchRocket() {
 })();
 
 
-/* ==================== LIVE COUNTERS (slow count-up, loops: 0 -> target -> pause -> 0 again) ==================== */
+/* ==================== LIVE COUNTERS ====================
+   Counts up (numbers + a drawing ring) each time the strip scrolls into view, then holds the final value.
+   Scroll away and come back and it plays again. No endless looping. Final numbers are already in the HTML. */
 (function(){
-    const counters = document.querySelectorAll('.counter-num');
-    if (!counters.length) return;
+    const section = document.getElementById('liveCounters');
+    if (!section) return;
+    const items = Array.prototype.slice.call(section.querySelectorAll('.counter-item'));
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;   // keep the final numbers as they are
+    const RING = 176, DURATION = 1800;
+    let run = 0, shown = false;
 
-    let sectionVisible = false;
-
-    function animateCounter(el, delay){
-        const raw = el.getAttribute('data-target') || '0';
-        const target = parseFloat(raw) || 0;
-        const decimals = (raw.split('.')[1] || '').length; // preserve e.g. 99.98
-        const duration = 3200; // slower, more satisfying count-up
-        const pauseAtEnd = 2500; // hold on the final number before looping back to 0
-
-        function run(){
-            if (!sectionVisible) { setTimeout(run, 500); return; } // don't burn cycles while off-screen
-            const startTime = performance.now() + delay;
-            delay = 0; // only the very first run is staggered
-
-            function tick(now){
-                const progress = Math.min((now - startTime) / duration, 1);
-                if (progress < 0) { requestAnimationFrame(tick); return; }
-                const eased = 1 - Math.pow(1 - progress, 4); // gentle ease-out, slow finish
-                const value = eased * target;
-                el.textContent = decimals ? value.toFixed(decimals) : Math.floor(value);
-                if (progress < 1) {
-                    requestAnimationFrame(tick);
-                } else {
-                    el.textContent = decimals ? target.toFixed(decimals) : target;
-                    setTimeout(run, pauseAtEnd); // hold, then loop back to 0 and count up again
-                }
-            }
-            requestAnimationFrame(tick);
-        }
-        run();
-    }
-
-    const counterSection = document.getElementById('liveCounters');
-    if (!counterSection) return;
-
-    let started = false;
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            sectionVisible = entry.isIntersecting;
-            if (entry.isIntersecting && !started) {
-                started = true;
-                counters.forEach((el, i) => animateCounter(el, i * 150)); // staggered start, card by card
-            }
+    function play() {
+        const id = ++run; shown = true;
+        section.classList.add('in-view');
+        items.forEach(function (it, i) {
+            const num = it.querySelector('.counter-num'), ring = it.querySelector('.ring-fg');
+            const target = parseFloat(num.getAttribute('data-target')) || 0, fill = parseFloat(it.getAttribute('data-fill') || '1');
+            const t0 = performance.now() + i * 110;
+            it.classList.remove('done');
+            (function tick(now) {
+                if (id !== run) return;                       // cancelled (scrolled away)
+                const p = Math.min(Math.max((now - t0) / DURATION, 0), 1), eased = 1 - Math.pow(1 - p, 3);
+                num.textContent = Math.round(eased * target);
+                ring.style.strokeDashoffset = RING * (1 - eased * fill);
+                if (p < 1) requestAnimationFrame(tick); else it.classList.add('done');
+            })(performance.now());
         });
-    }, { threshold: 0.35 });
-
-    observer.observe(counterSection);
+    }
+    function reset() {
+        run++; shown = false;
+        section.classList.remove('in-view');
+        items.forEach(function (it) {
+            it.classList.remove('done');
+            it.querySelector('.counter-num').textContent = '0';
+            it.querySelector('.ring-fg').style.strokeDashoffset = RING;
+        });
+    }
+    section.classList.add('js-ready');
+    reset();
+    new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+            if (en.intersectionRatio >= 0.3 && !shown) play();
+            else if (en.intersectionRatio === 0 && shown) reset();
+        });
+    }, { threshold: [0, 0.3] }).observe(section);
 })();
 
 
