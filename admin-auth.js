@@ -109,3 +109,5 @@
     window.addEventListener('hashchange', hashOpen);
     setTimeout(hashOpen, 300);
 })();
+
+

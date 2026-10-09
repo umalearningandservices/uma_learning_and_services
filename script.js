@@ -2267,17 +2267,6 @@ function scrollToSectionMiddle(id){
    NEW FEATURES — added per client requests
    ===================================================================== */
 
-/* ---------- Floating contact popup (FAB) ---------- */
-function toggleContactFab() {
-    document.getElementById('contactFabWrap').classList.toggle('open');
-}
-document.addEventListener('click', (e) => {
-    const fab = document.getElementById('contactFabWrap');
-    if (fab && fab.classList.contains('open') && !fab.contains(e.target)) {
-        fab.classList.remove('open');
-    }
-});
-
 /* ---------- Story / testimonial pinned-scroll section ---------- */
 function initStoryScroll() {
     const wrapper = document.getElementById('storySection');
@@ -3402,19 +3391,29 @@ function closeCertificate() {
 function closeCertificateOnOverlay(e) {
     if (e.target.id === 'certificateOverlay') closeCertificate();
 }
+let _titleBeforePrint = null;
 function downloadCertificate() {
-    // Marks THIS overlay (and only this one) as the thing to print — the
-    // Student Login dashboard stays open underneath (by design) even while
-    // the certificate is showing, so we can't rely on ".active" alone to
-    // know which overlay to print (see the CSS comment on .print-target).
+    // Marks THIS overlay (and only this one) as the thing to print: the Student Login dashboard stays open
+    // underneath, so ".active" alone cannot tell which overlay to print (see the CSS comment on .print-target).
     document.getElementById('certificateOverlay').classList.add('print-target');
     document.body.classList.add('printing-certificate');
+    // One A4 landscape page with no browser margins. Done here (not only in CSS) because some browsers ignore
+    // named @page rules, which pushed the certificate onto 2-3 pages.
+    let st = document.getElementById('printPageStyle');
+    if (!st) { st = document.createElement('style'); st.id = 'printPageStyle'; document.head.appendChild(st); }
+    st.textContent = '@page{size:A4 landscape;margin:0}';
+    // "Save as PDF" uses the page title as the file name
+    const nm = document.getElementById('certStudentName');
+    _titleBeforePrint = document.title;
+    document.title = 'Certificate - ' + ((nm && nm.textContent.trim()) || 'UMA Learning & Services');
     window.print();
 }
 window.addEventListener('afterprint', () => {
     document.body.classList.remove('printing-certificate');
     document.getElementById('certificateOverlay').classList.remove('print-target');
     document.getElementById('invoiceOverlay').classList.remove('print-target');
+    const st = document.getElementById('printPageStyle'); if (st) st.textContent = '';
+    if (_titleBeforePrint !== null) { document.title = _titleBeforePrint; _titleBeforePrint = null; }
 });
 
 
@@ -3509,7 +3508,7 @@ function launchRocket() {
     const items = Array.prototype.slice.call(section.querySelectorAll('.counter-item'));
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce || !('IntersectionObserver' in window)) return;   // keep the final numbers as they are
-    const RING = 176, DURATION = 1800;
+    const RING = 176, DURATION = 2600;
     let run = 0, shown = false;
 
     function play() {
@@ -3518,11 +3517,11 @@ function launchRocket() {
         items.forEach(function (it, i) {
             const num = it.querySelector('.counter-num'), ring = it.querySelector('.ring-fg');
             const target = parseFloat(num.getAttribute('data-target')) || 0, fill = parseFloat(it.getAttribute('data-fill') || '1');
-            const t0 = performance.now() + i * 110;
+            const t0 = performance.now() + i * 120;
             it.classList.remove('done');
             (function tick(now) {
                 if (id !== run) return;                       // cancelled (scrolled away)
-                const p = Math.min(Math.max((now - t0) / DURATION, 0), 1), eased = 1 - Math.pow(1 - p, 3);
+                const p = Math.min(Math.max((now - t0) / DURATION, 0), 1), eased = 1 - Math.pow(1 - p, 2);
                 num.textContent = Math.round(eased * target);
                 ring.style.strokeDashoffset = RING * (1 - eased * fill);
                 if (p < 1) requestAnimationFrame(tick); else it.classList.add('done');
@@ -3643,7 +3642,7 @@ const PAGE_SEO = {
     whyus:    ['Why Choose UMA Learning & Services', 'See what sets UMA Learning & Services apart: practical training, expert trainers and dependable support.'],
     team:     ['Our Team | UMA Learning & Services', 'Meet the trainers and professionals behind UMA Learning & Services.'],
     contact:  ['Contact & Enquiry | UMA Learning & Services', 'Send a quick enquiry or contact UMA Learning & Services, Jaipur, by phone, email or WhatsApp.'],
-    reviews:  ['Student & Client Reviews | UMA Learning & Services', 'Read what students and clients say about UMA Learning & Services.'],
+    reviews:  ['Student & Client Testimonials | UMA Learning & Services', 'Read what students and clients say about UMA Learning & Services.'],
     branches: ['Our Branches | UMA Learning & Services', 'Find UMA Learning & Services branches and how to reach them.'],
     blogs:    ['Blog | UMA Learning & Services', 'Career, skills and business guides from UMA Learning & Services.'],
     gallery:  ['Gallery | UMA Learning & Services', 'Photos from classes, events and the UMA Learning & Services campus.']
@@ -4022,3 +4021,109 @@ function fillCertificateDetails(r) {
         if (d && !d.textContent) d.textContent = 'Course Duration: ' + r.duration;
     }
 }
+
+/* Reviews page: stays tidy with many reviews — search box, count, long quotes clamp with "Read more",
+   and only 6 cards at first with a "Show more reviews" button. Also runs for reviews added by the content manager. */
+(function () {
+    var PAGE = 6, LONG = 230, shown = PAGE, query = '';
+    function enhance() {
+        var grid = document.querySelector('.reviews-grid');
+        if (!grid) return;
+        var bar = grid.querySelector('.rv-toolbar');
+        if (!bar) {
+            bar = document.createElement('div');
+            bar.className = 'rv-toolbar';
+            bar.innerHTML = '<input type="search" class="rv-search" placeholder="Search reviews by name, course or word…" aria-label="Search reviews"><span class="rv-count" aria-live="polite"></span>';
+            grid.insertBefore(bar, grid.firstChild);
+            bar.querySelector('.rv-search').addEventListener('input', function (e) {
+                query = e.target.value.trim().toLowerCase(); shown = PAGE; apply();
+            });
+        }
+        var more = grid.querySelector('.rv-showmore');
+        if (!more) {
+            more = document.createElement('div');
+            more.className = 'rv-showmore';
+            more.innerHTML = '<button type="button" class="rv-more-btn">Show more reviews</button>';
+            grid.appendChild(more);
+            more.querySelector('button').addEventListener('click', function () { shown += PAGE; apply(); });
+        } else if (more !== grid.lastElementChild) { grid.appendChild(more); }
+        grid.querySelectorAll('.review-card').forEach(function (c) {
+            var q = c.querySelector('p.quote');
+            if (!q || c.dataset.rvDone) return;
+            c.dataset.rvDone = '1';
+            if (q.textContent.length > LONG) {
+                q.classList.add('rv-clamp');
+                var b = document.createElement('button');
+                b.type = 'button'; b.className = 'rv-toggle'; b.textContent = 'Read more';
+                b.addEventListener('click', function () {
+                    var open = q.classList.toggle('rv-open');
+                    q.classList.toggle('rv-clamp', !open);
+                    b.textContent = open ? 'Show less' : 'Read more';
+                });
+                q.insertAdjacentElement('afterend', b);
+            }
+        });
+        apply();
+    }
+    function apply() {
+        var grid = document.querySelector('.reviews-grid');
+        if (!grid) return;
+        var cards = Array.prototype.slice.call(grid.querySelectorAll('.review-card'));
+        var matches = 0, visible = 0;
+        cards.forEach(function (c) {
+            var ok = !query || c.textContent.toLowerCase().indexOf(query) !== -1;
+            var show = false;
+            if (ok) { matches++; if (matches <= shown) { show = true; visible++; } }
+            c.classList.toggle('rv-hide', !show);
+        });
+        var cnt = grid.querySelector('.rv-count');
+        if (cnt) cnt.textContent = matches ? ('Showing ' + visible + ' of ' + matches + ' review' + (matches === 1 ? '' : 's')) : 'No reviews match your search';
+        var more = grid.querySelector('.rv-showmore');
+        if (more) more.style.display = matches > visible ? '' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', enhance);
+    document.addEventListener('cms-rendered', function () { setTimeout(enhance, 0); });
+})();
+
+
+/* Reviews: photo on a review card (class "review-photo", or the side photo of an image card).
+   Hover zooms it slightly, click/tap/Enter opens it full size; click anywhere, X or Esc closes. */
+(function () {
+    var box;
+    function build() {
+        box = document.createElement('div');
+        box.className = 'rv-lightbox';
+        box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', 'Review photo');
+        box.innerHTML = '<button type="button" class="rv-lb-close" aria-label="Close">&times;</button><figure><img alt=""><figcaption></figcaption></figure>';
+        box.addEventListener('click', close);
+        document.body.appendChild(box);
+    }
+    function open(img) {
+        if (!box) build();
+        var card = img.closest('.review-card'), n = card && card.querySelector('.ra-name');
+        box.querySelector('img').src = img.currentSrc || img.src;
+        box.querySelector('img').alt = img.alt || '';
+        box.querySelector('figcaption').textContent = (n && n.textContent.trim()) || img.alt || '';
+        box.classList.add('open');
+        document.documentElement.classList.add('rv-lb-lock');
+    }
+    function close() {
+        if (!box) return;
+        box.classList.remove('open');
+        document.documentElement.classList.remove('rv-lb-lock');
+    }
+    function target(e) { return e.target.closest && e.target.closest('.review-photo, .review-card-image .review-image'); }
+    document.addEventListener('click', function (e) { var t = target(e); if (t) open(t); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') close();
+        else if (e.key === 'Enter' && document.activeElement && document.activeElement.matches && document.activeElement.matches('.review-photo, .review-card-image .review-image')) open(document.activeElement);
+    });
+    function prep() {
+        document.querySelectorAll('.review-photo, .review-card-image .review-image').forEach(function (i) {
+            i.tabIndex = 0; i.setAttribute('role', 'button');
+            if (!i.title) i.title = 'Click to view photo';
+        });
+    }
+    document.addEventListener('DOMContentLoaded', prep);
+    document.addEventListener('cms-rendered', function () { setTimeout(prep, 0); });
+})();

@@ -9,7 +9,7 @@
     var HINTS = {
         blog:    { title: 'Blog title', cat: 'Category', list: ['Career', 'Automation', 'Learning Tips', 'Placement'], text: 'Article text (blank line = new paragraph)' },
         gallery: { title: 'Photo caption', cat: 'Category (pick one)', list: ['classroom', 'birthday', 'festival', 'celebration', 'Clients'], text: '' },
-        review:  { title: 'Reviewer name', cat: 'Role', list: ['Student', 'Client', 'Business Owner'], text: 'Review text' },
+        review:  { title: 'Name', cat: 'Role', list: ['Student', 'Client', 'Business Owner'], text: 'Testimonial text' },
         course:  { title: 'Course name', cat: 'Section (pick from suggestions)', list: null, text: 'Full description (what is covered, who it is for)' },
         service: { title: 'Service name', cat: 'Section (pick from suggestions)', list: null, text: 'Full description (what you deliver, who it is for)' }
     };
@@ -101,6 +101,7 @@
         }
         if (it.type === 'review') {
             n = el('div', 'review-card');
+            if (src) { var rp = el('img', 'review-photo'); rp.src = src; rp.alt = it.title || 'Review photo'; rp.loading = 'lazy'; n.appendChild(rp); }
             n.appendChild(el('div', 'review-stars', '★★★★★'));
             n.appendChild(el('p', 'quote', '"' + it.body + '"'));
             var a = el('div', 'review-author');
@@ -140,9 +141,9 @@
 
     var panel = el('div', 'admin-tab-panel'); panel.id = 'adminPanelContent'; panel.style.display = 'none';
     panel.innerHTML =
-        '<p class="sl-hint">Add or remove Blog posts, Gallery photos and Reviews. Changes go live for all visitors within seconds.</p>' +
+        '<p class="sl-hint">Add or remove Blog posts, Gallery photos and Testimonials. Changes go live for all visitors within seconds.</p>' +
         '<div class="student-login-form" style="background:#f5f8fb;border:1px solid #e4e7eb;border-radius:8px;padding:16px;margin-bottom:16px;">' +
-        '<label for="cmType">What do you want to add?</label><select id="cmType"><option value="blog">Blog post</option><option value="gallery">Gallery photo</option><option value="review">Review</option><option value="course">Course</option><option value="service">Service</option></select>' +
+        '<label for="cmType">What do you want to add?</label><select id="cmType"><option value="blog">Blog post</option><option value="gallery">Gallery photo</option><option value="review">Testimonial</option><option value="course">Course</option><option value="service">Service</option></select>' +
         '<label for="cmTitle" id="cmTitleL"></label><input type="text" id="cmTitle" maxlength="120">' +
         '<label for="cmCat" id="cmCatL"></label><input type="text" id="cmCat" list="cmCatList" maxlength="40"><datalist id="cmCatList"></datalist>' +
         '<label for="cmImg">Image link (https:// or Google Drive share link)</label><input type="text" id="cmImg" placeholder="Required for gallery, optional for blog">' +

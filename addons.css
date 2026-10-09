@@ -122,10 +122,8 @@
 /* ===== Our Team: professional profile cards ===== */
 .team-grid{max-width:860px;gap:30px;align-items:stretch}
 .team-card{display:flex;flex-direction:column;padding:0;text-align:left;border:1px solid #e4e7eb;border-radius:16px;background:#fff;box-shadow:0 6px 24px rgba(12,35,64,.08)}
+.team-card::before{content:"";display:block;height:5px;background:linear-gradient(90deg,#0c2340,#0073e6)}
 .team-card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(12,35,64,.15)}
-.team-photo{aspect-ratio:4/3.4;position:relative;background:#e8f1fb}
-.team-photo img{object-position:center top}
-.team-photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,#0c2340,#0073e6)}
 .team-body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
 .team-card h3{margin:0 0 8px;font-size:1.25rem;color:#0c2340;letter-spacing:.2px}
 .team-role{display:inline-block;align-self:flex-start;margin:0 0 18px;padding:5px 14px;border-radius:999px;background:#e8f1fb;color:#1565c0;font-size:.8rem;font-weight:700;letter-spacing:.3px}
@@ -474,3 +472,53 @@
 .sl-tab.active{background:#fff;color:#0c2340;box-shadow:0 2px 8px rgba(12,35,64,.12)}
 #slVerifyResult{margin-top:16px}
 #slVerifyResult .verify-result{margin-top:0}
+/* ===== Certificate prints on exactly ONE A4 landscape page ===== */
+@media print{
+  body.printing-certificate{margin:0 !important;padding:0 !important;height:209mm !important;overflow:hidden !important}
+  body.printing-certificate .print-target{width:297mm !important;height:209mm !important;margin:0 !important;padding:0 !important;overflow:hidden !important;display:block !important;break-after:avoid;page-break-after:avoid;break-inside:avoid}
+  body.printing-certificate .print-target .legal-modal-box{width:297mm !important;height:209mm !important;margin:0 !important;overflow:hidden !important}
+  body.printing-certificate .print-target .certificate-print-area{width:297mm !important;height:209mm !important;overflow:hidden !important}
+  body.printing-certificate .cert2-frame{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* ===== Floating buttons: WhatsApp (bottom-left) with the back-to-top rocket stacked above it; robot assistant bottom-right ===== */
+.wa-float{position:fixed;left:24px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px rgba(0,0,0,.25);z-index:1500;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease}
+.wa-float:hover{transform:scale(1.08);box-shadow:0 12px 28px rgba(0,0,0,.35)}
+.wa-float img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+@media(max-width:768px){.wa-float{left:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:40px;height:40px}}
+@media print{.wa-float{display:none!important}}
+/* ===== Back-to-top rocket: stacked ABOVE the WhatsApp button (it was hidden underneath it) ===== */
+#myBtn{left:27px!important;bottom:calc(76px + env(safe-area-inset-bottom,0px))!important;z-index:1600!important}
+@media(max-width:768px){#myBtn{left:16px!important;bottom:calc(66px + env(safe-area-inset-bottom,0px))!important}}
+/* ===== Reviews page for many reviews: search, clamp, show more ===== */
+.rv-toolbar{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-bottom:4px}
+.rv-search{flex:1 1 280px;max-width:420px;padding:11px 16px;border:1px solid #d5e2f0;border-radius:999px;font:inherit;font-size:.92rem;color:#0c2340;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+.rv-search:focus{border-color:#0073e6;box-shadow:0 0 0 3px rgba(0,115,230,.15)}
+.rv-count{font-size:.85rem;color:#667f99}
+.review-card.rv-hide{display:none}
+.review-card p.quote.rv-clamp{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px}
+.rv-toggle{align-self:flex-start;margin:0 0 16px;padding:0;border:0;background:none;color:#0073e6;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.rv-toggle:hover{text-decoration:underline}
+.rv-showmore{grid-column:1/-1;text-align:center;margin-top:10px}
+.rv-more-btn{padding:12px 30px;border:2px solid #0073e6;border-radius:999px;background:#fff;color:#0073e6;font:inherit;font-weight:700;cursor:pointer;transition:background .2s,color .2s}
+.rv-more-btn:hover{background:#0073e6;color:#fff}
+@media(max-width:600px){.rv-search{max-width:none}}
+@media print{.rv-toolbar,.rv-showmore{display:none}.review-card.rv-hide{display:block}}
+
+/* ===== Review photos: thumbnail on the card, full size on click ===== */
+.review-card .review-photo{display:block;width:calc(100% + 48px);max-width:none;margin:-26px -24px 18px;height:170px;object-fit:cover;background:#eef2f6;cursor:zoom-in;border-radius:0;border:0;box-shadow:none;transition:transform .35s ease,filter .35s ease}
+.review-card:has(.review-photo){overflow:hidden}
+@media(hover:hover){.review-card:hover .review-photo{transform:scale(1.05);filter:brightness(1.05)}}
+.review-card .review-photo:focus-visible,.review-card-image .review-image:focus-visible{outline:3px solid #0073e6;outline-offset:-3px}
+.review-card-image .review-image{cursor:zoom-in;transition:transform .3s ease}
+@media(hover:hover){.review-card-image:hover .review-image{transform:scale(1.04)}}
+.rv-lightbox{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(8,20,38,.88);cursor:zoom-out}
+.rv-lightbox.open{display:flex;animation:rvFade .2s ease}
+.rv-lightbox figure{margin:0;max-width:min(92vw,1000px);text-align:center}
+.rv-lightbox img{max-width:100%;max-height:82vh;border-radius:12px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.rv-lightbox figcaption{margin-top:12px;color:#e6eef8;font-weight:600}
+.rv-lb-close{position:absolute;top:14px;right:18px;width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:1.8rem;line-height:1;cursor:pointer}
+.rv-lb-close:hover{background:rgba(255,255,255,.3)}
+html.rv-lb-lock{overflow:hidden}
+@keyframes rvFade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.rv-lightbox.open{animation:none}.review-card .review-photo,.review-card-image .review-image{transition:none}}

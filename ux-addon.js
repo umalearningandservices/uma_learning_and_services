@@ -78,3 +78,52 @@
         window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
     }
 })();
+
+/* ---------- 3. home search bar: the hint types itself out, all the time (no click needed) ----------
+   First your courses and services, one by one, then helpful prompts. Names are read from the page, so a new
+   course appears by itself. Pauses when the bar is hidden (phones) or the tab is in the background. */
+(function () {
+    'use strict';
+    var input = document.getElementById('navSearchDisplay');
+    if (!input) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var GENERIC = ['Try "Excel" or "Python"', 'Ask about fees & batch timings', 'Business automation for your shop', 'Websites, CRM & ERP for your business', 'Free demo class: ask us', 'Search a skill: Tally, Web, Design...'];
+    var timer = null, queue = [];
+
+    function titles(sel) {
+        var seen = {}, out = [];
+        document.querySelectorAll(sel).forEach(function (t) { var v = t.textContent.trim(); if (v && v.length <= 38 && !seen[v]) { seen[v] = 1; out.push(v); } });
+        for (var i = out.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = out[i]; out[i] = out[j]; out[j] = x; }
+        return out.slice(0, 6);
+    }
+    function build() {   // courses and services first (taking turns), then the helpful prompts
+        var c = titles('#academy-hub .card-title'), s = titles('#services-hub .card-title'), q = [];
+        for (var i = 0; i < Math.max(c.length, s.length); i++) {
+            if (c[i]) q.push('Find Course \u2022 ' + c[i]);
+            if (s[i]) q.push('Find Service \u2022 ' + s[i]);
+        }
+        return q.concat(GENERIC);
+    }
+    function visible() { return !document.hidden && input.offsetParent !== null; }
+    function wait(ms, fn) { clearTimeout(timer); timer = setTimeout(fn, ms); }
+    function next() {
+        if (!visible()) { wait(1500, next); return; }
+        if (!queue.length) queue = build();
+        var text = queue.shift(), i = 0;
+        if (reduce) { input.setAttribute('placeholder', text); wait(3500, next); return; }
+        (function type() {
+            if (!visible()) { wait(1500, type); return; }
+            input.setAttribute('placeholder', text.slice(0, ++i));
+            if (i < text.length) { wait(55, type); } else { wait(1700, erase); }
+        })();
+        function erase() {
+            if (!visible()) { wait(1500, erase); return; }
+            i -= 2;
+            if (i <= 0) { input.setAttribute('placeholder', '\u00a0'); wait(250, next); return; }
+            input.setAttribute('placeholder', text.slice(0, i)); wait(22, erase);
+        }
+    }
+    function begin() { queue = build(); next(); }
+    if (document.readyState === 'complete') setTimeout(begin, 800); else window.addEventListener('load', function () { setTimeout(begin, 800); });
+    document.addEventListener('cms-rendered', function () { queue = []; });   // new courses added by staff
+})();
