@@ -306,10 +306,10 @@
 .certificate-print-area{overflow-x:auto}
 .certificate-card.cert2{
   container-type:inline-size;width:100%;min-width:720px;aspect-ratio:297/210;
-  padding:1.3cqw;border-radius:.8cqw;background:linear-gradient(135deg,#0c2340,#0073e6 55%,#e3b341);
+  padding:1.3cqw;border-radius:.8cqw;background:linear-gradient(135deg,#0c2340,#0073e6 60%,#4da3f0);
   -webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:"Segoe UI",system-ui,sans-serif}
 .cert2-frame{position:relative;height:100%;box-sizing:border-box;background:#fffdf8;border-radius:.4cqw;
-  border:.18cqw solid #e3c876;padding:1.8cqw 3cqw 1.2cqw;display:flex;flex-direction:column;color:#0c2340;overflow:hidden}
+  border:.18cqw solid #b7d3f0;padding:1.8cqw 3cqw 1.2cqw;display:flex;flex-direction:column;color:#0c2340;overflow:hidden}
 .cert2-frame::before{content:"";position:absolute;inset:.7cqw;border:.1cqw solid rgba(12,35,64,.35);border-radius:.3cqw;pointer-events:none}
 .cert2-frame::after{font-weight:800;color:rgba(0,115,230,.045)}
 .cert2-corner{position:absolute;width:5cqw;height:5cqw;border:.35cqw solid #0073e6;pointer-events:none}
@@ -334,7 +334,7 @@
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 .cert2-body{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.4cqw}
 .certificate-card.cert2 .cert2-line{margin:0;font-size:1.45cqw;font-style:italic;font-family:Georgia,serif}
-.certificate-card.cert2 .cert2-name{margin:.3cqw 0;padding:0 4cqw .4cqw;border-bottom:.15cqw solid #e3c876;font-family:Georgia,"Times New Roman",serif;font-size:4.4cqw;font-weight:700;max-width:80%;line-height:1.15}
+.certificate-card.cert2 .cert2-name{margin:.3cqw 0;padding:0 4cqw .4cqw;border-bottom:.15cqw solid #b7d3f0;font-family:Georgia,"Times New Roman",serif;font-size:4.4cqw;font-weight:700;max-width:80%;line-height:1.15}
 .certificate-card.cert2 .cert2-course{margin:.4cqw 0 0;font-size:2.7cqw;font-weight:800;line-height:1.2;max-width:85%}
 .certificate-card.cert2 .cert2-duration{margin:.3cqw 0 0;font-size:1.4cqw;font-weight:600}
 .cert2-duration:empty{display:none}
@@ -352,7 +352,7 @@
 .cert2-sign strong{font-size:1.25cqw;margin-top:.5cqw}
 .cert2-sign small{font-size:.9cqw;color:#627d98}
 
-.cert2-badges{position:relative;z-index:1;margin-top:.9cqw;padding-top:.7cqw;border-top:.1cqw solid #e3c876;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.6cqw 2.2cqw}
+.cert2-badges{position:relative;z-index:1;margin-top:.9cqw;padding-top:.7cqw;border-top:.1cqw solid #b7d3f0;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.6cqw 2.2cqw}
 .cert2-badges .credential-badge{height:3.6cqw;max-width:11cqw;width:auto;opacity:1;object-fit:contain}
 .cert2-address{position:relative;z-index:1;margin-top:.6cqw;text-align:center;font-size:.9cqw;color:#627d98}
 
@@ -396,7 +396,7 @@
 .verify-status{color:#22a652!important}
 
 /* ===== Certificate: student details row (father, DOB, regd., roll) ===== */
-.cert2-details{display:flex;flex-wrap:wrap;justify-content:center;gap:.6cqw 3.2cqw;margin-top:1.3cqw;padding:.8cqw 2cqw;border-top:.1cqw solid #e3c876;border-bottom:.1cqw solid #e3c876;max-width:92%}
+.cert2-details{display:flex;flex-wrap:wrap;justify-content:center;gap:.6cqw 3.2cqw;margin-top:1.3cqw;padding:.8cqw 2cqw;border-top:.1cqw solid #b7d3f0;border-bottom:.1cqw solid #b7d3f0;max-width:92%}
 .cert2-details>div{display:flex;flex-direction:column;align-items:center;text-align:center}
 .cert2-details span{font-size:.8cqw;letter-spacing:.15cqw;text-transform:uppercase;color:#8aa0b8}
 .cert2-details b{font-size:1.15cqw;color:#0c2340;font-weight:700}
@@ -551,3 +551,34 @@ html.rv-lb-lock{overflow:hidden}
   body.printing-certificate .print-target .certificate-print-area{width:100% !important;height:100% !important;display:flex !important;align-items:center;justify-content:center;overflow:hidden !important}
   body.printing-certificate .certificate-card.cert2{width:min(100vw, calc(100vh * 297 / 210)) !important;height:auto !important;aspect-ratio:297/210 !important;min-width:0 !important;max-width:none !important;flex:none}
 }
+
+/* ===== Back-to-top: brand-blue button with a clean white arrow (matches the logo colours, no yellow) ===== */
+#myBtn{background:linear-gradient(145deg,#0c2340,#0073e6)!important;box-shadow:0 5px 14px rgba(12,35,64,.35)!important}
+#myBtn:hover{box-shadow:0 8px 20px rgba(12,35,64,.45)!important}
+#myBtn .myBtn-inner{transform:none!important;color:#fff}
+#myBtn .myBtn-inner svg{width:55%;height:55%;display:block}
+#myBtn.launching .myBtn-inner{animation:arrowLift .7s ease-in forwards!important}
+@keyframes arrowLift{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-70px);opacity:0}}
+.rocket-spark{background:radial-gradient(circle,#ffffff 0%,#4da3f0 55%,rgba(0,115,230,0) 75%)!important}
+
+/* ===== Staff Panel: enquiry pipeline ===== */
+.enq-summary{margin:0 0 12px;padding:10px 12px;background:#f4f8fd;border:1px solid #d9e6f5;border-radius:10px}
+.enq-kpis{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.82rem;color:#486581;margin-bottom:8px}
+.enq-kpis b{color:#0c2340}
+.enq-kpis .enq-due,.enq-kpis .enq-due b{color:#c62828}
+.enq-chips{display:flex;flex-wrap:wrap;gap:6px}
+.enq-chip{border:1px solid #c9d9ec;background:#fff;color:#334e68;border-radius:999px;padding:5px 11px;font-size:.78rem;font-weight:600;cursor:pointer}
+.enq-chip b{margin-left:3px;color:#0073e6}
+.enq-chip.active{background:#0c2340;border-color:#0c2340;color:#fff}
+.enq-chip.active b{color:#9fd0ff}
+.enq-contact{display:flex;gap:8px;margin:8px 0}
+.enq-contact-btn{display:inline-block;padding:5px 12px;border-radius:999px;background:#eef3f9;color:#0c2340;font-size:.78rem;font-weight:700;text-decoration:none}
+.enq-contact-btn.wa{background:#e6f6ec;color:#1f7a37}
+.enq-edit{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.enq-edit label{font-size:.75rem;color:#627d98;margin-left:4px}
+.enq-edit select,.enq-edit input[type=date]{padding:4px 6px}
+.enq-overdue{font-size:.72rem;font-weight:700;color:#fff;background:#c62828;border-radius:999px;padding:2px 8px}
+.admin-enquiry-card.status-demobooked{border-left:3px solid #7e57c2}
+.admin-enquiry-card.status-demodone{border-left:3px solid #0073e6}
+.admin-enquiry-card.status-admitted{border-left:3px solid #1f7a37}
+.admin-enquiry-card.status-lost{border-left:3px solid #8798ab;opacity:.75}

@@ -352,6 +352,10 @@
     };
     form.onsubmit = function (e) { e.preventDefault(); var v = inp.value; inp.value = ''; ask(v); };
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) close(); });
+    // tap / click anywhere outside the assistant closes the panel (pointerdown runs before the chat re-draws itself)
+    document.addEventListener('pointerdown', function (e) {
+        if (panel.classList.contains('open') && !root.contains(e.target)) panel.classList.remove('open');
+    }, true);
 
     labels();
     function mount() {

@@ -2948,6 +2948,122 @@ function switchAdminTab(tab) {
    visible further down so staff have a full history, not just an inbox
    that vanishes once handled. Needs 'listEnquiries' + 'updateEnquiry'
    actions in Code.gs — see the GOOGLE SHEET BACKEND SETUP note above. */
+/* ---------- ENQUIRY PIPELINE ----------
+   Pending -> Contacted -> Demo Booked -> Demo Done -> Admitted, or Lost (with a reason).
+   Old rows marked "Closed" still show. The strip on top shows how many enquiries are at each step,
+   the admission rate, and how many follow-ups are due today. Click a step to filter the list. */
+const ENQ_STATUSES = ['Pending', 'Contacted', 'Demo Booked', 'Demo Done', 'Admitted', 'Lost'];
+const ENQ_LOST_REASONS = ['Fee too high', 'Not interested', 'Joined elsewhere', 'No response', 'Other'];
+let _enqAll = [], _enqFilter = 'all';
+
+function enqIsActive(st) { return st !== 'Admitted' && st !== 'Lost' && st !== 'Closed'; }
+function enqToday() { return new Date().toLocaleDateString('en-CA'); } // yyyy-mm-dd in local time
+function enqWaLink(phone) {
+    const d = String(phone || '').replace(/\D/g, '');
+    return d ? 'https://wa.me/' + (d.length === 10 ? '91' + d : d) : '';
+}
+
+function renderAdminEnquiries() {
+    const listEl = document.getElementById('adminEnquiriesList');
+    const countBadge = document.getElementById('adminEnquiryCount');
+    if (!listEl) return;
+    const today = enqToday();
+    const all = _enqAll.map(en => Object.assign({}, en, { _st: en.status || 'Pending' }));
+    const counts = {};
+    all.forEach(en => { counts[en._st] = (counts[en._st] || 0) + 1; });
+    const dueCount = all.filter(en => enqIsActive(en._st) && en.followUp && en.followUp <= today).length;
+    const admitted = counts['Admitted'] || 0;
+    const rate = all.length ? Math.round(admitted * 100 / all.length) : 0;
+
+    if (countBadge) {
+        const n = (counts['Pending'] || 0);
+        countBadge.style.display = n > 0 ? 'inline-flex' : 'none';
+        countBadge.textContent = n;
+    }
+
+    const steps = ENQ_STATUSES.concat(counts['Closed'] ? ['Closed'] : []);
+    const chip = (key, label, n) => `<button type="button" class="enq-chip ${_enqFilter === key ? 'active' : ''}" data-enq-filter="${key}">${label} <b>${n}</b></button>`;
+    const summary = `
+        <div class="enq-summary">
+            <div class="enq-kpis">
+                <span>Total: <b>${all.length}</b></span>
+                <span>Admitted: <b>${admitted}</b></span>
+                <span>Admission rate: <b>${rate}%</b></span>
+                <span class="${dueCount ? 'enq-due' : ''}">Follow-ups due: <b>${dueCount}</b></span>
+            </div>
+            <div class="enq-chips">
+                ${chip('all', 'All', all.length)}
+                ${dueCount ? chip('due', 'Follow-up due', dueCount) : ''}
+                ${steps.map(st => chip(st, escHtml(st), counts[st] || 0)).join('')}
+            </div>
+        </div>`;
+
+    let rows = all;
+    if (_enqFilter === 'due') rows = all.filter(en => enqIsActive(en._st) && en.followUp && en.followUp <= today);
+    else if (_enqFilter !== 'all') rows = all.filter(en => en._st === _enqFilter);
+
+    // follow-ups due first, then Pending, then other open ones, finished ones (Admitted / Lost / Closed) last; newest first inside each group
+    const rank = en => {
+        if (!enqIsActive(en._st)) return 3;
+        if (en.followUp && en.followUp <= today) return 0;
+        return en._st === 'Pending' ? 1 : 2;
+    };
+    rows = rows.slice().sort((x, y) => rank(x) - rank(y) || new Date(y.timestamp || 0) - new Date(x.timestamp || 0));
+
+    const cards = rows.map(en => {
+        const statusVal = en._st;
+        const whenText = en.timestamp ? new Date(en.timestamp).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+        const options = ENQ_STATUSES.concat(statusVal === 'Closed' ? ['Closed'] : []);
+        const wa = enqWaLink(en.phone), telDigits = String(en.phone || '').replace(/[^\d+]/g, '');
+        const overdue = enqIsActive(statusVal) && en.followUp && en.followUp <= today;
+        return `
+            <div class="sl-course-card admin-enquiry-card status-${escHtml(String(statusVal).toLowerCase().replace(/[^a-z]/g, ''))}">
+                <h4>${escHtml(en.name || 'Unnamed')} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${escHtml(en.phone || '')}${en.email ? ' · ' + escHtml(en.email) : ''})</span></h4>
+                ${en.uniqueId ? `<span class="admin-ref-id">ID: ${escHtml(en.uniqueId)}</span>` : ''}
+                ${whenText ? `<span style="font-size:0.75rem; color:#627d98;">${whenText}</span><br>` : ''}
+                ${en.type ? `<span style="font-size:0.78rem; color:#0073e6; font-weight:700;">${escHtml(en.type)}</span>` : ''}
+                ${en.service ? `<span style="font-size:0.78rem; color:#486581;"> · ${escHtml(en.service)}</span>` : ''}
+                ${en.message ? `<p style="font-size:0.82rem; color:#334e68; margin:6px 0;">${escHtml(en.message)}</p>` : ''}
+                <div class="enq-contact">
+                    ${telDigits ? `<a class="enq-contact-btn" href="tel:${escHtml(telDigits)}">📞 Call</a>` : ''}
+                    ${wa ? `<a class="enq-contact-btn wa" href="${wa}" target="_blank" rel="noopener">💬 WhatsApp</a>` : ''}
+                </div>
+                <div class="enq-edit">
+                    <label>Status</label>
+                    <select id="enq-status-row-${en.rowIndex}" data-enq-status="${en.rowIndex}">
+                        ${options.map(o => `<option value="${escHtml(o)}" ${statusVal === o ? 'selected' : ''}>${escHtml(o)}</option>`).join('')}
+                    </select>
+                    <span id="enq-lost-wrap-${en.rowIndex}" style="${statusVal === 'Lost' ? '' : 'display:none;'}">
+                        <label>Reason</label>
+                        <select id="enq-lost-row-${en.rowIndex}">
+                            <option value="">Select…</option>
+                            ${ENQ_LOST_REASONS.map(o => `<option value="${escHtml(o)}" ${en.lostReason === o ? 'selected' : ''}>${escHtml(o)}</option>`).join('')}
+                        </select>
+                    </span>
+                    <label>Follow-up</label>
+                    <input type="date" id="enq-follow-row-${en.rowIndex}" value="${escHtml(en.followUp || '')}">
+                    ${overdue ? '<span class="enq-overdue">Due</span>' : ''}
+                    <button class="sl-cert-btn" style="margin-left:8px;" onclick="saveAdminEnquiryStatus(${en.rowIndex})">Save</button>
+                </div>
+            </div>`;
+    }).join('');
+
+    listEl.innerHTML = summary + (cards || '<p class="sl-hint">No enquiries in this step.</p>');
+}
+
+// filter chips + "Lost" reason picker (no inline handlers: the Staff Panel safely strips those)
+document.addEventListener('click', e => {
+    const chip = e.target.closest && e.target.closest('[data-enq-filter]');
+    if (chip) { _enqFilter = chip.getAttribute('data-enq-filter'); renderAdminEnquiries(); }
+});
+document.addEventListener('change', e => {
+    const sel = e.target;
+    if (!sel || !sel.getAttribute || sel.getAttribute('data-enq-status') === null) return;
+    const wrap = document.getElementById('enq-lost-wrap-' + sel.getAttribute('data-enq-status'));
+    if (wrap) wrap.style.display = sel.value === 'Lost' ? '' : 'none';
+});
+
+/* Pulls every row from the "Enquiries" tab and draws the pipeline. Needs 'listEnquiries' + 'updateEnquiry' in Code.gs. */
 async function loadAdminEnquiries() {
     const listEl = document.getElementById('adminEnquiriesList');
     const emptyHint = document.getElementById('adminEnquiriesEmptyHint');
@@ -2976,42 +3092,8 @@ async function loadAdminEnquiries() {
             return;
         }
         emptyHint.style.display = 'none';
-
-        // Newest first, and Pending ones surfaced above Contacted/Closed ones.
-        const sorted = [...result.enquiries].sort((a, b) => {
-            const aPending = (a.status || 'Pending') === 'Pending';
-            const bPending = (b.status || 'Pending') === 'Pending';
-            if (aPending !== bPending) return aPending ? -1 : 1;
-            return new Date(b.timestamp || 0) - new Date(a.timestamp || 0);
-        });
-
-        const pendingCount = sorted.filter(en => (en.status || 'Pending') === 'Pending').length;
-        if (countBadge) {
-            countBadge.style.display = pendingCount > 0 ? 'inline-flex' : 'none';
-            countBadge.textContent = pendingCount;
-        }
-
-        listEl.innerHTML = sorted.map(en => {
-            const statusVal = en.status || 'Pending';
-            const whenText = en.timestamp ? new Date(en.timestamp).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
-            return `
-                <div class="sl-course-card admin-enquiry-card status-${escHtml(String(statusVal).toLowerCase().replace(/[^a-z]/g, ''))}">
-                    <h4>${escHtml(en.name || 'Unnamed')} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${escHtml(en.phone || '')}${en.email ? ' · ' + escHtml(en.email) : ''})</span></h4>
-                    ${en.uniqueId ? `<span class="admin-ref-id">ID: ${escHtml(en.uniqueId)}</span>` : ''}
-                    ${whenText ? `<span style="font-size:0.75rem; color:#627d98;">${whenText}</span><br>` : ''}
-                    ${en.type ? `<span style="font-size:0.78rem; color:#0073e6; font-weight:700;">${escHtml(en.type)}</span>` : ''}
-                    ${en.service ? `<span style="font-size:0.78rem; color:#486581;"> · ${escHtml(en.service)}</span>` : ''}
-                    ${en.message ? `<p style="font-size:0.82rem; color:#334e68; margin:6px 0;">${escHtml(en.message)}</p>` : ''}
-                    <label style="font-size:0.75rem;">Status</label>
-                    <select id="enq-status-row-${en.rowIndex}" style="margin-left:6px; padding:4px 6px;">
-                        <option value="Pending" ${statusVal === 'Pending' ? 'selected' : ''}>Pending</option>
-                        <option value="Contacted" ${statusVal === 'Contacted' ? 'selected' : ''}>Contacted</option>
-                        <option value="Closed" ${statusVal === 'Closed' ? 'selected' : ''}>Closed</option>
-                    </select>
-                    <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px;" onclick="saveAdminEnquiryStatus(${en.rowIndex})">Save</button>
-                </div>
-            `;
-        }).join('');
+        _enqAll = result.enquiries;
+        renderAdminEnquiries();
     } catch (e) {
         console.error('Loading admin enquiry list failed:', e);
         adminEnquiriesLoaded = false;
@@ -3022,12 +3104,17 @@ async function loadAdminEnquiries() {
 async function saveAdminEnquiryStatus(rowIndex) {
     const statusEl = document.getElementById(`enq-status-row-${rowIndex}`);
     const status = statusEl ? statusEl.value : 'Pending';
+    const lostEl = document.getElementById(`enq-lost-row-${rowIndex}`);
+    const followEl = document.getElementById(`enq-follow-row-${rowIndex}`);
+    const lostReason = status === 'Lost' && lostEl ? lostEl.value : '';
+    const followUp = followEl ? followEl.value : '';
+    if (status === 'Lost' && !lostReason) { showToast('Please pick why this enquiry was lost.'); return; }
     try {
-        const result = await callSheetBackend({ action: 'updateEnquiry', rowIndex, status });
+        const result = await callSheetBackend({ action: 'updateEnquiry', rowIndex, status, lostReason, followUp });
         if (result.success) {
             loadAdminEnquiries();
         } else {
-            showToast('Could not save — please try again.');
+            showToast(result.error || 'Could not save — please try again.');
         }
     } catch (e) {
         console.error('Saving enquiry status failed:', e);
