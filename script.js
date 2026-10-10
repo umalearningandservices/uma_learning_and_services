@@ -2500,21 +2500,23 @@ document.addEventListener('keydown', function (e) {
 });
 
 function slShowTab(tab) {
-    const verify = tab === 'verify';
-    const lf = document.getElementById('slLoginForm'), vf = document.getElementById('slVerifyForm');
-    if (lf) lf.style.display = verify ? 'none' : 'block';
-    if (vf) vf.style.display = verify ? 'block' : 'none';
-    const tl = document.getElementById('slTabLogin'), tv = document.getElementById('slTabVerify');
-    if (tl) tl.classList.toggle('active', !verify);
-    if (tv) tv.classList.toggle('active', verify);
-    const inp = document.getElementById(verify ? 'slVerifyInput' : 'slIdentifier');
+    const forms = { login: 'slLoginForm', verify: 'slVerifyForm', pay: 'slPayForm' };
+    const tabs = { login: 'slTabLogin', verify: 'slTabVerify', pay: 'slTabPay' };
+    if (!forms[tab]) tab = 'login';
+    Object.keys(forms).forEach(k => {
+        const f = document.getElementById(forms[k]), t = document.getElementById(tabs[k]);
+        if (f) f.style.display = k === tab ? 'block' : 'none';
+        if (t) t.classList.toggle('active', k === tab);
+    });
+    const inp = document.getElementById(tab === 'verify' ? 'slVerifyInput' : tab === 'login' ? 'slIdentifier' : '');
     if (inp) setTimeout(() => inp.focus(), 50);
 }
 
 function renderStudentDashboard(student) {
-    const tabsEl = document.getElementById('slTabs'), vForm = document.getElementById('slVerifyForm');
+    const tabsEl = document.getElementById('slTabs'), vForm = document.getElementById('slVerifyForm'), pForm = document.getElementById('slPayForm');
     if (tabsEl) tabsEl.style.display = 'none';
     if (vForm) vForm.style.display = 'none';
+    if (pForm) pForm.style.display = 'none';
     document.getElementById('slLoginForm').style.display = 'none';
     document.getElementById('slDashboard').classList.add('show');
     document.getElementById('slStudentName').textContent = student.name;
@@ -4214,7 +4216,7 @@ function fillCertificateDetails(r) {
             c.classList.toggle('rv-hide', !show);
         });
         var cnt = grid.querySelector('.rv-count');
-        if (cnt) cnt.textContent = matches ? ('Showing ' + visible + ' of ' + matches + ' review' + (matches === 1 ? '' : 's')) : 'No reviews match your search';
+        if (cnt) cnt.textContent = matches ? '' : 'No reviews match your search';
         var more = grid.querySelector('.rv-showmore');
         if (more) more.style.display = matches > visible ? '' : 'none';
     }

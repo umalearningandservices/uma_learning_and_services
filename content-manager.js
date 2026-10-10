@@ -9,7 +9,7 @@
     var HINTS = {
         blog:    { title: 'Blog title', cat: 'Category', list: ['Career', 'Automation', 'Learning Tips', 'Placement'], text: 'Article text (blank line = new paragraph)' },
         gallery: { title: 'Photo caption', cat: 'Category (pick one)', list: ['classroom', 'birthday', 'festival', 'celebration', 'Clients'], text: '' },
-        review:  { title: 'Name', cat: 'Role', list: ['Student', 'Client', 'Business Owner'], text: 'Testimonial text' },
+        review:  { title: 'Name', cat: 'Role', list: ['Learner', 'Client', 'Business Owner'], text: 'Testimonial text' },
         course:  { title: 'Course name', cat: 'Section (pick from suggestions)', list: null, text: 'Full description (what is covered, who it is for)' },
         service: { title: 'Service name', cat: 'Section (pick from suggestions)', list: null, text: 'Full description (what you deliver, who it is for)' }
     };
@@ -228,5 +228,3 @@
         panel.style.display = ''; btn.classList.add('active'); reload();
     };
 })();
-
-

@@ -582,3 +582,57 @@ html.rv-lb-lock{overflow:hidden}
 .admin-enquiry-card.status-demodone{border-left:3px solid #0073e6}
 .admin-enquiry-card.status-admitted{border-left:3px solid #1f7a37}
 .admin-enquiry-card.status-lost{border-left:3px solid #8798ab;opacity:.75}
+
+/* ===== Stamp + signature image (certificate & invoice) ===== */
+.cert2-sign-space{position:relative}
+.cert2-sign-img{position:absolute;left:50%;bottom:-.3cqw;transform:translateX(-50%);height:9cqw;width:auto;max-width:150%;object-fit:contain;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.inv2-sign-space{position:relative}
+.inv2-sign-img{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);height:84px;width:auto;max-width:150%;object-fit:contain;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+/* ===== Paytm QR on invoice ===== */
+.inv2-qr{display:flex;align-items:flex-end;justify-content:center}
+.inv2-pay-qr{width:104px;height:auto;max-height:130px;object-fit:contain;border:1px solid #dbe8f7;border-radius:6px;background:#fff;padding:3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@media(max-width:640px){.inv2-qr,.inv2-sign{align-self:center}}
+
+/* ===== Video testimonials ===== */
+.video-testimonials{max-width:1100px;margin:48px auto 0;padding:0 16px}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:20px}
+.video-slot{margin:0}
+.video-frame{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#eef4fb;border:2px dashed #b7d3f0}
+.video-frame video,.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover;background:#000}
+.video-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7a93ad;font-size:.85rem}
+.video-empty span{font-size:1.6rem;color:#1565c0}
+.video-slot figcaption{display:flex;flex-direction:column;margin-top:8px;font-size:.9rem}
+.video-slot figcaption span{font-size:.78rem;color:#7a93ad}
+
+/* signature+stamp image: larger, overlapping the line, always printed */
+.cert2-sign-space{height:7cqw;overflow:visible}
+.cert2-sign-img{height:12cqw;bottom:-1cqw;display:block !important;visibility:visible !important}
+.inv2-sign-space{height:70px;overflow:visible}
+.inv2-sign-img{height:110px;bottom:-6px;display:block !important;visibility:visible !important}
+.inv2-sign{width:210px}
+.rv-count:empty{display:none}
+@media print{.cert2-sign-img,.inv2-sign-img{display:block !important;visibility:visible !important;opacity:1 !important}}
+
+.learner-pay{flex-direction:column;align-items:center;gap:8px;display:flex;justify-content:center;margin:16px 0 4px}
+.learner-pay img{width:170px;max-width:60%;height:auto;border:1px solid #dbe8f7;border-radius:10px;background:#fff;padding:6px}
+.learner-pay-title{font-size:.8rem;font-weight:700;color:#0c2340;letter-spacing:.04em;text-transform:uppercase}
+
+.pay-fees{max-width:360px;margin:36px auto 8px;padding:20px;text-align:center;background:#fff;border:1px solid #dbe8f7;border-radius:16px}
+.pay-fees h3{margin:0 0 4px;color:#0c2340;font-size:1.2rem}
+.pay-fees p{margin:0 0 12px;font-size:.88rem;color:#627d98}
+.pay-fees img{width:220px;max-width:80%;height:auto;border-radius:10px}
+
+.sl-pay-qr{display:flex;justify-content:center;margin:8px 0 4px}
+.sl-pay-qr img{width:230px;max-width:75%;height:auto;border:1px solid #dbe8f7;border-radius:12px;background:#fff;padding:8px}
+
+/* FIX: sign-space collapsed to 0 width, squashing the image to 0 */
+.cert2-sign-space,.inv2-sign-space{width:100%}
+.cert2-sign-img,.inv2-sign-img{max-width:none !important;width:auto}
+
+/* signature+stamp sits right on the signature line, any white background blends away */
+.cert2-sign-img,.inv2-sign-img{bottom:2px !important;background:transparent;mix-blend-mode:multiply}
+.cert2-sign-space{height:8cqw}
+.cert2-sign-img{height:11cqw}
+.inv2-sign-space{height:80px}
+.inv2-sign-img{height:100px}

@@ -127,3 +127,30 @@
     if (document.readyState === 'complete') setTimeout(begin, 800); else window.addEventListener('load', function () { setTimeout(begin, 800); });
     document.addEventListener('cms-rendered', function () { queue = []; });   // new courses added by staff
 })();
+
+/* Video testimonials: paste any YouTube link into data-youtube="" on a .video-slot */
+(function () {
+    'use strict';
+    function ytId(u) {
+        var m = String(u || '').trim().match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/|v\/))([\w-]{11})/);
+        return m ? m[1] : '';
+    }
+    function init() {
+        document.querySelectorAll('.video-slot[data-youtube]').forEach(function (slot) {
+            var id = ytId(slot.getAttribute('data-youtube'));
+            var frame = slot.querySelector('.video-frame');
+            if (!id || !frame || frame.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0';
+            f.title = 'Video testimonial';
+            f.loading = 'lazy';
+            f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            f.setAttribute('allowfullscreen', '');
+            f.referrerPolicy = 'strict-origin-when-cross-origin';
+            frame.innerHTML = '';
+            frame.appendChild(f);
+            frame.style.border = '0';
+        });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
