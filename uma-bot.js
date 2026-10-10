@@ -11,8 +11,8 @@
         email: 'umalearingandservices@gmail.com',
         site: 'umalearningservices.com',
         address: 'Vatika Road, Jaipur, Rajasthan - 303905',
-        hoursEn: 'Monday to Saturday, 9:00 AM - 9:30 PM',
-        hoursHi: 'सोमवार से शनिवार, सुबह 9:00 - रात 9:30',
+        hoursEn: 'Monday to Saturday, 6:00 AM - 8:00 PM',
+        hoursHi: 'सोमवार से शनिवार, सुबह 6:00 - रात 8:00',
         fees: '',      // example: 'Courses start from Rs 2,000. Exact fee depends on the course.'  (blank = "tell us the course" answer)
         feesHi: '',
         batches: '',   // example: 'Morning 10 AM, Afternoon 2 PM and Evening 6 PM batches.'
@@ -22,7 +22,7 @@
     };
     var TXT = {
         en: {
-            title: 'UMA Assistant', online: 'Online now', ask: 'Ask UMA', teaser: 'Hi! Need help choosing a course?',
+            title: 'UMA Assistant', online: 'Online now', ask: 'Ask UMA', teaser: 'Hi! Need help choosing a course or service?',
             hello: 'Hi! I am the UMA assistant. Pick a topic below or type your question.',
             menu: 'Main menu', placeholder: 'Type your question...', send: 'Send',
             c_courses: 'Courses', c_services: 'Services', c_fees: 'Fees', c_timings: 'Timings', c_cert: 'Certificate',
@@ -32,7 +32,7 @@
             fees: 'Fees depend on the course and duration. Tell us which course you like and our team will share the exact fee.',
             timings: 'Batch timings depend on the course and our team will confirm the batch that suits you.',
             cert: 'After you complete a course you get a Certificate of Completion from UMA Learning & Services (MSME registered, ISO certified organization). Every certificate has a QR code that anyone can scan to verify it, and you can see yours in Student Login once the course is marked completed.',
-            adm: 'Admission is simple: 1) Choose a course. 2) Call or WhatsApp us to confirm the batch and fee. 3) Complete admission with our team. You then get a Student ID and can log in to track progress and download your certificate.',
+            adm: 'Admission is simple: 1) Choose a course or service. 2) Call or WhatsApp us to confirm the batch and fee. 3) Complete admission with our team. You then get a Student ID and can log in to track progress and download your certificate.',
             place: 'Yes! We provide 100% placement assistance to every student: practical skills training, resume building, interview preparation and job support until you are ready. So far 16+ students are placed and 12+ are self-employed. Join us and build your career with confidence!',
             demo: 'You can ask for a demo class. Share your number and our team will confirm the next demo time.',
             contact: 'You can reach us here:', open: 'Open', call: 'Call', wa: 'WhatsApp', mail: 'Email', map: 'Map',
@@ -45,7 +45,7 @@
             fail: 'Sorry, I could not save that just now. Please WhatsApp us instead:', again: 'Anything else I can help with?'
         },
         hi: {
-            title: 'UMA सहायक', online: 'अभी ऑनलाइन', ask: 'UMA से पूछें', teaser: 'नमस्ते! कोर्स चुनने में मदद चाहिए?',
+            title: 'UMA सहायक', online: 'अभी ऑनलाइन', ask: 'UMA से पूछें', teaser: 'नमस्ते! कोर्स या सेवा चुनने में मदद चाहिए?',
             hello: 'नमस्ते! मैं UMA सहायक हूँ। नीचे से विषय चुनें या अपना सवाल लिखें।',
             menu: 'मुख्य मेनू', placeholder: 'अपना सवाल लिखें...', send: 'भेजें',
             c_courses: 'कोर्स', c_services: 'सेवाएँ', c_fees: 'फीस', c_timings: 'समय', c_cert: 'सर्टिफिकेट',
@@ -55,7 +55,7 @@
             fees: 'फीस कोर्स और अवधि पर निर्भर करती है। आप कौन सा कोर्स चाहते हैं, बताइए, हमारी टीम सही फीस बता देगी।',
             timings: 'बैच का समय कोर्स पर निर्भर करता है और हमारी टीम आपके लिए सही बैच बता देगी।',
             cert: 'कोर्स पूरा होने पर आपको UMA Learning & Services का कम्प्लीशन सर्टिफिकेट मिलता है (MSME रजिस्टर्ड, ISO प्रमाणित संस्था)। हर सर्टिफिकेट पर QR कोड होता है जिसे स्कैन करके कोई भी जाँच सकता है। कोर्स पूरा चिह्नित होने पर आप इसे Student Login में देख सकते हैं।',
-            adm: 'एडमिशन आसान है: 1) कोर्स चुनें। 2) बैच और फीस पक्की करने के लिए हमें कॉल या WhatsApp करें। 3) हमारी टीम के साथ एडमिशन पूरा करें। फिर आपको Student ID मिलता है जिससे लॉगिन करके प्रगति देख सकते हैं और सर्टिफिकेट डाउनलोड कर सकते हैं।',
+            adm: 'एडमिशन आसान है: 1) कोर्स या सेवा चुनें। 2) बैच और फीस पक्की करने के लिए हमें कॉल या WhatsApp करें। 3) हमारी टीम के साथ एडमिशन पूरा करें। फिर आपको Student ID मिलता है जिससे लॉगिन करके प्रगति देख सकते हैं और सर्टिफिकेट डाउनलोड कर सकते हैं।',
             place: 'हम प्रैक्टिकल स्किल और करियर सहयोग देते हैं। अब तक 16+ विद्यार्थी प्लेस हुए हैं और 12+ स्वरोज़गार में हैं। परिणाम आपकी मेहनत और स्किल पर निर्भर करते हैं, इसलिए हम नौकरी की गारंटी नहीं देते।',
             demo: 'आप डेमो क्लास के लिए पूछ सकते हैं। अपना नंबर दें, हमारी टीम अगला डेमो समय बता देगी।',
             contact: 'आप हमसे यहाँ संपर्क कर सकते हैं:', open: 'समय', call: 'कॉल', wa: 'WhatsApp', mail: 'ईमेल', map: 'नक्शा',
