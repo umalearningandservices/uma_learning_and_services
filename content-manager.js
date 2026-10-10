@@ -189,6 +189,11 @@
     function reload() { return fetchContent(true).then(function (items) { renderPublic(items); drawList(items); }).catch(function (e) { $('cmList').innerHTML = ''; say(explain(e), true); }); }
     $('cmRefresh').onclick = reload;
 
+
+        // .ub-head small::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#32c9a8;margin-right:5px}
+
+
+
     $('cmAdd').onclick = function () {
         var type = $('cmType').value, item = {
             type: type, title: $('cmTitle').value.trim(), category: $('cmCat').value.trim(),
@@ -223,3 +228,5 @@
         panel.style.display = ''; btn.classList.add('active'); reload();
     };
 })();
+
+

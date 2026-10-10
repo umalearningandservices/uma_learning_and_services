@@ -2552,6 +2552,7 @@ function renderStudentDashboard(student) {
             ${enrolledDateText ? `<span style="font-size:0.78rem; color:#627d98; display:block; margin-top:2px;">📅 Enrolled: ${enrolledDateText}</span>` : ''}
             <div class="sl-progress-bar"><div class="sl-progress-fill" style="width:${c.progress}%;"></div></div>
             <span style="font-size:0.8rem; color:#627d98;">${c.progress}% complete</span>
+            ${c.status === 'completed' && gradeDisplayText(c.grade) ? `<span style="font-size:0.8rem; color:#1f7a37; font-weight:700; display:block; margin-top:4px;">🏅 Grade: ${escHtml(gradeDisplayText(c.grade))}</span>` : ''}
             ${feeHtml}
             ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${escJsArg(student.name)}', '${escJsArg(c.name)}', '${escJsArg(student.uniqueId || '')}', '${escJsArg(c.rowIndex != null ? c.rowIndex : '')}', '${escJsArg(durationText)}')">View Certificate</button>` : ''}
         </div>
@@ -2809,6 +2810,12 @@ async function loadAdminStudents() {
                         <label style="font-size:0.75rem; margin-top:6px; display:inline-block;">Certificate No.</label>
                         <input type="text" maxlength="40" id="cert-row-${c.rowIndex}" value="${escHtml(c.certNo || ('UMA-' + String(c.rowIndex).padStart(5, '0')))}" style="width:150px; margin-left:6px; padding:4px 6px;" title="Used when status is Completed. Default = sheet row number; type your own number if you prefer.">
                         <span style="font-size:0.7rem; color:#8798ab;">(auto-generated; you can change it)</span>
+                        <br>
+                        <label style="font-size:0.75rem; margin-top:6px; display:inline-block;">Grade</label>
+                        <select id="grade-row-${c.rowIndex}" style="margin-left:6px; padding:4px 6px;" title="Pick the grade after you have taken the exam. It is printed on the certificate with its percentage range.">
+                            <option value="">— Not graded —</option>
+                            ${GRADE_SCALE.map(x => `<option value="${x.grade}" ${String(c.grade || '') === x.grade ? 'selected' : ''}>${x.grade} (${gradeRangeText(x)}) ${x.label}</option>`).join('')}
+                        </select>
                         ${(c.rollNo || c.regdNo) ? `<span style="font-size:0.72rem; color:#486581; display:block; margin-top:4px;">${c.rollNo ? 'Roll No: <strong>' + escHtml(c.rollNo) + '</strong>' : ''}${c.rollNo && c.regdNo ? ' · ' : ''}${c.regdNo ? 'Regd. No: <strong>' + escHtml(c.regdNo) + '</strong>' : ''}${s.fatherName ? ' · Father: <strong>' + s.fatherName + '</strong>' : ''}</span>` : ''}
                         <br>
                         <button class="sl-cert-btn" style="margin-top:6px;" onclick="saveAdminCourseRow(${c.rowIndex})">Save Progress / Status / Fee</button>
@@ -2866,6 +2873,13 @@ async function saveAdminCourseRow(rowIndex) {
                     const cr = await callSheetBackend({ action: 'setCertificate', rowIndex, certNo: certEl.value.trim() });
                     if (cr && cr.success === false && cr.error && !/Unknown action/i.test(cr.error)) showToast(cr.error);
                 } catch (e) { /* certificate add-on not installed yet — row-number default still works */ }
+            }
+            const gEl = document.getElementById(`grade-row-${rowIndex}`);
+            if (gEl) {
+                try {
+                    const gr = await callSheetBackend({ action: 'setGrade', rowIndex, grade: gEl.value });
+                    if (gr && gr.success === false) showToast(/Unknown action/i.test(gr.error || '') ? 'Grade not saved: add setGrade to Code.gs (see instructions).' : (gr.error || 'Grade could not be saved.'));
+                } catch (e) { showToast('Grade could not be saved — check your connection.'); }
             }
             loadAdminStudents();
         } else {
@@ -3266,6 +3280,26 @@ function downloadInvoiceAsPdf() {
     window.print();
 }
 
+/* ---------- GRADE SCALE ----------
+   You take the exam yourself and pick the grade by hand in the Staff Panel.
+   EDIT THIS LIST to change grades, labels or percentage ranges - the Staff Panel dropdown,
+   the certificate and the grading key printed on it all follow it automatically. */
+const GRADE_SCALE = [
+    { grade: 'A+', min: 90, max: 100, label: 'Outstanding' },
+    { grade: 'A',  min: 80, max: 89,  label: 'Excellent' },
+    { grade: 'B+', min: 70, max: 79,  label: 'Very Good' },
+    { grade: 'B',  min: 60, max: 69,  label: 'Good' },
+    { grade: 'C',  min: 50, max: 59,  label: 'Satisfactory' },
+    { grade: 'D',  min: 40, max: 49,  label: 'Pass' }
+];
+function gradeEntry(g) { return GRADE_SCALE.find(x => x.grade === String(g || '').trim()) || null; }
+function gradeRangeText(x) { return x.min + '\u2013' + x.max + '%'; }
+function gradeDisplayText(g) {
+    const x = gradeEntry(g);
+    return x ? x.grade + ' (' + gradeRangeText(x) + ') \u00b7 ' + x.label : '';
+}
+function gradeKeyText() { return 'Grading: ' + GRADE_SCALE.map(x => x.grade + ' ' + gradeRangeText(x)).join('  \u2022  '); }
+
 /* ---------- CERTIFICATE ---------- */
 /* studentRefId = the student's own uniqueId (e.g. STU-20260811-A1B2, see
    generateUniqueId() near the top of this file); courseRowIndex = that
@@ -3294,7 +3328,7 @@ function viewCertificate(studentName, courseName, studentRefId, courseRowIndex, 
     // details the login response already carries (used first, so the certificate is never blank)
     const localDetails = {
         fatherName: co.fatherName || st.fatherName || '', dob: co.dob || st.dob || '',
-        regdNo: co.regdNo || st.regdNo || '', rollNo: co.rollNo || st.rollNo || '', duration: co.duration || ''
+        regdNo: co.regdNo || st.regdNo || '', rollNo: co.rollNo || st.rollNo || '', duration: co.duration || '', grade: co.grade || ''
     };
     let certNo;
     if (rowNo > 0) {
@@ -3323,7 +3357,7 @@ function viewCertificate(studentName, courseName, studentRefId, courseRowIndex, 
                 }
                 if (r.date) document.getElementById('certDate').textContent = r.date;
                 const merged = Object.assign({}, localDetails);
-                ['fatherName', 'dob', 'regdNo', 'rollNo', 'duration'].forEach(k => { if (r[k]) merged[k] = r[k]; });
+                ['fatherName', 'dob', 'regdNo', 'rollNo', 'duration', 'grade'].forEach(k => { if (r[k]) merged[k] = r[k]; });
                 fillCertificateDetails(merged);
             })
             .catch(() => { /* keep the details already shown */ });
@@ -3402,6 +3436,17 @@ function downloadCertificate() {
     let st = document.getElementById('printPageStyle');
     if (!st) { st = document.createElement('style'); st.id = 'printPageStyle'; document.head.appendChild(st); }
     st.textContent = '@page{size:A4 landscape;margin:0}';
+    // Safety net: if long names / many details ever make the certificate taller than one page, shrink its text
+    // a little at a time until it fits (the page itself is never allowed to split into two).
+    try {
+        const frame = document.querySelector('#certificateOverlay .cert2-frame'), body = document.querySelector('#certificateOverlay .cert2-body');
+        if (frame && body) {
+            body.style.zoom = '';
+            let z = 1, guard = 0;
+            document.body.offsetHeight; // force layout in print-sized state
+            while (frame.scrollHeight > frame.clientHeight + 1 && guard++ < 14) { z -= 0.05; body.style.zoom = z.toFixed(2); }
+        }
+    } catch (e) { /* printing still works without the safety net */ }
     // "Save as PDF" uses the page title as the file name
     const nm = document.getElementById('certStudentName');
     _titleBeforePrint = document.title;
@@ -3951,6 +3996,7 @@ async function openCertVerify(certNo) {
                   <dt>Student Name</dt><dd>${verifyEsc(r.name)}</dd>
                   <dt>Course</dt><dd>${verifyEsc(r.course)}</dd>
                   ${r.duration ? `<dt>Duration</dt><dd>${verifyEsc(r.duration)}</dd>` : ''}
+                  ${gradeEntry(r.grade) ? `<dt>Grade</dt><dd>${verifyEsc(gradeDisplayText(r.grade))}</dd>` : ''}
                   ${r.date ? `<dt>Date of Completion</dt><dd>${verifyEsc(r.date)}</dd>` : ''}
                   <dt>Status</dt><dd class="verify-status">Completed</dd>
                 </dl>
@@ -4014,8 +4060,12 @@ function fillCertificateDetails(r) {
     set('certDob', fmtDob(r.dob));
     set('certRegd', r.regdNo);
     set('certRoll', r.rollNo);
+    const gx = gradeEntry(r.grade);
+    set('certGrade', gx ? gx.grade + ' (' + gradeRangeText(gx) + ')' : (r.grade || ''));
+    const gk = document.getElementById('certGradeKey');
+    if (gk) { gk.textContent = (gx || r.grade) ? gradeKeyText() : ''; gk.style.display = (gx || r.grade) ? '' : 'none'; }
     const box = document.getElementById('certDetails');
-    if (box) box.style.display = (r.fatherName || r.dob || r.regdNo || r.rollNo) ? '' : 'none';
+    if (box) box.style.display = (r.fatherName || r.dob || r.regdNo || r.rollNo || r.grade) ? '' : 'none';
     if (r.duration) {
         const d = document.getElementById('certDurationLine');
         if (d && !d.textContent) d.textContent = 'Course Duration: ' + r.duration;

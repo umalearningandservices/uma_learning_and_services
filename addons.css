@@ -482,14 +482,15 @@
 }
 
 /* ===== Floating buttons: WhatsApp (bottom-left) with the back-to-top rocket stacked above it; robot assistant bottom-right ===== */
-.wa-float{position:fixed;left:24px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px rgba(0,0,0,.25);z-index:1500;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease}
+.wa-float{position:fixed;left:24px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px rgba(0,0,0,.25);z-index:1500;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease}
 .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 28px rgba(0,0,0,.35)}
 .wa-float img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
-@media(max-width:768px){.wa-float{left:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:40px;height:40px}}
+@media(max-width:768px){.wa-float{left:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:42px;height:42px}}
 @media print{.wa-float{display:none!important}}
 /* ===== Back-to-top rocket: stacked ABOVE the WhatsApp button (it was hidden underneath it) ===== */
-#myBtn{left:27px!important;bottom:calc(76px + env(safe-area-inset-bottom,0px))!important;z-index:1600!important}
-@media(max-width:768px){#myBtn{left:16px!important;bottom:calc(66px + env(safe-area-inset-bottom,0px))!important}}
+#myBtn{left:24px!important;width:46px!important;height:46px!important;bottom:calc(80px + env(safe-area-inset-bottom,0px))!important;z-index:1600!important;box-shadow:0 5px 14px rgba(0,0,0,.25)!important}
+#myBtn .myBtn-inner{font-size:1.2rem!important}
+@media(max-width:768px){#myBtn{left:14px!important;width:42px!important;height:42px!important;bottom:calc(70px + env(safe-area-inset-bottom,0px))!important}#myBtn .myBtn-inner{font-size:1.05rem!important}}
 /* ===== Reviews page for many reviews: search, clamp, show more ===== */
 .rv-toolbar{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-bottom:4px}
 .rv-search{flex:1 1 280px;max-width:420px;padding:11px 16px;border:1px solid #d5e2f0;border-radius:999px;font:inherit;font-size:.92rem;color:#0c2340;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
@@ -522,3 +523,31 @@
 html.rv-lb-lock{overflow:hidden}
 @keyframes rvFade{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.rv-lightbox.open{animation:none}.review-card .review-photo,.review-card-image .review-image{transition:none}}
+/* grade on certificate */
+.cert2-gradekey{margin:.9cqw 0 0;font-size:.85cqw;color:#627d98;letter-spacing:.05cqw;max-width:92%;text-align:center}
+.cert2-gradekey:empty{display:none}
+#certGradeWrap b{color:#1565c0}
+
+/* ===== Certificate: tighter spacing so the grade line + grading key always fit on ONE page ===== */
+.cert2-ribbon{margin:1cqw 0 .4cqw}
+.cert2-body{gap:.25cqw;min-height:0}
+.certificate-card.cert2 .cert2-name{font-size:4cqw;margin:.15cqw 0}
+.certificate-card.cert2 .cert2-course{font-size:2.5cqw;margin:.2cqw 0 0}
+.certificate-card.cert2 .cert2-line{font-size:1.3cqw}
+.cert2-details{margin-top:.7cqw;padding:.5cqw 2cqw}
+.certificate-card.cert2 .cert2-gradekey{margin:.5cqw 0 0;font-size:.75cqw;line-height:1.2}
+.cert2-foot{padding-top:.3cqw}
+.cert2-qr-box{width:8.5cqw;height:8.5cqw}
+@media print{
+  body.printing-certificate .cert2-frame{padding-top:1.4cqw;padding-bottom:1cqw}
+}
+
+/* ===== Certificate print: fit ANY paper (A4, Letter, portrait or landscape) - nothing is cut off ===== */
+@media print{
+  html{height:100% !important;overflow:hidden !important}
+  body.printing-certificate{width:100vw !important;height:100vh !important;overflow:hidden !important}
+  body.printing-certificate .print-target{width:100vw !important;height:100vh !important;display:flex !important;align-items:center;justify-content:center;overflow:hidden !important}
+  body.printing-certificate .print-target .legal-modal-box{width:100% !important;height:100% !important;max-width:none !important;display:flex !important;align-items:center;justify-content:center;overflow:hidden !important;margin:0 !important}
+  body.printing-certificate .print-target .certificate-print-area{width:100% !important;height:100% !important;display:flex !important;align-items:center;justify-content:center;overflow:hidden !important}
+  body.printing-certificate .certificate-card.cert2{width:min(100vw, calc(100vh * 297 / 210)) !important;height:auto !important;aspect-ratio:297/210 !important;min-width:0 !important;max-width:none !important;flex:none}
+}
