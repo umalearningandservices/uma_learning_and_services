@@ -140,6 +140,14 @@
             var id = ytId(slot.getAttribute('data-youtube'));
             var frame = slot.querySelector('.video-frame');
             if (!id || !frame || frame.querySelector('iframe')) return;
+            if (!/^https?:$/.test(location.protocol)) { /* opened from a file: YouTube blocks embeds (Error 153), so show a thumbnail that opens YouTube */
+                var t = document.createElement('a');
+                t.href = 'https://www.youtube.com/watch?v=' + id; t.target = '_blank'; t.rel = 'noopener';
+                t.className = 'video-thumb'; t.setAttribute('aria-label', 'Watch on YouTube');
+                t.innerHTML = '<img alt="" src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg"><span>\u25B6</span>';
+                frame.innerHTML = ''; frame.appendChild(t); frame.style.border = '0';
+                return;
+            }
             var f = document.createElement('iframe');
             f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0';
             f.title = 'Video testimonial';
@@ -150,7 +158,21 @@
             frame.innerHTML = '';
             frame.appendChild(f);
             frame.style.border = '0';
+            if (!slot.querySelector('.video-yt-link')) {
+                var a = document.createElement('a');
+                a.className = 'video-yt-link'; a.target = '_blank'; a.rel = 'noopener';
+                a.href = 'https://www.youtube.com/watch?v=' + id; a.textContent = 'Watch on YouTube \u2192';
+                slot.appendChild(a);
+            }
         });
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+(function () {
+    if (/^https?:$/.test(location.protocol)) return;
+    document.addEventListener('DOMContentLoaded', function () {
+        var f = document.querySelector('.video-frame-live iframe');
+        if (f) f.parentNode.innerHTML = '<a class="video-thumb video-thumb-ch" href="https://www.youtube.com/@UmalearningandServices" target="_blank" rel="noopener"><span>\u25B6 Open our YouTube channel</span></a>';
+    });
 })();
