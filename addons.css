@@ -647,3 +647,10 @@ html.rv-lb-lock{overflow:hidden}
 .video-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .video-thumb span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:rgba(229,9,20,.92);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
 .video-thumb-ch span{position:static;transform:none;width:auto;height:auto;border-radius:0;background:none;position:absolute;inset:0;display:flex;font-weight:700}
+
+.video-slot[hidden]{display:none}
+.video-more{display:block;margin:18px auto 0;padding:10px 22px;border:1.5px solid #1565c0;border-radius:999px;background:#fff;color:#1565c0;font-weight:700;font-size:.9rem;cursor:pointer}
+.video-more:hover{background:#1565c0;color:#fff}
+
+.video-testimonials{padding-bottom:64px;margin-bottom:0}
+.video-grid{row-gap:28px}

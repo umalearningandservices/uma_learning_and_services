@@ -176,3 +176,23 @@
         if (f) f.parentNode.innerHTML = '<a class="video-thumb video-thumb-ch" href="https://www.youtube.com/@UmalearningandServices" target="_blank" rel="noopener"><span>\u25B6 Open our YouTube channel</span></a>';
     });
 })();
+
+/* Video testimonials: show the first 10, put the rest behind a "Show more videos" button */
+(function () {
+    'use strict';
+    var LIMIT = 10;
+    function init() {
+        var grid = document.querySelector('.video-testimonials .video-grid');
+        if (!grid || grid.getAttribute('data-limited')) return;
+        var slots = Array.prototype.slice.call(grid.querySelectorAll('.video-slot'));
+        if (slots.length <= LIMIT) return;
+        grid.setAttribute('data-limited', '1');
+        slots.slice(LIMIT).forEach(function (s) { s.hidden = true; });
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'video-more';
+        btn.textContent = 'Show more videos (' + (slots.length - LIMIT) + ')';
+        btn.onclick = function () { slots.forEach(function (s) { s.hidden = false; }); btn.remove(); };
+        grid.parentNode.insertBefore(btn, grid.nextSibling);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
