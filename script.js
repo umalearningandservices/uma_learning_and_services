@@ -2400,11 +2400,9 @@ function initScrollPin(wrapperId) {
    uniqueness at registration, so this stays unambiguous even if two
    students happen to share a name.)
 
-   Security note: the phone-as-password value is stored in plain text in the
-   Staff Panel below is only gated by ADMIN_PASSWORD in this file — that's a
-   soft UI lock, not real security (anyone who reads this file could see it).
-   Fine for a small team on the honour system; avoid putting highly sensitive
-   data through it.
+   Security note: the phone-as-password value is stored in plain text in the Sheet.
+   Staff login is checked on the server (admin-auth.js). Students should be moved to a
+   separate password or OTP in the Apps Script backend.
    ============================================================================ */
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbw9C-UJLLXKdgCCcvBTW1nHr-MKG-9JyJ0oVrXeIL5ftKHgs-tN7-i6r4JtWuJ72qSk/exec";
 
@@ -2469,7 +2467,7 @@ async function studentLoginSubmit() {
     const fail = msg => { errorEl.textContent = msg; errorEl.classList.add('show'); };
     errorEl.classList.remove('show');
 
-    if (!idVal || !pwVal) { fail('Please enter your full name and phone number.'); return; }
+    if (!idVal || !pwVal) { fail('Please enter your full name and your PIN.'); return; }
     if (!sheetBackendReady) { fail('Login is not available right now. Please contact the centre.'); return; }
 
     // instant feedback: Apps Script can take a few seconds to answer
@@ -2487,7 +2485,7 @@ async function studentLoginSubmit() {
     loadingHint.style.display = 'none';
     if (btn) { btn.disabled = false; btn.textContent = 'Login'; }
 
-    if (!match) { fail(errMsg || 'Incorrect Name/Phone Number. Please try again.'); return; }
+    if (!match) { fail(errMsg || 'Incorrect Name or PIN. Please try again.'); return; }
     localStorage.setItem('umaLoggedInStudent', JSON.stringify(match));
     localStorage.setItem('umaLoggedInStudentAt', String(Date.now()));
     renderStudentDashboard(match);
@@ -2619,7 +2617,7 @@ async function submitAdmission() {
     const course = document.getElementById('admCourse').value;
     // Password isn't collected separately anymore — the student's phone
     // number doubles as their login password (see the note under the form).
-    const password = mobile;
+    const password = ''; // the backend now creates a random PIN; the phone number is no longer the password
     const feeEl = document.getElementById('admFee');
     const fee = feeEl ? (parseFloat(feeEl.value) || 0) : 0;
     const durationEl = document.getElementById('admDuration');
@@ -2658,7 +2656,7 @@ async function submitAdmission() {
         const finalId = result.uniqueId || uniqueId;
         const admSuccessEl = document.getElementById('admSuccess');
         if (admSuccessEl) {
-            admSuccessEl.innerHTML = `✅ Admission received! Student Reference ID: <strong>${finalId}</strong>${result.rollNo ? ` · Roll No: <strong>${result.rollNo}</strong>` : ''}${result.certNo ? ` · Certificate No: <strong>${result.certNo}</strong>` : ''} — save it for any queries.`;
+            admSuccessEl.innerHTML = `✅ Admission received! Student Reference ID: <strong>${finalId}</strong>${result.rollNo ? ` · Roll No: <strong>${result.rollNo}</strong>` : ''}${result.certNo ? ` · Certificate No: <strong>${result.certNo}</strong>` : ''}${result.pin ? `<br>🔑 Student Login PIN: <strong>${escHtml(result.pin)}</strong> — note it down and give it to the student now. It is shown only once.` : ''} — save it for any queries.`;
             admSuccessEl.style.display = 'block';
         }
         // The form used to get hidden here and replaced with just the
@@ -2821,6 +2819,7 @@ async function loadAdminStudents() {
                         ${(c.rollNo || c.regdNo) ? `<span style="font-size:0.72rem; color:#486581; display:block; margin-top:4px;">${c.rollNo ? 'Roll No: <strong>' + escHtml(c.rollNo) + '</strong>' : ''}${c.rollNo && c.regdNo ? ' · ' : ''}${c.regdNo ? 'Regd. No: <strong>' + escHtml(c.regdNo) + '</strong>' : ''}${s.fatherName ? ' · Father: <strong>' + s.fatherName + '</strong>' : ''}</span>` : ''}
                         <br>
                         <button class="sl-cert-btn" style="margin-top:6px;" onclick="saveAdminCourseRow(${c.rowIndex})">Save Progress / Status / Fee</button>
+                        ${c.status === 'completed' ? `<button class="sl-cert-btn" style="margin-top:6px; margin-left:6px;" onclick="viewCertificate('${escJsArg(s.name)}', '${escJsArg(c.name)}', '${escJsArg(s.uniqueId || '')}', '${escJsArg(c.rowIndex)}', '${escJsArg(c.duration || COURSE_DURATIONS[c.name] || '')}', '${escJsArg(s.mobile || '')}')">🎓 View / Share Certificate</button>` : ''}
 
                         <div style="margin-top:12px; padding-top:10px; border-top:1px dashed #d3e0ec;">
                             <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:6px; font-size:0.82rem; color:#486581;">
@@ -3400,7 +3399,8 @@ function gradeKeyText() { return 'Grading: ' + GRADE_SCALE.map(x => x.grade + ' 
    date" (the old behaviour), which silently produced a DIFFERENT ID every
    time a student re-opened their own certificate. A stable ID is what
    makes a certificate ID actually useful for verification. */
-function viewCertificate(studentName, courseName, studentRefId, courseRowIndex, durationText) {
+function viewCertificate(studentName, courseName, studentRefId, courseRowIndex, durationText, studentMobile) {
+    window._certShare = { mobile: String(studentMobile || '') }; // set when staff opens it, so WhatsApp goes straight to the student
     document.getElementById('certStudentName').textContent = studentName;
     document.getElementById('certCourseName').textContent = courseName;
     const dur = durationText || (typeof COURSE_DURATIONS !== 'undefined' ? COURSE_DURATIONS[courseName] : '') || '';
@@ -3515,6 +3515,24 @@ function closeCertificateOnOverlay(e) {
     if (e.target.id === 'certificateOverlay') closeCertificate();
 }
 let _titleBeforePrint = null;
+/* Staff / student: send the certificate verification link (and a congratulation text) on WhatsApp or copy it.
+   The PDF itself: Download Certificate > Save as PDF, then attach that file in WhatsApp / email. */
+function shareCertificate(mode) {
+    const g = id => ((document.getElementById(id) || {}).textContent || '').trim();
+    const no = g('certId'), name = g('certStudentName'), course = g('certCourseName');
+    const link = 'https://umalearningservices.com/?verify=' + encodeURIComponent(no);
+    const text = 'Congratulations ' + name + '! \uD83C\uDF93 You have successfully completed ' + course + ' at UMA Learning & Services.\nCertificate No: ' + no + '\nVerify your certificate: ' + link;
+    if (mode === 'whatsapp') {
+        let to = String((window._certShare && window._certShare.mobile) || '').replace(/\D/g, '');
+        if (to.length === 10) to = '91' + to;
+        window.open('https://wa.me/' + to + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+        return;
+    }
+    const done = () => { if (typeof showToast === 'function') showToast('Certificate link copied'); else alert('Certificate link copied'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => window.prompt('Copy this text:', text));
+    else window.prompt('Copy this text:', text);
+}
+
 function downloadCertificate() {
     // Marks THIS overlay (and only this one) as the thing to print: the Student Login dashboard stays open
     // underneath, so ".active" alone cannot tell which overlay to print (see the CSS comment on .print-target).
@@ -3572,12 +3590,29 @@ window.addEventListener("scroll", () => {
     lastScrollTopForBtn = scrollTop <= 0 ? 0 : scrollTop;
 });
 
+/* Gentle scroll-to-top: speed scales with distance (about 1.2s to 2.8s) and eases in/out,
+   so it never whips past the page. Touching/scrolling stops it. Edit the two numbers to tune. */
+function slowScrollToTop() {
+    const start = window.scrollY || document.documentElement.scrollTop || 0;
+    if (start <= 0) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { window.scrollTo(0, 0); return; }
+    const duration = Math.min(2800, Math.max(1200, start * 0.35));
+    const t0 = performance.now();
+    let stopped = false;
+    const stop = () => { stopped = true; };
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, stop, { once: true, passive: true }));
+    const ease = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    (function step(now) {
+        if (stopped) return;
+        const p = Math.min(1, (now - t0) / duration);
+        window.scrollTo({ top: start * (1 - ease(p)), behavior: 'instant' });
+        if (p < 1) requestAnimationFrame(step);
+    })(t0);
+}
+
 myBtn.onclick = () => {
     launchRocket();
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    slowScrollToTop();
 };
 
 function launchRocket() {

@@ -58,6 +58,7 @@
 </head>
 <body>
 
+<noscript><div style="padding:16px;text-align:center;font-family:sans-serif"><h1>UMA Learning &amp; Services, Jaipur</h1><p>Professional courses (Advanced Excel, Tally, ADCA, Python, Web Development, Digital Marketing) and business automation, CRM, ERP &amp; website services. Call +91 83404 34138. Please enable JavaScript to view the full site.</p></div></noscript>
 
 
     <header>
@@ -178,7 +179,7 @@
             <div class="hero-overlay"></div>
             <!-- <div class="hero-dots" id="rightHeroDots"></div> -->
             <span class="badge">UMA Learning Campus</span>
-            <h1>Professional Courses</h1>
+            <h1>Professional Courses in Jaipur</h1>
             <p class="hero-tagline">"Knowledge Today, Success Tomorrow !"</p>
             <p class="trust-snippet">"Transforming education into opportunity through practical learning, industry-relevant skills, and real-world experience that prepares you for a successful future."</p>
             <p class="tagline">Your all-in-one learning and business solutions partner—offering certified training, digital marketing, graphic design, data analytics, automation, jewellery CAD, branding, web development, and technology consulting and more.</p>
@@ -3384,10 +3385,10 @@
                 </div>
                 <label for="slIdentifier">Full Name</label>
                 <input type="text" id="slIdentifier" placeholder="Name as given at admission" autocomplete="name">
-                <label for="slPassword">Phone Number <span class="admission-optional-tag">(your password)</span></label>
-                <input type="password" id="slPassword" inputmode="numeric" maxlength="10" placeholder="10-digit phone number" autocomplete="current-password">
+                <label for="slPassword">Login PIN <span class="admission-optional-tag">(given at admission)</span></label>
+                <input type="password" id="slPassword" inputmode="numeric" maxlength="12" placeholder="Your 6-digit PIN" autocomplete="current-password">
                 <button type="button" id="slLoginBtn" onclick="studentLoginSubmit()">Login</button>
-                <p class="sl-error" id="slError">Incorrect Name/Phone Number. Please try again.</p>
+                <p class="sl-error" id="slError">Incorrect Name or PIN. Please try again.</p>
                 <p class="sl-hint" id="slLoadingHint" style="display:none;">Checking your details…</p>
                 <p class="sl-switch-link">New student? Contact us on WhatsApp or visit our centre &mdash; our team will complete your admission.</p>
             </div>
@@ -3498,14 +3499,14 @@
                 </div>
 
                 <p class="admission-field-hint u14">
-                    Your login will be your <strong>Full Name</strong> (as entered above) with your
-                    <strong>Phone Number</strong> as the password — no separate password to remember.
+                    Your login will be your <strong>Full Name</strong> (as entered above) with a
+                    <strong>6-digit PIN</strong> that is created automatically and shown once after you submit.
                 </p>
 
                 <button type="button" onclick="submitAdmission()">Submit Admission</button>
                 <p class="sl-error" id="admError">Please fill all required fields correctly.</p>
                 <p class="sl-hint" id="admLoadingHint" style="display:none;">Submitting your admission…</p>
-                <p class="sl-hint" id="admSuccess" style="display:none;">Admission received! You can log in anytime with your Full Name and your Phone Number as the password.</p>
+                <p class="sl-hint" id="admSuccess" style="display:none;">Admission received! You can log in anytime with your Full Name and the Login PIN shown here.</p>
                 <p class="sl-hint">Already registered? <a role="button" tabindex="0" onclick="closeAdmission(); openStudentLogin();">Login here</a> instead.</p>
             </div>
         </div>
@@ -3714,7 +3715,10 @@
             </div>
 
             <div class="certificate-actions no-print">
-                <button type="button" class="certificate-download-btn" onclick="downloadCertificate()">⬇ Download Certificate</button>
+                <button type="button" class="certificate-download-btn" style="margin:6px 4px 0;" onclick="downloadCertificate()">⬇ Download Certificate</button>
+                <button type="button" class="certificate-download-btn" style="margin:6px 4px 0;" onclick="shareCertificate('whatsapp')">📲 Share on WhatsApp</button>
+                <button type="button" class="certificate-download-btn" style="margin:6px 4px 0;" onclick="shareCertificate('copy')">🔗 Copy Verify Link</button>
+                <p class="sl-hint" style="margin-top:8px;">To send the PDF: click Download, choose “Save as PDF”, then attach the file in WhatsApp or email.</p>
             </div>
         </div>
     </div>

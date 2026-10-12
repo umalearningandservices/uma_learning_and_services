@@ -196,3 +196,22 @@
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
+/* ---------- Student login brute-force guard (browser side) ----------
+   After 5 wrong tries the login is paused for 60 seconds. This slows casual guessing;
+   the real protection must also be in the Apps Script backend. */
+(function () {
+    'use strict';
+    var fails = 0, lockedUntil = 0, prev = window.callSheetBackend;
+    if (typeof prev !== 'function') return;
+    window.callSheetBackend = function (payload) {
+        if (!payload || payload.action !== 'login') return prev.apply(this, arguments);
+        var left = lockedUntil - Date.now();
+        if (left > 0) return Promise.resolve({ success: false, error: 'Too many attempts. Please wait ' + Math.ceil(left / 1000) + ' seconds and try again.' });
+        return Promise.resolve(prev.apply(this, arguments)).then(function (r) {
+            if (r && r.success) fails = 0;
+            else if (++fails >= 5) { fails = 0; lockedUntil = Date.now() + 60000; }
+            return r;
+        });
+    };
+})();
