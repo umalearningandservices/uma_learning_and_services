@@ -102,7 +102,7 @@
         if (it.type === 'review') {
             n = el('div', 'review-card');
             if (src) { var rp = el('img', 'review-photo'); rp.src = src; rp.alt = it.title || 'Review photo'; rp.loading = 'lazy'; n.appendChild(rp); }
-            n.appendChild(el('div', 'review-stars', '★★★★★'));
+            var rt = Math.max(1, Math.min(5, parseInt(it.rating, 10) || 5)); n.appendChild(el('div', 'review-stars', '★★★★★'.slice(0, rt) + '☆☆☆☆☆'.slice(0, 5 - rt)));
             n.appendChild(el('p', 'quote', '"' + it.body + '"'));
             var a = el('div', 'review-author');
             a.appendChild(el('span', 'ra-name', it.title));
@@ -114,6 +114,7 @@
     }
     function renderPublic(items) {
         document.querySelectorAll('[data-cms-id]').forEach(function (x) { x.remove(); });
+        window.__cmsRendered = true;
         setTimeout(function () { document.dispatchEvent(new Event('cms-rendered')); }, 0);
         items.slice().reverse().forEach(function (it) { // server sends newest first
             var r = build(it); if (!r) return;
@@ -128,7 +129,21 @@
             .then(function (r) { if (r && r.success) return r.items || []; if (strict) throw new Error((r && r.error) || 'Backend does not know "listContent" yet — add the hook and redeploy.'); return []; })
             .catch(function (e) { if (strict) throw e; return []; });
     }
-    fetchContent().then(renderPublic);
+    /* Speed: the last list of reviews/blogs is kept in the visitor's browser, so it shows INSTANTLY on the next visit;
+       the fresh list is fetched in the background and replaces it only if something changed. */
+    (function () {
+        var CK = 'umaContentCacheV1', cached = null;
+        try { var j = JSON.parse(localStorage.getItem(CK) || 'null'); if (j && j.items) cached = j.items; } catch (e) {}
+        if (cached) renderPublic(cached);
+        if (!ready) { if (!cached) renderPublic([]); return; }
+        call({ action: 'listContent' }).then(function (r) {
+            if (r && r.success) {
+                var items = r.items || [];
+                if (!cached || JSON.stringify(items) !== JSON.stringify(cached)) renderPublic(items);
+                try { localStorage.setItem(CK, JSON.stringify({ items: items, t: Date.now() })); } catch (e) {}
+            } else if (!cached) renderPublic([]);
+        }).catch(function () { if (!cached) renderPublic([]); });
+    })();
 
     /* ---------- STAFF SIDE: "Site Content" tab ---------- */
     var bar = document.querySelector('.admin-tabs'), host = document.getElementById('adminPanelInvoices');
@@ -141,6 +156,8 @@
 
     var panel = el('div', 'admin-tab-panel'); panel.id = 'adminPanelContent'; panel.style.display = 'none';
     panel.innerHTML =
+        '<div id="cmPending" style="background:#fff8e6;border:1px solid #f5d27a;border-radius:8px;padding:14px 16px;margin-bottom:16px;">' +
+        '<strong style="color:#0c2340;">\u2B50 Visitor reviews waiting for approval</strong><div id="cmPendList" style="margin-top:8px;"></div></div>' +
         '<p class="sl-hint">Add or remove Blog posts, Gallery photos and Testimonials. Changes go live for all visitors within seconds.</p>' +
         '<div class="student-login-form" style="background:#f5f8fb;border:1px solid #e4e7eb;border-radius:8px;padding:16px;margin-bottom:16px;">' +
         '<label for="cmType">What do you want to add?</label><select id="cmType"><option value="blog">Blog post</option><option value="gallery">Gallery photo</option><option value="review">Testimonial</option><option value="course">Course</option><option value="service">Service</option></select>' +
@@ -186,7 +203,41 @@
             row.appendChild(rm); box.appendChild(row);
         });
     }
-    function reload() { return fetchContent(true).then(function (items) { renderPublic(items); drawList(items); }).catch(function (e) { $('cmList').innerHTML = ''; say(explain(e), true); }); }
+    function stars(n) { return '\u2605\u2605\u2605\u2605\u2605'.slice(0, n) + '\u2606\u2606\u2606\u2606\u2606'.slice(0, 5 - n); }
+    function setReview(id, status, label) {
+        return call({ action: 'setReviewStatus', id: id, status: status, label: label }).then(function (r) {
+            if (!r.success) return say(r.error || 'Could not update the review.', true);
+            say(status === 'Approved' ? 'Review approved. It is now live on the Testimonials page.' : 'Review hidden.');
+            reload();
+        }).catch(function (e) { say(explain(e), true); });
+    }
+    function loadPending() {
+        if (!ready || !(window.UMA_STAFF && UMA_STAFF.token)) return Promise.resolve();
+        return call({ action: 'listReviews' }).then(function (r) {
+            var box = $('cmPendList'), list = (r && r.success && r.reviews) || [];
+            btn.textContent = 'Site Content' + (list.length ? ' (' + list.length + ')' : '');
+            if (!box) return;
+            box.innerHTML = '';
+            if (!r || !r.success) { // do not say "No reviews waiting" when the backend actually failed
+                var bad = el('p', 'sl-hint', 'Could not load reviews: ' + ((r && r.error) || 'no answer from the server') + (/unknown|invalid|not supported/i.test((r && r.error) || '') ? ' (Code.gs needs the review actions and a New version deployment.)' : ''));
+                bad.style.color = '#c0262d'; box.appendChild(bad); return;
+            }
+            if (!list.length) { box.appendChild(el('p', 'sl-hint', 'No reviews waiting.')); return; }
+            list.forEach(function (rv) {
+                var row = el('div'); row.style.cssText = 'padding:10px 0;border-top:1px solid #f0e2b6;';
+                var head = el('div', null, rv.name + '  \u2022  visitor chose: ' + rv.role + '  ' + stars(rv.rating)); head.style.cssText = 'font-weight:700;color:#0c2340;';
+                var txt = el('p', null, rv.text); txt.style.cssText = 'margin:4px 0 8px;white-space:pre-wrap;color:#334e68;';
+                var lab = el('input'); lab.type = 'text'; lab.maxLength = 80; lab.value = rv.label || ''; lab.placeholder = 'Show under the name as, e.g. MIS Batch 2026 (STU-20261012-AB12)  or  Parent of Vinod (MIS)';
+                lab.style.cssText = 'width:100%;margin:0 0 8px;padding:9px 10px;border:1px solid #bcccdc;border-radius:8px;font:inherit;box-sizing:border-box;';
+                var ok = el('button', 'sl-cert-btn', 'Approve'); ok.type = 'button';
+                var no = el('button', 'sl-logout-btn', 'Hide'); no.type = 'button'; no.style.cssText = 'width:auto;margin-left:8px;';
+                ok.onclick = function () { ok.disabled = no.disabled = true; setReview(rv.id, 'Approved', lab.value.trim() || rv.role); };
+                no.onclick = function () { if (confirm('Hide this review?')) { ok.disabled = no.disabled = true; setReview(rv.id, 'Hidden'); } };
+                row.appendChild(head); row.appendChild(txt); row.appendChild(lab); row.appendChild(ok); row.appendChild(no); box.appendChild(row);
+            });
+        }).catch(function (e) { var box = $('cmPendList'); if (box) { box.innerHTML = ''; var p = el('p', 'sl-hint', 'Could not load reviews: ' + explain(e)); p.style.color = '#c0262d'; box.appendChild(p); } });
+    }
+    function reload() { loadPending(); return fetchContent(true).then(function (items) { renderPublic(items); drawList(items); }).catch(function (e) { $('cmList').innerHTML = ''; say(explain(e), true); }); }
     $('cmRefresh').onclick = reload;
 
 
@@ -222,7 +273,7 @@
     // Hook into the existing tab switcher
     var orig = window.switchAdminTab;
     window.switchAdminTab = function (tab) {
-        if (tab !== 'content') { panel.style.display = 'none'; btn.classList.remove('active'); return orig(tab); }
+        if (tab !== 'content') { panel.style.display = 'none'; btn.classList.remove('active'); loadPending(); return orig(tab); }
         document.querySelectorAll('.admin-tab-panel').forEach(function (p) { p.style.display = 'none'; });
         document.querySelectorAll('.admin-tab-btn').forEach(function (b) { b.classList.remove('active'); });
         panel.style.display = ''; btn.classList.add('active'); reload();

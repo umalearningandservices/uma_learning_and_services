@@ -3140,7 +3140,7 @@ function openInvoiceForm() {
 function closeInvoiceForm() {
     const form = document.getElementById('invoiceCreateForm');
     if (form) form.style.display = 'none';
-    ['invClientName', 'invPhone', 'invEmail', 'invService', 'invAmount', 'invDiscount', 'invTax', 'invAdvance', 'invMode', 'invRef', 'invNotes'].forEach(id => {
+    ['invClientName', 'invPhone', 'invAddress', 'invEmail', 'invService', 'invAmount', 'invDiscount', 'invTax', 'invAdvance', 'invMode', 'invRef', 'invNotes'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
@@ -3150,6 +3150,7 @@ async function submitInvoice() {
     const clientName = document.getElementById('invClientName').value.trim();
     const phone = document.getElementById('invPhone').value.trim();
     const email = document.getElementById('invEmail').value.trim();
+    const address = ((document.getElementById('invAddress') || {}).value || '').trim();
     const service = document.getElementById('invService').value.trim();
     const amount = parseFloat(document.getElementById('invAmount').value) || 0;
     const amountPaid = parseFloat(document.getElementById('invAdvance').value) || 0;
@@ -3168,7 +3169,7 @@ async function submitInvoice() {
 
     const uniqueId = generateUniqueId('INV');
     try {
-        const result = await callSheetBackend({ action: 'createInvoice', clientName, phone, email, service, amount, discount, taxPercent, amountPaid, payMode, payRef, notes, uniqueId });
+        const result = await callSheetBackend({ action: 'createInvoice', clientName, phone, address, email, service, amount, discount, taxPercent, amountPaid, payMode, payRef, notes, uniqueId });
         if (result.success) {
             closeInvoiceForm();
             loadAdminInvoices();
@@ -3230,7 +3231,8 @@ async function loadAdminInvoices() {
                 : `<p class="sl-hint" style="margin:6px 0;">No payments received yet.</p>`;
             return `
                 <div class="sl-course-card admin-invoice-card">
-                    <h4>${inv.clientName} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${inv.phone}${inv.email ? ' · ' + inv.email : ''})</span></h4>
+                    <h4>${inv.partyCode ? escHtml(inv.partyCode) + ' UmaLearningandservices \uD83E\uDD1D ' : ''}${inv.clientName} <span style="font-weight:400; color:#627d98; font-size:0.82rem;">(${inv.phone}${inv.email ? ' · ' + inv.email : ''})</span></h4>
+                    ${inv.address ? `<span style="font-size:0.78rem; color:#627d98; display:block;">📍 ${escHtml(inv.address)}</span>` : ''}
                     ${inv.invoiceNo ? `<span class="admin-ref-id">Invoice No: ${inv.invoiceNo}</span>` : (inv.uniqueId ? `<span class="admin-ref-id">ID: ${inv.uniqueId}</span>` : '')}
                     <span class="invoice-status-badge ${statusClass}">${statusLabel}</span>
                     ${formatDate(inv.timestamp) ? `<span style="font-size:0.75rem; color:#627d98; display:block; margin-top:2px;">📅 Service Date: ${formatDate(inv.timestamp)}</span>` : ''}
@@ -3293,7 +3295,8 @@ function downloadInvoicePDF(rowIndex) {
     const balance = Math.max(0, total - paid);
     const $ = id => document.getElementById(id);
 
-    $('invPdfClientName').textContent = inv.clientName;
+    $('invPdfClientName').textContent = (inv.partyCode ? inv.partyCode + ' UmaLearningandservices \uD83E\uDD1D ' : '') + inv.clientName;
+    if ($('invPdfAddress')) { $('invPdfAddress').textContent = inv.address || ''; $('invPdfAddress').style.display = inv.address ? '' : 'none'; }
     $('invPdfContact').textContent = `${inv.phone}${inv.email ? ' · ' + inv.email : ''}`;
     $('invPdfService').textContent = inv.service + (inv.notes ? ' — ' + inv.notes : '');
     $('invPdfRate').textContent = money(subtotal);

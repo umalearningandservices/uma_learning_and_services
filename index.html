@@ -22,6 +22,8 @@
     <meta name="twitter:image" content="https://umalearningservices.com/images/logo.png">
     <meta name="twitter:title" content="UMA Learning & Services" id="twitterTitle">
     <meta name="twitter:description" content="Practical courses, career skills, and business automation solutions from UMA, Jaipur." id="twitterDescription">
+    <link rel="preconnect" href="https://script.google.com">
+    <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -2677,56 +2679,7 @@
         </section>
 
         <div class="reviews-grid">
-            <div class="review-card">
-                <div class="review-stars">★★★★★</div>
-                <p class="quote">"I taken online Advance Excel class from suraj sir ,oct 2024 now I am working as MIS in merchandiser in gulmohar lane,mahendra SEZ ,jaipur from last 1.5 years, super experience."</p>
-                <div class="review-author"><span class="ra-name">ASHISH KUMAR</span><span class="ra-course">Merchandiser MIS </span></div>
-            </div>
-            <div class="review-card">
-                <div class="review-stars">★★★★★</div>
-                <p class="quote">"मेरा नाम विजय है और मैं उत्तर प्रदेश से हूँ। जीवन के एक कठिन दौर में बेहतर भविष्य की तलाश में मैं जयपुर आया और प्रताप नगर के एक कंप्यूटर संस्थान में एडमिशन लिया, जहाँ सूरज जी पार्ट-टाइम शिक्षक थे। उन्होंने एडवांस एक्सेल, VBA और अन्य तकनीकी विषयों को जिस सरल और गहराई से समझाया, उससे मेरी मजबूत नींव तैयार हुई। उन्हीं से मिली सीख और मार्गदर्शन की बदौलत मुझे 2022 में Modern Emergency Services में नौकरी मिली और बाद में मैं Gulmohar Lane Mehrasez में शिफ्ट होकर आज अपने जीवन में अच्छी तरह स्थापित हूँ। मैं दिल से सूरज जी का आभारी हूँ, क्योंकि उनके ज्ञान, मार्गदर्शन और प्रेरणा ने मेरे करियर को सही दिशा देने में महत्वपूर्ण भूमिका निभाई।"</p>
-                <div class="review-author"><span class="ra-name">VIJAY SINGH</span><span class="ra-course">SR. MIS EXECUTIVE</span></div>
-            </div>
-            <div class="review-card">
-                <div class="review-stars">★★★★☆</div>
-                <p class="quote">"Our CRM and help desk system built by UMA cut our response time in half. Genuinely reliable support."</p>
-                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Business Owner</span></div>
-            </div>
-            <div class="review-card">
-                <div class="review-stars">★★★★★</div>
-                <p class="quote">"Trainers were patient, practical, and always available. Highly recommend the ADCA Plus program."</p>
-                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Learner</span></div>
-            </div>
-            <div class="review-card">
-                <div class="review-stars">★★★★★</div>
-                <p class="quote">"Great blend of online flexibility and offline hands-on sessions. Made a real difference to my learning."</p>
-                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Learner</span></div>
-            </div>
-            <div class="review-card">
-                <div class="review-stars">★★★★☆</div>
-                <p class="quote">"Professional team, clear communication, and they delivered our automation project ahead of schedule."</p>
-                <div class="review-author"><span class="ra-name">Placeholder Name</span><span class="ra-course">Client</span></div>
-            </div>
-
-        <div class="review-card review-card-image">
-
-            <div class="review-content">
-                <div class="review-stars">★★★★★</div>
-
-               <p class="quote">"NEXT YOU."</p>
-
-                <div class="review-author">
-                    <span class="ra-name ra-no-verify"></span><br>
-                    <span class="ra-course"></span>
-                </div>
-            </div>
-
-            <div class="review-image-box">
-                <img src="images/next you.jpeg" alt="Learner" class="review-image" loading="lazy" decoding="async">
-            </div>
-
-        </div>
-
+            <!-- Reviews appear here by themselves after you approve them in Staff Panel > Site Content. Nothing is typed in by hand. -->
         </div>
 
         <section class="video-testimonials" id="videoTestimonials">
@@ -3577,6 +3530,8 @@
                         <input type="text" id="invClientName" placeholder="Client / company name">
                         <label for="invPhone">Phone</label>
                         <input type="tel" id="invPhone" placeholder="10-digit mobile number">
+                        <label for="invAddress">Address</label>
+                        <input type="text" id="invAddress" maxlength="300" placeholder="Party address (city, state, PIN)">
                         <label for="invEmail">Email (optional)</label>
                         <input type="email" id="invEmail" placeholder="Email address">
                         <label for="invService">Service / Project</label>
@@ -3752,6 +3707,7 @@
                         <div class="inv2-box">
                             <span class="inv2-label">Billed To</span>
                             <p class="inv2-client" id="invPdfClientName"></p>
+                            <p id="invPdfAddress" style="display:none;"></p>
                             <p id="invPdfContact"></p>
                         </div>
                         <div class="inv2-box inv2-box-right">
@@ -3831,6 +3787,8 @@
     <script src="seo-addon.js" defer></script>
     <script src="admin-auth.js" defer></script>
     <script src="content-manager.js" defer></script>
+    <script src="review-addon.js" defer></script>
+    <script src="testimonial-carousel.js?v=20261020" defer></script>
     <script src="analytics-addon.js?v=20261019" defer></script>
     <script src="ux-addon.js?v=20261019" defer></script>
     <script src="uma-bot.js?v=20261019" defer></script>
