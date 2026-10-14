@@ -2,7 +2,6 @@
    Put the file in the /images folder with exactly this name. */
 const COMING_SOON_IMG = 'images/photo_coming_soon_2048.webp';
 const WHATSAPP_NUMBER = '918340434138'; // Public Desk — update anytime
-
 /* ============================================================================
    UNIQUE REFERENCE IDs — shared across every backend record type
    ----------------------------------------------------------------------------
@@ -26,7 +25,6 @@ const WHATSAPP_NUMBER = '918340434138'; // Public Desk — update anytime
    student/enquirer is shown on screen is exactly what staff see in the Sheet
    and in the Staff Panel. See the GOOGLE SHEET BACKEND SETUP note below for
    the extra Sheet column this needs. ============================ */
-    
    function generateUniqueId(prefix) {
     const now = new Date();
     const datePart = now.getFullYear().toString() +
@@ -60,8 +58,6 @@ function dateFromUniqueId(uniqueId) {
     const t = new Date(`${y}-${m}-${d}`).getTime();
     return isNaN(t) ? 0 : t;
 }
-
-
 /* ============================================================================
    COURSE DURATIONS
    ----------------------------------------------------------------------------
@@ -1296,7 +1292,7 @@ function renderCourseCurriculum(courseKey) {
                 detailCover.alt = coverEl.getAttribute('alt') || title;
             }
 
-            insertBlogImageSlots(document.getElementById('blogDetailContent'));
+            if (!cardEl.dataset.noslots) insertBlogImageSlots(document.getElementById('blogDetailContent'));
 
             updateBlogSeoTags(title, excerpt, category);
 
@@ -4261,8 +4257,6 @@ function fillCertificateDetails(r) {
     document.addEventListener('DOMContentLoaded', enhance);
     document.addEventListener('cms-rendered', function () { setTimeout(enhance, 0); });
 })();
-
-
 /* Reviews: photo on a review card (class "review-photo", or the side photo of an image card).
    Hover zooms it slightly, click/tap/Enter opens it full size; click anywhere, X or Esc closes. */
 (function () {
@@ -4275,7 +4269,7 @@ function fillCertificateDetails(r) {
         box.addEventListener('click', close);
         document.body.appendChild(box);
     }
-    function open(img) {
+   function open(img) {
         if (!box) build();
         var card = img.closest('.review-card'), n = card && card.querySelector('.ra-name');
         box.querySelector('img').src = img.currentSrc || img.src;
@@ -4303,4 +4297,487 @@ function fillCertificateDetails(r) {
     }
     document.addEventListener('DOMContentLoaded', prep);
     document.addEventListener('cms-rendered', function () { setTimeout(prep, 0); });
+})();
+;
+/* ############ safe-render.js (merged) ############ */
+/* safe-render.js - loads right after script.js.
+   Staff Panel lists show text that visitors typed into public forms (enquiry and admission).
+   This cleans any HTML written into the Staff Panel / invoice screens / student course list,
+   so a malicious name or message can never run code in a staff member's browser.
+   The site's own buttons (save, add payment, view certificate) keep working. */
+(function () {
+    'use strict';
+    var desc = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
+    if (!desc || !desc.set) return;
+
+    var BAD_TAGS = 'script,iframe,frame,frameset,object,embed,applet,link,meta,base,style,foreignobject,animate,set,animatetransform,form';
+    var FN = 'addInvoicePayment|addStudentPayment|downloadInvoicePDF|saveAdminCourseRow|saveAdminEnquiryStatus|viewCertificate';
+    var ARG = "(?:\\d+|'(?:[^'\\\\]|\\\\.)*')";
+    var HANDLER = new RegExp('^\\s*(?:' + FN + ')\\(\\s*(?:' + ARG + '(?:\\s*,\\s*' + ARG + ')*)?\\s*\\)\\s*;?\\s*$');
+    var URL_ATTRS = /^(href|src|xlink:href|action|formaction|data|poster|srcset)$/i;
+    var SAFE_URL = /^\s*(https?:|mailto:|tel:|#|\/|\.\/|\.\.\/|images\/)/i;
+
+    function protectedTarget(el) {
+        return el.id === 'slCoursesList' || !!(el.closest && el.closest('#adminOverlay, #invoiceOverlay'));
+    }
+
+    function clean(html) {
+        var t = document.createElement('template'); // inert: nothing loads or runs inside it
+        t.innerHTML = html;
+        var bad = t.content.querySelectorAll(BAD_TAGS);
+        for (var i = 0; i < bad.length; i++) bad[i].remove();
+        var all = t.content.querySelectorAll('*');
+        for (var j = 0; j < all.length; j++) {
+            var el = all[j], attrs = Array.prototype.slice.call(el.attributes);
+            for (var k = 0; k < attrs.length; k++) {
+                var n = attrs[k].name, v = attrs[k].value;
+                if (/^on/i.test(n)) { if (!HANDLER.test(v)) el.removeAttribute(n); }
+                else if (URL_ATTRS.test(n)) { if (!SAFE_URL.test(v) && v.trim() !== '') el.removeAttribute(n); }
+                else if (n.toLowerCase() === 'style' && /expression\s*\(|url\s*\(|@import|behavior\s*:/i.test(v)) el.removeAttribute(n);
+            }
+        }
+        return t.innerHTML;
+    }
+
+    Object.defineProperty(Element.prototype, 'innerHTML', {
+        configurable: true, enumerable: desc.enumerable, get: desc.get,
+        set: function (v) {
+            if (typeof v === 'string' && v && protectedTarget(this)) v = clean(v);
+            desc.set.call(this, v);
+        }
+    });
+    window.__umaCleanHtml = clean; // for testing
+})();
+
+;
+/* ############ seo-addon.js (merged) ############ */
+/* seo-addon.js — runs after script.js. Reads the live page, so when the client
+   adds or removes a course, the SEO data updates itself. */
+(function () {
+    'use strict';
+    var ORG = 'UMA Learning & Services', SITE = 'https://umalearningservices.com/';
+
+    function fillAlts() { // empty alt="" on cards -> use the card's own title
+        document.querySelectorAll('.card img[alt=""]').forEach(function (img) {
+            var t = img.closest('.card').querySelector('.card-title');
+            if (t) img.alt = t.textContent.trim();
+        });
+    }
+    function courseSchema() {
+        var old = document.getElementById('courseListSchema'); if (old) old.remove();
+        var items = [];
+        document.querySelectorAll('#academy-hub .card').forEach(function (card) {
+            var title = card.querySelector('.card-title'); if (!title) return;
+            items.push({ '@type': 'ListItem', position: items.length + 1, item: {
+                '@type': 'Course', name: title.textContent.trim(),
+                description: (card.getAttribute('data-full') || '').replace(/\s+/g, ' ').trim().slice(0, 300),
+                provider: { '@type': 'EducationalOrganization', name: ORG, sameAs: SITE } } });
+        });
+        if (!items.length) return;
+        var s = document.createElement('script'); s.type = 'application/ld+json'; s.id = 'courseListSchema';
+        s.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList',
+            name: 'Professional Courses at ' + ORG, itemListElement: items });
+        document.head.appendChild(s);
+    }
+    function run() { fillAlts(); courseSchema(); }
+    run();
+    document.addEventListener('cms-rendered', run); // after client-added cards load
+})();
+
+;
+/* ############ admin-auth.js (merged) ############ */
+/* admin-auth.js — server-side staff login (Apps Script). Loads after script.js, before content-manager.js.
+   Username/password live ONLY in Apps Script > Project Settings > Script properties
+   (STAFF_USERNAME, STAFF_PASSWORD). See staff-auth-backend.gs. */
+(function () {
+    'use strict';
+    var S = window.UMA_STAFF = { token: '' }; // session token, memory only (logs out on refresh)
+    function $(id) { return document.getElementById(id); }
+
+    function showErr(msg) {
+        var er = $('adminError');
+        if (!er) return;
+        er.textContent = msg;
+        er.classList.add('show');
+        er.style.display = 'block';
+    }
+    function clearErr() {
+        var er = $('adminError');
+        if (er) { er.classList.remove('show'); er.style.display = ''; }
+    }
+
+    function post(p) {
+        return fetch(SHEET_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(p) })
+            .then(function (r) { return r.text(); })
+            .then(function (t) {
+                try { return JSON.parse(t); }
+                catch (e) { return { success: false, error: 'Server returned an error page instead of data. Open your Apps Script /exec link in a browser and read the message shown there (syntax error, authorization required, or a sheet error).' }; }
+            });
+    }
+
+    // Attach the session token to every backend call; handle expired sessions
+    var origCall = window.callSheetBackend;
+    if (typeof origCall === 'function') {
+        window.callSheetBackend = function (p) {
+            if (!S.token) return origCall(p); // public visitors: behave exactly as before
+            p.token = S.token;
+            // Staff session: never throw. Always hand back {success:false, error} so the panel can show the real reason.
+            return origCall(p).then(function (r) {
+                if (r && r.success === false && /Not authorized|Unauthorized/i.test(r.error || '')) expire();
+                return r;
+            }).catch(function (e) {
+                var m = String((e && e.message) || e);
+                return { success: false, error: /Failed to fetch|NetworkError|Load failed/i.test(m)
+                    ? 'Could not reach the server. Check your internet connection.'
+                    : 'Server error: Apps Script returned an error page. It cannot open your Google Sheet. Open Apps Script, run setupSheets once, approve permissions, check SPREADSHEET_ID, then Deploy > New version. Executions shows the exact error.' };
+            });
+        };
+    }
+    function expire() {
+        S.token = '';
+        try { window.adminLogout(); window.openAdmin(); } catch (e) {}
+        showErr('Session expired — please log in again.');
+    }
+
+    window.adminLoginSubmit = function () {
+        clearErr();
+        var user = $('adminUsername').value.trim(), pw = $('adminPassword').value;
+        if (!user || !pw) { showErr('Please enter username and password.'); return; }
+        if (typeof sheetBackendReady !== 'undefined' && !sheetBackendReady) { showErr('Backend is not connected (SHEET_API_URL missing).'); return; }
+        var btn = document.querySelector('#adminLoginForm button'); if (btn) { btn.disabled = true; btn.textContent = 'Logging in…'; }
+        post({ action: 'staffLogin', username: user, password: pw })
+            .then(function (r) {
+                if (btn) { btn.disabled = false; btn.textContent = 'Login'; }
+                if (!r.success || !r.token) { showErr(r.error || 'Incorrect username or password.'); return; }
+                S.token = r.token; window.isAdminAuthenticated = true;
+                try { isAdminAuthenticated = true; } catch (e) {}
+                $('adminPassword').value = '';
+                $('adminLoginForm').style.display = 'none';
+                $('adminDashboard').classList.add('show');
+                switchAdminTab('students');
+                // Load everything in parallel right after login so every tab is already filled when opened
+                try { loadAdminEnquiries(); } catch (e) {}
+                try { loadAdminInvoices(); } catch (e) {}
+            })
+            .catch(function () { if (btn) { btn.disabled = false; btn.textContent = 'Login'; } showErr('Could not reach the server. Check internet and try again.'); });
+    };
+
+    // Enter key submits the login form
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && e.target && (e.target.id === 'adminPassword' || e.target.id === 'adminUsername')) {
+            e.preventDefault(); window.adminLoginSubmit();
+        }
+    });
+
+    // Invoice "Service / Project": suggest every service and course shown on the site (staff can still type anything)
+    var origOpenInv = window.openInvoiceForm;
+    window.openInvoiceForm = function () {
+        if (typeof origOpenInv === 'function') origOpenInv();
+        var dl = $('invServiceList'); if (!dl) return;
+        var seen = {}; dl.innerHTML = '';
+        document.querySelectorAll('#services-hub .card-title, #academy-hub .card-title').forEach(function (t) {
+            var v = t.textContent.trim();
+            if (!v || seen[v]) return; seen[v] = 1;
+            var o = document.createElement('option'); o.value = v; dl.appendChild(o);
+        });
+    };
+
+    var origLogout = window.adminLogout;
+    window.adminLogout = function () {
+        if (S.token) { post({ action: 'staffLogout', token: S.token }); S.token = ''; }
+        if (typeof origLogout === 'function') origLogout();
+    };
+
+    // Hidden entry: yoursite.com/#staff  (also Alt+Shift+S, or tap the © line 5 times)
+    function hashOpen() {
+        if (location.hash !== '#staff') return;
+        try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+        if (typeof window.openAdmin === 'function') window.openAdmin();
+    }
+    window.addEventListener('hashchange', hashOpen);
+    setTimeout(hashOpen, 300);
+})();
+
+;
+/* ############ content-manager.js (merged) ############ */
+/* content-manager.js — lets the client add/remove Blog posts, Gallery photos
+   and Reviews from the existing Staff Panel ("Site Content" tab).
+   Data lives in a "SiteContent" sheet via Code.gs (see content-backend-addon.gs).
+   Public visitors only READ; adding/removing needs the Admin Key, which is
+   stored in Apps Script (never in this file). */
+(function () {
+    'use strict';
+    var ready = typeof sheetBackendReady !== 'undefined' && sheetBackendReady;
+    var HINTS = {
+        blog:    { title: 'Blog title', cat: 'Category', list: ['Career', 'Automation', 'Learning Tips', 'Placement'], text: 'Article text (blank line = new paragraph)' },
+        gallery: { title: 'Photo caption', cat: 'Category (pick one)', list: ['classroom', 'birthday', 'festival', 'celebration', 'Clients'], text: '' },
+        review:  { title: 'Name', cat: 'Role', list: ['Learner', 'Client', 'Business Owner'], text: 'Testimonial text' },
+        course:  { title: 'Course name', cat: 'Section (pick from suggestions)', list: null, text: 'Full description (what is covered, who it is for)' },
+        service: { title: 'Service name', cat: 'Section (pick from suggestions)', list: null, text: 'Full description (what you deliver, who it is for)' }
+    };
+    function hubOf(type) { return type === 'course' ? '#academy-hub' : '#services-hub'; }
+    function sectionGrid(type, name) {
+        var hs = document.querySelectorAll(hubOf(type) + ' .segment-heading');
+        for (var i = 0; i < hs.length; i++) {
+            var w = hs[i].closest('.segment-wrapper'), g = w && w.querySelector('.items-grid');
+            if (g && hs[i].textContent.trim() === name) return g;
+        }
+        return null;
+    }
+    function sectionNames(type) {
+        return Array.prototype.map.call(document.querySelectorAll(hubOf(type) + ' .segment-heading'), function (h) {
+            var w = h.closest('.segment-wrapper'); return w && w.querySelector('.items-grid') ? h.textContent.trim() : null;
+        }).filter(Boolean);
+    }
+
+    function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+    function img(u) { // https or local images/ only; converts Google Drive share links
+        u = (u || '').trim();
+        var m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+        if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1200';
+        return /^(https:\/\/|images\/)/.test(u) ? u : '';
+    }
+
+    // Own fetch wrapper so we can tell WHY a call failed (not JSON = Apps Script error page)
+    function call(p) {
+        if (window.UMA_STAFF && UMA_STAFF.token) p.token = UMA_STAFF.token;
+        return fetch(SHEET_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(p) })
+            .then(function (res) { return res.text(); })
+            .then(function (txt) { try { return JSON.parse(txt); } catch (e) { throw new Error('NOTJSON'); } });
+    }
+    function explain(e) {
+        var m = String((e && e.message) || e);
+        if (m === 'NOTJSON') return 'Apps Script cannot open your Google Sheet (it sent an error page). In Apps Script: run setupSheets once and approve permissions, check SPREADSHEET_ID at the top of Code.gs, then Deploy > Manage deployments > Edit > New version > Deploy. Executions shows the exact error.';
+        if (/Failed to fetch|NetworkError|Load failed/i.test(m)) return 'Could not reach your Apps Script URL. Make sure the deployment access is set to "Anyone" and that you redeployed.';
+        return m;
+    }
+
+    /* ---------- PUBLIC SIDE: render items into the existing grids ---------- */
+    function build(it) {
+        var src = img(it.image), n;
+        if (it.type === 'blog') {
+            var paras = String(it.body || '').split(/\n\s*\n/).filter(Boolean);
+            n = el('article', 'blog-card');
+            n.setAttribute('onclick', 'openBlogDetail(this)');
+            n.setAttribute('role', 'button'); n.tabIndex = 0;
+            n.dataset.date = it.date; n.dataset.author = it.author || 'UMA Team';
+            if (src) { var c = el('img', 'blog-card-cover'); c.src = src; c.alt = it.title; c.loading = 'lazy'; n.appendChild(c); }
+            n.appendChild(el('span', 'blog-cat', it.category || 'Update'));
+            n.appendChild(el('h4', null, it.title));
+            n.appendChild(el('p', null, (paras[0] || '').slice(0, 170)));
+            var meta = el('div', 'blog-card-meta');
+            var d = new Date(it.date);
+            meta.appendChild(el('span', 'bcm-date', isNaN(d) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })));
+            meta.appendChild(el('span', 'bcm-dot', '•'));
+            meta.appendChild(el('span', 'bcm-read', Math.max(1, Math.round(String(it.body).split(/\s+/).length / 200)) + ' min read'));
+            n.appendChild(meta);
+            n.appendChild(el('span', 'blog-read-more', 'Read More →'));
+            var full = el('div', 'blog-full-content'); full.hidden = true;
+            paras.forEach(function (p) { full.appendChild(el('p', null, p)); });
+            n.appendChild(full);
+            return [n, '.blogs-grid'];
+        }
+        if (it.type === 'course' || it.type === 'service') {
+            var g0 = sectionGrid(it.type, it.category); if (!g0) return null;
+            var ref = g0.querySelector('.card'), cls = ref ? (ref.className.match(/cat-[\w-]+/) || [''])[0] : '';
+            var pic = src || 'images/logo.png';
+            n = el('div', 'card ' + cls);
+            n.setAttribute('onclick', 'openDetail(this)'); n.setAttribute('role', 'button'); n.tabIndex = 0;
+            n.setAttribute('data-images', pic);
+            n.setAttribute('data-full', String(it.body).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+            var car = el('div', 'card-image-carousel');
+            ['ci-1', 'ci-2'].forEach(function (c) { var im = el('img', 'card-image ' + c); im.src = pic; im.alt = it.title; im.loading = 'lazy'; car.appendChild(im); });
+            n.appendChild(car);
+            var tx = el('div', 'card-text');
+            tx.appendChild(el('span', 'card-title', it.title)); tx.appendChild(el('span', 'card-details', it.author || ''));
+            n.appendChild(tx);
+            return [n, g0, true];
+        }
+        if (it.type === 'gallery' && src) {
+            n = el('figure', 'gallery-item');
+            n.dataset.category = it.category || 'celebration';
+            n.setAttribute('onclick', 'openGalleryLightbox(this)');
+            var g = el('img', 'gallery-photo'); g.src = src; g.alt = it.title; g.loading = 'lazy';
+            n.appendChild(g); n.appendChild(el('figcaption', null, it.title));
+            return [n, '#galleryGrid'];
+        }
+        if (it.type === 'review') {
+            n = el('div', 'review-card');
+            if (src) { var rp = el('img', 'review-photo'); rp.src = src; rp.alt = it.title || 'Review photo'; rp.loading = 'lazy'; n.appendChild(rp); }
+            var rt = Math.max(1, Math.min(5, parseInt(it.rating, 10) || 5)); n.appendChild(el('div', 'review-stars', '★★★★★'.slice(0, rt) + '☆☆☆☆☆'.slice(0, 5 - rt)));
+            n.appendChild(el('p', 'quote', '"' + it.body + '"'));
+            var a = el('div', 'review-author');
+            a.appendChild(el('span', 'ra-name', it.title));
+            a.appendChild(el('span', 'ra-course', it.category || ''));
+            n.appendChild(a);
+            return [n, '.reviews-grid'];
+        }
+        return null;
+    }
+    function renderPublic(items) {
+        document.querySelectorAll('[data-cms-id]').forEach(function (x) { x.remove(); });
+        window.__cmsRendered = true;
+        setTimeout(function () { document.dispatchEvent(new Event('cms-rendered')); }, 0);
+        items.slice().reverse().forEach(function (it) { // server sends newest first
+            var r = build(it); if (!r) return;
+            var grid = typeof r[1] === 'string' ? document.querySelector(r[1]) : r[1]; if (!grid) return;
+            r[0].dataset.cmsId = it.id;
+            if (r[2]) grid.appendChild(r[0]); else grid.insertBefore(r[0], grid.firstChild);
+        });
+    }
+    function fetchContent(strict) { // public site stays silent if backend is down; staff tab shows the reason
+        if (!ready) return Promise.resolve([]);
+        return call({ action: 'listContent' })
+            .then(function (r) { if (r && r.success) return r.items || []; if (strict) throw new Error((r && r.error) || 'Backend does not know "listContent" yet — add the hook and redeploy.'); return []; })
+            .catch(function (e) { if (strict) throw e; return []; });
+    }
+    /* Speed: the last list of reviews/blogs is kept in the visitor's browser, so it shows INSTANTLY on the next visit;
+       the fresh list is fetched in the background and replaces it only if something changed. */
+    (function () {
+        var CK = 'umaContentCacheV1', cached = null;
+        try { var j = JSON.parse(localStorage.getItem(CK) || 'null'); if (j && j.items) cached = j.items; } catch (e) {}
+        if (cached) renderPublic(cached);
+        if (!ready) { if (!cached) renderPublic([]); return; }
+        call({ action: 'listContent' }).then(function (r) {
+            if (r && r.success) {
+                var items = r.items || [];
+                if (!cached || JSON.stringify(items) !== JSON.stringify(cached)) renderPublic(items);
+                try { localStorage.setItem(CK, JSON.stringify({ items: items, t: Date.now() })); } catch (e) {}
+            } else if (!cached) renderPublic([]);
+        }).catch(function () { if (!cached) renderPublic([]); });
+    })();
+
+    /* ---------- STAFF SIDE: "Site Content" tab ---------- */
+    var bar = document.querySelector('.admin-tabs'), host = document.getElementById('adminPanelInvoices');
+    if (!bar || !host) return;
+
+    var btn = el('button', 'admin-tab-btn', 'Site Content');
+    btn.type = 'button'; btn.id = 'adminTabBtnContent';
+    btn.setAttribute('onclick', "switchAdminTab('content')");
+    bar.appendChild(btn);
+
+    var panel = el('div', 'admin-tab-panel'); panel.id = 'adminPanelContent'; panel.style.display = 'none';
+    panel.innerHTML =
+        '<div id="cmPending" style="background:#fff8e6;border:1px solid #f5d27a;border-radius:8px;padding:14px 16px;margin-bottom:16px;">' +
+        '<strong style="color:#0c2340;">\u2B50 Visitor reviews waiting for approval</strong><div id="cmPendList" style="margin-top:8px;"></div></div>' +
+        '<p class="sl-hint">Add or remove Blog posts, Gallery photos and Testimonials. Changes go live for all visitors within seconds.</p>' +
+        '<div class="student-login-form" style="background:#f5f8fb;border:1px solid #e4e7eb;border-radius:8px;padding:16px;margin-bottom:16px;">' +
+        '<label for="cmType">What do you want to add?</label><select id="cmType"><option value="blog">Blog post</option><option value="gallery">Gallery photo</option><option value="review">Testimonial</option><option value="course">Course</option><option value="service">Service</option></select>' +
+        '<label for="cmTitle" id="cmTitleL"></label><input type="text" id="cmTitle" maxlength="120">' +
+        '<label for="cmCat" id="cmCatL"></label><input type="text" id="cmCat" list="cmCatList" maxlength="40"><datalist id="cmCatList"></datalist>' +
+        '<label for="cmImg">Image link (https:// or Google Drive share link)</label><input type="text" id="cmImg" placeholder="Required for gallery, optional for blog">' +
+        '<label for="cmBody" id="cmBodyL"></label><textarea id="cmBody" rows="5" maxlength="6000"></textarea>' +
+        '<label for="cmAuthor" id="cmAuthorL">Author</label><input type="text" id="cmAuthor" value="UMA Team" maxlength="60">' +
+        '<p class="sl-error" id="cmErr"></p><p class="sl-hint" id="cmMsg"></p>' +
+        '<button type="button" id="cmAdd">Add to website</button></div>' +
+        '<div class="admin-panel-toolbar"><button type="button" class="admin-refresh-btn" id="cmRefresh">🔄 Refresh list</button></div>' +
+        '<div class="sl-courses-list" id="cmList"></div>';
+    host.parentNode.insertBefore(panel, host.nextSibling);
+
+    function $(id) { return document.getElementById(id); }
+    function syncForm() {
+        var h = HINTS[$('cmType').value];
+        $('cmTitleL').textContent = h.title; $('cmCatL').textContent = h.cat;
+        $('cmBodyL').textContent = h.text; $('cmBody').style.display = $('cmBodyL').style.display = h.text ? '' : 'none';
+        var t = $('cmType').value, card = t === 'course' || t === 'service';
+        $('cmAuthor').style.display = $('cmAuthorL').style.display = (t === 'blog' || card) ? '' : 'none';
+        $('cmAuthorL').textContent = card ? 'Short line shown on the card' : 'Author';
+        $('cmAuthor').value = t === 'blog' ? 'UMA Team' : '';
+        $('cmCatList').innerHTML = ''; (h.list || sectionNames(t)).forEach(function (v) { var o = el('option'); o.value = v; $('cmCatList').appendChild(o); });
+    }
+    $('cmType').addEventListener('change', syncForm); syncForm();
+
+    function say(msg, bad) { $('cmErr').textContent = bad ? msg : ''; $('cmErr').style.display = bad ? 'block' : 'none'; $('cmMsg').textContent = bad ? '' : msg; }
+    function drawList(items) {
+        var box = $('cmList'); box.innerHTML = '';
+        if (!items.length) { box.appendChild(el('p', 'sl-hint', 'Nothing added yet.')); return; }
+        items.forEach(function (it) {
+            var row = el('div'); row.style.cssText = 'display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e4e7eb;';
+            row.appendChild(el('span', null, '[' + it.type + '] ' + it.title));
+            var rm = el('button', 'sl-logout-btn', 'Remove'); rm.type = 'button'; rm.style.width = 'auto';
+            rm.onclick = function () {
+                if (!confirm('Remove "' + it.title + '" from the website?')) return;
+                call({ action: 'deleteContent', id: it.id }).then(function (r) {
+                    if (!r.success) return say(r.error || 'Could not remove.', true);
+                    say('Removed.'); reload();
+                });
+            };
+            row.appendChild(rm); box.appendChild(row);
+        });
+    }
+    function stars(n) { return '\u2605\u2605\u2605\u2605\u2605'.slice(0, n) + '\u2606\u2606\u2606\u2606\u2606'.slice(0, 5 - n); }
+    function setReview(id, status, label) {
+        return call({ action: 'setReviewStatus', id: id, status: status, label: label }).then(function (r) {
+            if (!r.success) return say(r.error || 'Could not update the review.', true);
+            say(status === 'Approved' ? 'Review approved. It is now live on the Testimonials page.' : 'Review hidden.');
+            reload();
+        }).catch(function (e) { say(explain(e), true); });
+    }
+    function loadPending() {
+        if (!ready || !(window.UMA_STAFF && UMA_STAFF.token)) return Promise.resolve();
+        return call({ action: 'listReviews' }).then(function (r) {
+            var box = $('cmPendList'), list = (r && r.success && r.reviews) || [];
+            btn.textContent = 'Site Content' + (list.length ? ' (' + list.length + ')' : '');
+            if (!box) return;
+            box.innerHTML = '';
+            if (!r || !r.success) { // do not say "No reviews waiting" when the backend actually failed
+                var bad = el('p', 'sl-hint', 'Could not load reviews: ' + ((r && r.error) || 'no answer from the server') + (/unknown|invalid|not supported/i.test((r && r.error) || '') ? ' (Code.gs needs the review actions and a New version deployment.)' : ''));
+                bad.style.color = '#c0262d'; box.appendChild(bad); return;
+            }
+            if (!list.length) { box.appendChild(el('p', 'sl-hint', 'No reviews waiting.')); return; }
+            list.forEach(function (rv) {
+                var row = el('div'); row.style.cssText = 'padding:10px 0;border-top:1px solid #f0e2b6;';
+                var head = el('div', null, rv.name + '  \u2022  visitor chose: ' + rv.role + '  ' + stars(rv.rating)); head.style.cssText = 'font-weight:700;color:#0c2340;';
+                var txt = el('p', null, rv.text); txt.style.cssText = 'margin:4px 0 8px;white-space:pre-wrap;color:#334e68;';
+                var lab = el('input'); lab.type = 'text'; lab.maxLength = 80; lab.value = rv.label || ''; lab.placeholder = 'Show under the name as, e.g. MIS Batch 2026 (STU-20261012-AB12)  or  Parent of Vinod (MIS)';
+                lab.style.cssText = 'width:100%;margin:0 0 8px;padding:9px 10px;border:1px solid #bcccdc;border-radius:8px;font:inherit;box-sizing:border-box;';
+                var ok = el('button', 'sl-cert-btn', 'Approve'); ok.type = 'button';
+                var no = el('button', 'sl-logout-btn', 'Hide'); no.type = 'button'; no.style.cssText = 'width:auto;margin-left:8px;';
+                ok.onclick = function () { ok.disabled = no.disabled = true; setReview(rv.id, 'Approved', lab.value.trim() || rv.role); };
+                no.onclick = function () { if (confirm('Hide this review?')) { ok.disabled = no.disabled = true; setReview(rv.id, 'Hidden'); } };
+                row.appendChild(head); row.appendChild(txt); row.appendChild(lab); row.appendChild(ok); row.appendChild(no); box.appendChild(row);
+            });
+        }).catch(function (e) { var box = $('cmPendList'); if (box) { box.innerHTML = ''; var p = el('p', 'sl-hint', 'Could not load reviews: ' + explain(e)); p.style.color = '#c0262d'; box.appendChild(p); } });
+    }
+    function reload() { loadPending(); return fetchContent(true).then(function (items) { renderPublic(items); drawList(items); }).catch(function (e) { $('cmList').innerHTML = ''; say(explain(e), true); }); }
+    $('cmRefresh').onclick = reload;
+
+
+        // .ub-head small::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#32c9a8;margin-right:5px}
+
+
+
+    $('cmAdd').onclick = function () {
+        var type = $('cmType').value, item = {
+            type: type, title: $('cmTitle').value.trim(), category: $('cmCat').value.trim(),
+            image: $('cmImg').value.trim(), body: $('cmBody').value.trim(), author: $('cmAuthor').value.trim()
+        };
+        if (!ready) return say('Backend not connected yet.', true);
+        if (!(window.UMA_STAFF && UMA_STAFF.token)) return say('Please log in again.', true);
+        if (!item.title) return say('Please add a title / name.', true);
+        if (type === 'gallery' && !img(item.image)) return say('Gallery needs a valid image link.', true);
+        if (type !== 'gallery' && !item.body) return say('Please add the text.', true);
+        if (type === 'course' || type === 'service') {
+            if (sectionNames(type).indexOf(item.category) < 0) return say('Section must exactly match one from the suggestions.', true);
+            if (!item.author) return say('Please add the short line shown on the card.', true);
+        }
+        if (item.image && !img(item.image)) return say('Image link must start with https:// (or be a Google Drive share link).', true);
+        item.image = img(item.image);
+        $('cmAdd').disabled = true; say('Saving…');
+        call({ action: 'addContent', item: item }).then(function (r) {
+            $('cmAdd').disabled = false;
+            if (!r.success) return say(r.error || 'Could not save.', true);
+            ['cmTitle', 'cmCat', 'cmImg', 'cmBody'].forEach(function (i) { $(i).value = ''; });
+            say('Added! It is now live on the website.'); reload();
+        }).catch(function (e) { $('cmAdd').disabled = false; say(explain(e), true); });
+    };
+
+    // Hook into the existing tab switcher
+    var orig = window.switchAdminTab;
+    window.switchAdminTab = function (tab) {
+        if (tab !== 'content') { panel.style.display = 'none'; btn.classList.remove('active'); loadPending(); return orig(tab); }
+        document.querySelectorAll('.admin-tab-panel').forEach(function (p) { p.style.display = 'none'; });
+        document.querySelectorAll('.admin-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        panel.style.display = ''; btn.classList.add('active'); reload();
+    };
 })();
