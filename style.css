@@ -6525,3 +6525,38 @@ body,html{overflow-x:clip}
 .services-card span{color:#486581!important}
 .services-card .why-card-header p{color:#1565c0!important;font-weight:600}
 .why-card .btn-agency::before{display:none!important;animation:none!important}
+/* UMA Learning Campus and UMA Services Studio hero badges share one color */
+.left-hero .badge,
+.right-hero .badge { background: linear-gradient(135deg, #0073e6 0%, #005bb8 100%) !important; }
+
+/* WHY-US PAGE: Learning Campus and Services Studio cards share one look (same blue theme) */
+.why-card.academy-card,
+.why-card.services-card{
+  background:linear-gradient(160deg,#eaf3ff,#ffffff 55%)!important;
+  border:1px solid #cfe1f7!important;
+  border-top:4px solid #0073e6!important;
+  box-shadow:0 12px 34px rgba(12,35,64,.10)!important;
+  color:#243b53!important;
+}
+.why-card.academy-card::after,
+.why-card.services-card::after{background:linear-gradient(160deg,#eaf3ff,#ffffff 55%)!important}
+.why-card.academy-card:hover,
+.why-card.services-card:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,115,230,.18)!important}
+.academy-card .why-card-header,
+.services-card .why-card-header{border-color:#d6e5f7!important}
+.academy-card h2,
+.services-card h2{color:#0c2340!important}
+.academy-card .why-card-header p,
+.services-card .why-card-header p{color:#0073e6!important;font-weight:600;opacity:1}
+.academy-card .why-feature,
+.services-card .why-feature{background:#fff!important;border:1px solid #dbe8f7!important}
+.academy-card .why-feature:hover,
+.services-card .why-feature:hover{background:#f3f8ff!important;border-color:#9fc4ee!important}
+.academy-card .why-feature strong,
+.services-card .why-feature strong{color:#0c2340!important}
+.academy-card .why-feature span,
+.services-card .why-feature span{color:#486581!important}
+
+/* Footer social icons: always in full brand colour, no animation */
+.uf-social a{filter:none!important;opacity:1!important;animation:none!important}
+.uf-social a:hover,.uf-social a:focus-visible{transform:translateY(-3px)!important}
