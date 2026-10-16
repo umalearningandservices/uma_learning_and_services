@@ -38,7 +38,7 @@
         '#revCount{float:right;font-weight:400;color:#829ab1}' +
         '@media(max-width:760px){#revFormBox{grid-template-columns:1fr;margin:30px 12px 16px;border-radius:14px}#revFormBox .rev-side{padding:24px 20px}#revFormBox .rev-main{padding:22px 18px}#revFormBox .rev-row{grid-template-columns:1fr;gap:0}}';
     document.head.appendChild(css);
-
+    
     var box = document.createElement('section');
     box.id = 'revFormBox';
     box.setAttribute('aria-label', 'Submit your review');
@@ -508,21 +508,6 @@
         for (var i = out.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = out[i]; out[i] = out[j]; out[j] = x; }
         return out.slice(0, 6);
     }
-    function targets() {                               // exact centre of each hero panel
-        var hr = host.getBoundingClientRect(), out = [];
-        ['rightHeroSection', 'leftHeroSection'].forEach(function (id) {
-            var e = document.getElementById(id); if (!e) return;
-            var r = e.getBoundingClientRect();
-            out.push({ x: r.left - hr.left + r.width / 2, y: r.top - hr.top + r.height / 2 });
-        });
-        return out;
-    }
-    function spawnTarget() {
-        var t = targets(); if (!t.length) return;
-        t = t[Math.random() < .5 ? 0 : t.length - 1];
-        var sx = Math.max(0, Math.min(W, t.x + rnd(-W * .35, W * .35))), sy = -10, dx = t.x - sx, dy = t.y - sy, d = Math.sqrt(dx * dx + dy * dy), v = rnd(9, 13);
-        shooters.push({ x: sx, y: sy, vx: dx / d * v, vy: dy / d * v, tx: t.x, ty: t.y, life: 1, k: 16 }); tgtN++;
-    }
     function build() {   // courses and services first (taking turns), then the helpful prompts
         var c = titles('#academy-hub .card-title'), s = titles('#services-hub .card-title'), q = [];
         for (var i = 0; i < Math.max(c.length, s.length); i++) {
@@ -734,7 +719,7 @@
 /* ############ night hero ############ */
 /* NIGHT HERO - the sky behind the two home-page heroes.
    - Twinkling stars that drift slowly and shift slightly with the mouse (depth); they fade toward the horizon.
-   - Shooting stars now and then, and a satellite that crosses the sky about once every half minute.
+   - An occasional shooting star, and a satellite that crosses the sky about once every half minute.
    - A soft flickering "torch" follows the mouse: stars near it glow and join into constellations.
    - Pauses when the hero is off screen or the tab is hidden; fewer stars on phones; a calm still sky for reduced motion. */
 (function () {
@@ -743,7 +728,7 @@
     if (!host || !cv || !cv.getContext) return;
     var ctx = cv.getContext('2d');
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var W = 0, H = 0, dpr = 1, stars = [], shooters = [], hits = [], tgtN = 0, sat = null, running = false, onScreen = true, last = 0, px = 0, py = 0;
+    var W = 0, H = 0, dpr = 1, stars = [], shooters = [], sat = null, running = false, onScreen = true, last = 0, px = 0, py = 0;
     var mouse = { x: -9999, y: -9999, on: false }, client = { x: 0, y: 0, touch: false }, pend = false, tHide = 0;
     var R = 230;                                   // torch reach in px
     var WHITE = '255,255,255', COOL = '205,220,255', MINT = '200,255,238';
@@ -771,6 +756,7 @@
         if (reduce) render(1, true);
         return true;
     }
+
 
     function render(dt, still) {
         ctx.clearRect(0, 0, W, H);
@@ -815,28 +801,13 @@
         ctx.globalAlpha = 1;
         if (still) return;
 
-        if (tgtN < 2 && Math.random() < .006 * dt) spawnTarget();
-        for (i = hits.length - 1; i >= 0; i--) {          // impact glow where a streak lands
-            var h = hits[i]; h.t += .03 * dt;
-            if (h.t >= 1) { hits.splice(i, 1); continue; }
-            var hg = ctx.createRadialGradient(h.x, h.y, 0, h.x, h.y, 10 + h.t * 46);
-            hg.addColorStop(0, 'rgba(255,255,255,' + (.85 * (1 - h.t)).toFixed(3) + ')'); hg.addColorStop(1, 'rgba(150,190,255,0)');
-            ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(h.x, h.y, 10 + h.t * 46, 0, 6.283); ctx.fill();
-        }
-        if (shooters.length < 5 && Math.random() < .003 * dt) shooters.push({ x: rnd(0, W), y: rnd(0, H * .45), vx: rnd(4, 10), vy: rnd(1, 4), life: 1 });
+        if (shooters.length < 3 && Math.random() < .003 * dt) shooters.push({ x: rnd(0, W), y: rnd(0, H * .45), vx: rnd(4, 10), vy: rnd(1, 4), life: 1 });   // an occasional shooting star
         for (i = shooters.length - 1; i >= 0; i--) {
-            s = shooters[i];
-            if (s.tx !== undefined) {                      // aimed streak: flies to the centre, then shrinks away into it
-                if (!s.arr) {
-                    s.x += s.vx * dt; s.y += s.vy * dt;
-                    if ((s.tx - s.x) * s.vx + (s.ty - s.y) * s.vy <= 0) { s.x = s.tx; s.y = s.ty; s.arr = true; }
-                } else { s.k -= .7 * dt; s.life -= .05 * dt; if (s.k <= 0) { shooters.splice(i, 1); tgtN--; continue; } }
-            } else { s.x += s.vx * dt; s.y += s.vy * dt; s.life -= .014 * dt; }
+            s = shooters[i]; s.x += s.vx * dt; s.y += s.vy * dt; s.life -= .014 * dt;
             if (s.life <= 0) { shooters.splice(i, 1); continue; }
-            var k = s.k !== undefined ? s.k : 14, tx2 = s.x - s.vx * k, ty2 = s.y - s.vy * k;
-            var g = ctx.createLinearGradient(s.x, s.y, tx2, ty2);
-            g.addColorStop(0, 'rgba(255,255,255,' + Math.max(0, s.life).toFixed(3) + ')'); g.addColorStop(1, 'rgba(255,255,255,0)');
-            ctx.strokeStyle = g; ctx.lineWidth = s.tx !== undefined ? 2 : 1.4; ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(tx2, ty2); ctx.stroke();
+            var g = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * 14, s.y - s.vy * 14);
+            g.addColorStop(0, 'rgba(255,255,255,' + s.life.toFixed(3) + ')'); g.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.strokeStyle = g; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.vx * 14, s.y - s.vy * 14); ctx.stroke();
         }
         if (!sat && Math.random() < .0007 * dt) { var dir = Math.random() < .5 ? 1 : -1; sat = { x: dir > 0 ? -10 : W + 10, y: rnd(H * .12, H * .4), vx: .55 * dir, vy: rnd(-.05, .12), a: 0 }; }
         if (sat) {                                      // a satellite drifting across the sky
@@ -885,4 +856,28 @@
     window.addEventListener('resize', relayout);
     document.addEventListener('visibilitychange', go);
     if (window.IntersectionObserver) new IntersectionObserver(function (e) { onScreen = e[0].isIntersecting; go(); }).observe(host);
+})();
+
+/* ############ about page: section menu highlights the part you are reading ############ */
+(function () {
+    'use strict';
+    var bar = document.querySelector('#page-about .org-jump');
+    if (!bar || !('IntersectionObserver' in window)) return;
+    var map = {};
+    Array.prototype.forEach.call(bar.querySelectorAll('a'), function (a) {
+        var m = /orgScroll\('([^']+)'\)/.exec(a.getAttribute('onclick') || '');
+        if (m) map[m[1]] = a;
+    });
+    var secs = Object.keys(map).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    function mark(id) {
+        Object.keys(map).forEach(function (k) {
+            var on = k === id; map[k].classList.toggle('is-active', on);
+            if (on) { map[k].setAttribute('aria-current', 'true'); if (bar.scrollWidth > bar.clientWidth) bar.scrollTo({ left: map[k].offsetLeft - bar.clientWidth / 2 + map[k].offsetWidth / 2, behavior: 'smooth' }); }
+            else map[k].removeAttribute('aria-current');
+        });
+    }
+    var io = new IntersectionObserver(function (en) {
+        en.forEach(function (e) { if (e.isIntersecting) mark(e.target.id); });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    secs.forEach(function (s) { io.observe(s); });
 })();

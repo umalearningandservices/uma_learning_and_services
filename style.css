@@ -6269,15 +6269,9 @@ html.rv-lb-lock{overflow:hidden}
 .uf a:focus-visible,.uf button:focus-visible,.uf input:focus-visible{outline:2px solid #7fb2ff;outline-offset:3px}
 
 /* call-to-action band */
-.uf-cta{display:flex;align-items:center;justify-content:space-between;gap:20px 32px;flex-wrap:wrap;padding:28px 32px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);margin-bottom:48px}
-.uf-cta h2{font-family:'Playfair Display',Georgia,serif;font-size:1.65rem;line-height:1.25;font-weight:700;color:#fff;max-width:28ch}
-.uf-cta p{margin-top:8px;color:#a9bbd0;font-size:.95rem;line-height:1.55;max-width:50ch}
-.uf-cta-actions{display:flex;gap:12px;flex-wrap:wrap}
 .uf-btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:10px;border:1px solid transparent;font:inherit;font-size:.95rem;font-weight:700;text-decoration:none;cursor:pointer;transition:background .2s,border-color .2s}
 .uf-btn-primary{background:#0073e6;color:#fff}
 .uf-btn-primary:hover{background:#1a85f0}
-.uf-btn-ghost{border-color:rgba(255,255,255,.35);color:#fff;background:transparent}
-.uf-btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
 
 /* link columns */
 .uf-cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:36px}
@@ -6343,10 +6337,6 @@ html.rv-lb-lock{overflow:hidden}
 }
 @media (max-width:768px){
     .uf{padding:44px 18px calc(96px + env(safe-area-inset-bottom,0px))} /* clear the floating WhatsApp / back-to-top buttons */
-    .uf-cta{padding:22px 20px;margin-bottom:36px}
-    .uf-cta h2{font-size:1.4rem}
-    .uf-cta-actions{width:100%}
-    .uf-cta-actions .uf-btn{flex:1 1 150px}
 }
 @media (max-width:640px){
     .uf-cols{gap:28px 20px}
@@ -6417,3 +6407,121 @@ html.rv-lb-lock{overflow:hidden}
 #heroSplit .tagline{color:#c3d3e6;text-shadow:none}
 #heroSplit .badge{box-shadow:0 0 0 1px rgba(255,255,255,.28),0 6px 20px rgba(0,115,230,.35)}
 #heroSplit .btn{box-shadow:0 8px 26px rgba(0,115,230,.4)}
+
+
+/* ======================================================================
+   WHY-US PAGE: the two big cards (Learning Campus / Services Studio) are now completely still.
+   No glowing moving border, no lift on hover, no transitions.
+   ====================================================================== */
+.why-card,.why-card *{animation:none!important;transition:none!important}
+.why-card::before{display:none!important}
+.why-card:hover,.why-feature:hover{transform:none!important}
+.why-card.academy-card:hover{box-shadow:0 14px 36px rgba(12,35,64,.14)!important}
+.why-card.services-card:hover{box-shadow:0 20px 60px rgba(0,0,0,.08)!important}
+
+/* ======================================================================
+   ABOUT US PAGE (light, brand navy / blue / teal; no motion)
+   ====================================================================== */
+#page-about .about-hero{padding-bottom:36px;background:linear-gradient(180deg,#f3f8ff 0%,#fcfcfc 100%)}
+#page-about .about-hero .badge{display:inline-block;margin-bottom:14px}
+.about-facts{list-style:none;margin:28px auto 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);max-width:1000px;background:#fff;border:1px solid #dfe8f3;border-radius:18px;box-shadow:0 10px 30px rgba(12,35,64,.07);text-align:left}
+.about-facts li{display:flex;gap:12px;align-items:center;padding:16px 18px;border-left:1px solid #e8eef6}
+.about-facts li:first-child{border-left:0}
+.about-facts svg{flex:none;width:38px;height:38px;padding:9px;border-radius:11px;background:#e8f2ff;color:#0073e6;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;box-sizing:border-box}
+.about-facts b{display:block;color:#0c2340;font-size:.95rem;line-height:1.25}
+.about-facts span{display:block;color:#627d98;font-size:.78rem;margin-top:2px}
+
+#page-about .org-wrap{max-width:1120px;counter-reset:orgsec}
+#page-about .org-jump{position:sticky;top:var(--hdr-h,98px);z-index:15;margin:20px -16px 0;padding:10px 16px;justify-content:center;gap:8px;background:#fff;border-bottom:1px solid #e6edf5;box-shadow:0 6px 14px rgba(12,35,64,.04)}
+#page-about .org-jump a{padding:8px 16px;border:1px solid #dce6f2;border-radius:999px;background:#fff;color:#0c2340;font-weight:600;font-size:.88rem;line-height:1.2;cursor:pointer;text-decoration:none;white-space:nowrap}
+#page-about .org-jump a:hover{border-color:#0073e6;color:#0073e6;background:#f2f8ff}
+#page-about .org-jump a.is-active{background:#0c2340;border-color:#0c2340;color:#fff}
+
+#page-about .org-section{counter-increment:orgsec;margin-top:50px;scroll-margin-top:calc(var(--hdr-h,98px) + 72px)}
+#page-about .org-h{display:flex;align-items:center;gap:14px;border:0;padding:0;margin:0 0 22px;font-size:1.5rem;color:#0c2340}
+#page-about .org-h::before{content:counter(orgsec,decimal-leading-zero);display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:42px;height:42px;border-radius:12px;background:#0c2340;color:#fff;font-size:.9rem;font-weight:700;letter-spacing:.02em}
+#page-about .org-h::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,#cfdcec,transparent)}
+#page-about .org-grid{gap:20px}
+
+#page-about .org-card{--c:#0073e6;--cbg:#e3f0ff;background:#fff;border:1px solid #e1e9f3;border-radius:16px;padding:24px;overflow:visible;box-shadow:0 2px 10px rgba(12,35,64,.04);transition:none}
+#page-about .org-card:hover{transform:none;border-color:#c5d8ee;box-shadow:0 10px 28px rgba(12,35,64,.09)}
+#page-about .t-navy,#page-about .t-purple{--c:#0c2340;--cbg:#e6ecf4}
+#page-about .t-blue,#page-about .t-indigo,#page-about .t-orange{--c:#0073e6;--cbg:#e3f0ff}
+#page-about .t-teal,#page-about .t-green{--c:#0e8a8a;--cbg:#dff3f3}
+#page-about .org-card h4{color:#0c2340;font-size:1.08rem;margin:14px 0 10px}
+#page-about .org-card .org-ico{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:13px;background:var(--cbg);color:var(--c)}
+#page-about .org-ico svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#page-about .org-card .org-step{width:42px;height:42px;border-radius:12px;background:var(--cbg);color:var(--c);font-size:1rem;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+#page-about .org-list{padding-left:20px}
+#page-about .org-list li{margin:5px 0}
+#page-about .org-card p{color:#40566e}
+#page-about .org-link a{color:#0073e6}
+#page-about .org-link a:hover{text-decoration:underline;text-underline-offset:3px}
+#page-about .org-dl{grid-template-columns:1fr;gap:0}
+#page-about .org-dl dt{padding:11px 0 0;border-top:1px solid #eef2f7;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#627d98}
+#page-about .org-dl dt:first-of-type{border-top:0;padding-top:0}
+#page-about .org-dl dd{padding:3px 0 11px;font-weight:600;color:#0c2340}
+#page-about .org-dl em{font-style:normal;font-size:.7rem;font-weight:600;background:#fff4e0;color:#9a5b00;padding:2px 8px;border-radius:99px;margin-left:4px;white-space:nowrap}
+
+#page-about .org-chart{margin:6px 0 30px}
+#page-about .org-node{position:relative;background:#fff;border:1.5px solid #9fc4ee;border-radius:14px;padding:13px 20px;color:#0c2340;font-weight:700;box-shadow:0 2px 10px rgba(12,35,64,.05);min-width:170px}
+#page-about .org-node small{color:#627d98}
+#page-about .org-top{background:#0c2340;border-color:#0c2340;color:#fff;padding:14px 34px;font-size:1.02rem}
+#page-about .org-leaf{background:#f3f8ff;border-color:#cfe0f3;font-weight:600}
+#page-about .org-line{width:2px;height:22px;background:#b4cae4}
+#page-about .org-row{position:relative;width:max-content;max-width:100%;display:flex;justify-content:center;gap:16px;padding-top:22px}
+#page-about .org-row::before{content:"";position:absolute;top:0;left:125px;right:125px;height:2px;background:#b4cae4}
+#page-about .org-row>.org-node{flex:none;width:250px}
+#page-about .org-row>.org-node::before{content:"";position:absolute;left:50%;top:-22px;width:2px;height:22px;margin-left:-1px;background:#b4cae4}
+#page-about .org-row:has(+ .org-line){margin-bottom:22px}
+#page-about .org-row:has(+ .org-line)::after{content:"";position:absolute;left:125px;right:125px;bottom:-22px;height:2px;background:#b4cae4}
+#page-about .org-row:has(+ .org-line)>.org-node::after{content:"";position:absolute;left:50%;bottom:-22px;width:2px;height:22px;margin-left:-1px;background:#b4cae4}
+#page-about .org-table-wrap{border-radius:14px;box-shadow:0 2px 10px rgba(12,35,64,.04)}
+#page-about .org-table th{background:#0c2340;padding:13px 16px}
+#page-about .org-table td{padding:13px 16px}
+#page-about .org-note{margin-top:20px;padding:14px 18px;background:#f3f8ff;border-left:4px solid #0073e6;border-radius:0 12px 12px 0;color:#334e68}
+
+#page-about .org-cta{display:flex;align-items:center;justify-content:space-between;gap:20px 30px;flex-wrap:wrap;text-align:left;margin-top:56px;padding:32px 36px;border-radius:20px;background:linear-gradient(135deg,#0c2340,#14518f)}
+#page-about .org-cta h4{margin:0;font-size:1.3rem;color:#fff}
+#page-about .org-cta p{margin:6px 0 0;color:#cfe0f3;font-size:.95rem}
+.org-cta-actions{display:flex;gap:12px;flex-wrap:wrap}
+#page-about .org-btn{background:#fff;color:#0c2340;padding:12px 26px;font-weight:700;border:1px solid #fff;text-decoration:none;cursor:pointer}
+#page-about .org-btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+#page-about .org-btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+
+@media(max-width:900px){
+  .about-facts{grid-template-columns:1fr 1fr}
+  .about-facts li:nth-child(3){border-left:0}
+  .about-facts li:nth-child(n+3){border-top:1px solid #e8eef6}
+}
+@media(max-width:700px){
+  #page-about .org-jump{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  #page-about .org-jump::-webkit-scrollbar{display:none}
+  #page-about .org-section{margin-top:40px}
+  #page-about .org-h{font-size:1.25rem}
+  #page-about .org-row{flex-direction:column;align-items:center;padding-top:0;gap:10px;max-width:none}
+  #page-about .org-row::before,#page-about .org-row::after,#page-about .org-row>.org-node::before,#page-about .org-row>.org-node::after{display:none!important}
+  #page-about .org-row:has(+ .org-line){margin-bottom:0}
+  #page-about .org-row>.org-node{flex:none;width:100%;max-width:340px}
+  #page-about .org-cta{padding:26px 22px}
+}
+@media(max-width:520px){
+  .about-facts{grid-template-columns:1fr}
+  .about-facts li{border-left:0;border-top:1px solid #e8eef6}
+  .about-facts li:first-child{border-top:0}
+}
+
+/* sticky elements (the About page section menu) need the page not to be a scroll container:
+   "clip" still stops sideways scrolling, but unlike "hidden" it allows position:sticky. Older browsers keep "hidden". */
+body,html{overflow-x:clip}
+
+/* ======================================================================
+   WHY-US PAGE, UMA Services Studio card: blue like the Learning Campus card (no green),
+   and the moving shine on its button is removed (the cards stay completely still).
+   ====================================================================== */
+.services-card .why-feature{background:#fff!important;border:1px solid #dbe8f7!important}
+.services-card .why-feature:hover{background:#f3f8ff!important;border-color:#9fc4ee!important}
+.services-card strong{color:#0c2340!important}
+.services-card span{color:#486581!important}
+.services-card .why-card-header p{color:#1565c0!important;font-weight:600}
+.why-card .btn-agency::before{display:none!important;animation:none!important}

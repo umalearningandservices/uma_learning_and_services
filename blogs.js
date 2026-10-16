@@ -1,4 +1,4 @@
-/* blogs.js - 36 SEO blog posts for the "Our Blogs" page, kept in this ONE file.
+/* blogs.js - 48 SEO blog posts for the "Our Blogs" page, kept in this ONE file.
    They are added on top of the blogs already in index.html and use the site's own blog layout,
    so the card, the "Read More" article page, reading time and SEO tags all work as before.
 
@@ -52,11 +52,612 @@
         'gst-billing-mistakes':          { cover: '', extra: [] },
         'cyber-safety-office-staff':     { cover: '', extra: [] },
         'python-project-ideas-beginners': { cover: '', extra: [] },
-        'mis-executive-interview-questions': { cover: '', extra: [] }
+        'mis-executive-interview-questions': { cover: '', extra: [] },
+        'top-5-computer-skills-office-jobs': { cover: '', extra: [] },
+        'automate-daily-reports-google-sheets': { cover: '', extra: [] },
+        'what-is-mis-reporting': { cover: '', extra: [] },
+        'reduce-manual-data-entry': { cover: '', extra: [] },
+        'ai-automation-small-business': { cover: '', extra: [] },
+        'advanced-excel-course-syllabus': { cover: '', extra: [] },
+        'create-daily-mis-report-excel': { cover: '', extra: [] },
+        'automate-google-sheets-apps-script': { cover: '', extra: [] },
+        'email-notifications-google-sheets': { cover: '', extra: [] },
+        'five-business-processes-spreadsheets': { cover: '', extra: [] },
+        'business-dashboard-management-reporting': { cover: '', extra: [] },
+        'manual-vs-automated-reporting': { cover: '', extra: [] }
     };
 
     /* ---------------- THE 20 POSTS ---------------- */
     var POSTS = [
+    {
+          "slug": "top-5-computer-skills-office-jobs",
+          "cat": "Career",
+          "date": "2026-10-15",
+          "plain": true,
+          "title": "Top 5 Computer Skills to Learn for Office Jobs",
+          "ex": "The five computer skills most office jobs ask for, from Excel and typing to Google Workspace and basic reporting, with a simple 90-day plan to learn them.",
+          "kw": "computer skills for office jobs, office job skills, MS Excel skills, typing and data entry, Google Workspace skills, MIS reporting basics",
+          "tags": "#OfficeJobs #ComputerSkills #Excel #CareerSkills #Jaipur",
+          "intro": "Almost every office job, from accounts and admin to HR and sales support, now needs some computer work. Employers rarely ask for fancy software. They ask for people who can use a few everyday tools quickly and without mistakes. These five skills appear again and again in office job descriptions.",
+          "pts": [
+                [
+                      "Skill 1: MS Excel or Google Sheets",
+                      "This is the number one skill. Learn to enter data cleanly, use formulas like SUM, IF, VLOOKUP or XLOOKUP, build a PivotTable and format a report so it prints properly. A person who is comfortable in Excel saves their team hours every week."
+                ],
+                [
+                      "Skill 2: Fast and accurate typing",
+                      "Speed matters, but accuracy matters more. Practise typing with both hands, learn shortcuts such as Ctrl + C, Ctrl + V, Ctrl + Z and Ctrl + F, and get into the habit of re-checking numbers, names and dates before you save."
+                ],
+                [
+                      "Skill 3: MS Word and PowerPoint",
+                      "Offices run on letters, quotations, reports and presentations. Learn styles and headings in Word, tables, headers and page numbers, mail merge for bulk letters, and how to make a clean, simple slide deck. Good formatting shows that you pay attention to detail."
+                ],
+                [
+                      "Skill 4: Email and Google Workspace",
+                      "Learn to write short, polite professional emails, attach the right file, use Cc and Bcc properly and organise folders in Drive. Know how to share a Google Sheet or Doc with the right permission, and how to join a meeting on Google Meet or Zoom without losing time."
+                ],
+                [
+                      "Skill 5: Basic reporting and data handling (MIS)",
+                      "Many office roles end with someone asking for a report. Learn to clean a messy list, remove duplicates, sort and filter, and summarise it in a table or chart. This basic MIS skill turns you from a data typist into someone managers depend on."
+                ],
+                [
+                      "A simple 90-day learning plan",
+                      "Month 1: daily typing practice plus Word and email basics. Month 2: Excel formulas, filters and PivotTables with real sample files. Month 3: reporting practice, Google Sheets and a small project, such as a monthly sales or attendance report. Thirty to forty-five minutes of daily practice works better than one long weekend session."
+                ],
+                [
+                      "How to show these skills in an interview",
+                      "Keep a small folder of practice work, such as a clean Excel report, a formatted letter and a short presentation. Mention the tools by name on your resume and be ready to do a short test on the spot."
+                ]
+          ],
+          "outro": "You do not need to learn everything at once. Pick the first skill, practise it daily for two weeks and then add the next. If you want guided practice with real office files, our computer and Advanced Excel courses in Jaipur follow exactly this practical order. Ask us about a free demo class."
+    },
+
+    {
+          "slug": "automate-daily-reports-google-sheets",
+          "cat": "Automation",
+          "date": "2026-10-15",
+          "title": "How to Automate Daily Reports in Google Sheets",
+          "ex": "A step-by-step way to build a daily report in Google Sheets that updates itself and can be emailed every evening, using formulas and a simple trigger.",
+          "kw": "automate daily reports Google Sheets, Google Sheets report automation, QUERY function, SUMIFS, Apps Script trigger, daily MIS report",
+          "tags": "#GoogleSheets #Automation #DailyReport #MIS #AppsScript",
+          "intro": "If someone in your team spends the last hour of every day copying numbers into a report, that report can almost certainly build itself. Google Sheets can collect the data, summarise it with formulas and even email the result at a fixed time. Here is a simple, reliable way to set it up.",
+          "pts": [
+                [
+                      "Keep raw data and the report on separate tabs",
+                      "Create a Data tab where every entry goes in as one row, with one column for the date, one for the branch or person, one for the category and one for the amount. Create a Report tab that only reads from Data. Never type numbers directly into the report."
+                ],
+                [
+                      "Make data entry clean with a form or dropdowns",
+                      "Use Google Forms linked to the sheet, or add dropdown lists using Data, then Data validation. Clean, consistent entries are what make automation possible. A typo such as \"Jaipur \" with an extra space becomes a different branch in your totals."
+                ],
+                [
+                      "Total today's numbers with SUMIFS",
+                      "In the Report tab, use SUMIFS to add up only today's rows for each branch. Because it uses TODAY(), the report changes by itself every morning. This works when the date column holds plain dates, not date and time.",
+                      "=SUMIFS(Data!E:E, Data!A:A, TODAY(), Data!B:B, A2)"
+                ],
+                [
+                      "Use QUERY for a ready summary table",
+                      "QUERY works like a small database question. This example lists every branch with today's total, so you do not need to type a row for each branch.",
+                      "=QUERY(Data!A:E, \"select B, sum(E) where A = date '\"&TEXT(TODAY(),\"yyyy-mm-dd\")&\"' group by B label sum(E) 'Total'\", 1)"
+                ],
+                [
+                      "Pull data from other sheets with IMPORTRANGE",
+                      "If each branch keeps its own sheet, bring them together with IMPORTRANGE. The first time you use it, Google asks you to allow access once. After that the data flows in automatically.",
+                      "=IMPORTRANGE(\"paste-the-sheet-link-here\", \"Data!A:E\")"
+                ],
+                [
+                      "Add a chart and highlight the exceptions",
+                      "Insert a chart for the trend and use Format, then Conditional formatting, to colour cells red when a number is below target. A manager should be able to read the report in ten seconds."
+                ],
+                [
+                      "Email the report automatically",
+                      "Open Extensions, then Apps Script, and set a time-driven trigger so a small script emails the summary or a PDF every evening. Our posts on Apps Script and on automatic email notifications show the exact steps."
+                ],
+                [
+                      "Test for a week before you rely on it",
+                      "Run the automated report next to your old manual one for five to seven days. Compare the totals, fix any mismatch and only then switch over. Also protect the Report tab so nobody overwrites a formula by mistake."
+                ]
+          ],
+          "outro": "A good automated report does not remove people, it removes copy-paste. The time you save can go into checking the numbers and acting on them. If you want a custom daily reporting system built for your team in Sheets or Excel, talk to our automation team."
+    },
+
+    {
+          "slug": "what-is-mis-reporting",
+          "cat": "Excel & MIS",
+          "date": "2026-10-15",
+          "plain": true,
+          "title": "What Is MIS Reporting? Skills, Tasks and Career Paths",
+          "ex": "MIS reporting explained simply for beginners: what it is, the reports an MIS executive prepares, the skills needed and how a career in MIS can grow.",
+          "kw": "what is MIS reporting, MIS reporting beginners guide, MIS executive, MIS reports in Excel, MIS career path, MIS skills, MIS course Jaipur",
+          "tags": "#MIS #MISReporting #Excel #CareerPath #Jaipur",
+          "intro": "MIS stands for Management Information System. In most companies, MIS reporting simply means collecting data from different people or departments, cleaning it, summarising it and giving managers a clear report so they can take decisions. If you have ever seen a daily sales sheet or a monthly attendance summary, you have seen MIS in action. This beginner's guide explains the work, the skills and the career path.",
+          "pts": [
+                [
+                      "What an MIS report looks like",
+                      "It is usually a table or a one-page dashboard with the key numbers a manager needs, such as daily sales, pending payments, stock levels, employee attendance, lead follow-ups or production output. The report is short, accurate and arrives on time."
+                ],
+                [
+                      "Common reports an MIS executive prepares",
+                      "Daily and monthly sales reports, branch-wise performance, attendance and leave summaries, collection and outstanding reports, inventory and dispatch reports, and target versus achievement sheets. Most of these are built in Excel or Google Sheets."
+                ],
+                [
+                      "Daily tasks in an MIS role",
+                      "Collect data from team members, check it for errors and duplicates, update the master file, prepare the report, share it by email or WhatsApp, answer questions from managers and keep a record of previous reports. Good MIS people also look for work that can be automated."
+                ],
+                [
+                      "Skills you need",
+                      "Strong Excel (formulas, lookups, PivotTables, charts, conditional formatting), data cleaning, Google Sheets, clear written communication, attention to detail and the habit of cross-checking totals. Basic Power BI or SQL is a useful extra, not a starting requirement."
+                ],
+                [
+                      "Soft skills that matter just as much",
+                      "Follow-up discipline, confidentiality and the ability to explain a number in simple words. MIS work depends on other people sending data on time, so polite and firm follow-up is part of the job."
+                ],
+                [
+                      "How to start learning MIS",
+                      "Begin with Excel basics, then practise on real-looking files such as a sales register or an attendance sheet. Build three practice reports from start to finish: raw data, cleaned data, summary and chart. Then learn PivotTables and dashboards."
+                ],
+                [
+                      "Career path in MIS",
+                      "Many people begin as MIS executive or data entry operator, grow into senior MIS executive or MIS analyst, and then move to reporting analyst, business analyst or MIS manager roles. Those who add automation and Power BI skills can move toward data analytics and operations roles."
+                ],
+                [
+                      "Where MIS roles are found",
+                      "Almost every industry needs MIS: retail, manufacturing, logistics, education, healthcare, finance, e-commerce and service companies. Anywhere that numbers are reviewed regularly, someone prepares the report."
+                ]
+          ],
+          "outro": "MIS is a practical and respected entry route into office and data careers, and it rewards people who are careful and consistent. If you want to learn MIS reporting with hands-on practice files, ask about our Advanced Excel and MIS training in Jaipur."
+    },
+
+    {
+          "slug": "reduce-manual-data-entry",
+          "cat": "Automation",
+          "date": "2026-10-15",
+          "plain": true,
+          "title": "How Businesses Can Reduce Manual Data Entry",
+          "ex": "Practical ways to cut manual data entry in your business: single-entry forms, dropdowns, connected tools, templates and simple automation, without a big budget.",
+          "kw": "reduce manual data entry, data entry automation, avoid double entry, Google Forms for business, business process automation Jaipur",
+          "tags": "#DataEntry #Automation #SmallBusiness #BusinessAutomation #Jaipur",
+          "intro": "Manual data entry looks cheap because it uses existing staff, but it costs time, causes errors and slows everything that depends on the data. The goal is not to remove people. It is to make sure every piece of information is typed once, correctly, and then reused everywhere it is needed.",
+          "pts": [
+                [
+                      "Find where the same data is typed twice",
+                      "Walk through one order, one enquiry and one invoice from start to end and note every place where someone re-types the same name, number or amount. Those repeat points are your biggest savings."
+                ],
+                [
+                      "Capture data once, at the source",
+                      "Use a form, such as Google Forms, a web form or a WhatsApp order flow, so the customer or the field team enters the details themselves. The data lands directly in a sheet or database instead of being copied from a message or a paper slip."
+                ],
+                [
+                      "Use dropdowns, validation and templates",
+                      "Limit free typing. Dropdown lists, date pickers, number-only fields and fixed templates stop most spelling and format errors before they happen."
+                ],
+                [
+                      "Connect your tools instead of copying between them",
+                      "Many apps can send data to each other: a form to a sheet, a sheet to an email, a CRM to an accounting tool. Where tools do not connect directly, a small script or an automation workflow can move the data on a schedule."
+                ],
+                [
+                      "Import files instead of re-typing them",
+                      "Bank statements, supplier price lists and marketplace orders usually download as CSV or Excel files. Importing and cleaning them with Power Query or a short script is far faster and safer than typing each row."
+                ],
+                [
+                      "Use scanning and barcodes carefully",
+                      "Barcodes and QR codes remove typing for stock and attendance. Reading text from invoices with OCR can also help, but always have a person verify amounts and dates before the data is accepted."
+                ],
+                [
+                      "Add checks that catch mistakes early",
+                      "Highlight duplicates, flag blank required fields, compare totals between two sources and show a warning when a value is unusually large or small. A check that runs automatically is worth more than a review done from memory."
+                ],
+                [
+                      "Train the team and measure the result",
+                      "Automation only helps if people use it. Show the team the new way, keep the old way for a short overlap and measure hours saved and errors per week. Small, visible wins make the next improvement easy to approve."
+                ]
+          ],
+          "outro": "Start with the one process that wastes the most time, fix it properly, and then move to the next. If you would like help turning a manual process into a form, a connected sheet or a custom system, our business automation team can review it with you."
+    },
+
+    {
+          "slug": "ai-automation-small-business",
+          "cat": "Automation",
+          "date": "2026-10-15",
+          "plain": true,
+          "title": "Practical Uses of AI Automation in Small Businesses",
+          "ex": "Real, low-cost ways small businesses use AI automation: replies, summaries, data extraction, lead sorting and reports, plus the safety rules to follow.",
+          "kw": "AI automation small business, AI tools for business, business automation Jaipur, WhatsApp automation, AI for reports",
+          "tags": "#AIAutomation #SmallBusiness #BusinessAutomation #AITools #Jaipur",
+          "intro": "AI automation does not need a big budget or a technical team. For a small business it usually means using AI tools to handle repetitive thinking and writing tasks, while people keep control of decisions. Here are practical uses that work today, and the care you should take with each.",
+          "pts": [
+                [
+                      "Drafting replies to common customer questions",
+                      "AI can draft answers to frequently asked questions about prices, timings, delivery or admissions. Staff review and send, so replies are faster but still correct and personal."
+                ],
+                [
+                      "Answering simple questions on WhatsApp",
+                      "A WhatsApp assistant can answer common questions, collect a name and requirement, and pass a complete enquiry to your team. Keep an easy way for the customer to reach a real person."
+                ],
+                [
+                      "Summarising calls, meetings and long messages",
+                      "AI can turn a meeting recording or a long email thread into a short list of decisions and tasks. This saves time and reduces forgotten follow-ups."
+                ],
+                [
+                      "Pulling data out of documents",
+                      "Invoices, purchase orders and enquiry emails contain data that someone usually types into a sheet. AI tools can read them and fill the columns. Always check amounts, dates and tax numbers before the data is used."
+                ],
+                [
+                      "Sorting and scoring leads",
+                      "AI can read an enquiry, label it by product and urgency, and route it to the right person. Combined with a CRM or a Google Sheet, nothing waits in a general inbox."
+                ],
+                [
+                      "Writing the explanation of a report",
+                      "A report shows numbers. AI can draft the plain-language summary, such as what changed since last week and what needs attention. The owner confirms that the summary matches the numbers."
+                ],
+                [
+                      "Creating first drafts of marketing content",
+                      "Product descriptions, social posts and email subject lines can be drafted quickly, then edited so they sound like your business and contain only true claims."
+                ],
+                [
+                      "Spotting unusual entries",
+                      "Combining simple rules with AI helps flag duplicate invoices, unusual amounts or missing fields before month-end, when fixing them is easier."
+                ],
+                [
+                      "Safety rules to follow",
+                      "Do not paste confidential customer data, passwords or bank details into tools you have not checked. Read the privacy settings, keep a human review step for anything that goes to a customer or affects money, and keep a record of what the automation did."
+                ]
+          ],
+          "outro": "Start with one task that is repetitive, low risk and easy to check, and measure the time it saves. When it works, add the next one. If you would like help choosing and setting up AI automation for your business, talk to our automation team in Jaipur."
+    },
+
+    {
+          "slug": "advanced-excel-course-syllabus",
+          "cat": "Excel & MIS",
+          "date": "2026-10-14",
+          "plain": true,
+          "title": "Advanced Excel Course: Syllabus, Skills and Career Uses",
+          "ex": "What a good Advanced Excel course covers, module by module, the skills you gain and the office, MIS and accounts jobs where they are used.",
+          "kw": "advanced Excel course syllabus, advanced Excel course Jaipur, Excel for MIS, Excel VBA, Power Query, Excel career",
+          "tags": "#AdvancedExcel #ExcelCourse #MIS #Jaipur #CareerSkills",
+          "intro": "Advanced Excel is the step after basic Excel, where you stop typing numbers and start building files that calculate, check and report by themselves. If you are choosing a course, the syllabus below shows what a practical, job-focused Advanced Excel course should include. Always compare it with the exact syllabus of the institute you choose.",
+          "pts": [
+                [
+                      "Module 1: Data cleaning and data entry control",
+                      "Text to Columns, Flash Fill, Remove Duplicates, Find and Replace, Data Validation with dropdown lists, tables and named ranges. This module makes your data clean before any analysis starts."
+                ],
+                [
+                      "Module 2: Logical, text and date formulas",
+                      "IF, IFS, AND, OR, nested conditions, LEFT, RIGHT, MID, TEXT, TRIM, DATE, EOMONTH and NETWORKDAYS. These formulas solve most everyday office problems."
+                ],
+                [
+                      "Module 3: Lookup and reference formulas",
+                      "VLOOKUP, HLOOKUP, INDEX with MATCH, and XLOOKUP in the versions that include it. You learn to bring data from one sheet or file to another reliably and to handle missing matches with IFERROR."
+                ],
+                [
+                      "Module 4: Summary formulas",
+                      "SUMIF, SUMIFS, COUNTIF, COUNTIFS, AVERAGEIFS and SUMPRODUCT for branch-wise, month-wise and product-wise totals."
+                ],
+                [
+                      "Module 5: PivotTables, slicers and charts",
+                      "Build PivotTables from raw data, group dates, add calculated fields, connect slicers and create charts. This is the core MIS reporting skill."
+                ],
+                [
+                      "Module 6: Dashboards and conditional formatting",
+                      "Combine KPIs, charts and slicers on one sheet, with colour rules and icons that show status at a glance. A manager-ready dashboard is a strong piece to show in an interview."
+                ],
+                [
+                      "Module 7: Power Query basics",
+                      "Import files, merge several workbooks, clean columns and refresh the result with one click. This replaces hours of monthly copy-paste."
+                ],
+                [
+                      "Module 8: Macros and VBA introduction",
+                      "Record and edit simple macros to repeat formatting, copy data or create a report. A little VBA turns a repeated task into a single button."
+                ],
+                [
+                      "Module 9: Protection, printing and sharing",
+                      "Protect formulas, lock cells, set print areas and page breaks, save as PDF and share files safely."
+                ],
+                [
+                      "Where these skills are used",
+                      "MIS and reporting, accounts and billing, HR and payroll sheets, sales operations, inventory and back-office roles. Employers value people who can build a working tracker or report without waiting for IT."
+                ],
+                [
+                      "How to judge a course",
+                      "Ask for the module list, check that you practise on real files, see a sample project and make sure you get a demo class. A good course ends with a project that you can show in an interview."
+                ]
+          ],
+          "outro": "If your goal is an MIS, accounts or data role, Advanced Excel is one of the most practical skills you can learn. Visit us or ask for a free demo class to see how the course is taught."
+    },
+
+    {
+          "slug": "create-daily-mis-report-excel",
+          "cat": "Excel & MIS",
+          "date": "2026-10-14",
+          "title": "How to Create a Daily MIS Report in Excel",
+          "ex": "Build a daily MIS report in Excel step by step: a clean data sheet, a SUMIFS summary, PivotTable, conditional formatting and a print-ready PDF.",
+          "kw": "daily MIS report in Excel, create MIS report, Excel SUMIFS report, PivotTable report, MIS report format",
+          "tags": "#MISReport #Excel #DailyReport #PivotTable #Jaipur",
+          "intro": "A daily MIS report answers one question: what happened yesterday and what needs attention today? You can build a useful one in Excel in under an hour, and once it is set up, updating it takes minutes. Follow these steps.",
+          "pts": [
+                [
+                      "Decide what the manager needs to see",
+                      "Write down five to seven numbers, for example total sales, number of orders, collection received, pending amount, top branch and target achieved. A daily report should fit on one page."
+                ],
+                [
+                      "Create a clean Data sheet",
+                      "Make columns such as Date, Branch, Salesperson, Product, Quantity and Amount, with one row per entry and no merged cells or blank rows. Select the data and press Ctrl + T to turn it into a Table named Sales."
+                ],
+                [
+                      "Control the entries",
+                      "Add dropdown lists for Branch and Product using Data Validation, and set the Date column to accept only dates. This prevents spelling and format errors that break totals later."
+                ],
+                [
+                      "Build the Report sheet",
+                      "Put the report date in one cell, for example B1, and use SUMIFS to total that date for each branch.",
+                      "=SUMIFS(Sales[Amount], Sales[Date], $B$1, Sales[Branch], A5)"
+                ],
+                [
+                      "Add percentage and achievement columns",
+                      "Compare actual against target and protect against division by zero.",
+                      "=IFERROR(C5/D5, 0)"
+                ],
+                [
+                      "Add a PivotTable for flexible questions",
+                      "Insert a PivotTable from the Sales table, put Branch in rows and Amount in values, and add a slicer for Date or Product. Now you can answer a new question in seconds."
+                ],
+                [
+                      "Use conditional formatting for status",
+                      "Colour achievement below 80 percent red, between 80 and 100 percent amber and above 100 percent green. Managers read colours faster than numbers."
+                ],
+                [
+                      "Add one or two simple charts",
+                      "A bar chart for branch comparison and a line chart for the last seven days are enough. Avoid decoration, keep titles clear and label the units."
+                ],
+                [
+                      "Set up printing and sharing",
+                      "Set the print area, choose Landscape and Fit All Columns on One Page, then save as PDF. Use a fixed file name such as MIS_Daily_2026-10-15 so reports are easy to find."
+                ],
+                [
+                      "Add checks, then automate",
+                      "Add a check cell that compares the report total with the Data total and shows a warning if they differ. When the report is stable, Power Query or a macro can refresh and export it with one click."
+                ]
+          ],
+          "outro": "A report that is correct, short and on time builds trust. Practise by creating this report with sample data first, then with your own. If you would like to learn the full process with guidance, our Advanced Excel and MIS course covers it step by step."
+    },
+
+    {
+          "slug": "automate-google-sheets-apps-script",
+          "cat": "Automation",
+          "date": "2026-10-14",
+          "title": "How to Automate Google Sheets with Apps Script",
+          "ex": "A beginner's guide to Google Apps Script: open the editor, write your first script, add a custom menu and run it automatically on a schedule.",
+          "kw": "Google Apps Script tutorial, automate Google Sheets, Apps Script trigger, Google Sheets macro, Apps Script for beginners",
+          "tags": "#AppsScript #GoogleSheets #Automation #GoogleWorkspace #Jaipur",
+          "intro": "Google Apps Script is a free, JavaScript-based tool built into Google Sheets. It lets you add buttons, copy data, create reports and run tasks automatically, without installing anything. You do not need to be a programmer to write your first useful script. Here is how to start.",
+          "pts": [
+                [
+                      "Open the editor",
+                      "In your Google Sheet click Extensions, then Apps Script. A code editor opens in a new tab. Give the project a name, such as Daily Report Tools."
+                ],
+                [
+                      "Understand what a script is",
+                      "A script is a set of instructions written as functions. Each function does one job, for example summarising today's sales. You run it from the editor, from a menu in the sheet, or from a trigger."
+                ],
+                [
+                      "Write your first function",
+                      "This function reads the Data tab and writes today's total into the Summary tab. It assumes the date is in column A and the amount is in column E, and that your tabs are named Data and Summary.",
+                      "function createSummary() {\n  const ss = SpreadsheetApp.getActiveSpreadsheet();\n  const data = ss.getSheetByName('Data').getDataRange().getValues();\n  const tz = Session.getScriptTimeZone();\n  const today = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd');\n  let total = 0;\n  for (let i = 1; i < data.length; i++) {\n    const day = Utilities.formatDate(new Date(data[i][0]), tz, 'yyyy-MM-dd');\n    if (day === today) total += Number(data[i][4]);\n  }\n  ss.getSheetByName('Summary').getRange('B2').setValue(total);\n}"
+                ],
+                [
+                      "Add a custom menu to your sheet",
+                      "The special function onOpen runs whenever the file opens and can add your own menu, so anyone in the team can run the script with a click.",
+                      "function onOpen() {\n  SpreadsheetApp.getUi()\n    .createMenu('Reports')\n    .addItem('Create today summary', 'createSummary')\n    .addToUi();\n}"
+                ],
+                [
+                      "Authorise the script",
+                      "The first time you run it, Google asks for permission to access your spreadsheet. Read the screen, choose your account and allow. Scripts only get the access you approve."
+                ],
+                [
+                      "Run it automatically with a trigger",
+                      "Click the clock icon (Triggers), choose Add Trigger, select createSummary, set the event source to Time-driven and pick a daily time. Google then runs the script by itself every day. You can also create the same trigger in code by running this line once.",
+                      "ScriptApp.newTrigger('createSummary').timeBased().everyDays(1).atHour(18).create();"
+                ],
+                [
+                      "Debug with the Executions log",
+                      "If something does not work, open Executions in the left menu to see the error message and the line number. Most beginner errors are a wrong tab name or a column in a different position."
+                ],
+                [
+                      "Good habits and limits",
+                      "Keep each function small, add comments, test on a copy of the sheet first and never put passwords inside a script. Apps Script has daily quotas and a maximum run time for each execution, so for very large jobs process the data in batches."
+                ]
+          ],
+          "outro": "Apps Script is one of the fastest ways to save hours in a small business: reports, reminders, document generation and data cleanup can all run on their own. If you would like a custom Google Sheets automation built for your team, or want to learn it with guidance, contact us."
+    },
+
+    {
+          "slug": "email-notifications-google-sheets",
+          "cat": "Automation",
+          "date": "2026-10-14",
+          "plain": true,
+          "title": "How to Send Automatic Email Notifications from Google Sheets",
+          "ex": "Three ways to send automatic emails from Google Sheets: built-in notification rules, form alerts and an Apps Script that emails when a status changes.",
+          "kw": "send email from Google Sheets, Google Sheets notification, Apps Script MailApp, automatic email notification, Google Forms email",
+          "tags": "#GoogleSheets #AppsScript #EmailAutomation #Automation #Jaipur",
+          "intro": "Instead of checking a sheet again and again, let the sheet tell you when something changes. Google Sheets can email you or your customers automatically when a cell is edited, a form is submitted or a status becomes Approved. Here are three ways, from the simplest to the most flexible.",
+          "pts": [
+                [
+                      "Method 1: Built-in notification rules",
+                      "Open the sheet, click Tools, then Notification settings. Choose to be emailed when any changes are made or when a user submits a form, and select email right away or a daily or weekly digest. This needs no coding and is ideal for a quick alert to yourself."
+                ],
+                [
+                      "Method 2: Google Forms response emails",
+                      "In Google Forms open Responses, click the three-dot menu and choose Get email notifications for new responses. Use this when you want to know the moment a customer or team member submits a request."
+                ],
+                [
+                      "Method 3: A custom email with Apps Script",
+                      "When you need to email a customer or a specific person as soon as a status changes, use a script. Open Extensions, then Apps Script, and paste this function. It sends an email when column E of the Orders tab is changed to Approved, taking the order number, name and email from columns A, B and C.",
+                      "function sendStatusEmail(e) {\n  const sheet = e.range.getSheet();\n  if (sheet.getName() !== 'Orders' || e.range.getColumn() !== 5) return;\n  if (e.value !== 'Approved') return;\n  const row = sheet.getRange(e.range.getRow(), 1, 1, 5).getValues()[0];\n  MailApp.sendEmail({\n    to: row[2],\n    subject: 'Your order ' + row[0] + ' is approved',\n    body: 'Hello ' + row[1] + ',\\n\\nYour order ' + row[0] + ' has been approved.\\n\\nThank you.'\n  });\n}"
+                ],
+                [
+                      "Create the installable trigger",
+                      "In the Apps Script editor open Triggers, click Add Trigger, choose sendStatusEmail, event source From spreadsheet and event type On edit. A simple onEdit function cannot send email because sending needs your permission, so an installable trigger is required. Approve the permission screen when asked."
+                ],
+                [
+                      "Send a daily summary instead of one email per row",
+                      "For a team, one daily email is better than fifty small ones. Use a time-driven trigger that collects pending items and sends a single message with MailApp.sendEmail at a fixed time every morning."
+                ],
+                [
+                      "Write emails people will actually read",
+                      "Use a clear subject, mention the order or ticket number, say what happens next and keep it short. Add your business name and a contact number so the reader knows the email is genuine."
+                ],
+                [
+                      "Know the limits and protect privacy",
+                      "Google limits how many emails a script can send per day, and the limit is lower for free Gmail accounts than for Google Workspace, so check the current quota before mailing large lists. Only send what the person needs, never put sensitive data in an email body and only email people who expect to hear from you."
+                ],
+                [
+                      "Test before going live",
+                      "Test with your own email address first. Change one test row, confirm that exactly one email arrives and check the Executions page for errors. Then switch the email column to real customers."
+                ]
+          ],
+          "outro": "Automatic notifications keep customers informed and stop tasks from being forgotten. If you want email, WhatsApp or SMS alerts built into your orders, enquiries or approvals, our automation team can set it up for you."
+    },
+
+    {
+          "slug": "five-business-processes-spreadsheets",
+          "cat": "Automation",
+          "date": "2026-10-14",
+          "plain": true,
+          "title": "Five Business Processes You Can Automate Using Spreadsheets",
+          "ex": "Five everyday business processes, from attendance to invoices and follow-ups, that you can automate with Google Sheets or Excel before buying any software.",
+          "kw": "automate business processes spreadsheets, Google Sheets automation, business process automation, attendance tracker, invoice tracker, lead tracker",
+          "tags": "#BusinessAutomation #Spreadsheets #GoogleSheets #Excel #SmallBusiness",
+          "intro": "You do not always need expensive software to automate a business. A well-designed spreadsheet, a form and a few scripts can run many daily processes reliably. These five are good starting points because they are repetitive, easy to measure and low risk.",
+          "pts": [
+                [
+                      "Process 1: Attendance and leave tracking",
+                      "Collect check-ins through a form or a shared sheet, calculate working days, late marks and leave balance with formulas, and send the monthly summary to payroll automatically. This replaces manual counting at month-end."
+                ],
+                [
+                      "Process 2: Quotations, invoices and payment reminders",
+                      "Keep a product list and a template. Pick the customer and items from dropdowns, let formulas calculate tax and totals, and export a PDF with one click. A status column shows which invoices are unpaid, and a scheduled script can send a polite reminder when a due date passes."
+                ],
+                [
+                      "Process 3: Inventory and low-stock alerts",
+                      "Record stock in and stock out, calculate the balance with SUMIFS and set a minimum level for every item. When an item goes below the minimum, the sheet turns it red and an email asks for a reorder."
+                ],
+                [
+                      "Process 4: Lead tracking and follow-ups",
+                      "Capture enquiries from a form, record the source, product and owner, and set the next follow-up date. A daily list of today's follow-ups for each person keeps leads from being forgotten."
+                ],
+                [
+                      "Process 5: Task and approval workflows",
+                      "Use a sheet where each request has a status such as Requested, Approved, In Progress and Done, with owners and due dates. Automatic emails move the task to the next person. This is often called a flow management system."
+                ],
+                [
+                      "When to move beyond spreadsheets",
+                      "If many people edit at once, the data is growing very large, you need strict permissions or the process depends on complex rules, a custom CRM, ERP or web app is safer. A good spreadsheet system is still the best way to learn exactly what your process needs before building one."
+                ]
+          ],
+          "outro": "Pick one process, build the simple version this week and use it for a month. You will quickly see what to improve. If you want us to build and maintain these automations for your business, contact our Services Studio."
+    },
+
+    {
+          "slug": "business-dashboard-management-reporting",
+          "cat": "Excel & MIS",
+          "date": "2026-10-14",
+          "title": "How to Build a Business Dashboard for Management Reporting",
+          "ex": "Build a clear management dashboard step by step: choose KPIs, prepare data, pick the right charts, design the layout and keep it updated automatically.",
+          "kw": "business dashboard, management reporting dashboard, Excel dashboard, Power BI dashboard, Looker Studio dashboard, KPI dashboard",
+          "tags": "#Dashboard #ManagementReporting #PowerBI #Excel #DataAnalytics",
+          "intro": "A management dashboard is one screen that tells a manager how the business is doing and where to look next. The best dashboards are not full of charts. They answer a few important questions clearly. This process works whether you build in Excel, Power BI or Looker Studio.",
+          "pts": [
+                [
+                      "Start with the questions, not the charts",
+                      "Ask the manager what decisions the dashboard should support. For example: Are we meeting the sales target? Which branch is falling behind? Which payments are overdue? Every item on the dashboard should answer one of these questions."
+                ],
+                [
+                      "Choose five to seven KPIs",
+                      "Pick a small set of numbers that matter, such as revenue, orders, collection, pending amount, conversion rate or on-time delivery. Write a one-line definition for each so everyone calculates it the same way."
+                ],
+                [
+                      "Prepare clean, consistent data",
+                      "Combine your sources into one tidy table with consistent names, dates and categories. Dashboards fail more often because of messy data than because of weak charts."
+                ],
+                [
+                      "Calculate the numbers in a separate place",
+                      "Keep calculations apart from the visuals. In Excel use a calculation sheet with SUMIFS and PivotTables, and in Power BI use measures. This makes the dashboard easier to check and update."
+                ],
+                [
+                      "Pick the right chart for each question",
+                      "Use a line chart for trends over time, a bar chart to compare categories, a simple table for exact values and a single large number for a KPI. Use pie charts rarely, and only for a few parts of a whole."
+                ],
+                [
+                      "Design the layout for reading",
+                      "Put the key KPIs at the top, trends in the middle and detail tables at the bottom. Use consistent colours, such as green for good and red for attention, plenty of white space and clear titles that state what the chart shows."
+                ],
+                [
+                      "Add filters carefully",
+                      "Slicers for date, branch or product let managers explore on their own. Keep the number of filters small so the dashboard stays simple."
+                ],
+                [
+                      "Automate the refresh",
+                      "A dashboard that needs manual updating is soon abandoned. Use Power Query or Power BI refresh, connect Looker Studio to Google Sheets, or schedule a script so the numbers update daily or weekly."
+                ],
+                [
+                      "Test with the real audience",
+                      "Show the first version to the manager, ask what they would do after seeing it and remove anything that does not help. Then document where each number comes from so it can be trusted."
+                ]
+          ],
+          "outro": "A dashboard is a communication tool. When it is accurate, simple and always up to date, it saves meetings and speeds up decisions. If you want a management dashboard built for your business, or want to learn dashboard building with Excel and Power BI, get in touch with us."
+    },
+
+    {
+          "slug": "manual-vs-automated-reporting",
+          "cat": "Automation",
+          "date": "2026-10-14",
+          "plain": true,
+          "title": "Manual Reporting vs Automated Reporting: A Practical Comparison",
+          "ex": "Manual or automated reports? Compare time, accuracy, cost and flexibility, learn when manual is still fine and how to move step by step.",
+          "kw": "manual reporting vs automated reporting, report automation, automated MIS reports, reporting accuracy, business reporting",
+          "tags": "#ReportAutomation #MIS #Reporting #BusinessAutomation #Excel",
+          "intro": "Most businesses start with manual reports, and there is nothing wrong with that. The question is when the effort of doing it by hand becomes more expensive than automating it. This comparison helps you decide.",
+          "pts": [
+                [
+                      "Time",
+                      "Manual reporting repeats the same collection, copying and formatting every day or month. Automated reporting does that work in minutes, so people spend their time on checking and acting instead of preparing."
+                ],
+                [
+                      "Accuracy",
+                      "Every manual copy-paste is a chance for a mistake. Automation applies the same rules every time, but only if the rules and the source data are correct, so setup and testing matter."
+                ],
+                [
+                      "Consistency",
+                      "Manual reports vary with the person who prepares them. Automated reports use one fixed format and definition, which makes month-to-month comparison reliable."
+                ],
+                [
+                      "Cost",
+                      "Manual reporting has a low start-up cost but a continuing cost in staff hours. Automation needs an initial setup cost and some maintenance, then costs much less per report."
+                ],
+                [
+                      "Flexibility",
+                      "A person can handle an unusual request or a strange data format quickly. Automated reports are less flexible until someone updates them, so keep a simple way to adjust or override."
+                ],
+                [
+                      "Speed of decisions",
+                      "Automated reports can be ready every morning, or even live, so managers act on current numbers. Manual reports often arrive after the moment to act has passed."
+                ],
+                [
+                      "Audit trail and control",
+                      "Good automation records when data was loaded and from where, which helps explain a number later. Manual files often have no history of who changed what."
+                ],
+                [
+                      "When manual is still fine",
+                      "If a report is needed rarely, the data is small and the format changes every time, manual is reasonable. Automate when a task is frequent, rule-based and uses the same data sources each time."
+                ],
+                [
+                      "How to move from manual to automated",
+                      "Document the current steps, standardise the data entry, automate the easiest part first, run the new report next to the old one for a few weeks, compare the results and only then retire the manual version."
+                ]
+          ],
+          "outro": "The best approach is usually a mix: automate the collection and calculation, and keep a person responsible for reviewing and explaining the result. If you want to automate your reports and keep control of them, our automation team can help you plan it."
+    },
+
     { slug: 'sarkari-result-2026-check-safely', cat: 'Career', date: '2026-10-13', plain: true,
       title: 'Sarkari Result 2026: How to Check Your Result Safely and Avoid Fake Websites',
       ex: 'Searching for Sarkari Result 2026? Learn the safe, official way to check results, merit lists and scorecards, and how to spot fake sites.',
@@ -510,9 +1111,9 @@
       outro: 'A good institute welcomes your questions. Visit, compare two or three options and choose the one where you feel confident about what you will actually be able to do at the end of the course.' },
 
     { slug: 'power-bi-vs-excel', cat: 'Excel & MIS', date: '2026-09-06',
-      title: 'Power BI vs Excel: Which Should You Learn First?',
+      title: 'Excel vs Power BI: Which Should You Learn First?',
       ex: 'Excel or Power BI? Learn what each tool does best and which one to start with for MIS and data jobs.',
-      kw: 'Power BI vs Excel, Power BI course Jaipur, data analytics course',
+      kw: 'Excel vs Power BI, Power BI vs Excel, Power BI course Jaipur, data analytics course',
       tags: '#PowerBI #Excel #DataAnalytics #MIS',
       intro: 'Beginners often ask whether to learn Excel or Power BI. The honest answer is that they are different tools that work best together, and there is a good order to learn them.',
       pts: [
@@ -635,7 +1236,8 @@
         '<p style="margin:0 0 10px;"><strong>Feeling nervous about starting?</strong> That is completely normal. Join a demo class, tell the trainer you are a beginner, and start from the basics. You learn one step at a time, and nobody expects you to know everything on day one.</p>' +
         '<p style="margin:0;"><strong>Worried about getting a sarkari naukri?</strong> Keep preparing if that is your goal. A skill does not replace it, it supports it. Many government posts also expect basic computer knowledge, and while you wait for results you will have something you can use right now to earn, freelance or help a business. Learn a skill you can actually use, whatever happens next.</p></div>';
     var NO_ENCOURAGE = { 'automate-workflows-early': 1, 'sarkari-naukri-or-skills': 1, 'signs-business-needs-crm': 1, 'custom-crm-erp-software-jaipur': 1, 'whatsapp-business-automation-jaipur': 1,
-                         'ai-business-process-automation-jaipur': 1, 'gst-billing-mistakes': 1, 'cyber-safety-office-staff': 1 };
+                         'ai-business-process-automation-jaipur': 1, 'gst-billing-mistakes': 1, 'cyber-safety-office-staff': 1,
+                         'automate-daily-reports-google-sheets': 1, 'reduce-manual-data-entry': 1, 'ai-automation-small-business': 1, 'automate-google-sheets-apps-script': 1, 'email-notifications-google-sheets': 1, 'five-business-processes-spreadsheets': 1, 'business-dashboard-management-reporting': 1, 'manual-vs-automated-reporting': 1 };
 
     /* ---------------- code below: no need to edit ---------------- */
     var COLORS = { 'Career': ['#0c2340', '#14518f'], 'Excel & MIS': ['#0b5d3b', '#1f9d6b'], 'Programming': ['#3b1f6b', '#6f4bd8'],
@@ -669,7 +1271,10 @@
     }
     function bodyHtml(p, extras) {
         var parts = ['<p>' + p.intro + '</p>'];
-        p.pts.forEach(function (pt, i) { parts.push('<p><strong>' + (p.plain ? '' : (i + 1) + '. ') + pt[0] + '.</strong> ' + pt[1] + '</p>'); });
+        p.pts.forEach(function (pt, i) {
+            parts.push('<p><strong>' + (p.plain ? '' : (i + 1) + '. ') + pt[0] + '.</strong> ' + pt[1] + '</p>');
+            if (pt[2]) parts.push('<pre style="background:#0c2340;color:#e8f1fb;padding:14px 16px;border-radius:10px;overflow-x:auto;font-family:Consolas,Menlo,Monaco,monospace;font-size:.85rem;line-height:1.55;margin:10px 0 18px;white-space:pre;"><code style="font-family:inherit;">' + xml(pt[2]) + '</code></pre>');   // optional 3rd item = formula or code
+        });
         parts.push('<p>' + p.outro + '</p>');
         // up to 3 own pictures: after the intro, in the middle, near the end
         var spots = [1, 4, parts.length - 1];
