@@ -2528,6 +2528,7 @@ function renderStudentDashboard(student) {
 
     const listEl = document.getElementById('slCoursesList');
     listEl.innerHTML = student.courses.map(c => {
+        (window._receiptData = window._receiptData || {})[c.rowIndex] = { s: student, c: c };
         const hasFee = typeof c.fee === 'number' && c.fee > 0;
         const due = hasFee ? Math.max(0, (c.fee || 0) - (c.feePaid || 0)) : 0;
         const feeHtml = hasFee ? `
@@ -2550,6 +2551,7 @@ function renderStudentDashboard(student) {
             <span style="font-size:0.8rem; color:#627d98;">${c.progress}% complete</span>
             ${c.status === 'completed' && gradeDisplayText(c.grade) ? `<span style="font-size:0.8rem; color:#1f7a37; font-weight:700; display:block; margin-top:4px;">🏅 Grade: ${escHtml(gradeDisplayText(c.grade))}</span>` : ''}
             ${feeHtml}
+            ${(c.payments && c.payments.length) ? `<details style="margin:6px 0; font-size:0.8rem;"><summary style="cursor:pointer; color:#0073e6; font-weight:700;">🧾 Payment receipts (${c.payments.length})</summary>${c.payments.map((p, i) => `<div style="display:flex; justify-content:space-between; align-items:center; gap:8px; padding:5px 0; border-bottom:1px solid #eef2f6;"><span>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}${p.mode ? ' · ' + escHtml(p.mode) : ''} · <strong>₹${p.amount}</strong></span><button type="button" class="sl-cert-btn" style="padding:2px 10px; font-size:0.72rem;" onclick="openReceipt(${c.rowIndex}, ${i})">View / Share</button></div>`).join('')}</details>` : ''}
             ${c.status === 'completed' ? `<button class="sl-cert-btn" onclick="viewCertificate('${escJsArg(student.name)}', '${escJsArg(c.name)}', '${escJsArg(student.uniqueId || '')}', '${escJsArg(c.rowIndex != null ? c.rowIndex : '')}', '${escJsArg(durationText)}')">View Certificate</button>` : ''}
         </div>
     `;
@@ -2773,13 +2775,14 @@ async function loadAdminStudents() {
             const enrolledDateText = formatDate(c.enrolledDate);
             const dobText = formatDate(s.dob); // was showing the raw ISO string before (e.g. 2000-04-04T18:30:00.000Z)
             const balance = Math.max(0, (c.fee || 0) - (c.feePaid || 0));
+            (window._receiptData = window._receiptData || {})[c.rowIndex] = { s: s, c: c };
             const payments = c.payments || [];
             const paymentsHtml = payments.length
                 ? `<div class="payment-history">
-                        ${payments.map(p => `
+                        ${payments.map((p, i) => `
                             <div class="payment-history-row">
-                                <span>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}</span>
-                                <span>₹${p.amount}</span>
+                                <span>${p.timestamp ? formatDate(p.timestamp) : 'Earlier payment'}${p.mode ? ' · ' + escHtml(p.mode) : ''}</span>
+                                <span>₹${p.amount} <button type="button" class="sl-cert-btn" style="padding:2px 8px; font-size:0.7rem; margin-left:6px;" onclick="openReceipt(${c.rowIndex}, ${i})">🧾 Receipt</button></span>
                             </div>`).join('')}
                    </div>`
                 : `<p class="sl-hint" style="margin:6px 0;">No payments received yet.</p>`;
@@ -2826,6 +2829,7 @@ async function loadAdminStudents() {
                             ${paymentsHtml}
                             <label style="font-size:0.75rem;">Add Payment ₹</label>
                             <input type="number" min="0" placeholder="e.g. 25000" id="newpay-row-${c.rowIndex}" style="width:110px; margin-left:6px; padding:4px 6px;">
+                            <select id="paymode-row-${c.rowIndex}" style="margin-left:6px; padding:4px 6px;" title="How the student paid (printed on the receipt)"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Card</option><option>Cheque</option><option>Other</option></select>
                             <button class="sl-cert-btn" style="margin-top:6px; margin-left:8px;" onclick="addStudentPayment(${c.rowIndex})">+ Add Payment</button>
                         </div>
                     </div>
@@ -2901,9 +2905,12 @@ async function addStudentPayment(rowIndex) {
         return;
     }
     try {
-        const result = await callSheetBackend({ action: 'addStudentPayment', rowIndex, amount });
+        const modeEl = document.getElementById(`paymode-row-${rowIndex}`);
+        const result = await callSheetBackend({ action: 'addStudentPayment', rowIndex, amount, mode: modeEl ? modeEl.value : '' });
         if (result.success) {
-            loadAdminStudents();
+            await loadAdminStudents();
+            const dd = window._receiptData && window._receiptData[rowIndex];     // show the receipt of the payment just saved
+            if (dd && dd.c.payments && dd.c.payments.length) openReceipt(rowIndex, dd.c.payments.length - 1);
         } else {
             showToast(result.error || 'Could not save — please try again.');
         }
@@ -2911,6 +2918,140 @@ async function addStudentPayment(rowIndex) {
         console.error('Adding student payment failed:', e);
         showToast('Could not save — check the Apps Script Web App URL in script.js is correct and deployed.');
     }
+}
+
+/* ---------- PAYMENT RECEIPT: view, print / save as PDF, share on WhatsApp ---------- */
+function rupeesInWords(amount) {
+    const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const two = n => n < 20 ? ones[n] : tens[Math.floor(n / 10)] + (n % 10 ? ' ' + ones[n % 10] : '');
+    const three = n => (n >= 100 ? ones[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' ' : '') : '') + (n % 100 ? two(n % 100) : '');
+    const toWords = n => {
+        if (n === 0) return 'Zero';
+        const parts = [], cr = Math.floor(n / 10000000), lk = Math.floor(n % 10000000 / 100000), th = Math.floor(n % 100000 / 1000), rest = n % 1000;
+        if (cr) parts.push(three(cr) + ' Crore');
+        if (lk) parts.push(two(lk) + ' Lakh');
+        if (th) parts.push(two(th) + ' Thousand');
+        if (rest) parts.push(three(rest));
+        return parts.join(' ');
+    };
+    const a = Math.round((Number(amount) || 0) * 100), rupees = Math.floor(a / 100), paise = a % 100;
+    return 'Rupees ' + toWords(rupees) + (paise ? ' and ' + two(paise) + ' Paise' : '') + ' Only';
+}
+
+function buildReceipt(rowIndex, payIndex) {
+    const d = window._receiptData && window._receiptData[rowIndex];
+    if (!d || !d.c || !d.c.payments || !d.c.payments[payIndex]) return null;
+    const s = d.s, c = d.c, p = c.payments[payIndex];
+    let upTo = 0;
+    for (let k = 0; k <= payIndex; k++) upTo += Number(c.payments[k].amount) || 0;
+    const fee = Number(c.fee) || 0, amount = Number(p.amount) || 0;
+    const money = n => '\u20B9' + (Number(n) || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    return {
+        no: p.receiptNo || ('UMA-R' + rowIndex + '-' + (payIndex + 1)),
+        date: p.timestamp ? formatDate(p.timestamp) : 'Earlier payment',
+        name: s.name || '', uid: s.uniqueId || '', mobile: s.mobile || '',
+        course: c.name || '', duration: c.duration || (typeof COURSE_DURATIONS !== 'undefined' ? COURSE_DURATIONS[c.name] : '') || '',
+        mode: p.mode || '', amount: amount, amountText: money(amount), words: rupeesInWords(amount),
+        fee: fee, feeText: fee ? money(fee) : '', paidText: money(upTo), balance: fee ? Math.max(0, fee - upTo) : null,
+        balanceText: fee ? money(Math.max(0, fee - upTo)) : ''
+    };
+}
+
+/* The logo file is the same one used on the website: images/logo.png. A full address is used so it also prints correctly. */
+function receiptLogoUrl() {
+    try { return new URL('images/logo.png', document.baseURI).href; } catch (e) { return 'images/logo.png'; }
+}
+
+function receiptCardHtml(r) {
+    const row = (a, b) => b ? `<tr><td style="padding:5px 0; color:#627d98; width:42%;">${a}</td><td style="padding:5px 0; font-weight:600; color:#0c2340;">${escHtml(b)}</td></tr>` : '';
+    return `<div style="border:2px solid #0c2340; border-radius:10px; padding:18px 20px; font-family:Arial,Helvetica,sans-serif; background:#fff; color:#102a43;">
+        <div style="text-align:center; border-bottom:2px solid #0073e6; padding-bottom:10px; margin-bottom:12px;">
+            <img src="${receiptLogoUrl()}" alt="UMA Learning &amp; Services" onerror="this.style.display='none'" style="display:block; margin:0 auto 6px; max-height:64px; max-width:200px; width:auto; height:auto;">
+            <div style="font-size:1.25rem; font-weight:800; color:#0c2340;">UMA Learning &amp; Services</div>
+            <div style="font-size:0.78rem; color:#627d98;">Jaipur &middot; +91 83404 34138 &middot; umalearningservices.com</div>
+            <div style="display:inline-block; margin-top:8px; background:#0c2340; color:#fff; padding:3px 16px; border-radius:999px; font-size:0.8rem; font-weight:700; letter-spacing:.06em;">FEE RECEIPT</div>
+        </div>
+        <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+            ${row('Receipt No.', r.no)}${row('Date', r.date)}${row('Received from', r.name)}${row('Student ID', r.uid)}${row('Mobile', r.mobile)}${row('Course', r.course)}${row('Duration', r.duration)}${row('Payment mode', r.mode)}
+        </table>
+        <div style="margin:14px 0; padding:12px; background:#f2f8ff; border-radius:8px; text-align:center;">
+            <div style="font-size:0.78rem; color:#627d98;">Amount received</div>
+            <div style="font-size:1.7rem; font-weight:800; color:#1f7a37;">${escHtml(r.amountText)}</div>
+            <div style="font-size:0.78rem; color:#486581;">${escHtml(r.words)}</div>
+        </div>
+        <table style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+            ${row('Total course fee', r.feeText)}${row('Total paid till this receipt', r.paidText)}${row('Balance due', r.balanceText)}
+        </table>
+        <p style="margin:14px 0 0; font-size:0.72rem; color:#829ab1; text-align:center;">This is a computer-generated receipt.<br>Thank you for learning with UMA Learning &amp; Services.</p>
+    </div>`;
+}
+
+function receiptText(r) {
+    return '*Fee Receipt - UMA Learning & Services*\n' +
+        'Receipt No: ' + r.no + '\nDate: ' + r.date + '\nStudent: ' + r.name + (r.uid ? ' (' + r.uid + ')' : '') + '\nCourse: ' + r.course + '\n' +
+        'Amount received: ' + r.amountText + (r.mode ? ' (' + r.mode + ')' : '') + '\n' + r.words + '\n' +
+        'Total paid: ' + r.paidText + (r.balanceText ? '\nBalance due: ' + r.balanceText : '') + '\n\nThank you! \u2013 UMA Learning & Services, +91 83404 34138';
+}
+
+function closeReceipt() {
+    const o = document.getElementById('receiptOverlay');
+    if (o) o.remove();
+    document.removeEventListener('keydown', _receiptKey);
+}
+function _receiptKey(e) { if (e.key === 'Escape') closeReceipt(); }
+
+function printReceipt(html, title) {
+    const old = document.getElementById('receiptPrintFrame');
+    if (old) old.remove();
+    const f = document.createElement('iframe');
+    f.id = 'receiptPrintFrame';
+    f.style.cssText = 'position:fixed; right:0; bottom:0; width:0; height:0; border:0; visibility:hidden;';
+    document.body.appendChild(f);
+    const doc = f.contentWindow.document;
+    doc.open();
+    doc.write('<!doctype html><html><head><meta charset="utf-8"><title>' + escHtml(title) + '</title><style>@page{size:A5 portrait;margin:10mm}body{margin:0;padding:6px;font-family:Arial,Helvetica,sans-serif}</style></head><body>' + html + '</body></html>');
+    doc.close();
+    const before = document.title;
+    document.title = title;
+    setTimeout(() => {
+        try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { window.print(); }
+        setTimeout(() => { document.title = before; }, 1500);
+    }, 250);
+}
+
+function openReceipt(rowIndex, payIndex) {
+    const r = buildReceipt(rowIndex, payIndex);
+    if (!r) { showToast('Receipt not available. Please refresh and try again.'); return; }
+    closeReceipt();
+    const isStaff = !!(window.UMA_STAFF && UMA_STAFF.token);
+    let to = isStaff ? String(r.mobile || '').replace(/\D/g, '') : '';
+    if (to.length === 10) to = '91' + to;
+    const o = document.createElement('div');
+    o.id = 'receiptOverlay';
+    o.style.cssText = 'position:fixed; inset:0; z-index:100000; background:rgba(12,35,64,.65); display:flex; align-items:flex-start; justify-content:center; overflow:auto; padding:18px 12px;';
+    o.innerHTML = `<div style="background:#fff; border-radius:14px; width:100%; max-width:470px; padding:14px; box-shadow:0 20px 60px rgba(0,0,0,.4);">
+        <div id="receiptCard">${receiptCardHtml(r)}</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+            <button type="button" class="sl-cert-btn" id="rcPrint" style="flex:1; min-width:140px;">🖨 Print / Save PDF</button>
+            <button type="button" class="sl-cert-btn" id="rcWa" style="flex:1; min-width:140px;">📲 Share on WhatsApp</button>
+            <button type="button" class="sl-cert-btn" id="rcCopy" style="flex:1; min-width:140px;">🔗 Copy Details</button>
+            <button type="button" class="sl-logout-btn" id="rcClose" style="flex:1; min-width:100px; width:auto;">Close</button>
+        </div>
+        <p class="sl-hint" style="margin:8px 0 0; font-size:0.74rem;">To send the PDF: tap Print / Save PDF, choose “Save as PDF”, then attach the file in WhatsApp or email.</p>
+    </div>`;
+    document.body.appendChild(o);
+    o.addEventListener('click', e => { if (e.target === o) closeReceipt(); });
+    document.addEventListener('keydown', _receiptKey);
+    document.getElementById('rcClose').onclick = closeReceipt;
+    document.getElementById('rcPrint').onclick = () => printReceipt(receiptCardHtml(r), 'Receipt ' + r.no + ' - ' + (r.name || 'UMA'));
+    document.getElementById('rcWa').onclick = () => window.open('https://wa.me/' + to + '?text=' + encodeURIComponent(receiptText(r)), '_blank', 'noopener');
+    document.getElementById('rcCopy').onclick = () => {
+        const t = receiptText(r).replace(/\*/g, '');
+        const done = () => showToast('Receipt details copied');
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, () => window.prompt('Copy this text:', t));
+        else window.prompt('Copy this text:', t);
+    };
 }
 
 /* ---------- STAFF PANEL TABS (Registered Students / Pending Enquiries) ---------- */
@@ -4311,7 +4452,7 @@ function fillCertificateDetails(r) {
     if (!desc || !desc.set) return;
 
     var BAD_TAGS = 'script,iframe,frame,frameset,object,embed,applet,link,meta,base,style,foreignobject,animate,set,animatetransform,form';
-    var FN = 'addInvoicePayment|addStudentPayment|downloadInvoicePDF|saveAdminCourseRow|saveAdminEnquiryStatus|viewCertificate';
+    var FN = 'addInvoicePayment|addStudentPayment|downloadInvoicePDF|saveAdminCourseRow|saveAdminEnquiryStatus|viewCertificate|openReceipt';
     var ARG = "(?:\\d+|'(?:[^'\\\\]|\\\\.)*')";
     var HANDLER = new RegExp('^\\s*(?:' + FN + ')\\(\\s*(?:' + ARG + '(?:\\s*,\\s*' + ARG + ')*)?\\s*\\)\\s*;?\\s*$');
     var URL_ATTRS = /^(href|src|xlink:href|action|formaction|data|poster|srcset)$/i;
@@ -4781,5 +4922,3 @@ function fillCertificateDetails(r) {
         panel.style.display = ''; btn.classList.add('active'); reload();
     };
 })();
-
-

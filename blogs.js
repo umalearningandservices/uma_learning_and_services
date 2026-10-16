@@ -1,4 +1,4 @@
-/* blogs.js - 48 SEO blog posts for the "Our Blogs" page, kept in this ONE file.
+/* blogs.js - 64 SEO blog posts for the "Our Blogs" page, kept in this ONE file.
    They are added on top of the blogs already in index.html and use the site's own blog layout,
    so the card, the "Read More" article page, reading time and SEO tags all work as before.
 
@@ -17,6 +17,22 @@
 
     /* ---------------- YOUR PHOTOS (optional) ---------------- */
     var BLOG_IMAGES = {
+        'flow-management-system-fms': { cover: '', extra: [] },
+        'google-sheets-mini-erp-apps-script': { cover: '', extra: [] },
+        'excel-add-ins-one-click-tools': { cover: '', extra: [] },
+        'hr-automation-small-business': { cover: '', extra: [] },
+        'auto-reminder-smart-alert-systems': { cover: '', extra: [] },
+        'task-delegation-monitoring-system': { cover: '', extra: [] },
+        'visitor-gate-pass-night-guard-automation': { cover: '', extra: [] },
+        'smart-stock-management-ims': { cover: '', extra: [] },
+        'automated-data-collection-report-automation': { cover: '', extra: [] },
+        'ai-automation-integrations-business': { cover: '', extra: [] },
+        'website-or-custom-web-app-business': { cover: '', extra: [] },
+        'outsourced-payroll-services': { cover: '', extra: [] },
+        'automation-tools-for-ca-firms': { cover: '', extra: [] },
+        'professional-photography-videography-business': { cover: '', extra: [] },
+        'social-media-handling-for-businesses': { cover: '', extra: [] },
+        'publishing-services-books-brochures': { cover: '', extra: [] },
         'sarkari-result-2026-check-safely': { cover: '', extra: [] },
         'excel-to-pdf-how-to-convert': { cover: '', extra: [] },
         'top-blogging-websites-india': { cover: '', extra: [] },
@@ -658,6 +674,262 @@
           "outro": "The best approach is usually a mix: automate the collection and calculation, and keep a person responsible for reviewing and explaining the result. If you want to automate your reports and keep control of them, our automation team can help you plan it."
     },
 
+    { slug: 'flow-management-system-fms', cat: 'Business Services', date: '2026-10-13', plain: true, svc: true,
+      title: 'What Is a Flow Management System (FMS) and Does Your Office Need One?',
+      ex: 'When work moves through registers, WhatsApp chats and verbal orders, things get stuck. An FMS shows every step and who owns it.',
+      kw: 'Flow Management System, FMS software, workflow tracking, office automation Jaipur',
+      tags: '#FMS #WorkflowAutomation #OfficeAutomation #Jaipur',
+      intro: 'In many offices, work moves through registers, WhatsApp chats and verbal instructions, and requests quietly get stuck. A Flow Management System (FMS) maps each step of a process, so everyone knows what is pending and who is responsible for it.',
+      pts: [
+        ['What an FMS does', 'It follows a piece of work from enquiry to approval, execution and closure. Every step has an owner and a time limit, so nothing depends on someone remembering.'],
+        ['Signs your office needs one', 'You keep asking who is handling a task, delays are noticed only after the customer complains, and managers spend time chasing updates instead of managing.'],
+        ['Main features', 'Workflow mapping, role-based task routing, WhatsApp and email triggers, real-time status dashboards and escalation alerts when a step is delayed.'],
+        ['Processes that suit an FMS', 'Purchase approvals, client orders, quotations, leave requests, complaint handling and any process with several people and several steps.'],
+        ['How a good one is built', 'First study how the work really happens, then draw the steps, decide the owner and time for each step, build the system, test it with your team and train your staff.'],
+        ['A mistake to avoid', 'Do not make the system more complicated than the process. Start with one process, make it work smoothly and then add the next.']
+      ],
+      outro: 'Pick the one process that causes the most delays in your office and write down its steps. That list is the starting point for a custom FMS built around how you actually work.' },
+
+    { slug: 'google-sheets-mini-erp-apps-script', cat: 'Automation', date: '2026-10-12', plain: true, svc: true,
+      title: 'Turn Google Sheets and Docs into a Mini ERP with Apps Script',
+      ex: 'If your team already uses Google Workspace, Apps Script can connect Sheets, Docs and Gmail into an automated system without new software.',
+      kw: 'Google Workspace automation, Apps Script, Google Sheets automation, mini ERP',
+      tags: '#GoogleWorkspace #AppsScript #GoogleSheets #BusinessAutomation',
+      intro: 'Many teams already live in Google Sheets, Docs and Gmail. With Google Apps Script, these everyday tools can be connected into a system that records data, sends approvals and creates documents on its own, without buying new software.',
+      pts: [
+        ['What Apps Script does', 'It runs small programs inside Google Workspace. It can react when a form is filled, when a cell changes or at a scheduled time, and then update sheets, send emails or build documents.'],
+        ['Practical examples', 'A Sheet row creating an offer letter or certificate in Docs, an approval workflow handled inside Sheets, and a scheduled report that reaches the owner by email every morning.'],
+        ['Who it suits', 'Teams that already use Google Workspace and want it to behave like a small ERP, without the cost and training of a new platform.'],
+        ['Benefits', 'Low cost, familiar screens, quick changes and easy sharing. Your staff keep using tools they already know.'],
+        ['Limits to know', 'For very large data or complex multi-department needs, a full ERP may suit better. Permissions and access should always be planned carefully.'],
+        ['How to begin', 'Choose one repeated task, such as monthly reports or approvals, and automate that first. Measure the time saved before moving on.']
+      ],
+      outro: 'If your team spends hours copying data between sheets and documents, that is the best place to start. Tell us the task and we will suggest the simplest automation for it.' },
+
+    { slug: 'excel-add-ins-one-click-tools', cat: 'Excel & MIS', date: '2026-10-11', plain: true, svc: true,
+      title: 'One-Click Excel Add-ins: Stop Repeating the Same Task Every Day',
+      ex: 'A custom Excel add-in gives your team a button for the task that currently takes manual effort every day.',
+      kw: 'Excel add-in development, custom Excel tools, VBA automation, Office Scripts',
+      tags: '#ExcelAddIn #VBA #OfficeAutomation #MIS',
+      intro: 'Finance, HR and operations teams often repeat the same Excel steps every day: cleaning data, applying formats, merging files and preparing a report. A custom add-in turns that whole routine into a single button.',
+      pts: [
+        ['What an Excel add-in is', 'A packaged tool, such as an XLAM file, that adds its own buttons and menus to the Excel ribbon on your staff computers.'],
+        ['Tasks that suit an add-in', 'Cleaning exported data, formatting monthly reports, merging several files, creating statements and anything that follows the same steps each time.'],
+        ['How it works behind the scenes', 'The logic is written in VBA or Office Scripts, so the button runs the exact steps your best employee would follow, in seconds and without mistakes.'],
+        ['Packaging and training', 'A good project includes installing the tool on your computers and showing your staff how to use it, so it is actually used every day.'],
+        ['Benefits', 'Hours saved every week, the same result every time and no dependence on one person who knows the trick.'],
+        ['When to build one', 'If someone repeats the same Excel task daily for more than half an hour, an add-in will probably pay for itself quickly.']
+      ],
+      outro: 'Ask your team which Excel task they dislike most. That task is usually the best candidate for your first one-click tool.' },
+
+    { slug: 'hr-automation-small-business', cat: 'Automation', date: '2026-10-10', plain: true, svc: true,
+      title: 'HR Automation for Small Businesses: Leave, Attendance and Salary Slips Made Easy',
+      ex: 'Replace paper registers and scattered Excel sheets with a simple system for leave approvals, attendance and payslips.',
+      kw: 'HR automation, leave management system, attendance tracking, salary slip generation',
+      tags: '#HRAutomation #Attendance #LeaveManagement #SmallBusiness',
+      intro: 'In many small businesses, HR still runs on paper registers and Excel sheets. Leave requests are forgotten, attendance is counted by hand and salary slips take days. An automated HR system removes most of this routine work.',
+      pts: [
+        ['Leave requests and approvals', 'Employees apply online, the manager approves with one click and the balance updates by itself. No more phone calls and lost slips.'],
+        ['Daily attendance tracking', 'Attendance is recorded digitally and summarised automatically, ready for payroll at month end.'],
+        ['Automatic salary slips', 'Once salary data is in the system, payslips are generated in the same format for every employee, which saves time and avoids calculation mistakes.'],
+        ['Alerts and notifications', 'Managers and employees receive messages for approvals, pending requests and important HR dates.'],
+        ['Employee records in one place', 'Joining details, documents and history are stored safely, so nothing is lost when a file or a person goes missing.'],
+        ['Who benefits most', 'HR teams and business owners handling staff processes manually on paper or Excel, and growing businesses that cannot keep adding admin staff.']
+      ],
+      outro: 'Start with leave and attendance, because they are used every day. Once the team is comfortable, add salary slips and records. Talk to us about the HR process that takes your team the most time.' },
+
+    { slug: 'auto-reminder-smart-alert-systems', cat: 'Automation', date: '2026-10-09', plain: true, svc: true,
+      title: 'Never Miss a Renewal Again: Auto Reminder and Smart Alert Systems',
+      ex: 'Insurance, licences, compliance dates and birthdays: an automatic reminder system means your business never misses an important date.',
+      kw: 'auto reminder system, compliance reminders, WhatsApp reminders, business automation',
+      tags: '#AutoReminder #SmartAlerts #Compliance #BusinessAutomation',
+      intro: 'Missed renewals and deadlines cost businesses money, fines and customer trust. Relying on memory or sticky notes works until the day it does not. An automatic reminder system watches the dates for you.',
+      pts: [
+        ['What it can remind you about', 'Insurance and document expiry, licence and contract renewals, compliance deadlines, task due dates, customer follow-ups and staff birthdays or work anniversaries.'],
+        ['Reminders reach you where you are', 'Alerts can come by email, WhatsApp, SMS or push notification, so the right person sees them on the channel they actually check.'],
+        ['Escalation when something is ignored', 'If a reminder is not acted on, the system alerts a senior person, so important dates do not fall through the cracks.'],
+        ['One central dashboard', 'See every upcoming date and its status in one place, with a log of what was sent and when.'],
+        ['Rules you control', 'You decide who gets which alert and how many days in advance, for example 30, 15 and 3 days before an expiry.'],
+        ['Good for admin and compliance teams', 'It replaces memory and notebooks with a system that works the same way every day, even when staff are on leave.']
+      ],
+      outro: 'List the ten dates your business can least afford to miss and set a reminder for each. That one afternoon of setup can prevent costly surprises all year.' },
+
+    { slug: 'task-delegation-monitoring-system', cat: 'Business Services', date: '2026-10-08', plain: true, svc: true,
+      title: 'How a Task Delegation and Monitoring System Keeps Your Team on Track',
+      ex: 'When tasks are assigned verbally, they fall through the cracks. A task system shows what is pending and who owns it, in real time.',
+      kw: 'task delegation system, task monitoring, team management software, daily task report',
+      tags: '#TaskManagement #TeamManagement #Productivity #BusinessSystems',
+      intro: 'In many teams, work is assigned by voice or in a chat, and then nobody is sure what is done. A task delegation and monitoring system gives every task an owner, a deadline and a visible status.',
+      pts: [
+        ['Clear assignment', 'Managers assign a task with the details and the deadline, and the employee sees it immediately in a simple list.'],
+        ['Real-time progress', 'Everyone can see what is not started, in progress and completed, so the owner no longer needs to ask around.'],
+        ['Deadline and delay alerts', 'The system warns when a task is due soon or late, so problems are caught early rather than at the end of the week.'],
+        ['Staff performance summaries', 'See how many tasks each person completed on time. This makes reviews fairer and based on facts.'],
+        ['Daily task reports', 'A short report of what was done and what is pending reaches the manager automatically.'],
+        ['Best for', 'Teams where work is assigned verbally and often falls through the cracks, and managers who want visibility without constant follow-up.']
+      ],
+      outro: 'Introduce it with one team first and keep the screens simple. When people see that the system reduces confusion, adoption becomes much easier.' },
+
+    { slug: 'visitor-gate-pass-night-guard-automation', cat: 'Business Services', date: '2026-10-07', plain: true, svc: true,
+      title: 'Digital Visitor Gate Pass and Night Guard Monitoring for Factories and Offices',
+      ex: 'Paper visitor registers and unchecked night duty are common risks. Digital gate passes and timed guard check-ins give you proof.',
+      kw: 'visitor management system, digital gate pass, night guard monitoring, security automation',
+      tags: '#VisitorManagement #GatePass #SecurityAutomation #Factory',
+      intro: 'Factories, warehouses and offices need to know who enters the premises and whether security staff are really on duty. Paper registers cannot prove either. Two simple digital systems solve both problems.',
+      pts: [
+        ['Visitor gate pass automation', 'Visitors are registered at entry, their ID is captured and a digital gate pass is created. The host approves the visit, and entry and exit times are logged.'],
+        ['Why it beats a paper register', 'Records are complete and searchable, handwriting problems disappear and a security dashboard shows who is inside right now.'],
+        ['Night guard duty monitoring', 'The system sends timed check-in alerts to the guard, who confirms with a photo at each round. A digital punch records the attendance.'],
+        ['Missed round escalation', 'If a round is missed, a notification goes to the supervisor straight away, so action can be taken the same night.'],
+        ['Reports and history', 'Duty history and visitor reports are available whenever you need them, for audits, insurance or investigations.'],
+        ['Who needs this', 'Factories, warehouses, offices and gated facilities that want paperless, secure records and proof that patrolling really happens.']
+      ],
+      outro: 'Start with the area that worries you most, the main gate or the night shift. Even a basic version brings more control than a paper register ever can.' },
+
+    { slug: 'smart-stock-management-ims', cat: 'Business Services', date: '2026-10-06', plain: true, svc: true,
+      title: 'Smart Stock Management: How an Inventory System Prevents Stock-Outs',
+      ex: 'Tracking stock in registers or basic sheets leads to shortages and excess. A smart inventory system keeps levels visible and reorders on time.',
+      kw: 'inventory management system, stock management software, low stock alert, IMS',
+      tags: '#InventoryManagement #StockManagement #Retail #Distribution',
+      intro: 'Running out of a fast-moving item loses sales, and holding too much of a slow item blocks money. Retailers, distributors and manufacturers who track stock by hand face both problems. A smart inventory system keeps your stock clear.',
+      pts: [
+        ['Stock in and stock out tracking', 'Every purchase, sale and return updates the stock automatically, so the number you see is the number you have.'],
+        ['Low-stock alerts', 'When an item falls below its minimum level, the system alerts you before the shelf is empty.'],
+        ['Item-wise reports', 'See which items sell fast, which sit idle and where stock is tied up, so buying decisions are based on data.'],
+        ['Multi-location visibility', 'If you have more than one shop or godown, view stock for every location in one place.'],
+        ['Purchase and reorder suggestions', 'The system can suggest what to reorder and when, using your own sales pattern.'],
+        ['Who benefits', 'Retailers, distributors and manufacturers currently using registers or basic spreadsheets, and anyone whose stock count rarely matches reality.']
+      ],
+      outro: 'Begin by entering your opening stock accurately and set minimum levels for your top twenty items. Accurate data at the start makes every later report trustworthy.' },
+
+    { slug: 'automated-data-collection-report-automation', cat: 'Excel & MIS', date: '2026-10-05', plain: true, svc: true,
+      title: 'Stop Compiling Reports by Hand: Automated Data Collection and Reporting',
+      ex: 'If managers spend hours every week building daily, weekly and monthly reports, automation can collect the data and deliver the report for you.',
+      kw: 'report automation, data collection automation, MIS dashboard, Power Query',
+      tags: '#ReportAutomation #MIS #PowerQuery #DataAutomation',
+      intro: 'In many offices, managers spend hours each week gathering numbers from different people and files, and then formatting a report. Automated data collection and reporting remove this work and make reports arrive on time.',
+      pts: [
+        ['Collect data once, at the source', 'Forms, sheets or your existing systems feed the data directly, so nobody has to type it again.'],
+        ['Automatic logging', 'Every entry is recorded with its date and time, creating a clean history you can trust.'],
+        ['Scheduled reports', 'Daily, weekly or monthly reports are prepared on a schedule, with charts and summaries already formatted.'],
+        ['Delivery where people read it', 'Reports can be sent by email or WhatsApp to the owner and managers, without anyone pressing a button.'],
+        ['Refreshable MIS dashboards', 'Using tools such as Excel with Power Query, a monthly MIS dashboard can be refreshed with new data in a few clicks.'],
+        ['Who it helps', 'Managers who currently spend hours every week compiling reports by hand, and owners who want numbers without chasing staff.']
+      ],
+      outro: 'Choose the report that takes the most time today and automate that one first. The hours you save every week add up very quickly.' },
+
+    { slug: 'ai-automation-integrations-business', cat: 'Automation', date: '2026-10-04', plain: true, svc: true,
+      title: 'AI Automation and Integrations: Connect Your Business Tools Without Copy-Paste',
+      ex: 'AI agents and workflow tools can read, decide and act across your apps. Learn where they help and how to start safely.',
+      kw: 'AI automation, AI integrations, n8n, Make.com, workflow automation Jaipur',
+      tags: '#AIAutomation #n8n #MakeCom #BusinessAutomation',
+      intro: 'Most businesses use several tools: a CRM, spreadsheets, email, WhatsApp and accounting software. When these tools do not talk to each other, people copy and paste between them all day. AI automation and integrations connect them, and add intelligence where it helps.',
+      pts: [
+        ['Connecting your apps', 'Workflow tools such as n8n and Make.com link your CRM, payment, messaging and Google Workspace so that an event in one tool triggers action in another.'],
+        ['Where AI adds value', 'Models such as OpenAI, Gemini and Claude can read an enquiry, summarise a document, draft a reply or classify a request, and pass the result to the next step.'],
+        ['Practical examples', 'Lead capture and follow-up, automatic emails and WhatsApp notifications, approvals, report generation and customer support replies.'],
+        ['AI agents', 'An agent can handle a multi-step task, such as collecting information, checking a database and preparing a response, while a person reviews anything important.'],
+        ['Keep a human in the loop', 'AI can make mistakes. For anything involving money, contracts or customers, keep a person to check before the action is final.'],
+        ['Protect your data', 'Decide what information may be shared with AI services, use proper access controls and keep logs of what the automation does.']
+      ],
+      outro: 'Start with one workflow where people repeat the same steps, such as new enquiry handling. Test it for a few weeks, measure the time saved and then extend it to other processes.' },
+
+    { slug: 'website-or-custom-web-app-business', cat: 'Web Development', date: '2026-10-03', plain: true, svc: true,
+      title: 'Website or Custom Web App? How to Choose the Right Solution for Your Business',
+      ex: 'A business website, an online store and a custom web tool solve different problems. Here is how to pick the right one.',
+      kw: 'website development Jaipur, custom web app, WordPress, Shopify, e-commerce website',
+      tags: '#WebsiteDevelopment #WebApp #WordPress #Shopify',
+      intro: 'Not every business needs the same kind of website. Some need a clear online presence, some need an online store and some need a custom tool that handles their own process. Choosing correctly saves money and avoids rebuilding later.',
+      pts: [
+        ['A business or portfolio website', 'Best when you mainly want customers to find you, trust you and contact you. It should be fast, mobile friendly and structured for search engines.'],
+        ['An e-commerce store', 'If you sell products online, a platform such as Shopify or WooCommerce on WordPress handles catalogue, cart and payments.'],
+        ['A custom web app or internal tool', 'When you need something specific, such as a dashboard, a booking system or a tool for your staff, a purpose-built application is a better fit than a template.'],
+        ['Choosing the technology', 'WordPress, Shopify, React, Node.js and PHP are all good in the right place. The right platform follows your requirement, not the other way round.'],
+        ['What to expect in a good project', 'Planning your pages and goals, responsive design, domain and hosting setup, basic SEO structure and support after launch.'],
+        ['Questions to ask before you start', 'Who owns the site and the code, how updates will be made, what maintenance costs and how quickly it loads on a phone.']
+      ],
+      outro: 'Write down what you want visitors or staff to do on the site. That one sentence usually shows whether you need a simple website, a store or a custom tool.' },
+
+    { slug: 'outsourced-payroll-services', cat: 'Accounting', date: '2026-10-02', plain: true, svc: true,
+      title: 'Third-Party Payroll Services: When Does Outsourcing Payroll Make Sense?',
+      ex: 'Payroll mistakes and compliance delays are costly. See when a growing business should outsource payroll instead of running it in-house.',
+      kw: 'payroll services, outsourced payroll, PF ESI TDS compliance, salary processing',
+      tags: '#Payroll #PayrollServices #Compliance #SmallBusiness',
+      intro: 'Payroll looks simple until the business grows. Salary calculations, deductions, payslips and statutory compliance take time and need accuracy. Many growing businesses choose to outsource payroll so they can stay compliant without building an in-house team.',
+      pts: [
+        ['What outsourced payroll includes', 'Salary computation and disbursal support, PF, ESI and TDS processing, payslip generation, statutory filing support and answers to employee payroll queries.'],
+        ['Signs it is time to outsource', 'Payroll takes days every month, errors are appearing, one person holds all the knowledge or compliance dates are being missed.'],
+        ['Benefits', 'Accurate and on-time salaries, fewer compliance worries, and your team free to focus on the main business.'],
+        ['What to ask a provider', 'How data is kept confidential, who is responsible for filings, how changes are handled and how quickly queries are answered.'],
+        ['What you still control', 'You approve salary decisions and give attendance and leave inputs. The provider processes them accurately and on schedule.'],
+        ['A note on rules', 'Statutory rules and rates change from time to time, so always confirm current requirements with official sources or your professional advisor.']
+      ],
+      outro: 'Compare the cost of an outsourced service with the time, errors and risk of doing payroll yourself. For many growing businesses, outsourcing turns out to be both safer and cheaper.' },
+
+    { slug: 'automation-tools-for-ca-firms', cat: 'Accounting', date: '2026-10-01', plain: true, svc: true,
+      title: 'Automation Tools for CA Firms: GST Reconciliation, Bank Statements to Tally and More',
+      ex: 'CA firms and accounting teams spend hours on repeat work. See which tasks automation can speed up while you keep full control.',
+      kw: 'CA firm automation, GSTR-2B reconciliation, bank statement to Tally, MIS dashboard, accounting automation',
+      tags: '#CAFirms #GSTReconciliation #TallyAutomation #AccountingAutomation',
+      intro: 'Accountants and CA firms repeat many tasks every month for every client: reconciliations, voucher entry, reminders and reports. Good automation takes over the mechanical work, so professionals can spend time on review and advice.',
+      pts: [
+        ['GSTR-2B and ITC reconciliation', 'Match purchase records with GSTR-2B and list missing or mismatched invoices and input credit differences, across multiple GSTINs.'],
+        ['Bank statement to Tally vouchers', 'Convert bank statements into Tally-ready files for bulk import, instead of typing each entry by hand.'],
+        ['Monthly MIS dashboards', 'A refreshable Excel dashboard built with Power Query gives clients a clear monthly picture of their finances.'],
+        ['Compliance calendars and reminders', 'Automatic reminders for income tax, TDS and GST due dates, and for ITR filing, so nothing is missed across many clients.'],
+        ['Multi-file Excel reconciliation', 'Compare large datasets from different sources in minutes and highlight the differences that need attention.'],
+        ['Your judgement stays in charge', 'These tools prepare and flag. Review, professional judgement and responsibility for the final work always remain with the accountant or CA.']
+      ],
+      outro: 'List the tasks your team repeats for every client every month. Those are the best candidates for automation, and the time you save can go into higher-value advisory work.' },
+
+    { slug: 'professional-photography-videography-business', cat: 'Creative Services', date: '2026-09-30', plain: true, svc: true,
+      title: 'Professional Photography and Video: Why Visuals Decide Whether Customers Trust You',
+      ex: 'Customers judge your business by what they see first. Learn where professional photos and videos make the biggest difference.',
+      kw: 'professional photography Jaipur, videography services, product photography, corporate video production',
+      tags: '#Photography #Videography #BrandVisuals #Jaipur',
+      intro: 'Before a customer calls you or visits your shop, they look at your photos and videos. Poor visuals make a good business look ordinary, while clear, professional ones build trust within seconds.',
+      pts: [
+        ['Product and catalogue photography', 'Clean, well-lit product images lift a website, a catalogue and a marketplace listing, and help customers understand what they are buying.'],
+        ['Corporate and event photography', 'Photos of your team, premises and events show that your business is real and active, and give you material for years of marketing.'],
+        ['Portraits and profile shoots', 'Professional portraits for founders, doctors, consultants and trainers make profiles and websites more credible.'],
+        ['Video production', 'Event and corporate videos, product or promotional films and short clips for social media bring your story to life better than text.'],
+        ['Editing, colour and sound', 'Good editing, colour grading and sound sync are what separate a professional video from a casual recording.'],
+        ['How to brief a shoot', 'Decide where the photos and videos will be used, list the shots you need and share examples you like. A clear brief gives better results at lower cost.']
+      ],
+      outro: 'Review the photos on your website and Google profile as a stranger would. If they do not show your business at its best, a single planned shoot can improve your marketing for a long time.' },
+
+    { slug: 'social-media-handling-for-businesses', cat: 'Digital Marketing', date: '2026-09-29', plain: true, svc: true,
+      title: 'Social Media Handling for Businesses: Consistency Beats Occasional Posting',
+      ex: 'Posting once in a while does not build a brand. See what professional social media handling includes and how it helps.',
+      kw: 'social media handling, social media management Jaipur, graphic creation, reels and posts',
+      tags: '#SocialMediaMarketing #SocialMediaHandling #Reels #Branding',
+      intro: 'Many businesses start social media with energy and then go quiet for weeks. Customers notice. Steady, planned posting builds trust and keeps you in mind, which is why many businesses hand it to a team that manages it every day.',
+      pts: [
+        ['Content calendar planning', 'Posts are planned in advance around offers, festivals, products and useful tips, so you always know what goes out and when.'],
+        ['Static posts and reels', 'A mix of designed posts and short videos keeps your page fresh and reaches different kinds of viewers.'],
+        ['Captions and content writing', 'Clear, simple words that fit your brand and invite people to call, visit or message you.'],
+        ['Page management and schedule', 'Regular posting at the right times, and replies to comments and messages so people feel heard.'],
+        ['Basic performance reporting', 'A simple monthly view of what worked, so the next month improves on the last.'],
+        ['Who it suits', 'Businesses that want a consistent presence online without managing it in-house or learning every tool themselves.']
+      ],
+      outro: 'Consistency matters more than perfection. Decide how many posts a week you can sustain, and either commit to that or hand it to a team that will.' },
+
+    { slug: 'publishing-services-books-brochures', cat: 'Creative Services', date: '2026-09-28', plain: true, svc: true,
+      title: 'Publishing Services: Getting Your Book, Brochure or Magazine Print-Ready',
+      ex: 'Authors, institutions and businesses need more than a typed document. See what goes into preparing material for print or digital release.',
+      kw: 'publishing services, book formatting, print-ready files, e-book publishing, layout design',
+      tags: '#PublishingServices #BookDesign #PrintReady #Ebook',
+      intro: 'A typed manuscript is not yet a book, and a draft is not yet a brochure. Publishing involves formatting, design, proofreading and the right file preparation, and each step affects how professional the final result looks.',
+      pts: [
+        ['Manuscript and document formatting', 'Consistent headings, fonts, spacing and page numbers make long documents easier to read and look professional.'],
+        ['Cover and layout design', 'The cover is your first impression. Good layout makes pages comfortable to read and gives your material a clear identity.'],
+        ['Print-ready file preparation', 'Printers need files with the correct size, margins, bleed and resolution. Preparing them properly avoids costly reprints.'],
+        ['Digital and e-book formats', 'The same content can be prepared for e-book readers and online release, reaching readers who prefer screens.'],
+        ['Proofreading support', 'A careful check for spelling, grammar and consistency protects your credibility before the material is published.'],
+        ['Who needs it', 'Authors, schools and institutions, and businesses publishing books, brochures, catalogues or magazines.']
+      ],
+      outro: 'Before you send anything to a printer, get the file checked and proofread. A small amount of preparation now prevents expensive mistakes after printing.' },
+
     { slug: 'sarkari-result-2026-check-safely', cat: 'Career', date: '2026-10-13', plain: true,
       title: 'Sarkari Result 2026: How to Check Your Result Safely and Avoid Fake Websites',
       ex: 'Searching for Sarkari Result 2026? Learn the safe, official way to check results, merit lists and scorecards, and how to spot fake sites.',
@@ -1242,7 +1514,8 @@
     /* ---------------- code below: no need to edit ---------------- */
     var COLORS = { 'Career': ['#0c2340', '#14518f'], 'Excel & MIS': ['#0b5d3b', '#1f9d6b'], 'Programming': ['#3b1f6b', '#6f4bd8'],
                    'Digital Marketing': ['#7a1f3d', '#d6456f'], 'Automation': ['#0c3b5c', '#0094c6'], 'Web Development': ['#14365c', '#2f7de1'],
-                   'Accounting': ['#5c3b0c', '#c98a1b'], 'Design': ['#6b1f5c', '#e05bc0'], 'Learning Tips': ['#1f4b4b', '#2a9d8f'], 'Placement': ['#2b2f5c', '#5865d6'] };
+                   'Accounting': ['#5c3b0c', '#c98a1b'], 'Design': ['#6b1f5c', '#e05bc0'], 'Learning Tips': ['#1f4b4b', '#2a9d8f'], 'Placement': ['#2b2f5c', '#5865d6'],
+                   'Business Services': ['#0b3c49', '#1b8a9e'], 'Creative Services': ['#5a1a6b', '#d94f9a'] };
 
     function xml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
     function wrap(text, max) {
@@ -1279,8 +1552,9 @@
         // up to 3 own pictures: after the intro, in the middle, near the end
         var spots = [1, 4, parts.length - 1];
         extras.slice(0, 3).forEach(function (src, k) { parts.splice(spots[k] + k, 0, fig(src, p.title + ' (' + (k + 1) + ')')); });
-        if (!NO_ENCOURAGE[p.slug]) parts.push(ENCOURAGE);
-        parts.push('<p><strong>Learn this in Jaipur:</strong> UMA Learning &amp; Services offers practical, job-oriented training. Call or WhatsApp us on <a href="' + WA + '" target="_blank" rel="noopener">' + PHONE + '</a> for course details, fees and batch timings.</p>');
+        if (!NO_ENCOURAGE[p.slug] && !p.svc) parts.push(ENCOURAGE);
+        if (p.svc) parts.push('<p><strong>Need this for your business?</strong> UMA Learning &amp; Services builds custom systems and services for businesses in Jaipur and beyond. Call or WhatsApp us on <a href="' + WA + '" target="_blank" rel="noopener">' + PHONE + '</a>, tell us your process, and we will suggest where to start.</p>');
+        else parts.push('<p><strong>Learn this in Jaipur:</strong> UMA Learning &amp; Services offers practical, job-oriented training. Call or WhatsApp us on <a href="' + WA + '" target="_blank" rel="noopener">' + PHONE + '</a> for course details, fees and batch timings.</p>');
         parts.push('<p style="color:#627d98;font-size:.9rem;"><strong>Related topics:</strong> ' + xml(p.kw) + '</p>');
         parts.push('<p style="color:#0073e6;font-size:.9rem;">' + xml(p.tags) + '</p>');
         return parts.join('');

@@ -2321,3 +2321,4 @@ var qrcode = function() {
   qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
 
 }(qrcode);
+

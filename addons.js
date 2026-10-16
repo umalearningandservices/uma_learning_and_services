@@ -859,6 +859,9 @@
 })();
 
 /* ############ about page: section menu highlights the part you are reading ############ */
+
+
+
 (function () {
     'use strict';
     var bar = document.querySelector('#page-about .org-jump');
@@ -881,3 +884,5 @@
     }, { rootMargin: '-30% 0px -60% 0px' });
     secs.forEach(function (s) { io.observe(s); });
 })();
+
+
