@@ -3442,6 +3442,18 @@ transform:translateX(-50%);
 
 }
 
+/* Two-row technologies marquee: opposite directions */
+@keyframes scroll-reverse{
+    0%   { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+.marquee + .marquee{ margin-top: 22px; }
+.marquee-track.marquee-ltr{ animation: scroll-reverse 70s linear infinite; }  /* left -> right */
+.marquee-track.marquee-rtl{ animation: scroll 70s linear infinite; }          /* right -> left */
+@media (max-width: 600px){
+    .marquee + .marquee{ margin-top: 12px; }
+}
+
 
 .tech-section{
     overflow: hidden;
@@ -6355,15 +6367,15 @@ html.rv-lb-lock{overflow:hidden}
    ====================================================================== */
 #heroSplit{position:relative;background:
   radial-gradient(ellipse 60% 55% at 80% 12%,rgba(70,95,180,.22),transparent 60%),
-  radial-gradient(ellipse 55% 60% at 10% 88%,rgba(50,201,168,.10),transparent 60%),
+  radial-gradient(ellipse 55% 60% at 10% 88%,rgba(90,110,220,.10),transparent 60%),
   radial-gradient(ellipse 45% 45% at 92% 90%,rgba(120,80,200,.12),transparent 60%),
   #03050e}
 #heroSplit>.screen:first-of-type{border-right:1px solid rgba(160,190,255,.12)}
 
 /* the two halves: sky glow at the horizon (semi-transparent, so the stars show through) */
 #heroSplit>#rightHeroSection{background:
-  radial-gradient(ellipse 95% 44% at 50% 108%,rgba(255,186,110,.30) 0%,rgba(50,201,168,.22) 38%,transparent 74%),
-  radial-gradient(ellipse 70% 40% at 20% 0%,rgba(50,201,168,.10),transparent 70%)!important}
+  radial-gradient(ellipse 95% 44% at 50% 108%,rgba(255,186,110,.30) 0%,rgba(150,110,210,.18) 38%,transparent 74%),
+  radial-gradient(ellipse 70% 40% at 20% 0%,rgba(70,95,180,.10),transparent 70%)!important}
 #heroSplit>#leftHeroSection{background:
   radial-gradient(ellipse 95% 44% at 50% 108%,rgba(110,130,255,.30) 0%,rgba(120,80,200,.18) 42%,transparent 76%),
   radial-gradient(ellipse 60% 40% at 85% 0%,rgba(70,95,180,.16),transparent 70%)!important}
@@ -6561,4 +6573,11 @@ body,html{overflow-x:clip}
 .uf-social a{filter:none!important;opacity:1!important;animation:none!important}
 .uf-social a:hover,.uf-social a:focus-visible{transform:translateY(-3px)!important}
 
+/* ---------- home hero: no aurora (green sky effect removed) ---------- */
+.night-aurora{display:none!important}
 
+/* ---------- home hero: "UMA Learning Campus" and "UMA Services Studio" labels are buttons ---------- */
+.badge.hero-go{cursor:pointer;position:relative;z-index:3;transition:box-shadow .2s ease,filter .2s ease}
+.badge.hero-go::after{content:" \2192"}
+.badge.hero-go:hover{box-shadow:0 8px 22px rgba(0,0,0,.4);filter:brightness(1.15)}
+.badge.hero-go:focus-visible{outline:2px solid #fff;outline-offset:3px}
